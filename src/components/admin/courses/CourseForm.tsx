@@ -1,0 +1,381 @@
+"use client";
+
+import { useRef, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import {
+  createCourseSchema,
+  type CreateCourseSchema,
+} from "@/validators/admin/course";
+import type { Course } from "@/types/admin/course";
+import { Input }     from "@/components/ui/input";
+import { Label }     from "@/components/ui/label";
+import { Button }    from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { cn }        from "@/lib/utils";
+import { ImageIcon, UploadCloud, X } from "lucide-react";
+import { employeeService } from "@/services/admin/employeeService";
+
+// ─── Instructor dropdown ───────────────────────────────────────────────────────
+type EmployeeOption = { id: string; name: string; designation?: string };
+
+function useActiveEmployees() {
+  const [options, setOptions] = useState<EmployeeOption[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    employeeService.list({ status: "ACTIVE", limit: 200 })
+      .then((data) =>
+        setOptions(
+          data.employees.map((e) => ({
+            id:          e.id,
+            name:        e.name,
+            designation: (e as { designation?: string }).designation,
+          }))
+        )
+      )
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
+  return { options, loading };
+}
+
+// ─── Languages list ────────────────────────────────────────────────────────────
+const LANGUAGES = [
+  "English", "Hindi", "Marathi", "Hinglish"
+];
+
+type Props = {
+  mode:           "create" | "edit";
+  defaultValues?: Partial<Course>;
+  onSubmit:       (data: FormData) => Promise<void>;
+  onCancel:       () => void;
+  isLoading?:     boolean;
+};
+
+// ─── Image file picker (no pre-upload — file goes with the form submission) ────
+function ImagePickerField({
+  existingUrl,
+  imageFile,
+  onFileSelected,
+  onClear,
+}: {
+  existingUrl:    string;
+  imageFile:      File | null;
+  onFileSelected: (file: File) => void;
+  onClear:        () => void;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [blobUrl, setBlobUrl] = useState("");
+
+  // Create/revoke a local object URL for the selected file preview
+  useEffect(() => {
+    if (!imageFile) { setBlobUrl(""); return; }
+    const url = URL.createObjectURL(imageFile);
+    setBlobUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [imageFile]);
+
+  const previewUrl = blobUrl || existingUrl;
+
+  return (
+    <div className="space-y-2">
+      <Label>Course Image</Label>
+
+      {previewUrl && (
+        <div className="relative inline-block">
+          <div className="relative h-32 w-52 overflow-hidden rounded-xl border border-border bg-muted">
+            <Image src={previewUrl} alt="Course cover" fill className="object-cover" unoptimized />
+          </div>
+          <button
+            type="button"
+            onClick={onClear}
+            className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-white shadow"
+          >
+            <X className="h-3 w-3" />
+          </button>
+        </div>
+      )}
+
+      <button
+        type="button"
+        onClick={() => inputRef.current?.click()}
+        className={cn(
+          "flex w-full cursor-pointer items-center gap-3 rounded-lg border border-dashed border-border bg-muted/30 px-4 py-3 text-sm text-muted-foreground",
+          "transition hover:border-primary/50 hover:bg-muted/60"
+        )}
+      >
+        <ImageIcon className="h-4 w-4" />
+        <span>{previewUrl ? "Replace image" : "Upload course image"}</span>
+        <UploadCloud className="ml-auto h-4 w-4 opacity-40" />
+      </button>
+
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp,image/gif"
+        className="hidden"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) onFileSelected(file);
+          e.target.value = "";
+        }}
+      />
+    </div>
+  );
+}
+
+// ─── Main form ─────────────────────────────────────────────────────────────────
+export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading }: Props) {
+  const [imageFile,     setImageFile]     = useState<File | null>(null);
+  const [existingImage, setExistingImage] = useState(defaultValues?.image || "");
+
+  const { options: employeeOptions, loading: loadingEmployees } = useActiveEmployees();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateCourseSchema>({
+    resolver: zodResolver(createCourseSchema),
+    defaultValues: {
+      name:        defaultValues?.name        || "",
+      duration:    defaultValues?.duration    ?? undefined,
+      mode:        defaultValues?.mode        || undefined,
+      image:       "",
+      description: defaultValues?.description || "",
+      price:       defaultValues?.price       ?? undefined,
+      instructor:  defaultValues?.instructor  || "",
+      language:    defaultValues?.language    || "",
+      courseType:  defaultValues?.courseType  || undefined,
+      discount:     defaultValues?.discount     ?? undefined,
+      category:     defaultValues?.category     || "",
+      displayOrder: defaultValues?.displayOrder ?? 0,
+    },
+  });
+
+  const handleFormSubmit = async (formValues: CreateCourseSchema) => {
+    const fd = new FormData();
+    fd.append("name",       formValues.name);
+    fd.append("duration",   String(formValues.duration));
+    fd.append("mode",       formValues.mode);
+    fd.append("price",      String(formValues.price));
+    fd.append("instructor", formValues.instructor);
+    fd.append("language",   formValues.language);
+    if (formValues.description)                  fd.append("description", formValues.description);
+    fd.append("courseType", formValues.courseType);
+    if (formValues.discount !== undefined)        fd.append("discount",     String(formValues.discount));
+    if (formValues.category)                      fd.append("category",     formValues.category);
+    if (formValues.displayOrder !== undefined)    fd.append("displayOrder", String(formValues.displayOrder));
+
+    if (imageFile) {
+      fd.append("image", imageFile, imageFile.name);
+    } else if (existingImage) {
+      fd.append("imageUrl", existingImage);
+    }
+
+    await onSubmit(fd);
+  };
+
+  const selectCls = cn(
+    "h-9 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground",
+    "focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring transition"
+  );
+
+  return (
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-5">
+
+      {/* ── Course Name ── */}
+      <div className="space-y-1.5">
+        <Label htmlFor="name">Course Name <span className="text-destructive">*</span></Label>
+        <Input
+          id="name"
+          {...register("name")}
+          placeholder="e.g. Full Stack Web Development"
+          className={errors.name ? "border-destructive focus-visible:ring-destructive" : ""}
+        />
+        {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
+      </div>
+
+      {/* ── Duration + Mode ── */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="space-y-1.5">
+          <Label htmlFor="duration">Duration (hours) <span className="text-destructive">*</span></Label>
+          <Input
+            id="duration"
+            type="number"
+            step="0.5"
+            min="0.5"
+            {...register("duration", { valueAsNumber: true })}
+            placeholder="e.g. 40"
+            className={errors.duration ? "border-destructive focus-visible:ring-destructive" : ""}
+          />
+          {errors.duration && <p className="text-xs text-destructive">{errors.duration.message}</p>}
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="mode">Mode <span className="text-destructive">*</span></Label>
+          <select
+            id="mode"
+            {...register("mode")}
+            className={cn(selectCls, errors.mode ? "border-destructive" : "")}
+          >
+            <option value="">Select mode</option>
+            <option value="Online">Online</option>
+            <option value="Offline">Offline</option>
+          </select>
+          {errors.mode && <p className="text-xs text-destructive">{errors.mode.message}</p>}
+        </div>
+      </div>
+
+      {/* ── Price + Language ── */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="space-y-1.5">
+          <Label htmlFor="price">Price (₹) <span className="text-destructive">*</span></Label>
+          <Input
+            id="price"
+            type="number"
+            min="0"
+            step="1"
+            {...register("price", { valueAsNumber: true })}
+            placeholder="e.g. 4999"
+            className={errors.price ? "border-destructive focus-visible:ring-destructive" : ""}
+          />
+          {errors.price && <p className="text-xs text-destructive">{errors.price.message}</p>}
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="language">Language <span className="text-destructive">*</span></Label>
+          <select
+            id="language"
+            {...register("language")}
+            className={cn(selectCls, errors.language ? "border-destructive" : "")}
+          >
+            <option value="">Select language</option>
+            {LANGUAGES.map((l) => (
+              <option key={l} value={l}>{l}</option>
+            ))}
+          </select>
+          {errors.language && <p className="text-xs text-destructive">{errors.language.message}</p>}
+        </div>
+      </div>
+
+      {/* ── Course Type + Discount ── */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="space-y-1.5">
+          <Label htmlFor="courseType">Course Type <span className="text-destructive">*</span></Label>
+          <select
+            id="courseType"
+            {...register("courseType")}
+            className={cn(selectCls, errors.courseType ? "border-destructive" : "")}
+          >
+            <option value="">Select type</option>
+            <option value="Mindlyftai">Mindlyftai</option>
+            <option value="IIT">IIT</option>
+          </select>
+          {errors.courseType && <p className="text-xs text-destructive">{errors.courseType.message}</p>}
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="discount">Discount (%)</Label>
+          <Input
+            id="discount"
+            type="number"
+            min="0"
+            max="100"
+            step="0.5"
+            {...register("discount", { valueAsNumber: true })}
+            placeholder="e.g. 10"
+            className={errors.discount ? "border-destructive focus-visible:ring-destructive" : ""}
+          />
+          {errors.discount && <p className="text-xs text-destructive">{errors.discount.message}</p>}
+        </div>
+      </div>
+
+      {/* ── Display Order ── */}
+      <div className="space-y-1.5">
+        <Label htmlFor="displayOrder">Display Order</Label>
+        <Input
+          id="displayOrder"
+          type="number"
+          min={0}
+          {...register("displayOrder", { valueAsNumber: true })}
+          placeholder="0"
+        />
+      </div>
+
+      {/* ── Category ── */}
+      <div className="space-y-1.5">
+        <Label htmlFor="category">Category</Label>
+        <Input
+          id="category"
+          {...register("category")}
+          placeholder="e.g. Programming, Data Science, Design"
+          className={errors.category ? "border-destructive focus-visible:ring-destructive" : ""}
+        />
+        {errors.category && <p className="text-xs text-destructive">{errors.category.message}</p>}
+      </div>
+
+      {/* ── Instructor ── */}
+      <div className="space-y-1.5">
+        <Label htmlFor="instructor">Instructor <span className="text-destructive">*</span></Label>
+        <select
+          id="instructor"
+          {...register("instructor")}
+          disabled={loadingEmployees}
+          className={cn(selectCls, errors.instructor ? "border-destructive" : "", loadingEmployees ? "opacity-60" : "")}
+        >
+          <option value="">
+            {loadingEmployees ? "Loading employees…" : "Select instructor"}
+          </option>
+          {employeeOptions.map((emp) => (
+            <option key={emp.id} value={emp.name}>
+              {emp.name}{emp.designation ? ` — ${emp.designation}` : ""}
+            </option>
+          ))}
+        </select>
+        {errors.instructor && <p className="text-xs text-destructive">{errors.instructor.message}</p>}
+      </div>
+
+      {/* ── Description ── */}
+      <div className="space-y-1.5">
+        <Label htmlFor="description">Description</Label>
+        <textarea
+          id="description"
+          {...register("description")}
+          rows={3}
+          placeholder="What will students learn in this course…"
+          className={cn(
+            "w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground",
+            "focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring transition resize-none",
+            errors.description ? "border-destructive focus:ring-destructive" : ""
+          )}
+        />
+        {errors.description && <p className="text-xs text-destructive">{errors.description.message}</p>}
+      </div>
+
+      {/* ── Image picker ── */}
+      <ImagePickerField
+        existingUrl={existingImage}
+        imageFile={imageFile}
+        onFileSelected={setImageFile}
+        onClear={() => { setImageFile(null); setExistingImage(""); }}
+      />
+
+      {/* ── Actions ── */}
+      <Separator />
+      <div className="flex items-center justify-end gap-3 pt-1">
+        <Button type="button" variant="outline" onClick={onCancel}>
+          Cancel
+        </Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading
+            ? (mode === "create" ? "Creating…" : "Saving…")
+            : (mode === "create" ? "Create Course" : "Save Changes")}
+        </Button>
+      </div>
+    </form>
+  );
+}

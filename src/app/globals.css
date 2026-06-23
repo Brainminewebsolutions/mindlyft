@@ -1,0 +1,229 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "./swiper.css";
+@import "./remixicon.css";
+@import "./template-styles.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: var(--font-sans);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* ── Marquee (right → left infinite scroll) ────────────────────────────────── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* ── Video hero animations ─────────────────────────────────────────────────── */
+@keyframes mlScan {
+  0%   { top: -4px; opacity: 0; }
+  10%  { opacity: .5; }
+  90%  { opacity: .5; }
+  100% { top: 100%; opacity: 0; }
+}
+@keyframes mlBounce {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(8px); }
+}
+
+/* ── Override template dark-only CSS variables for light mode ──────────────── */
+/* style.css defines these as black/dark with no theme variant.                 */
+/* We redefine them here so they adapt properly to light/dark mode.             */
+:root {
+    /* Template section colors — light equivalents */
+    --codColor:      #ffffff;
+    --aztechColor:   #f5f7ff;
+    --slateGrayColor:#e8eaf0;
+    --darkParaColor: #555555;
+    --borderColor:   rgba(0, 0, 0, 0.12);
+}
+
+.dark {
+    /* Restore original dark values */
+    --codColor:      #12131B;
+    --aztechColor:   #111828;
+    --slateGrayColor:#2a2a2a;
+    --darkParaColor: #C0C0C0;
+    --borderColor:   rgba(255, 255, 255, 0.21);
+}
+
+/* ── Light theme (default) ─────────────────────────────────────────────────── */
+:root {
+    --background:            oklch(0.98 0 0);
+    --foreground:            oklch(0.145 0 0);
+    --card:                  oklch(1 0 0);
+    --card-foreground:       oklch(0.145 0 0);
+    --popover:               oklch(1 0 0);
+    --popover-foreground:    oklch(0.145 0 0);
+
+    /* Indigo as brand primary */
+    --primary:               oklch(0.511 0.262 264.376);   /* indigo-600  */
+    --primary-foreground:    oklch(0.985 0 0);             /* white       */
+
+    --secondary:             oklch(0.96 0.012 264);        /* indigo-50   */
+    --secondary-foreground:  oklch(0.35 0.18 264);         /* indigo-800  */
+    --muted:                 oklch(0.96 0 0);
+    --muted-foreground:      oklch(0.50 0 0);
+    --accent:                oklch(0.94 0.02 264);
+    --accent-foreground:     oklch(0.35 0.18 264);
+    --destructive:           oklch(0.577 0.245 27.325);
+    --border:                oklch(0.90 0 0);
+    --input:                 oklch(0.90 0 0);
+    --ring:                  oklch(0.511 0.262 264.376);   /* indigo ring */
+    --radius:                0.625rem;
+
+    /* Charts */
+    --chart-1: oklch(0.511 0.262 264.376);
+    --chart-2: oklch(0.606 0.243 264.376);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+
+    /* Sidebar */
+    --sidebar:                        oklch(0.985 0.006 264);
+    --sidebar-foreground:             oklch(0.145 0 0);
+    --sidebar-primary:                oklch(0.511 0.262 264.376);
+    --sidebar-primary-foreground:     oklch(0.985 0 0);
+    --sidebar-accent:                 oklch(0.94 0.02 264);
+    --sidebar-accent-foreground:      oklch(0.35 0.18 264);
+    --sidebar-border:                 oklch(0.90 0 0);
+    --sidebar-ring:                   oklch(0.511 0.262 264.376);
+}
+
+/* ── Dark theme ────────────────────────────────────────────────────────────── */
+.dark {
+    --background:            oklch(0.13 0 0);
+    --foreground:            oklch(0.97 0 0);
+    --card:                  oklch(0.18 0 0);
+    --card-foreground:       oklch(0.97 0 0);
+    --popover:               oklch(0.18 0 0);
+    --popover-foreground:    oklch(0.97 0 0);
+
+    --primary:               oklch(0.606 0.262 264.376);   /* indigo-500 */
+    --primary-foreground:    oklch(0.985 0 0);
+
+    --secondary:             oklch(0.22 0.02 264);
+    --secondary-foreground:  oklch(0.97 0 0);
+    --muted:                 oklch(0.22 0 0);
+    --muted-foreground:      oklch(0.60 0 0);
+    --accent:                oklch(0.24 0.03 264);
+    --accent-foreground:     oklch(0.97 0 0);
+    --destructive:           oklch(0.704 0.191 22.216);
+    --border:                oklch(1 0 0 / 10%);
+    --input:                 oklch(1 0 0 / 15%);
+    --ring:                  oklch(0.606 0.262 264.376);
+
+    --chart-1: oklch(0.606 0.262 264.376);
+    --chart-2: oklch(0.511 0.262 264.376);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+
+    --sidebar:                        oklch(0.18 0.01 264);
+    --sidebar-foreground:             oklch(0.97 0 0);
+    --sidebar-primary:                oklch(0.606 0.262 264.376);
+    --sidebar-primary-foreground:     oklch(0.985 0 0);
+    --sidebar-accent:                 oklch(0.24 0.03 264);
+    --sidebar-accent-foreground:      oklch(0.97 0 0);
+    --sidebar-border:                 oklch(1 0 0 / 10%);
+    --sidebar-ring:                   oklch(0.606 0.262 264.376);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+    html {
+        @apply font-sans;
+    }
+}
+
+/* Override template's hardcoded dark body background in light mode.           */
+/* style.css sets body { background-color: var(--blackColor) } unconditionally. */
+html:not(.dark) body {
+    background-color: var(--background) !important;
+    color: var(--foreground) !important;
+}
+
+/* ── Student panel — always light, regardless of html.dark ─────────────────── */
+/* CSS custom properties cascade from the closest ancestor, so scoping them    */
+/* here overrides whatever :root or .dark (html) sets for all descendants.     */
+.student-panel {
+    --background:             oklch(0.98 0 0);
+    --foreground:             oklch(0.145 0 0);
+    --card:                   oklch(1 0 0);
+    --card-foreground:        oklch(0.145 0 0);
+    --popover:                oklch(1 0 0);
+    --popover-foreground:     oklch(0.145 0 0);
+    --primary:                oklch(0.511 0.262 264.376);
+    --primary-foreground:     oklch(0.985 0 0);
+    --secondary:              oklch(0.96 0.012 264);
+    --secondary-foreground:   oklch(0.35 0.18 264);
+    --muted:                  oklch(0.96 0 0);
+    --muted-foreground:       oklch(0.50 0 0);
+    --accent:                 oklch(0.94 0.02 264);
+    --accent-foreground:      oklch(0.35 0.18 264);
+    --destructive:            oklch(0.577 0.245 27.325);
+    --border:                 oklch(0.90 0 0);
+    --input:                  oklch(0.90 0 0);
+    --ring:                   oklch(0.511 0.262 264.376);
+    --sidebar:                oklch(0.985 0.006 264);
+    --sidebar-foreground:     oklch(0.145 0 0);
+    --sidebar-primary:        oklch(0.511 0.262 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent:         oklch(0.94 0.02 264);
+    --sidebar-accent-foreground: oklch(0.35 0.18 264);
+    --sidebar-border:         oklch(0.90 0 0);
+    --sidebar-ring:           oklch(0.511 0.262 264.376);
+    color-scheme: light;
+    background-color: oklch(0.98 0 0);
+    color: oklch(0.145 0 0);
+}
