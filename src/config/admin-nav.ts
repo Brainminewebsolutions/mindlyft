@@ -16,6 +16,7 @@ import {
   CalendarCheck,
   Handshake,
   Newspaper,
+  Tag,
   type LucideIcon,
 } from "lucide-react";
 
@@ -48,7 +49,8 @@ export const adminNavGroups: NavGroup[] = [
   {
     label: "Content",
     items: [
-      { label: "Courses",        href: "/admin/courses",  icon: BookOpen  },
+      { label: "Courses",           href: "/admin/courses",             icon: BookOpen },
+      { label: "Course Categories", href: "/admin/course-categories",   icon: Tag      },
       { label: "Blog Articles",  href: "/admin/blog",     icon: Newspaper },
       { label: "Workshops",   href: "/admin/webinars",    icon: Video        },
       { label: "Tool Cards",  href: "/admin/tools",       icon: Wrench       },

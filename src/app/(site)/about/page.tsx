@@ -6,6 +6,15 @@ import type { Employee } from "@/types/admin/employee";
 import VisionMission from "@/components/site/about/VisionMission";
 import CompanyValues from "@/components/site/about/CompanyValues ";
 import WhyChooseMindlyft from "@/components/site/about/features";
+import WhoWeAre from "@/components/site/about/WhoWeAre";
+import OurPartners from "@/components/site/about/OurPartners";
+import MembersWorkWith from "@/components/site/about/MembersWorkWith";
+import WhatsNew from "@/components/site/about/WhatsNew";
+import DirectorMessage from "@/components/site/about/DirectorMessage";
+import IntroductionVideo from "@/components/site/about/IntroductionVideo";
+
+
+
 type EmployeeEnvelope = {
   isSuccess: boolean;
   data: {
@@ -41,7 +50,14 @@ async function getTeamCategories() {
       grouped.get(key)!.push(emp);
     }
 
-    return Array.from(grouped.entries()).map(([title, employees]) => ({
+    const ORDER = [
+      "founder & co-founder",
+      "advisors",
+      "board of directors",
+      "instructor",
+    ];
+
+    const entries = Array.from(grouped.entries()).map(([title, employees]) => ({
       title,
       icon: categoryIcon(title),
       leaders: employees.map((emp) => ({
@@ -53,6 +69,14 @@ async function getTeamCategories() {
         video:       emp.video,
       })),
     }));
+
+    return entries.sort((a, b) => {
+      const ai = ORDER.indexOf(a.title.toLowerCase());
+      const bi = ORDER.indexOf(b.title.toLowerCase());
+      const an = ai === -1 ? ORDER.length : ai;
+      const bn = bi === -1 ? ORDER.length : bi;
+      return an - bn;
+    });
   } catch {
     return [];
   }
@@ -69,6 +93,22 @@ export default async function About() {
          We combine the latest advances in artificial intelligence with thoughtful design and practical business strategy to help organisations unlock value, accelerate decision-making, and drive innovation. At Mindlyft AI, we believe in pushing the boundaries of what businesses can achieve — not just through software, but through smart, data-driven intelligence that anticipates user needs and delivers measurable impact.
          "
       />
+<VisionMission      bg="bg-white" />
+<CompanyValues      bg="bg-blue-50" />
+<WhoWeAre           bg="bg-violet-50" />
+<OurPartners        bg="bg-white" />
+<MembersWorkWith    bg="bg-blue-50" />
+<WhyChooseMindlyft  bg="bg-violet-50" />
+
+      <DirectorMessage
+        directorName="Mr. Director Name"
+        designation="Director"
+        message={[
+          "Placeholder message from the Director.",
+        ]}
+        imageUrl="/assets/img/about/director.jpg"
+        bg="bg-white"
+      />
 
       <FounderMessage
         founderName="Ms. Pooja Ahire"
@@ -81,11 +121,12 @@ export default async function About() {
           "As the founder, my vision is to make AI accessible, understandable, and impactful for everyone. We are not just building technology — we are building a future where intelligence meets innovation. Together, let's create, learn, and lead in this exciting era of AI."
         ]}
         imageUrl="/assets/img/about/PoojaAhire.jpg"
+        bg="bg-blue-50"
       />
-<VisionMission />
-<CompanyValues />
-<WhyChooseMindlyft />
-      <OurLeaders categories={categories} />
+
+<WhatsNew        bg="bg-violet-50" />
+<IntroductionVideo bg="bg-white" />
+<OurLeaders      bg="bg-white" categories={categories} />
     </main>
   );
 }

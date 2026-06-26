@@ -1,6 +1,3 @@
-const CONTACT_IMAGE =
-  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80";
-
 type ContactHeroProps = {
   title?: string;
   tagline?: string;
@@ -11,29 +8,42 @@ export default function ContactHero({
   tagline = "We'd love to hear from you. Reach out and we'll get back to you shortly.",
 }: ContactHeroProps) {
   return (
-    <div className="relative h-screen overflow-hidden">
-      {/* Background image */}
-      <img
-        src={CONTACT_IMAGE}
-        alt="Contact MindlyftAI"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+    <div className="flex h-screen w-full overflow-hidden">
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-violet-950/70 via-violet-900/30 to-transparent" />
-
-      {/* Centered content */}
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6">
+      {/* Left — content 60% */}
+      <div
+        className="flex w-[60%] flex-col justify-center px-10 lg:px-20"
+        style={{ background: "linear-gradient(135deg, #1e1b4b 0%, #4c1d95 60%, #6d28d9 100%)" }}
+      >
+        <p className="mb-3 text-[11px] font-black uppercase tracking-[5px] text-violet-300">
+          Get In Touch
+        </p>
         <h1
-          className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
-          style={{ color: "#ffffff", textShadow: "0 2px 16px rgba(0,0,0,0.6)" }}
+          className="text-4xl font-black leading-tight md:text-5xl lg:text-6xl"
+          style={{ color: "#ffffff", textShadow: "0 2px 16px rgba(0,0,0,0.4)" }}
         >
           {title}
         </h1>
-        <p className="mt-4 text-white/85 text-base md:text-lg max-w-xl leading-relaxed">
+        <p className="mt-4 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
           {tagline}
         </p>
+        <div className="mt-8 flex gap-2">
+          <span className="h-2 w-8 rounded-full bg-violet-400 opacity-70" />
+          <span className="h-2 w-2 rounded-full bg-violet-400 opacity-40" />
+          <span className="h-2 w-2 rounded-full bg-violet-400 opacity-20" />
+        </div>
       </div>
+
+      {/* Right — portrait image 40% */}
+      <div className="relative h-screen w-[40%] overflow-hidden">
+        <img
+          src="/Contact.jpeg"
+          alt="MindlyftAI Office"
+          className="h-full w-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1e1b4b]/30 to-transparent" />
+      </div>
+
     </div>
   );
 }

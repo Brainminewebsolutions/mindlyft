@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { SectionBadge } from "@/components/ui/SectionBadge";
 import Link from "next/link";
 import Image from "next/image";
 import { Clock, Globe, Monitor, User, ArrowUpRight, Tag } from "lucide-react";
@@ -122,10 +123,7 @@ gsap.set(cards[0], {
       <div className="w-full max-w-3xl mx-auto flex flex-col items-center gap-5 text-center">
 
         {/* Badge */}
-        <span className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 via-violet-500 to-blue-500 text-white text-sm font-semibold px-5 py-2 rounded-full shadow-lg shadow-violet-500/30 ring-1 ring-white/20">
-          <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
-          Powered by Research. Backed by Innovation.
-        </span>
+        <SectionBadge variant="dark">Powered by Research. Backed by Innovation.</SectionBadge>
 
         {/* Heading */}
         <h2 className="text-lg sm:text-5xl font-bold leading-tight tracking-tight text-gray-900">
@@ -146,7 +144,7 @@ gsap.set(cards[0], {
   <div className="flex flex-col items-center shrink-0">
     <div className="flex items-center justify-center w-48 h-40">
       <img
-        src={SITE_CONFIG?.logo ?? "/logo.png"}
+        src={SITE_CONFIG?.logo1 ?? "/logo.png"}
         alt="MindLyft AI"
         className="object-contain w-full h-full"
       />
@@ -421,7 +419,7 @@ gsap.set(cards[0], {
 
   {/* Button Below */}
   <Link
-    href={`/courses/${course.id}`}
+    href={course.courseType === "IIT" ? `/courses/iit/${course.id}` : `/courses/mindlyftai/${course.id}`}
     className="inline-flex w-fit items-center gap-2 px-8 py-3 rounded-full text-sm font-bold tracking-wide text-white transition-all hover:scale-105 hover:shadow-lg"
     style={{
       background: accent,

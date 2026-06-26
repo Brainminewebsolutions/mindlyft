@@ -39,7 +39,7 @@ const ACADEMY_LEFT = [
   { label: "IIT",       href: "/iit"       },
   { label: "Courses",   href: "/courses"   },
   { label: "Workshops", href: "/workshops" },
-  { label: "Webinars",  href: "/webinars"  },
+  { label: "Webinars",  href: "/webinar"  },
 ];
 
 function AcademyDesktopItem({ pathname, scrolled }: { pathname: string; scrolled: boolean }) {
@@ -111,15 +111,6 @@ function DesktopItem({ item, pathname, scrolled }: { item: NavItem; pathname: st
   const ref = useRef<HTMLDivElement>(null);
   const isActive = pathname === item.href || item.children?.some(c => pathname === c.href);
 
-  useEffect(() => {
-    if (!open) return;
-    const h = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener("mousedown", h);
-    return () => document.removeEventListener("mousedown", h);
-  }, [open]);
-
   if (!item.children) {
     return (
       <Link
@@ -137,10 +128,9 @@ function DesktopItem({ item, pathname, scrolled }: { item: NavItem; pathname: st
   }
 
   return (
-    <div ref={ref} className="relative">
-      <button
-        type="button"
-        onClick={() => setOpen(v => !v)}
+    <div ref={ref} className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <Link
+        href={item.href}
         className={cn(
           "flex items-center gap-1.5 px-3 py-2 rounded-lg text-[15px] font-semibold transition-colors",
           open || isActive
@@ -154,25 +144,15 @@ function DesktopItem({ item, pathname, scrolled }: { item: NavItem; pathname: st
           strokeWidth={2.2}
           className={cn("transition-transform duration-200", open && "rotate-180")}
         />
-      </button>
+      </Link>
 
       {/* Dropdown panel */}
       <div className={cn(
-        "absolute top-[calc(100%+10px)] left-0 min-w-[230px] bg-white border border-gray-200 rounded-xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.12)] z-50 transition-all duration-200",
+        "absolute top-[calc(100%+4px)] left-0 min-w-[200px] bg-white border border-gray-200 rounded-xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.12)] z-50 transition-all duration-200",
         open
           ? "opacity-100 visible translate-y-0"
           : "opacity-0 invisible -translate-y-2 pointer-events-none"
       )}>
-        {item.href !== "#" && (
-          <Link
-            href={item.href}
-            onClick={() => setOpen(false)}
-            className="flex items-center justify-between px-4 py-3 text-[13px] font-semibold text-indigo-600 border-b border-gray-100 hover:bg-indigo-50 transition-colors"
-          >
-            View all {item.label}
-            <ArrowRight size={12} className="opacity-60" />
-          </Link>
-        )}
         <div className="p-1.5">
           {item.children.map(child => (
             <Link
@@ -201,7 +181,7 @@ const ACADEMY_MOBILE_ITEMS = [
   { label: "IIT",       href: "/iit"       },
   { label: "Courses",   href: "/courses"   },
   { label: "Workshops", href: "/workshops" },
-  { label: "Webinars",  href: "/webinars"  },
+  { label: "Webinars",  href: "/webinar"  },
 ];
 
 function MobileNav({
@@ -405,7 +385,7 @@ export default function SiteNavbar({ user, height, courses = [] }: Props) {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
               <Image
-                src={SITE_CONFIG.logo}
+                src={SITE_CONFIG.logo1}
                 alt="MindlyftAI"
                 width={44}
                 height={44}
@@ -529,7 +509,7 @@ export default function SiteNavbar({ user, height, courses = [] }: Props) {
         <div className="flex items-center justify-between px-4 h-[88px] border-b border-gray-100 shrink-0">
           <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-2">
             <Image
-              src={SITE_CONFIG.logo}
+              src={SITE_CONFIG.logo1}
               alt="MindlyftAI"
               width={32}
               height={32}

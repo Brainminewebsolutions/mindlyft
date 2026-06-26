@@ -1,5 +1,5 @@
 import { dotnetFetch } from "@/lib/api/dotnet-client";
-import TestimonialSection from "./Review";
+import Testimonials from "./Testimonials";
 
 interface Testimonial {
   id: number;
@@ -37,5 +37,5 @@ async function getTestimonials(): Promise<Testimonial[]> {
 export default async function TestimonialsCard() {
   const testimonials = await getTestimonials();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return <TestimonialSection testimonials={testimonials as any} />;
+  return <Testimonials testimonials={testimonials as any} />;
 }

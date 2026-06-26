@@ -38,9 +38,9 @@ const values = [
   },
 ];
 
-export default function CompanyValues() {
+export default function CompanyValues({ bg = "bg-white" }: { bg?: string }) {
   return (
-    <section className="py-24 px-6 bg-gradient-to-b from-white via-violet-50/50 to-white">
+    <section className={`py-24 px-6 ${bg}`}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-sm font-semibold tracking-[4px] uppercase text-violet-600">

@@ -1,6 +1,7 @@
- "use client";
+"use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { SectionBadge } from "@/components/ui/SectionBadge";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -18,7 +19,7 @@ const CARD_W = 300;
 const CARD_H = 200;
 const AUTO_SPEED = 0.008; // radians per frame
 
-export default function CircularCarousel({ cards: cardsProp }) {
+export default function OurTools({ cards: cardsProp }) {
   const router = useRouter();
   const cards = (cardsProp ?? []).map((c, i) => ({
     ...c,
@@ -104,28 +105,12 @@ export default function CircularCarousel({ cards: cardsProp }) {
         }
       `}</style>
 
-      <div  style={{background: "linear-gradient(135deg, #d5b7fcf5, #a5bee6" }} className="relative flex min-h-[80vh] flex-col items-center justify-center overflow-hidden pt-12 pb-[60px] bg-white">
-        {/* Background blobs — violet/blue theme */}
-        <div
-          className="pointer-events-none absolute rounded-full opacity-30 blur-[100px]"
-          style={{ width: 480, height: 480, top: "-10%", left: "-8%", background: "radial-gradient(circle, #ede9fe, #c4b5fd)" }}
-        />
-        <div
-          className="pointer-events-none absolute rounded-full opacity-25 blur-[100px]"
-          style={{ width: 400, height: 400, top: "10%", right: "-5%", background: "radial-gradient(circle, #dbeafe, #93c5fd)" }}
-        />
-        <div
-          className="pointer-events-none absolute rounded-full opacity-20 blur-[80px]"
-          style={{ width: 300, height: 300, bottom: "0%", left: "20%", background: "radial-gradient(circle, #e0e7ff, #a5b4fc)" }}
-        />
+      <div style={{background: "radial-gradient(ellipse at center, white 30%, #ddd6fe 100%)"}} className="relative flex flex-col items-center justify-center overflow-hidden py-20">
 
         {/* Header */}
-        <div className="relative z-[5] mb-[52px] text-center">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 via-violet-500 to-blue-500 text-white text-sm font-semibold px-5 py-2 rounded-full shadow-lg shadow-violet-500/30 ring-1 ring-white/20">
-            <div className="h-1.5 w-1.5 rounded-full bg-violet-500 animate-[ccPulse_2s_ease-in-out_infinite]" />
-            Our Tools
-          </div>
-          <h2 className="py-5 mb-3 text-[clamp(28px,4vw,48px)] font-extrabold leading-[1.1] tracking-[-0.04em] text-gray-900">
+        <div className="relative z-[5] mb-0 text-center px-6">
+          <SectionBadge variant="dark">Our Tools</SectionBadge>
+          <h2 className="mt-4 mb-3 text-[clamp(28px,4vw,48px)] font-extrabold leading-[1.1] tracking-[-0.04em] text-gray-900">
             Powerful tools to
             <br />
             <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
@@ -139,7 +124,7 @@ export default function CircularCarousel({ cards: cardsProp }) {
 
         {/* Stage */}
         <div
-          className="relative h-[560px] w-[560px] cursor-grab select-none touch-none active:cursor-grabbing"
+          className="relative h-[560px] w-[560px] cursor-grab select-none touch-none active:cursor-grabbing -mt-16"
           ref={containerRef}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
@@ -227,7 +212,7 @@ export default function CircularCarousel({ cards: cardsProp }) {
         </div>
 
         {/* Dot indicators */}
-        <div className="relative z-[5] mt-10 flex gap-2">
+        <div className="relative z-[5] mt-5 flex gap-2">
           {cards.map((_, i) => (
             <button
               key={i}

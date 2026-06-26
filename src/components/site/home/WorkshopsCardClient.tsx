@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { SectionBadge } from "@/components/ui/SectionBadge";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Calendar, Clock } from "lucide-react";
 import { toUploadUrl } from "@/lib/api/image-url";
@@ -111,9 +112,7 @@ export default function WorkshopsCardClient({ webinars }: { webinars: Webinar[] 
       <div className="max-w-6xl mx-auto px-6 mb-10">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <span className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 via-violet-500 to-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-full shadow-lg shadow-violet-500/30 ring-1 ring-white/20">
-              Workshops &amp; Webinars
-            </span>
+            <SectionBadge variant="dark">Workshops &amp; Webinars</SectionBadge>
             <h2 className="py-4 text-4xl md:text-5xl font-bold text-gray-900 max-w-xl">
               Hands-on sessions to{" "}
               <span className="text-violet-600">accelerate your skills.</span>

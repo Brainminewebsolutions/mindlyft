@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { SectionBadge } from "@/components/ui/SectionBadge";
 import Link from "next/link";
 import { Clock, ArrowRight, Globe, User, CheckCircle } from "lucide-react";
 import { getGsap, getScrollTrigger, onGsapReady } from "@/lib/gsap-config";
@@ -134,9 +135,7 @@ export default function CoursesCardClient({ courses }: { courses: Course[] }) {
     <section ref={containerRef} className="relative overflow-x-hidden bg-white">
       {/* Section Header */}
     <div className="space-y-6 px-6 pt-10 pb-20 text-center">
-        <span className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 via-violet-500 to-blue-500 text-white text-lg font-semibold px-6 py-2 rounded-full shadow-lg shadow-violet-500/30 ring-1 ring-white/20">
-          Our Courses
-        </span>
+        <SectionBadge variant="dark">Our Courses</SectionBadge>
         <h2 className="text-4xl font-bold text-gray-900 md:text-5xl">
           Expert-led courses designed to take you{" "}
           <span className="text-violet-600">from fundamentals to mastery.</span>
@@ -226,7 +225,7 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
       onMouseLeave={handleMouseLeave}
     >
       {/* Image / gradient */}
-      <div className="relative h-[200px] w-full overflow-hidden">
+      <div className="relative h-[240px] w-full overflow-hidden">
         {course.image ? (
           <img src={course.image} alt={course.name} className="block h-full w-full object-cover" />
         ) : (
@@ -297,7 +296,7 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
 
         {/* Button */}
         <Link
-          href={`/courses/${course.id}`}
+          href={course.courseType === "IIT" ? `/courses/iit/${course.id}` : `/courses/mindlyftai/${course.id}`}
           onClick={(e) => e.stopPropagation()}
           className={`${textClass} mt-auto inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[linear-gradient(135deg,rgba(var(--a),1)_0%,rgba(var(--a),0.75)_100%)] py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-95`}
         >

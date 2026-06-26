@@ -40,9 +40,7 @@ const HeaderNav: FC<Props> = ({ open, onClose }) => {
 
         {/* 1 ── HOME */}
         <li>
-          <Link className="active" href="/" onClick={onClose}>
-            Home
-          </Link>
+          <Link className="active" href="/" onClick={onClose}>Home</Link>
         </li>
 
         {/* 2 ── ACADEMY */}
@@ -51,40 +49,46 @@ const HeaderNav: FC<Props> = ({ open, onClose }) => {
             Academy
             <i className="ri-arrow-down-s-fill" />
           </Link>
-
           <ul className={`menu-subs menu-column-1${openSub === "Academy" ? " active" : ""}`}>
-            <li className="menu-item-has-children">
-              <Link href="/courses" onClick={onClose}>
-                Courses
-                <i className="ri-arrow-right-s-fill" />
-              </Link>
-              <ul className="menu-subs menu-column-1">
-                <li><Link href="/courses/data-science-career-accelerator" onClick={onClose}>Data Science Career Accelerator</Link></li>
-                <li><Link href="/courses/ai-foundations" onClick={onClose}>AI Foundations: From Data to Decisions</Link></li>
-                <li><Link href="/courses/business-intelligence" onClick={onClose}>Business Intelligence &amp; Data Analysis</Link></li>
-                <li><Link href="/courses/full-stack-ai" onClick={onClose}>Full-Stack AI</Link></li>
-                <li><Link href="/courses/ai-for-professionals" onClick={onClose}>AI for Professionals</Link></li>
-              </ul>
-            </li>
+            <li><Link href="/courses/mindlyftai" onClick={onClose}>Courses</Link></li>
+            <li><Link href="/courses/iit" onClick={onClose}>AI & Cyber Security</Link></li>
+            <li><Link href="/webinar" onClick={onClose}>Webinars</Link></li>
           </ul>
         </li>
 
-        {/* 4 ── ABOUT */}
+        {/* 3 ── RESOURCE */}
+        <li className="menu-item-has-children">
+          <Link href="#" onClick={(e) => { e.preventDefault(); toggleSub("Resource"); }}>
+            Resource
+            <i className="ri-arrow-down-s-fill" />
+          </Link>
+          <ul className={`menu-subs menu-column-1${openSub === "Resource" ? " active" : ""}`}>
+            <li><Link href="/blogs" onClick={onClose}>Blogs</Link></li>
+            <li><Link href="/webinar" onClick={onClose}>Webinars</Link></li>
+          </ul>
+        </li>
+
+        {/* 4 ── BLOG */}
+        <li>
+          <Link href="/blogs" onClick={onClose}>Blog</Link>
+        </li>
+
+        {/* 5 ── OUR JOURNEY */}
+        <li>
+          <Link href="/about" onClick={onClose}>Our Journey</Link>
+        </li>
+
+        {/* 6 ── ABOUT */}
         <li>
           <Link href="/about" onClick={onClose}>About</Link>
         </li>
 
-        {/* 5 ── BLOGS */}
-        <li>
-          <Link href="/blogs" onClick={onClose}>Blogs</Link>
-        </li>
-
-        {/* 6 ── CONTACT */}
+        {/* 7 ── CONTACT */}
         <li>
           <Link href="/contact" onClick={onClose}>Contact</Link>
         </li>
 
-        {/* 7 ── LOGIN (mobile only) */}
+        {/* LOGIN (mobile only) */}
         <li className="lg:hidden">
           <Link href="/login" prefetch={false} onClick={onClose}>Login</Link>
         </li>

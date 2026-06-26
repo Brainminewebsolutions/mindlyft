@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback, useState } from "react";
+import { SectionBadge } from "@/components/ui/SectionBadge";
 import type { Partner } from "@/types/admin/partner";
 
 // ─── Tooltip ─────────────────────────────────────────────────────────────────
@@ -41,9 +42,9 @@ function PartnerTooltip({ partner, anchorX, anchorY }: TooltipProps) {
           </div>
           <div>
             <p className="text-sm font-semibold text-neutral-900 leading-tight">{partner.name}</p>
-            <span className="inline-flex items-center gap-1 mt-0.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              <span className="text-[10px] font-medium text-emerald-600 uppercase tracking-wide">
+            <span className="inline-flex items-start gap-1 mt-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 mt-[3px]" />
+              <span className="text-[10px] font-medium text-emerald-600 uppercase tracking-wide leading-tight">
                 {partner.sector}
               </span>
             </span>
@@ -52,12 +53,7 @@ function PartnerTooltip({ partner, anchorX, anchorY }: TooltipProps) {
 
         <p className="text-xs text-neutral-500 leading-relaxed">{partner.overview}</p>
 
-        <div className="mt-3 pt-3 border-t border-neutral-100 flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
-          <span className="text-[10px] font-medium text-neutral-400 uppercase tracking-wider">
-            Recruiting Partner
-          </span>
-        </div>
+         
       </div>
       <div className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-white border-r border-b border-neutral-200/80 rotate-45" />
     </div>
@@ -69,7 +65,7 @@ function PartnerTooltip({ partner, anchorX, anchorY }: TooltipProps) {
 function PartnerLogo({ partner }: { partner: Partner }) {
   return (
     <div className="relative flex flex-col items-center justify-center gap-2 select-none">
-      <div className="w-20 h-20 rounded-2xl bg-neutral-100 group-hover:bg-white group-hover:shadow-md transition-all duration-300 flex items-center justify-center overflow-hidden border border-neutral-200/60">
+      <div className="w-20 h-20 rounded-2xl bg-white group-hover:bg-white group-hover:shadow-md transition-all duration-300 flex items-center justify-center overflow-hidden border border-neutral-200/60">
         {partner.image
           ? <img src={partner.image} alt={partner.name} className="h-full w-full object-contain p-2" />
           : <span className="text-lg font-bold text-neutral-600 group-hover:text-violet-600 transition-colors duration-300">
@@ -137,15 +133,8 @@ const [marqueeHovered, setMarqueeHovered] = useState(false);
 
         {/* Badge + divider */}
         <div className="flex flex-col items-center justify-center mb-14 gap-3">
-          <span className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 via-violet-500 to-blue-500 text-white text-sm font-semibold px-5 py-2 rounded-full shadow-lg shadow-violet-500/30 ring-1 ring-white/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-white/80 flex-shrink-0 animate-pulse" />
-            Our Recruiting Partners
-          </span>
-          <div className="flex items-center gap-3 mt-1">
-            <span className="block h-px w-16 bg-gradient-to-r from-transparent to-violet-300" />
-            <span className="w-1.5 h-1.5 rounded-full bg-violet-400 opacity-60" />
-            <span className="block h-px w-16 bg-gradient-to-l from-transparent to-violet-300" />
-          </div>
+          <SectionBadge variant="dark">Our Recruiting Partners</SectionBadge>
+          
         </div>
 
         {/* Marquee */}
@@ -155,7 +144,10 @@ const [marqueeHovered, setMarqueeHovered] = useState(false);
 
   <div
     className="flex w-max gap-0 animate-marquee"
-    style={{ animationPlayState: marqueeHovered ? "paused" : "running" }}
+    style={{
+      animationPlayState: marqueeHovered ? "paused" : "running",
+      animationDuration: `${partners.length * 3}s`,
+    }}
     onMouseEnter={() => setMarqueeHovered(true)}
     onMouseLeave={() => setMarqueeHovered(false)}
   >

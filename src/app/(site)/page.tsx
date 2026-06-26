@@ -11,14 +11,14 @@ import VideoHeroSection from '../../components/site/home/VideoHeroSection'
 import ToolSection from '../../components/site/home/ToolSection'
 import IITExpertiseSection from '@/components/site/home/IITExpertiseSection'
 import CoursesCard from '../../components/site/home/CoursesCard'
-import StickyVideoScrollSection from '@/components/site/home/StickyVideoScrollSection'
-import NEXTGENAI from '../../components/site/home/NEXTGENAI'
-import AboutUs3 from '../../components/site/home/AboutUs3'
+import WhatWeDo from '@/components/site/home/WhatWeDo'
+import NextGenAI from '../../components/site/home/NextGenAI'
+import Innovation from '../../components/site/home/Innovation'
  import OurClients from "@/components/site/home/OurClients";
  import GsapInit from "@/components/GsapInit";
 import FeaturedSection from "@/components/site/home/FeaturedSection";
 import WhyChooseUs from "@/components/site/home/WhyChooseUs";
-import CallToAction from "@/components/site/home/CALLTOACTION";
+import AiItSolutions from "@/components/site/home/AiItSolutions";
 
 
 
@@ -46,7 +46,7 @@ export default function HomePage() {
               <ToolSection />
 
              
-              <StickyVideoScrollSection />
+              <WhatWeDo />
 
               <OurClients />
  
@@ -57,11 +57,11 @@ export default function HomePage() {
 
               <TestimonialsCard />
 
-              <CallToAction />
+              <AiItSolutions />
 
-              <AboutUs3 />
+              <Innovation />
 
-               <NEXTGENAI />
+               <NextGenAI />
 
             </div>
           </div>

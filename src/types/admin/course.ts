@@ -1,22 +1,32 @@
 export type CourseMode = "Online" | "Offline";
 export type CourseType = "Mindlyftai" | "IIT";
 
-export type Course = {
+export type InstructorDetail = {
   id:          string;
   name:        string;
-  duration:    number;          // hours
-  mode:        CourseMode;
-  image:       string | null;
+  avatar:      string | null;
+  designation: string | null;
   description: string | null;
-  price:       number;
-  instructor:  string;
-  language:    string;
-  highlights:  string[] | null;
-  status:      "ACTIVE" | "INACTIVE" | "SUSPENDED";
-  discount:    number | null;
-  courseType:  CourseType;
-  category:     string | null;
-  displayOrder: number;
-  createdAt:    string;          // ISO date string
-  updatedAt:   string;          // ISO date string
+};
+
+export type Course = {
+  id:               string;
+  name:             string;
+  duration:         number;
+  mode:             CourseMode;
+  image:            string | null;
+  description:      string | null;
+  price:            number;
+  instructor:       string | null;
+  instructorId:     number | null;
+  language:         string;
+  highlights:       string[] | null;
+  status:           "ACTIVE" | "INACTIVE" | "SUSPENDED";
+  discount:         number | null;
+  courseType:       CourseType;
+  category:         string | null;
+  displayOrder:     number;
+  createdAt:        string;
+  updatedAt:        string;
+  instructorDetail: InstructorDetail | null;
 };

@@ -16,9 +16,10 @@ export default function FounderMessage({
   message,
   imageUrl,
   signature,
-}: FounderMessageProps) {
+  bg = "bg-blue-50",
+}: FounderMessageProps & { bg?: string }) {
   return (
-    <section className="bg-blue-50 px-6 py-20">
+    <section className={`${bg} px-6 py-20`}>
       <div className="max-w-6xl mx-auto">
 
         {/* Section Label */}

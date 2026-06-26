@@ -1,39 +1,48 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react"; // useState kept for loaded state
+import { useEffect, useRef, useState } from "react";
 import { Mouse } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const PARTS = [
-  "Empowering Students, Professionals & Businesses",
-  "with Industry-Ready AI Skills,",
-  "Intelligent Solutions,",
-  "and Future-Focused Innovation.",
+  "Elevating Learning",
+  "Engineering Intelligence",
+  "Building the Future",
 ];
 
-function TypewriterParts() {
-  const [partIdx, setPartIdx] = useState(0);
-  const [charIdx, setCharIdx] = useState(0);
+function AnimatedParts() {
+  const [idx,     setIdx]     = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const current = PARTS[partIdx];
-    if (charIdx < current.length) {
-      const id = setTimeout(() => setCharIdx((c) => c + 1), 200);
-      return () => clearTimeout(id);
-    }
-    // Part done — pause then clear and move to next
-    const id = setTimeout(() => {
-      setPartIdx((p) => (p + 1) % PARTS.length);
-      setCharIdx(0);
-    }, 1400);
-    return () => clearTimeout(id);
-  }, [charIdx, partIdx]);
+    const pause = setTimeout(() => setVisible(false), 2600);
+    return () => clearTimeout(pause);
+  }, [idx]);
+
+  useEffect(() => {
+    if (visible) return;
+    const swap = setTimeout(() => {
+      setIdx((i) => (i + 1) % PARTS.length);
+      setVisible(true);
+    }, 400);
+    return () => clearTimeout(swap);
+  }, [visible]);
 
   return (
-    <span className="block leading-[1.8]" style={{ fontSize: "clamp(22px, 3.5vw, 48px)" }}>
-      <span className="text-white">
-        {PARTS[partIdx].slice(0, charIdx)}
-        <span className="inline-block w-[2px] h-[0.9em] bg-violet-400 ml-0.5 align-middle animate-pulse" />
+    <span
+      className="block leading-tight"
+      style={{ fontSize: "clamp(28px, 4.5vw, 60px)", minHeight: "1.2em" }}
+    >
+      <span
+        className="bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent"
+        style={{
+          display:    "inline-block",
+          transition: "opacity 0.4s ease, transform 0.4s ease",
+          opacity:    visible ? 1 : 0,
+          transform:  visible ? "translateY(0)" : "translateY(-12px)",
+        }}
+      >
+        {PARTS[idx]}
       </span>
     </span>
   );
@@ -92,7 +101,7 @@ export default function VideoHeroSection() {
         )}
       >
         <h1 className="font-extrabold tracking-[-0.02em] text-white mb-[22px] w-full">
-          <TypewriterParts />
+          <AnimatedParts />
         </h1>
       </div>
 
@@ -106,7 +115,7 @@ export default function VideoHeroSection() {
       >
         <div className="flex items-center gap-2.5">
           <span className="h-px w-8 bg-gradient-to-r from-transparent to-violet-400/70" />
-          <span className="font-bold tracking-[0.18em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500 text-[24px] sm:text-[24px]">
+          <span className="font-bold tracking-[0.18em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-emerald-300 text-[24px] sm:text-[24px]">
   Three Pillars, One Vision
 </span>
           <span className="h-px w-8 bg-gradient-to-l from-transparent to-blue-400/70" />

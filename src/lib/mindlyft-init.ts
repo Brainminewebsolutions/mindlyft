@@ -472,10 +472,14 @@ export function initMindlyft() {
     const cursorinner = document.querySelector<HTMLElement>('.cursor-inner');
 
     if (cursor && cursorinner) {
+        let cursorVisible = false;
         document.addEventListener('mousemove', function (e) {
+            if (!cursorVisible) {
+                cursorVisible = true;
+                cursor.style.opacity = '1';
+                cursorinner.style.opacity = '0.9';
+            }
             cursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`;
-        });
-        document.addEventListener('mousemove', function (e) {
             cursorinner.style.left = e.clientX + 'px';
             cursorinner.style.top = e.clientY + 'px';
         });

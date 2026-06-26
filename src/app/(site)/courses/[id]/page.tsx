@@ -2,13 +2,16 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   Clock, Wifi, MapPin, User, Globe, ArrowLeft,
-  ShoppingBag, CheckCircle2, ChevronDown, PlayCircle, FileText, BookOpen,
+  ShoppingBag, BookOpen,
 } from "lucide-react";
 import { dotnetFetch } from "@/lib/api/dotnet-client";
 import { toUploadUrl } from "@/lib/api/image-url";
 import type { Course } from "@/types/admin/course";
 import type { CourseChapterItem } from "@/types/student/course";
-import IITCourseDetail from "@/components/site/courses/IITCourseDetail";
+import IITCourseDetail from "@/components/site/courses/iit/IITCourseDetail";
+import Syllabus from "@/components/site/courses/Syllabus";
+import Skills from "@/components/site/courses/Skills";
+import InstructorProfile from "@/components/site/Instructor/InstructorProfile";
 
 interface CourseEnvelope {
   isSuccess: boolean;
@@ -44,6 +47,9 @@ async function getChapters(id: string): Promise<CourseChapterItem[]> {
   }
 }
 
+const COLOR    = "#6c63ff";
+const BG_COLOR = "#f5f3ff";
+
 const sectionTitle =
   "text-[1.1rem] font-extrabold text-[#1a1046] tracking-[0.3px] mb-[18px] pb-3 border-b-2 border-[#f0eeff] [font-family:var(--secondaryFont,sans-serif)]";
 
@@ -57,6 +63,8 @@ export default async function CourseDetailPage({
   const [course, rawChapters] = await Promise.all([getCourse(id), getChapters(id)]);
 
   if (!course) notFound();
+
+  const instructor = course.instructorDetail;
 
   // Sort chapters once — reused by both layouts
   const chapters = rawChapters
@@ -92,15 +100,6 @@ export default async function CourseDetailPage({
 
         <div className="absolute inset-0 bg-gradient-to-t from-violet-950/40 via-transparent to-transparent" />
 
-        {/* Back link */}
-        <Link
-          href="/courses"
-          className="absolute top-24 left-8 inline-flex items-center gap-1.5 text-white/70 hover:text-white text-sm font-medium transition-colors z-10"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Courses
-        </Link>
-
         {/* Title — bottom */}
         <div className="absolute bottom-0 left-0 right-0 z-10">
           <div className="px-8 pb-4 pt-6">
@@ -132,18 +131,7 @@ export default async function CourseDetailPage({
           {/* What You'll Learn */}
           {highlights.length > 0 && (
             <div className="mb-10">
-              <p className={sectionTitle}>What You&apos;ll Learn</p>
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3">
-                {highlights.map((h, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-2.5 rounded-xl border border-[#6c63ff]/15 bg-[#f5f3ff] px-4 py-3.5 transition-shadow duration-200 hover:shadow-[0_4px_16px_rgba(108,99,255,0.10)]"
-                  >
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-[#6c63ff]" />
-                    <span className="text-[13.5px] font-medium text-[#333]">{h}</span>
-                  </div>
-                ))}
-              </div>
+              <Skills highlights={highlights} color={COLOR} bgColor={BG_COLOR} />
             </div>
           )}
 
@@ -236,81 +224,33 @@ export default async function CourseDetailPage({
 
       </div>
 
-      {/* ── Syllabus — full-width below the grid ── */}
+      {/* ── Syllabus ── */}
       {chapters.length > 0 && (
-        <div className="mx-auto max-w-[1100px] px-[6vw] pb-[100px]">
-
-          {/* Section header */}
-          <div className="mb-6 flex items-center justify-between border-b-2 border-[#f0eeff] pb-3.5">
-            <p className={`${sectionTitle} m-0 border-none p-0`}>
-              Course Syllabus
-            </p>
-            <span className="rounded-[20px] bg-[#f0eeff] px-2.5 py-1 text-xs font-semibold text-[#6c63ff]">
-              {chapters.length} chapter{chapters.length !== 1 ? "s" : ""} &middot; {totalLessons} lesson{totalLessons !== 1 ? "s" : ""}
-            </span>
-          </div>
-
-          {/* Chapter accordion — two columns on wide screens */}
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(480px,1fr))] gap-3">
-            {chapters.map((ch, chIdx) => (
-              <details
-                key={ch.id}
-                open={chIdx === 0}
-                className="group overflow-hidden rounded-xl border border-[#6c63ff]/15 bg-white"
-              >
-
-                <summary className="flex cursor-pointer select-none list-none items-center gap-3 bg-[#faf9ff] px-4 py-3.5 transition-colors duration-150 hover:bg-[#f0eeff] group-open:border-b group-open:border-[#6c63ff]/10 group-open:bg-[#f0eeff] [&::-webkit-details-marker]:hidden">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#6c63ff] text-[11px] font-bold text-white">
-                    {chIdx + 1}
-                  </div>
-
-                  <div className="min-w-0 flex-1">
-                    <p className="m-0 truncate text-[13.5px] font-bold text-[#1a1046]">
-                      {ch.title}
-                    </p>
-                    {ch.description && (
-                      <p className="m-0 mt-0.5 truncate text-[11.5px] text-[#888]">
-                        {ch.description}
-                      </p>
-                    )}
-                  </div>
-
-                  <span className="shrink-0 text-[11px] font-semibold text-[#6c63ff]">
-                    {ch.contents.length} lesson{ch.contents.length !== 1 ? "s" : ""}
-                  </span>
-
-                  <ChevronDown className="h-4 w-4 shrink-0 text-[#6c63ff] transition-transform duration-200 ease-out group-open:rotate-180" />
-                </summary>
-
-                {ch.contents.length > 0 ? (
-                  <ul className="m-0 list-none p-0">
-                    {ch.contents.map((lesson, lIdx) => (
-                      <li
-                        key={lesson.id}
-                        className="flex items-center gap-2.5 border-b border-[#6c63ff]/5 py-2.5 pl-11 pr-4 text-[13px] text-[#444] last:border-b-0"
-                      >
-                        {lesson.videoUrl
-                          ? <PlayCircle className="h-[13px] w-[13px] shrink-0 text-[#6c63ff]" />
-                          : <FileText   className="h-[13px] w-[13px] shrink-0 text-[#aaa]" />}
-                        <span className="min-w-[18px] shrink-0 text-[11px] font-semibold text-[#777]">
-                          {lIdx + 1}.
-                        </span>
-                        <span className="flex-1 text-[13px] text-[#333]">{lesson.title}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="m-0 px-4 py-3 text-[12.5px] text-[#aaa]">
-                    No lessons yet
-                  </p>
-                )}
-
-              </details>
-            ))}
-          </div>
-
+        <div className="mx-auto max-w-[1100px] px-[6vw] pb-10">
+          <Syllabus chapters={chapters} totalLessons={totalLessons} color={COLOR} bgColor={BG_COLOR} />
         </div>
       )}
+
+      {/* ── Instructor ── */}
+      {instructor && (
+        <div className="mx-auto max-w-[1100px] px-[6vw] pb-[100px]">
+          <div className="mb-6 border-b-2 pb-3.5" style={{ borderColor: `${COLOR}22` }}>
+            <p className={`${sectionTitle} m-0 border-none p-0`}>Meet Your Instructor</p>
+          </div>
+          <InstructorProfile instructor={instructor} color={COLOR} bgColor="#ffffff" />
+        </div>
+      )}
+
+      {/* ── Back button ── */}
+      <div className="mx-auto max-w-[1100px] px-[6vw] pb-16 pt-4">
+        <Link
+          href="/courses"
+          className="inline-flex items-center gap-2 rounded-xl border border-[#6c63ff]/20 bg-white px-5 py-2.5 text-sm font-semibold text-[#6c63ff] shadow-sm hover:bg-[#f0eeff] transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Courses
+        </Link>
+      </div>
 
     </div>
   );

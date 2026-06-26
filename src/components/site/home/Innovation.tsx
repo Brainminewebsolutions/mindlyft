@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { SectionBadge } from "@/components/ui/SectionBadge";
 
-export default function AboutUs3() {
+export default function Innovation() {
   return (
     <>
       {/* About Us Section Start */}
@@ -31,9 +32,7 @@ export default function AboutUs3() {
           />
 
           {/* Subtitle */}
-          <span className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-blue-500 text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">
-            Innovation
-          </span>
+          <SectionBadge variant="dark">Innovation</SectionBadge>
 
           {/* Title */}
           <h2 className="section-title style-four font-medium !text-white/75 2xl:pr-6">

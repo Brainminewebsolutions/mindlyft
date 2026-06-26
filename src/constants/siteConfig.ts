@@ -2,10 +2,15 @@
 
 export  const SITE_CONFIG = {
   // Brand
-  logo: "/mindlyftai_logo.png",
+  logo1: "/mindlyftai_logo.png",
+  logo2: "/MINDLYF_LOGO_new.png",
+  logo3: "/mindlyftai-logo1.png",
+  iitLogo: "/iit_kanpur_logo.png",
+  c3iHubLogo: "/C3ihub.jpeg",
 
   // Institute Info
   name: "MindLyft AI",
+  C3ihub: "C3iHub IIT Kanpur",
   tagline: "Shaping Bright Futures Since 2022 ",
   established: "2022 ",
 

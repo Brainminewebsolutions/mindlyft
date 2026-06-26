@@ -1,5 +1,5 @@
 import { dotnetFetch } from "@/lib/api/dotnet-client";
-import Circularcarousel from "@/components/site/home/Circularcarousel";
+import OurTools from "@/components/site/home/OurTools";
 
 type ToolApiItem = {
   id:           number;
@@ -45,5 +45,5 @@ async function getActiveTools(): Promise<CarouselCard[]> {
 
 export default async function ToolSection() {
   const cards = await getActiveTools();
-  return <Circularcarousel cards={cards} />;
+  return <OurTools cards={cards} />;
 }

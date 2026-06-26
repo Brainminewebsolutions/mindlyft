@@ -1,6 +1,7 @@
  "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, OrbitControls } from "@react-three/drei";
 import { motion } from "framer-motion";
@@ -25,7 +26,7 @@ function Sphere() {
   );
 }
 
-export default function Hero() {
+export default function NextGenAI() {
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden bg-white">
       {/* ── LEFT: Text content ── */}
@@ -50,13 +51,15 @@ export default function Hero() {
           animations.
         </motion.p>
 
-        <motion.button
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
-          className="cursor-pointer rounded-full border-none bg-violet-500 px-[34px] py-3.5 text-base font-bold text-white shadow-[0_4px_20px_rgba(139,92,246,0.35)]"
-        >
-          Get Started
-        </motion.button>
+        <Link href="/about">
+          <motion.button
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            className="cursor-pointer rounded-full border-none bg-violet-500 px-[34px] py-3.5 text-base font-bold text-white shadow-[0_4px_20px_rgba(139,92,246,0.35)]"
+          >
+            Get Started
+          </motion.button>
+        </Link>
       </div>
 
       {/* ── RIGHT: 3D Canvas ── */}

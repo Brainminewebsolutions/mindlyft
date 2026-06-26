@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { SectionBadge } from "@/components/ui/SectionBadge";
 import { ArrowRight, GraduationCap, BookOpen, Repeat2, FolderKanban, Briefcase, Mic2, TextAlignCenter } from "lucide-react";
 
 const reasons = [
@@ -75,12 +76,8 @@ export default function WhyChooseUs() {
           <div className="flex flex-wrap items-center">
             <div className="w-full lg:w-1/2 xl:w-5/12">
               <div className="wh-content md:mb-[30px]">
-                <span
-                  className="section-subtitle style-two fs-13 font-medium ls-1 inline-block bg-gradient-to-r from-violet-600 to-blue-500 text-white round-oval mb-12"
-                  data-cue="slideInUp">
-                  WHY CHOOSE MINDLYFTAI
-                </span>
-                <h2
+                <SectionBadge variant="dark">Why Choose Mindlyft AI</SectionBadge>
+<h2
                   className="section-title style-one font-secondary font-medium text-white mb-15"
                   data-cue="slideInUp"
                   data-delay="400">

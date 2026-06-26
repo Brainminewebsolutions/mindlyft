@@ -1,4 +1,4 @@
-export default function VisionMission() {
+export default function VisionMission({ bg = "bg-white" }: { bg?: string }) {
     const stats = [
   {
     value: "100+",
@@ -15,7 +15,7 @@ export default function VisionMission() {
 ];
 
   return (
-    <section className="bg-gradient-to-b from-white to-violet-50 py-20 px-6">
+    <section className={`${bg} py-20 px-6`}>
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-14">
           <span className="text-xs font-bold uppercase tracking-[4px] text-violet-500">

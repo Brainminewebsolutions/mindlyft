@@ -33,9 +33,9 @@ const features = [
   },
 ];
 
-export default function WhyChooseMindlyft() {
+export default function WhyChooseMindlyft({ bg = "bg-white" }: { bg?: string }) {
   return (
-    <section className="py-18 px-6 bg-white">
+    <section className={`py-18 px-6 ${bg}`}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center max-w-4xl mx-auto mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-violet-600">
@@ -100,33 +100,7 @@ export default function WhyChooseMindlyft() {
           })}
         </div>
       </div>
-      <div className="max-w-7xl mx-auto py-24">
-        <div className="text-center max-w-4xl mx-auto mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-violet-600">
-           Watch a Short Introduction Video About Our Company.
-          </h2>
-
-          <p className="mt-6 text-lg text-gray-600 leading-8">
-           Discover who we are, what we do, and how we create value
-for our customers.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <video
-  autoPlay
-  muted
-  loop
-  playsInline
-  className="absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-[550ms] ease-in-out"
->
-  <source
-    src="../videos/Fir2.mp4"
-    type="video/mp4"
-  />
-</video>
-        </div>
-      </div>
+      
     </section>
     
   );

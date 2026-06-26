@@ -103,11 +103,11 @@ function LeaderCard({ leader }: { leader: Leader }) {
   );
 }
 
-export default function OurLeaders({ categories }: OurLeadersProps) {
+export default function OurLeaders({ categories, bg = "bg-white" }: OurLeadersProps & { bg?: string }) {
   if (categories.length === 0) return null;
 
   return (
-    <section className="bg-transparent px-6 py-20">
+    <section className={`${bg} px-6 py-20`}>
       <div className="max-w-6xl mx-auto space-y-20">
 
         {/* Heading */}

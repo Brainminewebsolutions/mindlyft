@@ -1,18 +1,15 @@
 import {ArrowUpRight, Lock} from "lucide-react";
 import Link from "next/link";
+import { SectionBadge } from "@/components/ui/SectionBadge";
 
-export default function CallToAction(){
+export default function AiItSolutions(){
     return(
          <div className="cta-area style-two bg-f relative z-[1] ptb-130 round-20">
                 <div className="container style-one">
                   <div className="flex flex-wrap items-center">
                     <div className="w-full md:w-1/2 2xl:w-5/12 2xl:pr-12 md:mb-[30px]">
-                      <span
-                        className="section-subtitle style-two fs-13 font-medium ls-1 inline-block bg-gradient-to-r from-violet-600 to-blue-500 text-white round-oval mb-15"
-                        data-cue="slideInUp">
-                         AI &amp; IT Solutions
-                      </span>
-                      <h2
+                      <SectionBadge variant="dark">AI &amp; IT Solutions</SectionBadge>
+<h2
                         className="section-title style-one text-title font-medium mb-0"
                         data-cue="slideInUp"
                         data-delay="300">

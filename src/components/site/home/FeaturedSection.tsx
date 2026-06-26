@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
-function CyclingLine({ lines, paused }: { lines: [string, string, string]; paused: boolean }) {
+function CyclingLine({ lines, paused, textSize = "text-[11px] sm:text-xs" }: { lines: [string, string, string]; paused: boolean; textSize?: string }) {
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function CyclingLine({ lines, paused }: { lines: [string, string, string]; pause
       <AnimatePresence mode="wait">
         <motion.p
           key={idx}
-          className="text-[11px] sm:text-xs font-semibold text-slate-600 leading-snug absolute"
+          className={`${textSize} font-semibold text-slate-600 leading-snug absolute`}
           initial={{ opacity: 0, x: -18 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 18 }}
@@ -50,7 +50,7 @@ interface CardItem {
 
 const items: CardItem[] = [
   {
-    image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&q=90",
+    image: "./AI_IT_Solution.jpeg",
     name: "AI & IT Solutions",
     lines: [
       "Building Intelligent Digital Solutions",
@@ -181,24 +181,25 @@ function Card({
       <div className="relative flex flex-col justify-between flex-1 min-w-0 py-3.5 pr-3.5 pl-2.5">
         <div className={`absolute -bottom-5 -right-5 rounded-full ${item.orbColor} opacity-20 blur-2xl`} />
 
-        <div>
-          <motion.div
-            className={`mb-2 rounded-full ${item.accent} ${isCenter ? "h-[4px] w-8" : "h-[3px] w-6"}`}
-            initial={{ scaleX: 0, originX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-          />
+        <div className="flex flex-col justify-between h-full">
+          <div>
+            <motion.div
+              className={`mb-2 rounded-full ${item.accent} ${isCenter ? "h-[4px] w-8" : "h-[3px] w-6"}`}
+              initial={{ scaleX: 0, originX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+            />
+            <h3 className={`font-extrabold text-gray-900 truncate ${isCenter ? "text-lg" : "text-sm"}`}>
+              {item.name}
+            </h3>
+          </div>
 
-          <h3 className={`font-extrabold text-gray-900 truncate ${isCenter ? "text-lg" : "text-sm"}`}>
-            {item.name}
-          </h3>
- <div className="absolute bottom-2 left-2">
-          <span className={`px-4 py-1 rounded-full text-[11px] font-bold uppercase ${item.tagBg} ${item.tagText}`}>
+          <CyclingLine lines={item.lines} paused={hovered} textSize={isCenter ? "text-sm" : "text-[11px] sm:text-xs"} />
+
+          <span className={`inline-flex items-center gap-1.5 self-start px-3 py-0.5 rounded-full text-[10px] font-bold uppercase ${item.tagBg} ${item.tagText}`}>
+            <span className="h-1.5 w-1.5 rounded-full bg-current opacity-70" />
             {item.tag}
           </span>
-        </div>
-
-          <CyclingLine lines={item.lines} paused={hovered} />
         </div>
 
         {/* FOOTER */}
@@ -227,7 +228,7 @@ function Card({
       </div>
 
       <motion.div
-        className={`absolute bottom-0 left-0 w-full bg-gradient-to-r ${item.stripFrom} to-transparent rounded-b-2xl ${
+        className={`absolute top-0 left-0 w-full bg-gradient-to-r ${item.stripFrom} to-transparent rounded-t-2xl ${
           isCenter ? "h-[4px]" : "h-[3px]"
         }`}
         initial={{ scaleX: 0 }}

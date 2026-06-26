@@ -23,7 +23,7 @@ function IITCourseCard({ course, index }: { course: Course; index: number }) {
 
   return (
     <Link
-      href={`/courses/${course.id}`}
+      href={`/courses/iit/${course.id}`}
       className="group flex flex-col rounded-2xl border border-violet-100 bg-white overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
     >
       <div className="relative h-48 overflow-hidden shrink-0">
@@ -103,7 +103,7 @@ function IITCourseCard({ course, index }: { course: Course; index: number }) {
   );
 }
 
-export default function IITCoursesGrid({ courses }: { courses: Course[] }) {
+export default function CoursesGrid({ courses }: { courses: Course[] }) {
   const [search, setSearch] = useState("");
 
   const filtered = search.trim()
@@ -111,7 +111,7 @@ export default function IITCoursesGrid({ courses }: { courses: Course[] }) {
         const q = search.toLowerCase();
         return (
           c.name.toLowerCase().includes(q) ||
-          c.instructor.toLowerCase().includes(q) ||
+          c.instructor?.toLowerCase().includes(q) ||
           c.category?.toLowerCase().includes(q) ||
           c.description?.toLowerCase().includes(q)
         );

@@ -18,6 +18,20 @@ type Props = {
 
 type MenuState = { id: string; top: number; right: number } | null;
 
+function CourseTypeBadge({ type }: { type: string }) {
+  if (type === "IIT")
+    return (
+      <Badge variant="outline" className="border-violet-400/40 text-violet-600 dark:text-violet-400">
+        IIT
+      </Badge>
+    );
+  return (
+    <Badge variant="outline" className="border-blue-400/40 text-blue-600 dark:text-blue-400">
+      Mindlyftai
+    </Badge>
+  );
+}
+
 function ModeBadge({ mode }: { mode: string }) {
   if (mode === "Online")
     return (
@@ -80,6 +94,7 @@ export function CourseTable({ courses, onEdit, onDelete }: Props) {
               <TableRow>
                 <TableHead>Course</TableHead>
                 <TableHead>Mode</TableHead>
+                <TableHead className="hidden sm:table-cell">Type</TableHead>
                 <TableHead className="hidden sm:table-cell">Duration</TableHead>
                 <TableHead className="hidden md:table-cell">Instructor</TableHead>
                 <TableHead className="hidden lg:table-cell">Language</TableHead>
@@ -108,6 +123,10 @@ export function CourseTable({ courses, onEdit, onDelete }: Props) {
 
                   <TableCell>
                     <ModeBadge mode={course.mode} />
+                  </TableCell>
+
+                  <TableCell className="hidden sm:table-cell">
+                    <CourseTypeBadge type={course.courseType} />
                   </TableCell>
 
                   <TableCell className="hidden text-sm text-muted-foreground sm:table-cell">

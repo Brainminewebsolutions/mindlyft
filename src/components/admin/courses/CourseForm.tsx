@@ -14,11 +14,13 @@ import { Label }     from "@/components/ui/label";
 import { Button }    from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn }        from "@/lib/utils";
-import { ImageIcon, UploadCloud, X } from "lucide-react";
-import { employeeService } from "@/services/admin/employeeService";
+import { ImageIcon, Plus, UploadCloud, X } from "lucide-react";
+import { employeeService }          from "@/services/admin/employeeService";
+import { courseCategoryService }    from "@/services/admin/courseCategoryService";
+import type { CourseCategory }      from "@/types/admin/courseCategory";
 
 // ─── Instructor dropdown ───────────────────────────────────────────────────────
-type EmployeeOption = { id: string; name: string; designation?: string };
+type EmployeeOption = { id: string; employeeId: number; name: string; designation?: string };
 
 function useActiveEmployees() {
   const [options, setOptions] = useState<EmployeeOption[]>([]);
@@ -28,13 +30,31 @@ function useActiveEmployees() {
     employeeService.list({ status: "ACTIVE", limit: 200 })
       .then((data) =>
         setOptions(
-          data.employees.map((e) => ({
-            id:          e.id,
-            name:        e.name,
-            designation: (e as { designation?: string }).designation,
-          }))
+          data.employees
+            .filter((e) => e.category?.toLowerCase() === "instructor")
+            .map((e) => ({
+              id:          e.id,
+              employeeId:  e.employeeId,
+              name:        e.name,
+              designation: e.designation,
+            }))
         )
       )
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
+  return { options, loading };
+}
+
+// ─── Course categories dropdown ───────────────────────────────────────────────
+function useCourseCategories() {
+  const [options, setOptions] = useState<CourseCategory[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    courseCategoryService.list({ status: "Active" })
+      .then((data) => setOptions(Array.isArray(data) ? data : []))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
@@ -131,12 +151,15 @@ function ImagePickerField({
 export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading }: Props) {
   const [imageFile,     setImageFile]     = useState<File | null>(null);
   const [existingImage, setExistingImage] = useState(defaultValues?.image || "");
+  const [highlights,    setHighlights]    = useState<string[]>(defaultValues?.highlights ?? []);
 
-  const { options: employeeOptions, loading: loadingEmployees } = useActiveEmployees();
+  const { options: employeeOptions,  loading: loadingEmployees }  = useActiveEmployees();
+  const { options: categoryOptions, loading: loadingCategories } = useCourseCategories();
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<CreateCourseSchema>({
     resolver: zodResolver(createCourseSchema),
@@ -147,7 +170,7 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
       image:       "",
       description: defaultValues?.description || "",
       price:       defaultValues?.price       ?? undefined,
-      instructor:  defaultValues?.instructor  || "",
+      instructorId: defaultValues?.instructorId ?? undefined,
       language:    defaultValues?.language    || "",
       courseType:  defaultValues?.courseType  || undefined,
       discount:     defaultValues?.discount     ?? undefined,
@@ -156,13 +179,23 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
     },
   });
 
+  useEffect(() => {
+    if (!loadingEmployees && defaultValues?.instructorId)
+      setValue("instructorId", defaultValues.instructorId);
+  }, [loadingEmployees]);
+
+  useEffect(() => {
+    if (!loadingCategories && defaultValues?.category)
+      setValue("category", defaultValues.category);
+  }, [loadingCategories]);
+
   const handleFormSubmit = async (formValues: CreateCourseSchema) => {
     const fd = new FormData();
     fd.append("name",       formValues.name);
     fd.append("duration",   String(formValues.duration));
     fd.append("mode",       formValues.mode);
     fd.append("price",      String(formValues.price));
-    fd.append("instructor", formValues.instructor);
+    fd.append("instructorId", String(formValues.instructorId));
     fd.append("language",   formValues.language);
     if (formValues.description)                  fd.append("description", formValues.description);
     fd.append("courseType", formValues.courseType);
@@ -175,6 +208,8 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
     } else if (existingImage) {
       fd.append("imageUrl", existingImage);
     }
+
+    highlights.filter(h => h.trim()).forEach(h => fd.append("highlights", h.trim()));
 
     await onSubmit(fd);
   };
@@ -225,6 +260,7 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
             <option value="">Select mode</option>
             <option value="Online">Online</option>
             <option value="Offline">Offline</option>
+             <option value="Hybrid">Hybrid</option>
           </select>
           {errors.mode && <p className="text-xs text-destructive">{errors.mode.message}</p>}
         </div>
@@ -294,49 +330,59 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
         </div>
       </div>
 
-      {/* ── Display Order ── */}
-      <div className="space-y-1.5">
-        <Label htmlFor="displayOrder">Display Order</Label>
-        <Input
-          id="displayOrder"
-          type="number"
-          min={0}
-          {...register("displayOrder", { valueAsNumber: true })}
-          placeholder="0"
-        />
+      {/* ── Display Order + Instructor ── */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="space-y-1.5">
+          <Label htmlFor="displayOrder">Display Order</Label>
+          <Input
+            id="displayOrder"
+            type="number"
+            min={0}
+            {...register("displayOrder", { valueAsNumber: true })}
+            placeholder="0"
+          />
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="instructorId">Instructor <span className="text-destructive">*</span></Label>
+          <select
+            id="instructorId"
+            {...register("instructorId", { valueAsNumber: true })}
+            disabled={loadingEmployees}
+            className={cn(selectCls, errors.instructorId ? "border-destructive" : "", loadingEmployees ? "opacity-60" : "")}
+          >
+            <option value="">
+              {loadingEmployees ? "Loading instructors…" : "Select instructor"}
+            </option>
+            {employeeOptions.map((emp) => (
+              <option key={emp.id} value={emp.employeeId}>
+                {emp.name}{emp.designation ? ` — ${emp.designation}` : ""}
+              </option>
+            ))}
+          </select>
+          {errors.instructorId && <p className="text-xs text-destructive">{errors.instructorId.message}</p>}
+        </div>
       </div>
 
       {/* ── Category ── */}
       <div className="space-y-1.5">
         <Label htmlFor="category">Category</Label>
-        <Input
+        <select
           id="category"
           {...register("category")}
-          placeholder="e.g. Programming, Data Science, Design"
-          className={errors.category ? "border-destructive focus-visible:ring-destructive" : ""}
-        />
-        {errors.category && <p className="text-xs text-destructive">{errors.category.message}</p>}
-      </div>
-
-      {/* ── Instructor ── */}
-      <div className="space-y-1.5">
-        <Label htmlFor="instructor">Instructor <span className="text-destructive">*</span></Label>
-        <select
-          id="instructor"
-          {...register("instructor")}
-          disabled={loadingEmployees}
-          className={cn(selectCls, errors.instructor ? "border-destructive" : "", loadingEmployees ? "opacity-60" : "")}
+          disabled={loadingCategories}
+          className={cn(selectCls, errors.category ? "border-destructive" : "", loadingCategories ? "opacity-60" : "")}
         >
           <option value="">
-            {loadingEmployees ? "Loading employees…" : "Select instructor"}
+            {loadingCategories ? "Loading categories…" : "Select category"}
           </option>
-          {employeeOptions.map((emp) => (
-            <option key={emp.id} value={emp.name}>
-              {emp.name}{emp.designation ? ` — ${emp.designation}` : ""}
+          {categoryOptions.map((cat) => (
+            <option key={cat.id} value={cat.name}>
+              {cat.name}
             </option>
           ))}
         </select>
-        {errors.instructor && <p className="text-xs text-destructive">{errors.instructor.message}</p>}
+        {errors.category && <p className="text-xs text-destructive">{errors.category.message}</p>}
       </div>
 
       {/* ── Description ── */}
@@ -356,13 +402,52 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
         {errors.description && <p className="text-xs text-destructive">{errors.description.message}</p>}
       </div>
 
-      {/* ── Image picker ── */}
-      <ImagePickerField
-        existingUrl={existingImage}
-        imageFile={imageFile}
-        onFileSelected={setImageFile}
-        onClear={() => { setImageFile(null); setExistingImage(""); }}
-      />
+      {/* ── Highlights + Image side by side ── */}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+
+        {/* Highlights */}
+        <div className="space-y-2">
+          <Label>Highlights</Label>
+          <div className="space-y-2">
+            {highlights.map((item, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <Input
+                  value={item}
+                  onChange={(e) => {
+                    const updated = [...highlights];
+                    updated[i] = e.target.value;
+                    setHighlights(updated);
+                  }}
+                  placeholder={`Highlight ${i + 1}`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setHighlights(highlights.filter((_, idx) => idx !== i))}
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-input text-muted-foreground hover:border-destructive hover:text-destructive transition"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => setHighlights([...highlights, ""])}
+            className="flex items-center gap-1.5 text-sm text-primary hover:underline"
+          >
+            <Plus className="h-3.5 w-3.5" /> Add Highlight
+          </button>
+        </div>
+
+        {/* Image picker */}
+        <ImagePickerField
+          existingUrl={existingImage}
+          imageFile={imageFile}
+          onFileSelected={setImageFile}
+          onClear={() => { setImageFile(null); setExistingImage(""); }}
+        />
+
+      </div>
 
       {/* ── Actions ── */}
       <Separator />
