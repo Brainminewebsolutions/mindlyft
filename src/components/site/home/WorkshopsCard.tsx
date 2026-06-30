@@ -11,7 +11,7 @@ async function getWebinars(): Promise<Webinar[]> {
   try {
     const envelope = await dotnetFetch<WebinarEnvelope>(
       "/v1/workshopWebinar?status=Active",
-      { cache: "no-store" } as RequestInit,
+      { next: { revalidate: 300 } } as RequestInit,
     );
     return envelope.isSuccess ? (envelope.data ?? []) : [];
   } catch {

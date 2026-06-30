@@ -93,6 +93,7 @@ export function TestimonialTable({ testimonials, onEdit, onDelete }: Props) {
               <TableRow>
                 <TableHead>Person</TableHead>
                 <TableHead className="hidden sm:table-cell">Type</TableHead>
+                <TableHead className="hidden md:table-cell">Review</TableHead>
                 <TableHead className="hidden md:table-cell">Rating</TableHead>
                 <TableHead className="hidden lg:table-cell">Tag</TableHead>
                 <TableHead className="hidden lg:table-cell">Order</TableHead>
@@ -120,6 +121,12 @@ export function TestimonialTable({ testimonials, onEdit, onDelete }: Props) {
 
                   <TableCell className="hidden sm:table-cell">
                     <TypeBadge type={t.type} />
+                  </TableCell>
+
+                  <TableCell className="hidden max-w-[300px] md:table-cell">
+                    <p className="truncate text-xs text-muted-foreground">
+                      {(t.review || t.quote || "—").slice(0, 300)}
+                    </p>
                   </TableCell>
 
                   <TableCell className="hidden md:table-cell">

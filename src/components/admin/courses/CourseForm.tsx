@@ -18,6 +18,7 @@ import { ImageIcon, Plus, UploadCloud, X } from "lucide-react";
 import { employeeService }          from "@/services/admin/employeeService";
 import { courseCategoryService }    from "@/services/admin/courseCategoryService";
 import type { CourseCategory }      from "@/types/admin/courseCategory";
+import { LANGUAGES }               from "@/constants/languages";
 
 // ─── Instructor dropdown ───────────────────────────────────────────────────────
 type EmployeeOption = { id: string; employeeId: number; name: string; designation?: string };
@@ -61,11 +62,6 @@ function useCourseCategories() {
 
   return { options, loading };
 }
-
-// ─── Languages list ────────────────────────────────────────────────────────────
-const LANGUAGES = [
-  "English", "Hindi", "Marathi", "Hinglish"
-];
 
 type Props = {
   mode:           "create" | "edit";

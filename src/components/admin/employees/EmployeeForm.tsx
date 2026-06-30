@@ -11,6 +11,7 @@ import {
 } from "@/validators/admin/employee";
 import type { Resolver } from "react-hook-form";
 import type { Employee } from "@/types/admin/employee";
+import { EMPLOYEE_CATEGORIES, EMPLOYEE_DEPARTMENTS } from "@/constants/employee";
 import { Input }     from "@/components/ui/input";
 import { Label }     from "@/components/ui/label";
 import { Button }    from "@/components/ui/button";
@@ -28,14 +29,8 @@ type Props = {
   isLoading?:     boolean;
 };
 
-const CATEGORIES = [
-  "Instructor", "Founder & Co-Founder", "Experts", "Board Of Directors", "Advisors"
-];
-
-const DEPARTMENTS = [
-  "Engineering", "Design", "Marketing",
-  "Content", "Sales", "Support",
-];
+const CATEGORIES  = EMPLOYEE_CATEGORIES;
+const DEPARTMENTS = EMPLOYEE_DEPARTMENTS;
 
 function FilePickerField({
   label,

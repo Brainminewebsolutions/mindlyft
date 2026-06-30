@@ -24,40 +24,33 @@ function ProjectCard({ webinar, index }: { webinar: Webinar | null; index: numbe
   return (
     <div className="relative w-[320px] sm:w-[360px] flex-shrink-0 h-[480px] overflow-hidden rounded-2xl group cursor-pointer bg-violet-50/60 border border-violet-100">
 
-      {/* Image — off-screen left by default, slides in on hover, slides back on leave */}
-      <div
-        className="absolute inset-0 -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-in-out"
-      >
+      {/* Image — slides in over the full card on hover */}
+      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-in-out">
         <img
           src={imgSrc}
           alt={webinar?.name ?? "Coming Soon"}
           className="w-full h-full object-cover object-center"
         />
-        {/* Dark gradient overlay over image */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
       </div>
 
-      {/* Counter — violet tint on default, white/faint on hover */}
+      {/* Counter */}
       <span className="absolute top-5 left-5 text-[128px] font-black leading-none select-none pointer-events-none text-violet-200 group-hover:text-white/10 transition-colors duration-500">
         {num}
       </span>
 
       {/* Bottom info */}
       <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
-
-        {/* Type pill — dark on default, white bg on hover */}
         <span className="inline-block mb-3 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-violet-600 text-white transition-colors duration-300">
           {webinar?.type ?? "Workshop"}
         </span>
 
-        {/* Title — dark on default, white on hover */}
-        <h3 className="font-semibold text-[1.3rem] leading-snug line-clamp-2 mb-3 text-gray-900 group-hover:text-white transition-colors duration-300">
+        <h3 className="font-semibold text-[1.3rem] leading-snug line-clamp-2 mb-3 text-gray-900 group-hover:text-white transition-colors duration-300 min-h-[3.6rem]">
           {webinar?.name ?? "New Session Coming Soon"}
         </h3>
 
-        {/* Date + Time */}
         {webinar && (
-          <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] mb-4 text-gray-400 group-hover:text-white/70 transition-colors duration-300">
+          <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] mb-4 text-gray-400 group-hover:text-violet-200/70 transition-colors duration-300">
             <span className="flex items-center gap-1">
               <Calendar className="w-3 h-3" />
               {webinar.date}
@@ -69,9 +62,8 @@ function ProjectCard({ webinar, index }: { webinar: Webinar | null; index: numbe
           </div>
         )}
 
-        {/* Arrow button */}
         <div className="flex items-center justify-between">
-          <span className="text-gray-400 group-hover:text-white/60 text-xs font-medium transition-colors duration-300">
+          <span className="text-gray-400 group-hover:text-violet-200/70 text-xs font-medium transition-colors duration-300">
             {webinar?.instructor ?? ""}
           </span>
           {webinar ? (

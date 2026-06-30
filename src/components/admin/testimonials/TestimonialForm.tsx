@@ -15,6 +15,7 @@ import { Label }     from "@/components/ui/label";
 import { Button }    from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ImageIcon, VideoIcon, UploadCloud, X } from "lucide-react";
+import { ACCENT_PRESETS } from "@/constants/testimonial";
 
 type FormValues = CreateTestimonialSchema;
 
@@ -25,11 +26,6 @@ type Props = {
   onCancel:       () => void;
   isLoading?:     boolean;
 };
-
-const ACCENT_PRESETS = [
-  "#6c63ff", "#7c3aed", "#0ea5e9", "#f59e0b",
-  "#10b981", "#ef4444", "#ec4899", "#f97316",
-];
 
 function FilePickerField({
   label,
@@ -282,7 +278,7 @@ export function TestimonialForm({ mode, defaultValues, onSubmit, onCancel, isLoa
                 />
                 <div className="flex items-center justify-between">
                   {fieldErr(errors.review?.message) ?? <span />}
-                  {charCount(watchReview.length, 500)}
+                  {charCount(watchReview.length, 300)}
                 </div>
               </div>
             )}

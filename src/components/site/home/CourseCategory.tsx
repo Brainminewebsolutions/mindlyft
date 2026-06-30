@@ -120,11 +120,11 @@ gsap.set(cards[0], {
   }, []);
 
   return (
-    <section className="relative bg-white overflow-x-hidden">
+    <section className="relative bg-white overflow-x-hidden isolate">
       {/* ── Stacking category cards ── */}
       <div
         ref={wrapperRef}
-        className="relative h-screen overflow-hidden bg-gradient-to-b from-violet-50 to-white"
+        className="relative h-screen overflow-hidden bg-gradient-to-b from-violet-50 to-white isolate"
       >
         {/* Empty state */}
         {items.length === 0 && (
@@ -253,13 +253,7 @@ gsap.set(cards[0], {
         fill
         className="object-cover"
       />
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(to right, #F5F3FF 0%, #F5F3FFcc 10%, #F5F3FF55 35%, transparent 65%)",
-        }}
-      />
+       
     </div>
 
     {/* Glow */}
@@ -284,8 +278,8 @@ gsap.set(cards[0], {
 
       {/* Main Content */}
       <div className="flex flex-col gap-4">
-        <h2 className="m-0 text-[clamp(2rem,4vw,4rem)] font-extrabold leading-tight tracking-tight text-gray-900">
-          Certificate of Completion
+        <h2 className="m-0 text-[clamp(2rem,4vw,4rem)] font-extrabold leading-tight tracking-tight text-gray-900 [font-family:var(--primaryFont,sans-serif)]">
+          Certificate of <span className="text-violet-600">Completion</span>
         </h2>
         <p className="m-0 text-sm md:text-base leading-[1.8] text-gray-500">
         Earn a Joint Certification from MindLyft AI and C3iHub IIT Kanpur upon successful completion of the program.

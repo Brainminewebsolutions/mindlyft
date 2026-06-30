@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { partnerService } from "@/services/admin/partnerService";
+import { PARTNER_STATUSES } from "@/constants/partner";
 
-const STATUS_OPTIONS = ["Active", "Inactive", "Pending", "Suspended"];
+const STATUS_OPTIONS = PARTNER_STATUSES;
 
 export default function AddPartnerPage() {
   const router = useRouter();

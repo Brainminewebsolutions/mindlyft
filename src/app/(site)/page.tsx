@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, ArrowUpRight, Lock, Shield, ClipboardCheck, Folder, KeyRound, Activity } from "lucide-react";
@@ -39,23 +40,30 @@ export default function HomePage() {
               <FeaturedSection />
   
               <div id="iit-courses">
-                <IITExpertiseSection />
+                <Suspense fallback={<div className="h-screen" />}>
+                  <IITExpertiseSection />
+                </Suspense>
               </div>
-              <CoursesCard />
+              <Suspense fallback={<div className="h-[600px]" />}>
+                <CoursesCard />
+              </Suspense>
 
-              <ToolSection />
+              <Suspense fallback={<div className="h-64" />}>
+                <ToolSection />
+              </Suspense>
 
-             
               <WhatWeDo />
 
               <OurClients />
- 
-              <WorkshopsCard /> 
-              {/* ---- Why Choose Us Area Start ---- */}
-              <WhyChooseUs />
-              {/* ---- Why Choose Us Area End ---- */}
 
-              <TestimonialsCard />
+              <Suspense fallback={<div className="h-[500px]" />}>
+                <WorkshopsCard />
+              </Suspense>
+              <WhyChooseUs />
+
+              <Suspense fallback={<div className="h-[400px]" />}>
+                <TestimonialsCard />
+              </Suspense>
 
               <AiItSolutions />
 

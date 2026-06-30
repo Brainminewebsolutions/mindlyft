@@ -28,7 +28,7 @@ async function getActiveTools(): Promise<CarouselCard[]> {
   try {
     const envelope = await dotnetFetch<ToolsEnvelope>(
       "/v1/tools?status=ACTIVE",
-      { cache: "no-store" } as RequestInit,
+      { next: { revalidate: 300 } } as RequestInit,
     );
     if (!envelope.isSuccess || !Array.isArray(envelope.data)) return [];
     return envelope.data.map((t) => ({

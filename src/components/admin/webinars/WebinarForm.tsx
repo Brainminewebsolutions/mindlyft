@@ -13,8 +13,7 @@ import { Button }    from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn }        from "@/lib/utils";
 import { employeeService } from "@/services/admin/employeeService";
-
-const LANGUAGES = ["English", "Hindi", "Marathi", "Hinglish"];
+import { LANGUAGES } from "@/constants/languages";
 
 type EmployeeOption = { id: string; name: string };
 

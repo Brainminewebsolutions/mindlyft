@@ -11,7 +11,7 @@ async function getPublicCourses(): Promise<Course[]> {
   try {
     const envelope = await dotnetFetch<CoursesEnvelope>(
       "/v1/courses?status=ACTIVE",
-      { cache: "no-store" } as RequestInit,
+      { next: { revalidate: 300 } } as RequestInit,
     );
     const all = envelope.isSuccess ? (envelope.data?.courses ?? []) : [];
     return all.filter((c) => c.courseType === "Mindlyftai");

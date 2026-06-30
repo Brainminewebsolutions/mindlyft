@@ -13,7 +13,7 @@ async function getCourseCategories(): Promise<CourseCategory[]> {
   try {
     const envelope = await dotnetFetch<CategoriesEnvelope>(
       "/v1/course-categories?status=Active",
-      { cache: "no-store" } as RequestInit,
+      { next: { revalidate: 300 } } as RequestInit,
     );
     const raw = envelope.isSuccess ? (envelope.data ?? []) : [];
     return Array.isArray(raw) ? raw : [];

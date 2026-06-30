@@ -43,15 +43,10 @@ function TypeBadge({ type, accent }) {
 
 function TestimonialCard({ item }) {
   const videoRef = useRef(null);
-  const [hovered, setHovered] = useState(false);
   const isVideo = item.type === "video";
 
-  const onEnter = () => {
-    setHovered(true);
-    if (isVideo && videoRef.current) videoRef.current.play().catch(() => {});
-  };
+  const onEnter = () => { if (isVideo && videoRef.current) videoRef.current.play().catch(() => {}); };
   const onLeave = () => {
-    setHovered(false);
     if (isVideo && videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
@@ -62,22 +57,16 @@ function TestimonialCard({ item }) {
     <div
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      className="relative h-[400px] flex-shrink-0 cursor-pointer overflow-hidden rounded-[20px] bg-white transition-[border-color,box-shadow,transform] duration-[400ms]"
+      className="group relative h-[400px] flex-shrink-0 cursor-pointer overflow-hidden rounded-[20px] bg-white transition-[border-color,box-shadow,transform] duration-[400ms] hover:-translate-y-[6px]"
       style={{
-        border: `1.5px solid ${hovered ? item.accent + "55" : "#e5e7eb"}`,
-        boxShadow: hovered
-          ? `0 20px 50px ${item.accent}22, 0 4px 16px rgba(0,0,0,0.08)`
-          : "0 2px 12px rgba(0,0,0,0.06)",
-        transform: hovered ? "translateY(-6px)" : "translateY(0)",
+        border: `1.5px solid ${item.accent}55`,
+        boxShadow: `0 8px 30px ${item.accent}18, 0 2px 10px rgba(0,0,0,0.06)`,
       }}
     >
       {/* ── Avatar bg ── */}
       <div
-        className="absolute inset-0 bg-cover bg-top transition-opacity duration-500"
-        style={{
-          backgroundImage: `url(${item.avatar})`,
-          opacity: hovered ? (isVideo ? 0.1 : 0.06) : 0.12,
-        }}
+        className="absolute inset-0 bg-cover bg-top"
+        style={{ backgroundImage: `url(${item.avatar})`, opacity: isVideo ? 0.1 : 0.06 }}
       />
 
       {/* ── Light base scrim ── */}
@@ -91,33 +80,24 @@ function TestimonialCard({ item }) {
         <video
           ref={videoRef}
           src={item.video}
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 z-[2] h-full w-full object-cover transition-opacity duration-[550ms]"
-          style={{ opacity: hovered ? 1 : 0 }}
+          loop muted playsInline
+          className="absolute inset-0 z-[2] h-full w-full object-cover opacity-0 transition-opacity duration-[550ms] group-hover:opacity-100"
         />
       )}
 
-      {/* ── Video scrim for readability ── */}
+      {/* ── Video scrim ── */}
       {isVideo && (
         <div
-          className="pointer-events-none absolute inset-0 z-[3] transition-opacity duration-500"
-          style={{
-            background: `linear-gradient(0deg, ${item.accent}ee 0%, rgba(255,255,255,0.08) 55%)`,
-            opacity: hovered ? 1 : 0,
-          }}
+          className="pointer-events-none absolute inset-0 z-[3]"
+          style={{ background: `linear-gradient(0deg, ${item.accent}ee 0%, rgba(255,255,255,0.08) 55%)` }}
         />
       )}
 
-      {/* ── Text hover tint ── */}
+      {/* ── Text tint ── */}
       {!isVideo && (
         <div
-          className="pointer-events-none absolute inset-0 z-[2] transition-opacity duration-[450ms]"
-          style={{
-            background: `linear-gradient(145deg, ${item.accent}0d 0%, ${item.accent}22 100%)`,
-            opacity: hovered ? 1 : 0,
-          }}
+          className="pointer-events-none absolute inset-0 z-[2]"
+          style={{ background: `linear-gradient(145deg, ${item.accent}0d 0%, ${item.accent}22 100%)` }}
         />
       )}
 
@@ -129,39 +109,11 @@ function TestimonialCard({ item }) {
         </div>
       </div>
 
-      {/* ── DEFAULT: avatar + name + hint ── */}
-      <div
-        className="pointer-events-none absolute inset-0 z-[5] flex flex-col items-center justify-end p-6 transition-[opacity,transform] duration-300"
-        style={{
-          opacity: hovered ? 0 : 1,
-          transform: hovered ? "translateY(8px)" : "translateY(0)",
-        }}
-      >
-        <div
-          className="relative mb-3 h-[72px] w-[72px] flex-shrink-0 overflow-hidden rounded-full"
-          style={{ border: `3px solid ${item.accent}`, boxShadow: `0 0 0 4px ${item.accent}22` }}
-        >
-          <AvatarImg src={item.avatar} name={item.name} accent={item.accent} fontSize="1.25rem" />
-        </div>
-        <p className="m-0 text-center text-base font-bold text-[#111827]">{item.name}</p>
-        <p className="mx-0 mb-2 mt-1 text-center text-[0.8rem] text-[#6b7280]">{item.designation}</p>
-        <Stars color={item.accent} />
-        <p className="mt-3 text-[0.72rem] uppercase tracking-[0.08em] text-[#9ca3af]">
-          {isVideo ? "Hover to watch" : "Hover to read"}
-        </p>
-      </div>
-
-      {/* ── HOVER VIDEO: quote ── */}
+      {/* ── VIDEO content ── */}
       {isVideo && (
-        <div
-          className="pointer-events-none absolute inset-0 z-10 flex flex-col justify-end p-6 transition-[opacity,transform] delay-100 duration-[400ms] ease-out"
-          style={{
-            opacity: hovered ? 1 : 0,
-            transform: hovered ? "translateY(0)" : "translateY(12px)",
-          }}
-        >
+        <div className="pointer-events-none absolute inset-0 z-10 flex flex-col justify-end p-6">
           <Stars color="#fff" />
-          <Quote size={24} color="rgba(255,255,255,0.5)" className="my-2" style={{ margin: "10px 0 8px" }} />
+          <Quote size={24} color="rgba(255,255,255,0.5)" style={{ margin: "10px 0 8px" }} />
           <p className="m-0 text-base font-semibold leading-[1.5] text-white">"{item.quote}"</p>
           <div className="mt-3.5 flex items-center gap-2.5">
             <div className="relative h-9 w-9 flex-shrink-0 overflow-hidden rounded-full border-2 border-white/60">
@@ -175,16 +127,10 @@ function TestimonialCard({ item }) {
         </div>
       )}
 
-      {/* ── HOVER TEXT: full review ── */}
+      {/* ── TEXT review content ── */}
       {!isVideo && (
-        <div
-          className="pointer-events-none absolute inset-0 z-10 flex flex-col justify-between px-6 pb-6 pt-[4.5rem] transition-[opacity,transform] delay-[50ms] duration-[400ms] ease-out"
-          style={{
-            opacity: hovered ? 1 : 0,
-            transform: hovered ? "translateY(0)" : "translateY(14px)",
-          }}
-        >
-          <div className="mt-10 flex items-center gap-3">
+        <div className="pointer-events-none absolute inset-0 z-10 flex flex-col gap-4 px-6 pb-3 pt-[2.5rem]">
+          <div className="mt-4 flex items-center gap-3">
             <div
               className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full"
               style={{ border: `2px solid ${item.accent}` }}
@@ -198,8 +144,10 @@ function TestimonialCard({ item }) {
           </div>
 
           <div>
-            <Quote size={28} color={item.accent} className="mb-2.5 opacity-60" />
-            <p className="m-0 line-clamp-5 text-[0.875rem] leading-[1.75] text-[#374151]">{item.review}</p>
+            <Quote size={20} color={item.accent} className="mb-2.5 opacity-60" />
+            <p className="m-0 text-[0.875rem] leading-[1.75] text-[#374151]">
+              {item.review?.length > 300 ? item.review.slice(0, 300) + "…" : item.review}
+            </p>
           </div>
 
           <Stars color={item.accent} />
@@ -208,11 +156,8 @@ function TestimonialCard({ item }) {
 
       {/* ── Accent bottom bar ── */}
       <div
-        className="absolute bottom-0 left-0 right-0 z-20 h-[3px] origin-left rounded-b-[20px] transition-transform duration-[400ms] ease-[cubic-bezier(.4,0,.2,1)]"
-        style={{
-          background: item.accent,
-          transform: hovered ? "scaleX(1)" : "scaleX(0)",
-        }}
+        className="absolute bottom-0 left-0 right-0 z-20 h-[3px] rounded-b-[20px]"
+        style={{ background: item.accent }}
       />
     </div>
   );
@@ -271,7 +216,7 @@ export default function Testimonials({ testimonials = [] }) {
           </h2>
 
           <p className="mx-auto mt-4 max-w-[400px] text-sm leading-[1.7] text-[#6b7280]">
-            Real stories from real people — hover a card to watch their video or read their full review.
+            Real stories from real people who transformed their careers with MindLyft AI.
           </p>
 
           {/* Legend */}

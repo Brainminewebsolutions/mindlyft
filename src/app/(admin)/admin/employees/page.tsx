@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Plus, Search, RefreshCw } from "lucide-react";
+import { EMPLOYEE_CATEGORIES, EMPLOYEE_DEPARTMENTS } from "@/constants/employee";
 import { useEmployees }         from "@/hooks/useEmployees";
 import { EmployeeTable }        from "@/components/admin/employees/EmployeeTable";
 import { DeleteConfirmModal }   from "@/components/admin/employees/DeleteConfirmModal";
@@ -12,7 +13,8 @@ import { Input }   from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardDescription } from "@/components/ui/card";
 import type { Employee } from "@/types/admin/employee";
 
-const DEPARTMENTS = ["Engineering", "Design", "Marketing", "Content", "Sales", "Support"];
+const DEPARTMENTS = EMPLOYEE_DEPARTMENTS;
+const CATEGORIES  = EMPLOYEE_CATEGORIES;
 
 export default function EmployeesPage() {
   const router = useRouter();
@@ -20,12 +22,13 @@ export default function EmployeesPage() {
   const [search,     setSearch]     = useState("");
   const [status,     setStatus]     = useState("");
   const [department, setDepartment] = useState("");
+  const [category,   setCategory]   = useState("");
   const [page,       setPage]       = useState(1);
 
   const {
     employees, pagination, loading, error,
     refetch, deleteEmployee,
-  } = useEmployees({ search, status, department, page, limit: 10 });
+  } = useEmployees({ search, status, department, category, page, limit: 10 });
 
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [selected,   setSelected]   = useState<Employee | null>(null);
@@ -118,6 +121,17 @@ export default function EmployeesPage() {
           <option value="">All Departments</option>
           {DEPARTMENTS.map((d) => (
             <option key={d} value={d}>{d}</option>
+          ))}
+        </select>
+
+        <select
+          value={category}
+          onChange={(e) => { setCategory(e.target.value); setPage(1); }}
+          className="h-9 rounded-md border border-input bg-background px-3 text-sm text-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
+        >
+          <option value="">All Categories</option>
+          {CATEGORIES.map((c) => (
+            <option key={c} value={c}>{c}</option>
           ))}
         </select>
 

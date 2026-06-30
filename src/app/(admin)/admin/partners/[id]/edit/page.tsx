@@ -6,8 +6,9 @@ import { ArrowLeft, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { partnerService } from "@/services/admin/partnerService";
 import type { Partner } from "@/types/admin/partner";
+import { PARTNER_STATUSES } from "@/constants/partner";
 
-const STATUS_OPTIONS = ["Active", "Inactive", "Pending", "Suspended"];
+const STATUS_OPTIONS = PARTNER_STATUSES;
 
 export default function EditPartnerPage() {
   const { id }  = useParams<{ id: string }>();

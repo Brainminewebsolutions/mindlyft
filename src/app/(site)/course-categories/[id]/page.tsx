@@ -50,13 +50,12 @@ async function getCoursesByCategory(categoryName: string): Promise<Course[]> {
 async function getInstructors(): Promise<Employee[]> {
   try {
     const envelope = await dotnetFetch<EmployeeEnvelope>(
-      `/v1/employees?status=ACTIVE&limit=200`,
+      `/v1/employees?status=ACTIVE&limit=200&category=instructor`,
       { next: { revalidate: 300 } } as RequestInit,
     );
     if (!envelope.isSuccess) return [];
-    return (envelope.data?.employees ?? []).filter(
-      (e) => e.category?.toLowerCase() === "instructor",
-    );
+    return (envelope.data?.employees ?? []);
+    
   } catch {
     return [];
   }

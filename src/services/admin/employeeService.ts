@@ -5,6 +5,7 @@ export type EmployeeListParams = {
   search?:     string;
   status?:     string;
   department?: string;
+  category?:   string;
   page?:       number;
   limit?:      number;
 };

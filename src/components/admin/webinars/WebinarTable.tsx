@@ -32,6 +32,20 @@ function TypeBadge({ type }: { type: string }) {
   );
 }
 
+function StatusBadge({ status }: { status: string }) {
+  const map: Record<string, string> = {
+    Active:    "border-emerald-500/30 bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400",
+    Inactive:  "border-gray-400/30 bg-gray-50 text-gray-500 dark:bg-gray-800/40 dark:text-gray-400",
+    Pending:   "border-amber-500/30 bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400",
+    Suspended: "border-red-500/30 bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-400",
+  };
+  return (
+    <Badge variant="outline" className={map[status] ?? map.Inactive}>
+      {status}
+    </Badge>
+  );
+}
+
 function ModeBadge({ mode }: { mode: string }) {
   if (mode === "Online")
     return (
@@ -83,6 +97,7 @@ export function WebinarTable({ webinars, onEdit, onDelete }: Props) {
                 <TableHead>Mode</TableHead>
                 <TableHead className="hidden sm:table-cell">Date</TableHead>
                 <TableHead className="hidden md:table-cell">Instructor</TableHead>
+                <TableHead>Status</TableHead>
                 <TableHead>Price</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
@@ -113,6 +128,8 @@ export function WebinarTable({ webinars, onEdit, onDelete }: Props) {
                   <TableCell className="hidden text-sm text-muted-foreground md:table-cell">
                     {w.instructor}
                   </TableCell>
+
+                  <TableCell><StatusBadge status={w.status} /></TableCell>
 
                   <TableCell className="text-sm font-medium text-foreground">
                     {w.price === 0

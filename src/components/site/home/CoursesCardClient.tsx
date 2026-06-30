@@ -93,7 +93,8 @@ export default function CoursesCardClient({ courses }: { courses: Course[] }) {
                   filter: "blur(6px)",
                   duration: 0.4,
                   ease: "power2.inOut",
-                  onStart: () => gsap.set(prevLayer, { pointerEvents: "none" }),
+                  onStart:          () => gsap.set(prevLayer, { pointerEvents: "none" }),
+                  onReverseComplete: () => gsap.set(prevLayer, { pointerEvents: "auto" }),
                 },
                 pos
               )
@@ -106,7 +107,8 @@ export default function CoursesCardClient({ courses }: { courses: Course[] }) {
                   filter: "blur(0px)",
                   duration: 0.4,
                   ease: "power2.inOut",
-                  onStart: () => gsap.set(layer, { pointerEvents: "auto" }),
+                  onStart:          () => gsap.set(layer, { pointerEvents: "auto" }),
+                  onReverseComplete: () => gsap.set(layer, { pointerEvents: "none" }),
                 },
                 pos + 0.15
               );
@@ -132,7 +134,7 @@ export default function CoursesCardClient({ courses }: { courses: Course[] }) {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative overflow-x-hidden bg-white">
+    <section ref={containerRef} className="relative overflow-x-hidden bg-white isolate">
       {/* Section Header */}
     <div className="space-y-6 px-6 pt-10 pb-20 text-center">
         <SectionBadge variant="dark">Our Courses</SectionBadge>
@@ -205,20 +207,23 @@ type CourseCardProps = {
 };
 
 function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps) {
-  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+  const href = course.courseType === "IIT" ? `/courses/iit/${course.id}` : `/courses/mindlyftai/${course.id}`;
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const gsap = getGsap();
     if (!gsap) return;
     gsap.to(e.currentTarget, { y: -8, scale: 1.01, duration: 0.5, ease: "power3.out" });
   };
 
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const gsap = getGsap();
     if (!gsap) return;
     gsap.to(e.currentTarget, { y: 0, scale: 1, duration: 0.5, ease: "power3.out" });
   };
 
   return (
-    <div
+    <Link
+      href={href}
       className={`${cardClass} relative flex cursor-pointer flex-col overflow-hidden rounded-[24px] border border-[color:rgba(var(--a),0.15)] bg-white shadow-[0_8px_32px_rgba(var(--a),0.10),0_2px_8px_rgba(0,0,0,0.06)] will-change-transform`}
       style={{ "--a": accentRgb } as React.CSSProperties}
       onMouseEnter={handleMouseEnter}
@@ -295,16 +300,14 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
         )}
 
         {/* Button */}
-        <Link
-          href={course.courseType === "IIT" ? `/courses/iit/${course.id}` : `/courses/mindlyftai/${course.id}`}
-          onClick={(e) => e.stopPropagation()}
+        <div
           className={`${textClass} mt-auto inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[linear-gradient(135deg,rgba(var(--a),1)_0%,rgba(var(--a),0.75)_100%)] py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-95`}
         >
           View Course
           <ArrowRight size={14} strokeWidth={2.5} />
-        </Link>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

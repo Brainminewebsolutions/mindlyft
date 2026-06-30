@@ -26,7 +26,7 @@ async function getTestimonials(): Promise<Testimonial[]> {
   try {
     const envelope = await dotnetFetch<TestimonialsEnvelope>(
       "/v1/testimonials?status=ACTIVE&limit=50",
-      { cache: "no-store" } as RequestInit,
+      { next: { revalidate: 300 } } as RequestInit,
     );
     return envelope.isSuccess ? (envelope.data?.testimonials ?? []) : [];
   } catch {
