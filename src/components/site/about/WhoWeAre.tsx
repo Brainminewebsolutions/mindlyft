@@ -1,3 +1,5 @@
+import { AnimateIn } from "@/components/ui/AnimateIn";
+
 const ITEMS = [
   {
     title: "AI & Machine Learning Solutions",
@@ -29,7 +31,7 @@ export default function WhoWeAre({ bg = "bg-white" }: { bg?: string }) {
         {/* Image */}
         <div className="w-full lg:w-[45%] shrink-0">
           <img
-            src="/assets/img/about/who-we-are.jpg"
+            src="/images/Whoweare.png"
             alt="Who we are"
             className="w-full h-[480px] object-cover rounded-2xl shadow-md"
           />
@@ -37,10 +39,17 @@ export default function WhoWeAre({ bg = "bg-white" }: { bg?: string }) {
 
         {/* Content */}
         <div className="flex-1">
-          <h2 className="text-3xl md:text-4xl font-black text-violet-600 mb-8">
-            Who we are
-          </h2>
-
+            <div className="text-center">
+                <AnimateIn delay={100} direction="right">
+                  <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
+                     Who we &&nbsp;
+                    <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
+                      are
+                    </span>
+                  </h2>
+                </AnimateIn>
+              </div>
+          
           <div className="flex flex-col gap-6">
             {ITEMS.map((item) => (
               <div key={item.title}>

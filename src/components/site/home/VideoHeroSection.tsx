@@ -115,7 +115,7 @@ export default function VideoHeroSection() {
       >
         <div className="flex items-center gap-2.5">
           <span className="h-px w-8 bg-gradient-to-r from-transparent to-violet-400/70" />
-          <span className="font-bold tracking-[0.18em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-emerald-300 text-[24px] sm:text-[24px]">
+          <span className="font-bold tracking-[0.18em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400 text-[24px] sm:text-[24px]">
   Three Pillars, One Vision
 </span>
           <span className="h-px w-8 bg-gradient-to-l from-transparent to-blue-400/70" />

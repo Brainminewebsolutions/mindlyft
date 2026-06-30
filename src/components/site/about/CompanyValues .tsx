@@ -1,3 +1,5 @@
+import { AnimateIn } from "@/components/ui/AnimateIn";
+import { LineBadge } from "@/components/ui/LineBadge";
 import {
   Lightbulb,
   ShieldCheck,
@@ -42,21 +44,26 @@ export default function CompanyValues({ bg = "bg-white" }: { bg?: string }) {
   return (
     <section className={`py-24 px-6 ${bg}`}>
       <div className="max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-sm font-semibold tracking-[4px] uppercase text-violet-600">
-            Our Values
-          </span>
-
-          <h2 className="mt-4 text-4xl md:text-5xl font-bold text-gray-900">
-            The Principles That Drive Us
-          </h2>
-
-          <p className="mt-6 text-lg text-gray-600 leading-8">
-            We combine bold innovation, responsible AI practices, and a
+         <div className="text-center mb-16">
+          <AnimateIn delay={0} direction="right"><LineBadge className="justify-center mb-5"> Our Values</LineBadge></AnimateIn>
+          <AnimateIn delay={100} direction="right">
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
+               The Principles That Drive Us 
+              <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
+                That Drive Us 
+              </span>
+            </h2>
+          </AnimateIn>
+          <AnimateIn delay={200} direction="right">
+            <p className="text-base text-gray-500 leading-relaxed max-w-2xl mx-auto">
+               We combine bold innovation, responsible AI practices, and a
             relentless focus on human impact to create technology that delivers
             meaningful results.
-          </p>
+            </p>
+          </AnimateIn>
         </div>
+
+        
 
         <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
           {values.map((value) => {

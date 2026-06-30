@@ -190,7 +190,7 @@ gsap.set(cards[0], {
                 <div className="relative z-[1] flex flex-col justify-between w-full md:w-[56%] p-8 md:p-10 lg:p-14 h-full">
 
                   {/* Top: counter + program label */}
-                  <div className="flex items-center justify-between">
+                  <div className="justify-between py-1">
                     <span className="text-[11px] tracking-[6px] font-extrabold uppercase" style={{ color: accent }}>
                       0{i + 1}
                     </span>
@@ -198,7 +198,7 @@ gsap.set(cards[0], {
                       className="text-[10px] font-black uppercase tracking-[3px] px-3 py-1 rounded-full border"
                       style={{ color: accent, borderColor: `${accent}40`, backgroundColor: `${accent}10` }}
                     >
-                      Professional Certification Program
+                     C3iHub IIT Kanpur Certification Program
                     </span>
                   </div>
 
@@ -207,9 +207,9 @@ gsap.set(cards[0], {
                     <h2 className="m-0 text-[clamp(1.8rem,3.5vw,3.2rem)] font-extrabold leading-tight tracking-tight text-gray-900 [font-family:var(--primaryFont,sans-serif)]">
                       {cat.name}
                     </h2>
-                    <p className="m-0 text-sm md:text-base font-medium italic leading-snug" style={{ color: accent }}>
+                    {/* <p className="m-0 text-sm md:text-base font-medium italic leading-snug" style={{ color: accent }}>
                       Future-Proof Your Career with AI-Powered Cybersecurity
-                    </p>
+                    </p> */}
                     {cat.description && (
                       <p className="m-0 text-sm md:text-base leading-[1.8] text-gray-500 line-clamp-3">
                         {cat.description}
@@ -235,7 +235,67 @@ gsap.set(cards[0], {
             </div>
           );
         })}
+        {/* Final Certificate Card */}
+{/* Final Certificate Card */}
+<div
+  className="ss-card absolute top-0 left-0 w-full h-full flex items-center justify-center pt-[98px] px-[18px] pb-[18px] md:pt-[116px] md:px-9 md:pb-9 [will-change:transform,opacity]"
+  style={{ zIndex: items.length + 1 }}
+>
+  <div
+    className="relative overflow-hidden w-full max-w-[1280px] h-[60vh] md:h-[70vh] lg:h-[78vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-row"
+    style={{ background: "#F5F3FF" }}
+  >
+    {/* Right Image */}
+    <div className="absolute right-0 top-0 w-[48%] h-full hidden md:block pointer-events-none">
+      <Image
+        src="/images/Certifcate.jpeg" // your certificate image
+        alt="Certificate"
+        fill
+        className="object-cover"
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to right, #F5F3FF 0%, #F5F3FFcc 10%, #F5F3FF55 35%, transparent 65%)",
+        }}
+      />
+    </div>
 
+    {/* Glow */}
+    <div
+      className="absolute w-[500px] h-[500px] rounded-full blur-[120px] top-[-20%] left-[30%] pointer-events-none"
+      style={{
+        background:
+          "radial-gradient(circle, rgba(139,92,246,0.15), transparent 65%)",
+      }}
+    />
+
+    {/* Left Content */}
+    <div className="relative z-[1] flex flex-col justify-between w-full md:w-[56%] p-8 md:p-10 lg:p-14 h-full">
+      
+      {/* Top */}
+      <div className="justify-between py-1">
+       
+        <span className="text-[10px] font-black uppercase tracking-[3px] px-3 py-1 rounded-full border border-violet-200 bg-violet-100 text-violet-700">
+          Joint Certification
+        </span>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex flex-col gap-4">
+        <h2 className="m-0 text-[clamp(2rem,4vw,4rem)] font-extrabold leading-tight tracking-tight text-gray-900">
+          Certificate of Completion
+        </h2>
+        <p className="m-0 text-sm md:text-base leading-[1.8] text-gray-500">
+        Earn a Joint Certification from MindLyft AI and C3iHub IIT Kanpur upon successful completion of the program.
+        </p>
+      </div>
+ <div className="flex flex-col gap-5"></div>
+        
+    </div>
+  </div>
+</div>
         {/* ── Commented out: iitCourses (Course[]) card rendering ──────────────
         {courses.length === 0 && ( ... Coming Soon placeholder ... )}
         {courses.map((course, i) => {

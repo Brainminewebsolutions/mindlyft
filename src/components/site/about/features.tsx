@@ -1,3 +1,4 @@
+import { AnimateIn } from "@/components/ui/AnimateIn";
 import {
   Brain,
   Briefcase,
@@ -37,17 +38,25 @@ export default function WhyChooseMindlyft({ bg = "bg-white" }: { bg?: string }) 
   return (
     <section className={`py-18 px-6 ${bg}`}>
       <div className="max-w-7xl mx-auto">
-        <div className="text-center max-w-4xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-violet-600">
-            Mindlyft AI stands out because we blend
-          </h2>
-
-          <p className="mt-6 text-lg text-gray-600 leading-8">
-            Cutting-edge artificial intelligence with human insight to deliver
+         <div className="text-center mb-16">
+          <AnimateIn delay={100} direction="right">
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
+               Mindlyft AI stands&nbsp;
+              <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
+               out because we blend
+              </span>
+            </h2>
+          </AnimateIn>
+          <AnimateIn delay={200} direction="right">
+            <p className="text-base text-gray-500 leading-relaxed max-w-2xl mx-auto">
+                Cutting-edge artificial intelligence with human insight to deliver
             solutions that are smart, practical, and built for real-world
             impact.
-          </p>
+            </p>
+          </AnimateIn>
         </div>
+
+       
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((item) => {

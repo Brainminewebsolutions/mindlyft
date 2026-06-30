@@ -28,8 +28,8 @@ export default function DirectorMessage({
             Leadership
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 leading-tight">
-            Message from our{" "}
-            <span className="text-violet-600">Director</span>
+            Meet our{" "}
+            <span className="text-violet-600">Chairman</span>
           </h2>
           <div className="w-16 h-1 bg-violet-600 rounded-full mx-auto mt-4" />
         </div>

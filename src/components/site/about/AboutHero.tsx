@@ -1,3 +1,5 @@
+import { AnimateIn } from "@/components/ui/AnimateIn";
+
 const ABOUT_IMAGE =
   "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&q=80";
 
@@ -48,13 +50,18 @@ export default function AboutHero({ description }: AboutHeroProps) {
     {/* Image Right */}
     <div className="flex-1">
       <div className="flex items-center justify-center md:justify-start gap-3">
-        <div className="h-px w-12 bg-gradient-to-r from-transparent to-violet-400" />
-        <span className="text-xs font-bold uppercase tracking-[4px] text-violet-500">
-          About Us
-        </span>
-        <div className="h-px w-12 bg-gradient-to-l from-transparent to-violet-400" />
+          <div className="text-center">
+                <AnimateIn delay={100} direction="right">
+                  <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
+                    About &&nbsp;
+                    <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
+                      Us
+                    </span>
+                  </h2>
+                </AnimateIn>
+              </div>
       </div>
-  <p className="text-gray-500 text-lg md:text-xl leading-[1.9] font-light py-4">
+  <p className="text-gray-500 text-lg md:text-xl leading-[1.9] font-light">
         {description}
       </p>
 

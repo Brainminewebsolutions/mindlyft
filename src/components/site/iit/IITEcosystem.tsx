@@ -22,7 +22,7 @@ export default function IITEcosystem({ bg = "bg-violet-50" }: { bg?: string }) {
     <section className={`${bg} px-6 py-24 md:px-[60px] overflow-hidden`}>
       <div className="max-w-6xl mx-auto">
 
-        <div className="text-center mb-16">
+      <div className="text-center mb-16">
           <AnimateIn delay={0} direction="right"><LineBadge className="justify-center mb-5">The Ecosystem</LineBadge></AnimateIn>
           <AnimateIn delay={100} direction="right">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">

@@ -73,7 +73,7 @@ function PartnerLogo({ partner }: { partner: Partner }) {
             </span>
         }
       </div>
-      <span className="text-[10px] tracking-widest uppercase text-neutral-400 group-hover:text-neutral-700 transition-colors duration-300 font-semibold whitespace-nowrap">
+      <span className="text-[10px] tracking-widest uppercase  group-hover:text-neutral-700 transition-colors duration-300 font-semibold whitespace-nowrap">
         {partner.name}
       </span>
     </div>

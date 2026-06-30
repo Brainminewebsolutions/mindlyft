@@ -13,7 +13,7 @@ export default function MembersWorkWith({ bg = "bg-white" }: { bg?: string }) {
   const track = [...LOGOS, ...LOGOS];
 
   return (
-    <section className={`${bg} py-14 px-6 md:px-14 lg:px-24 text-center overflow-hidden`}>
+    <section className={`${bg} py-14 px-6 md:px-14 lg:px-24 text-center overflow-hidden hidden  `}>
       <h2 className="text-3xl md:text-4xl font-black text-violet-600 mb-2">Our members work with</h2>
       <p className="text-sm font-semibold text-gray-700 mb-12">Strategic Collaborations Driving AI Innovation</p>
 

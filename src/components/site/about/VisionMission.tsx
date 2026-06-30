@@ -1,3 +1,6 @@
+import { AnimateIn } from "@/components/ui/AnimateIn";
+import { LineBadge } from "@/components/ui/LineBadge";
+
 export default function VisionMission({ bg = "bg-white" }: { bg?: string }) {
     const stats = [
   {
@@ -15,18 +18,21 @@ export default function VisionMission({ bg = "bg-white" }: { bg?: string }) {
 ];
 
   return (
-    <section className={`${bg} py-20 px-6`}>
+    <section className={`${bg} py-10 px-6`}>
+      <div className="text-center mb-16">
+                <AnimateIn delay={0} direction="right"><LineBadge className="justify-center mb-5"> Our Purpose</LineBadge></AnimateIn>
+                <AnimateIn delay={100} direction="right">
+                  <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
+                    Vision &&nbsp;
+                    <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
+                      Mission
+                    </span>
+                  </h2>
+                </AnimateIn>
+              </div>
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-14">
-          <span className="text-xs font-bold uppercase tracking-[4px] text-violet-500">
-            Our Purpose
-          </span>
-          <h2 className="mt-4 text-4xl font-bold text-gray-900">
-            Vision & Mission
-          </h2>
-          <div className="mx-auto mt-4 h-1 w-20 rounded-full bg-gradient-to-r from-violet-500 to-blue-500" />
-        </div>
-
+        
+        
         <div className="grid md:grid-cols-2 gap-8">
           {/* Vision */}
           <div className="bg-white rounded-3xl p-8 shadow-sm border border-violet-100">
@@ -90,6 +96,7 @@ export default function VisionMission({ bg = "bg-white" }: { bg?: string }) {
         {/* Stats Section */}
 
       </div>
+     <br />
       <div className="mb-16 rounded-[32px] bg-violet-50 px-8 py-12">
   <div className="grid grid-cols-1 md:grid-cols-3">
     {stats.map((stat, index) => (

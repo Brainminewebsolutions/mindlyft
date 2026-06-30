@@ -1,3 +1,4 @@
+import { AnimateIn } from "@/components/ui/AnimateIn";
 import Link from "next/link";
 
 const ITEMS = [
@@ -16,11 +17,23 @@ const ITEMS = [
 export default function WhatsNew({ bg = "bg-white" }: { bg?: string }) {
   return (
     <section className={`${bg} py-16 px-6 md:px-14 lg:px-24 text-center`}>
-      <h2 className="text-3xl md:text-4xl font-black text-violet-600 mb-3">What&apos;s New</h2>
-      <p className="text-sm font-semibold text-gray-700 max-w-2xl mx-auto mb-12">
-        This Will Contain Details About Mindlyft AI&apos;s New Project, Partnership, Workshops, News
+       <div className="text-center mb-16">
+          <AnimateIn delay={100} direction="right">
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
+            What&apos;s&nbsp;
+              <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
+               New
+              </span>
+            </h2>
+          </AnimateIn>
+           <AnimateIn delay={200} direction="right">
+            <p className="text-base text-gray-500 leading-relaxed max-w-2xl mx-auto">
+                This Will Contain Details About Mindlyft AI&apos;s New Project, Partnership, Workshops, News
         And Engagement Across Global Including The Social And Media News.
-      </p>
+            </p>
+          </AnimateIn>
+        </div>
+
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
         {ITEMS.map((item) => (

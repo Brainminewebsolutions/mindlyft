@@ -204,6 +204,21 @@ html:not(.dark) body {
     background-color: var(--background) !important;
     color: var(--foreground) !important;
 }
+ .animate-scroll {
+          width: max-content;
+          animation: scroll 50s linear infinite;
+        }
+
+        @keyframes scroll {
+          from {
+            transform: translateX(0);
+          }
+
+          to {
+            transform: translateX(-50%);
+          }
+        }
+        
 
 /* ── Student panel — always light, regardless of html.dark ─────────────────── */
 /* CSS custom properties cascade from the closest ancestor, so scoping them    */
@@ -238,4 +253,9 @@ html:not(.dark) body {
     color-scheme: light;
     background-color: oklch(0.98 0 0);
     color: oklch(0.145 0 0);
+}
+
+.text-violet-500 
+{
+font-size: 18px !important;
 }

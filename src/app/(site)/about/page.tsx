@@ -8,6 +8,7 @@ import CompanyValues from "@/components/site/about/CompanyValues ";
 import WhyChooseMindlyft from "@/components/site/about/features";
 import WhoWeAre from "@/components/site/about/WhoWeAre";
 import OurPartners from "@/components/site/about/OurPartners";
+import Members from "@/components/site/about/Members";
 import MembersWorkWith from "@/components/site/about/MembersWorkWith";
 import WhatsNew from "@/components/site/about/WhatsNew";
 import DirectorMessage from "@/components/site/about/DirectorMessage";
@@ -97,16 +98,17 @@ export default async function About() {
 <CompanyValues      bg="bg-blue-50" />
 <WhoWeAre           bg="bg-violet-50" />
 <OurPartners        bg="bg-white" />
+<Members           />
 <MembersWorkWith    bg="bg-blue-50" />
 <WhyChooseMindlyft  bg="bg-violet-50" />
 
       <DirectorMessage
-        directorName="Mr. Director Name"
-        designation="Director"
+        directorName="Mr. Srijan Pal Singh"
+        designation="Chairman"
         message={[
-          "Placeholder message from the Director.",
+          "Srijan Pal Singh is a scientist, author, public speaker, and education innovator, and a Gold Medalist from IIM Ahmedabad. Former Advisor to President Dr. A.P.J. Abdul Kalam, he is Founder & CEO of the Dr. A.P.J. Abdul Kalam Centre and co-author of bestselling books with Dr. Kalam, contributing to innovation, education, and national development initiatives.",
         ]}
-        imageUrl="/assets/img/about/director.jpg"
+        imageUrl="/director.jpg"
         bg="bg-white"
       />
 

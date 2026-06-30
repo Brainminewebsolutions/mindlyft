@@ -23,12 +23,12 @@ interface Props    { user?: NavUser | null; height?: number; courses?: NavCourse
 const NAV: NavItem[] = [
   { label: "Home",       href: "/"           },
   { label: "Academy",    href: "/academy"    }, // rendered via AcademyDesktopItem / AcademyMobileItem
+ { label: "Resources",  href: "/resources"  },
+  { label: "Blogs",      href: "/blogs"      },
   { label: "Our Journey", href: "/our-journey", children: [
     { label: "Events",     href: "/our-journey/events"     },
     { label: "Our Impact", href: "/our-journey/our-impact" },
   ]},
-  { label: "Resources",  href: "/resources"  },
-  { label: "Blogs",      href: "/blogs"      },
   { label: "About",      href: "/about"      },
   { label: "Contact",    href: "/contact"    },
 ];
@@ -417,7 +417,7 @@ export default function SiteNavbar({ user, height, courses = [] }: Props) {
                     prefetch={false}
                     className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors"
                   >
-                    Login <ArrowRight size={14} />
+                    Sign in <ArrowRight size={14} />
                   </Link>
                 ) : user.role === "STUDENT" ? (
                   <StudentNavDropdown
@@ -540,7 +540,7 @@ export default function SiteNavbar({ user, height, courses = [] }: Props) {
                 onClick={() => setMobileOpen(false)}
                 className="flex items-center justify-center gap-2 w-full px-4 py-2.5 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors"
               >
-                Login <ArrowRight size={14} />
+                Sign in <ArrowRight size={14} />
               </Link>
             ) : (
               <div className="space-y-1">

@@ -16,7 +16,7 @@ function CyclingLine({ lines, paused, textSize = "text-[11px] sm:text-xs" }: { l
   }, [paused, lines.length]);
 
   return (
-    <div className="mt-1 h-[35px] overflow-hidden relative">
+    <div className="mt-1 h-[55px] overflow-hidden relative">
       <AnimatePresence mode="wait">
         <motion.p
           key={idx}
