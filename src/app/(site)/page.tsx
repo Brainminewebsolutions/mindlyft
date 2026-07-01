@@ -3,8 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, ArrowUpRight, Lock, Shield, ClipboardCheck, Folder, KeyRound, Activity } from "lucide-react";
 
-import TestimonialsCard from '../../components/site/home/TestimonialsCard'
-import Project from '../../components/site/home/Project'
+import TestimonialsCard from '../../components/site/home/TestimonialsCard' 
 
 import WorkshopsCard from '../../components/site/home/WorkshopsCard'
 import VideoHeroSection from '../../components/site/home/VideoHeroSection'
@@ -20,9 +19,7 @@ import Innovation from '../../components/site/home/Innovation'
 import FeaturedSection from "@/components/site/home/FeaturedSection";
 import WhyChooseUs from "@/components/site/home/WhyChooseUs";
 import AiItSolutions from "@/components/site/home/AiItSolutions";
-
-
-
+ 
 export default function HomePage() {
   return (
     <>

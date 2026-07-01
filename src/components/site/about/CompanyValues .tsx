@@ -48,7 +48,7 @@ export default function CompanyValues({ bg = "bg-white" }: { bg?: string }) {
           <AnimateIn delay={0} direction="right"><LineBadge className="justify-center mb-5"> Our Values</LineBadge></AnimateIn>
           <AnimateIn delay={100} direction="right">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
-               The Principles That Drive Us 
+               The Principles 
               <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
                 That Drive Us 
               </span>

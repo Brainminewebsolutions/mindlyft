@@ -53,7 +53,7 @@ export default function AboutHero({ description }: AboutHeroProps) {
           <div className="text-center">
                 <AnimateIn delay={100} direction="right">
                   <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
-                    About &&nbsp;
+                    About &nbsp;
                     <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
                       Us
                     </span>
