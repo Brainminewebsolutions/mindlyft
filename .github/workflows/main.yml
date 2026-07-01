@@ -24,6 +24,7 @@ jobs:
         run: |
           xcopy /E /I /Y .next\static .next\standalone\.next\static
           xcopy /E /I /Y public .next\standalone\public
+          xcopy /E /I /Y node_modules\next\dist\compiled\webpack .next\standalone\node_modules\next\dist\compiled\webpack
 
       - name: Deploy to Simply
         uses: talunzhang/auto-web-deploy@v1.0.1
