@@ -16,7 +16,7 @@ async function getCourses(): Promise<Course[]> {
   try {
     const envelope = await dotnetFetch<CoursesEnvelope>(
       "/v1/courses?status=ACTIVE&limit=200",
-      { cache: "no-store" } as RequestInit,
+      { next: { revalidate: 300 } } as RequestInit,
     );
     return envelope.isSuccess ? (envelope.data?.courses ?? []) : [];
   } catch {

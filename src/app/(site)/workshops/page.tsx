@@ -10,7 +10,7 @@ async function getWorkshops(): Promise<Webinar[]> {
   try {
     const envelope = await dotnetFetch<Envelope>(
       "/v1/workshopWebinar?status=Active&type=Workshop",
-      { cache: "no-store" } as RequestInit,
+      { next: { revalidate: 300 } } as RequestInit,
     );
     return envelope.isSuccess ? (envelope.data ?? []) : [];
   } catch {

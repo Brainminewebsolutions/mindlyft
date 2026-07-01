@@ -75,6 +75,7 @@ export default function VideoHeroSection() {
         muted
         loop
         playsInline
+        preload="none"
         className="absolute inset-0 w-full h-full object-cover object-center z-0"
       />
 

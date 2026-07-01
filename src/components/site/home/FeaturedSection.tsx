@@ -54,7 +54,8 @@ const items: CardItem[] = [
     name: "AI & IT Solutions",
     lines: [
       "Building Intelligent Digital Solutions",
-      "Helping businesses leverage AI, automation, software development",
+      "Helping businesses leverage AI,",
+      "automation, software development",
       "and digital transformation",
     ],
     tag: "Technology",
@@ -166,15 +167,7 @@ function Card({
           className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-black/30" />
-
-       
-        {/* {isCenter && (
-          <div className="absolute bottom-2 right-2">
-            <span className="px-2 py-0.5 text-[9px] font-bold bg-white/90 text-violet-700 rounded-full">
-              ★ Core Pillar
-            </span>
-          </div>
-        )} */}
+ 
       </div>
 
       {/* CONTENT */}
@@ -201,30 +194,7 @@ function Card({
             {item.tag}
           </span>
         </div>
-
-        {/* FOOTER */}
-        {/* <div className="flex items-center justify-between mt-2">
-          <div className="flex gap-1">
-            <span className={`h-1 ${isCenter ? "w-6" : "w-4"} ${item.accent}`} />
-            <span className={`h-1 w-1 ${item.accent} opacity-40`} />
-            <span className={`h-1 w-1 ${item.accent} opacity-20`} />
-          </div>
-
-          <span
-            className={`flex items-center justify-center rounded-full border transition-all group-hover:text-white ${
-              arrowColors[item.accent]
-            } ${isCenter ? "w-8 h-8" : "w-7 h-7"}`}
-          >
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-              <path
-                d={isCenter ? "M1 9h10M7 5l4 4-4 4" : "M1 6h10M7 2l4 4-4 4"}
-                stroke="currentColor"
-                strokeWidth="1.7"
-                strokeLinecap="round"
-              />
-            </svg>
-          </span>
-        </div> */}
+ 
       </div>
 
       <motion.div

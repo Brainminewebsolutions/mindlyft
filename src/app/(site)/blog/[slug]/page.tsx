@@ -35,7 +35,7 @@ async function getBlog(slug: string): Promise<BlogDetail | null> {
   try {
     const envelope = await dotnetFetch<BlogEnvelope>(
       `/v1/blogs/slug/${encodeURIComponent(slug)}`,
-      { cache: "no-store" } as RequestInit,
+      { next: { revalidate: 300 } } as RequestInit,
     );
     return envelope.isSuccess ? envelope.data : null;
   } catch {

@@ -33,7 +33,8 @@ export default function NextGenAI() {
       <div className="relative z-10 max-w-[50%] flex-[0_0_50%] pl-[8%] pr-[5%]">
         <motion.h1
           initial={{ opacity: 0, y: 80 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 1 }}
           className="mb-5 text-[clamp(2.5rem,6vw,6rem)] font-extrabold leading-[1.05] text-[#0a0a0a]"
         >
@@ -43,7 +44,8 @@ export default function NextGenAI() {
 
         <motion.p
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.5 }}
           className="mb-8 max-w-[460px] text-[1.1rem] leading-[1.7] text-[#555]"
         >

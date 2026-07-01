@@ -12,7 +12,7 @@ import ToolSection from '../../components/site/home/ToolSection'
 import IITExpertiseSection from '@/components/site/home/IITExpertiseSection'
 import CoursesCard from '../../components/site/home/CoursesCard'
 import WhatWeDo from '@/components/site/home/WhatWeDo'
-import NextGenAI from '../../components/site/home/NextGenAI'
+import NextGenAI from '../../components/site/home/NextGenAIDynamic';
 import Innovation from '../../components/site/home/Innovation'
  import OurClients from "@/components/site/home/OurClients";
  import GsapInit from "@/components/GsapInit";

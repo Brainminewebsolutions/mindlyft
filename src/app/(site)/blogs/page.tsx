@@ -34,8 +34,8 @@ async function fetchData(): Promise<{
   blogsByCategory: Record<number, BlogItem[]>;
 }> {
   const [catRes, blogRes] = await Promise.allSettled([
-    dotnetFetch<CatEnvelope>("/v1/blog-categories?status=Active", { cache: "no-store" } as RequestInit),
-    dotnetFetch<BlogEnvelope>("/v1/blogs?status=Active&limit=200", { cache: "no-store" } as RequestInit),
+    dotnetFetch<CatEnvelope>("/v1/blog-categories?status=Active", { next: { revalidate: 300 } } as RequestInit),
+    dotnetFetch<BlogEnvelope>("/v1/blogs?status=Active&limit=200", { next: { revalidate: 300 } } as RequestInit),
   ]);
 
   const apiCategories: ApiCategory[] =

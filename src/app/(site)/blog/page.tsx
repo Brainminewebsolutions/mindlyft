@@ -33,7 +33,7 @@ async function getPublishedBlogs(): Promise<BlogItem[]> {
   try {
     const envelope = await dotnetFetch<BlogListEnvelope>(
       "/v1/blogs?status=Active&limit=200",
-      { cache: "no-store" } as RequestInit,
+      { next: { revalidate: 300 } } as RequestInit,
     );
     return envelope.isSuccess ? (envelope.data?.blogs ?? []) : [];
   } catch {

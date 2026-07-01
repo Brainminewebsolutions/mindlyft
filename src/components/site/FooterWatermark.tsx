@@ -24,7 +24,8 @@ export default function FooterWatermark() {
     fontSize: "clamp(4rem, 13.5vw, 220px)",
     fontFamily: "'Playfair Display', Georgia, serif",
     letterSpacing: "-0.02em",
-    lineHeight: 1,
+    lineHeight: 1.15,
+    paddingBottom: "0.12em",
     background: "linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #3b82f6 100%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
@@ -66,12 +67,13 @@ export default function FooterWatermark() {
         }
       `}</style>
 
-      <div ref={ref} className="pb-14 pt-6 mt-10 w-full overflow-hidden">
-        <div className={`flex items-end justify-center w-full select-none pointer-events-none ${visible ? "wm-visible" : ""}`}>
+      <div ref={ref} className="pb-14 pt-8 mt-10 w-full">
+        <div className={`flex items-end justify-center w-full select-none pointer-events-none pb-4 ${visible ? "wm-visible" : ""}`}>
 
           {LETTERS.map((letter, i) => {
             const isI = i === LETTERS.length - 1; // last letter = "I" with robot
             const isL = letter === "L";
+            const isF = letter === "f";
             const isSpace = letter === " ";
 
             if (isSpace) {
@@ -110,6 +112,7 @@ export default function FooterWatermark() {
                 style={{
                   ...textStyle,
                   ...(isL ? { color: "#7c3aed", WebkitTextFillColor: "#7c3aed" } : {}),
+                  ...(isF ? { paddingRight: "0.18em" } : {}),
                 }}
               >
                 {letter}

@@ -23,7 +23,7 @@ async function getReviews(): Promise<Review[]> {
   try {
     const envelope = await dotnetFetch<ReviewsEnvelope>(
       "/v1/testimonials?status=ACTIVE&limit=50",
-      { cache: "no-store" } as RequestInit,
+      { next: { revalidate: 300 } } as RequestInit,
     );
     return envelope.isSuccess ? (envelope.data?.testimonials ?? []) : [];
   } catch {

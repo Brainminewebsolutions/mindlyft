@@ -9,7 +9,7 @@ async function getActiveCourses(): Promise<CourseItem[]> {
   try {
     const env = await dotnetFetch<CoursesEnvelope>(
       "/v1/courses?status=ACTIVE",
-      { cache: "no-store" } as RequestInit,
+      { next: { revalidate: 300 } } as RequestInit,
     );
     if (!env.isSuccess || !Array.isArray(env.data?.courses)) return [];
     return env.data.courses.map(c => ({ id: c.id, name: c.name }));

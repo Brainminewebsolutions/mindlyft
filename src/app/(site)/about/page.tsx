@@ -40,13 +40,14 @@ async function getTeamCategories() {
   try {
     const env = await dotnetFetch<EmployeeEnvelope>(
       "/v1/employees?status=ACTIVE&limit=200",
-      { cache: "no-store" } as RequestInit,
+      { next: { revalidate: 300 } } as RequestInit,
     );
     if (!env.isSuccess || !Array.isArray(env.data?.employees)) return [];
 
     const grouped = new Map<string, Employee[]>();
     for (const emp of env.data.employees) {
-      const key = emp.category?.trim() || "Team";
+      const key = emp.category?.trim();
+      if (!key) continue;
       if (!grouped.has(key)) grouped.set(key, []);
       grouped.get(key)!.push(emp);
     }
