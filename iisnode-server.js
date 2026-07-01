@@ -1,25 +1,15 @@
 'use strict'
 // IISNode-compatible Next.js standalone server.
-// Copied to .next/standalone/server.js automatically by the postbuild script.
-//
-// Why this exists:
-//   Next.js generates server.js with `parseInt(process.env.PORT, 10) || 3000`.
-//   IISNode sets PORT to a Windows named pipe (\\.\pipe\...), not a number.
-//   parseInt of a pipe path returns NaN -> fallback to 3000 -> EADDRINUSE.
-//
-//   This file handles both cases using only startServer (the correct standalone
-//   API) to avoid loading webpack-lib which is excluded from standalone node_modules.
-//
-//   Named-pipe path: start Next.js on a local TCP port, then proxy the
-//   named pipe to it so IISNode can connect.
-
+// postbuild.js prepends: const nextConfig = {...}; process.env.__NEXT_PRIVATE_STANDALONE_CONFIG = JSON.stringify(nextConfig);
+// That env-var must be set before requiring Next.js so config.js silently skips
+// loadWebpackHook() failures (webpack is not in the standalone trace).
 const http = require('http')
 const path = require('path')
 
 process.env.NODE_ENV = 'production'
 process.chdir(__dirname)
 
-const nextConfig = JSON.parse(process.env.__NEXT_PRIVATE_STANDALONE_CONFIG || '{}')
+// nextConfig is declared by the prepended header from postbuild.js
 const { startServer } = require('next/dist/server/lib/start-server')
 
 const portEnv = process.env.PORT

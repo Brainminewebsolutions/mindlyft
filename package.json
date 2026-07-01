@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "node -e \"require('fs').copyFileSync('iisnode-server.js','.next/standalone/server.js')\"",
+    "postbuild": "node postbuild.js",
     "start": "next start",
     "startdev": "node .next/standalone/server.js",
     "startprod": "node server.js",
