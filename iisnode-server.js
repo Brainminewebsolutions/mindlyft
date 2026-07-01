@@ -5,63 +5,82 @@
 // Why this exists:
 //   Next.js generates server.js with `parseInt(process.env.PORT, 10) || 3000`.
 //   IISNode sets PORT to a Windows named pipe (\\.\pipe\...), not a number.
-//   parseInt of a pipe path returns NaN → fallback to 3000 → EADDRINUSE.
-//   This file detects the named pipe and uses http.createServer directly.
+//   parseInt of a pipe path returns NaN -> fallback to 3000 -> EADDRINUSE.
+//
+//   This file handles both cases using only startServer (the correct standalone
+//   API) to avoid loading webpack-lib which is excluded from standalone node_modules.
+//
+//   Named-pipe path: start Next.js on a local TCP port, then proxy the
+//   named pipe to it so IISNode can connect.
 
+const http = require('http')
 const path = require('path')
-const http  = require('http')
-
-const dir = path.join(__dirname)
 
 process.env.NODE_ENV = 'production'
 process.chdir(__dirname)
 
-// If PORT is a named pipe string (iisnode), keep it as-is.
-// If PORT is a number string or undefined, parse it as TCP port.
-const portEnv     = process.env.PORT
-const currentPort = portEnv && isNaN(Number(portEnv))
-  ? portEnv                          // named pipe from iisnode
-  : (parseInt(portEnv, 10) || 3000)  // plain TCP port
+const nextConfig = JSON.parse(process.env.__NEXT_PRIVATE_STANDALONE_CONFIG || '{}')
+const { startServer } = require('next/dist/server/lib/start-server')
 
+const portEnv = process.env.PORT
+const isNamedPipe = portEnv && isNaN(Number(portEnv))
 const hostname = process.env.HOSTNAME || '0.0.0.0'
 
 let keepAliveTimeout = parseInt(process.env.KEEP_ALIVE_TIMEOUT, 10)
-if (
-  Number.isNaN(keepAliveTimeout) ||
-  !Number.isFinite(keepAliveTimeout) ||
-  keepAliveTimeout < 0
-) {
+if (!Number.isFinite(keepAliveTimeout) || keepAliveTimeout < 0) {
   keepAliveTimeout = undefined
 }
 
-// Load config injected by Next.js build
-const nextConfig = JSON.parse(process.env.__NEXT_PRIVATE_STANDALONE_CONFIG || '{}')
+if (isNamedPipe) {
+  // IISNode named-pipe path.
+  // startServer cannot listen on Windows named pipes, so we start Next.js on
+  // a pseudo-unique local TCP port and proxy the named pipe connection to it.
+  const localPort = 49000 + (process.pid % 1000)
 
-require('next')
-
-if (typeof currentPort === 'string') {
-  // ── iisnode named-pipe path ──────────────────────────────────────────────
-  const next   = require('next')
-  const app    = next({ dev: false, dir, conf: nextConfig })
-  const handle = app.getRequestHandler()
-
-  app.prepare().then(() => {
-    const server = http.createServer((req, res) => handle(req, res))
-    if (keepAliveTimeout !== undefined) server.keepAliveTimeout = keepAliveTimeout
-    server.listen(currentPort, () => {
-      console.log('> Ready on named pipe', currentPort)
-    })
-    server.on('error', (err) => { console.error(err); process.exit(1) })
-  })
-} else {
-  // ── Direct TCP port ───────────────────────────────────────────────────────
-  const { startServer } = require('next/dist/server/lib/start-server')
   startServer({
-    dir,
+    dir: __dirname,
+    isDev: false,
+    config: nextConfig,
+    hostname: '127.0.0.1',
+    port: localPort,
+    allowRetry: true,
+    keepAliveTimeout,
+  }).then(() => {
+    const proxy = http.createServer((req, res) => {
+      const proxyReq = http.request(
+        {
+          hostname: '127.0.0.1',
+          port: localPort,
+          path: req.url,
+          method: req.method,
+          headers: req.headers,
+        },
+        (proxyRes) => {
+          res.writeHead(proxyRes.statusCode, proxyRes.headers)
+          proxyRes.pipe(res, { end: true })
+        }
+      )
+      proxyReq.on('error', (err) => {
+        console.error('Proxy error:', err.message)
+        if (!res.headersSent) res.writeHead(502)
+        res.end()
+      })
+      req.pipe(proxyReq, { end: true })
+    })
+
+    proxy.listen(portEnv, () => {
+      console.log('> Ready on named pipe', portEnv)
+    })
+    proxy.on('error', (err) => { console.error(err); process.exit(1) })
+  }).catch((err) => { console.error(err); process.exit(1) })
+} else {
+  // Direct TCP port path.
+  startServer({
+    dir: __dirname,
     isDev: false,
     config: nextConfig,
     hostname,
-    port: currentPort,
+    port: parseInt(portEnv, 10) || 3000,
     allowRetry: false,
     keepAliveTimeout,
   }).catch((err) => { console.error(err); process.exit(1) })
