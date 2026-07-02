@@ -49,7 +49,7 @@ jobs:
             "-disableLink:ContentExtension",
             "-disableLink:CertificateExtension",
             "-source:contentPath=`"${{ github.workspace }}\.next\standalone`"",
-            "-dest:contentPath=`"${{ secrets.WEBSITE_NAME }}`",computerName=`"https://win8067.site4now.net:8172`",userName=`"${{ secrets.SERVER_USERNAME }}`",password=`"${{ secrets.SERVER_PASSWORD }}`",authType=`"Basic`""
+            "-dest:contentPath=`"${{ secrets.WEBSITE_NAME }}`",computerName=`"https://win8067.site4now.net:8172/MsDeploy.axd`",userName=`"${{ secrets.SERVER_USERNAME }}`",password=`"${{ secrets.SERVER_PASSWORD }}`",authType=`"Basic`""
           )
           & $msdeploy $arguments
           exit $LASTEXITCODE

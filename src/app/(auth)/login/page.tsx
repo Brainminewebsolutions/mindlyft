@@ -1,7 +1,7 @@
  "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
@@ -19,8 +19,16 @@ const ROLE_HOME: Record<string, string> = {
   STUDENT:    "/student/dashboard",
 };
 
-export default function LoginPage() {
+// Only allow same-site relative paths — a raw "//evil.com" or absolute URL
+// from the query string could otherwise be used as an open redirect.
+function safeRedirect(path: string | null): string | null {
+  return path && path.startsWith("/") && !path.startsWith("//") ? path : null;
+}
+
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = safeRedirect(searchParams.get("next")) ?? safeRedirect(searchParams.get("from"));
 
   const [email,    setEmail]    = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +42,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const { role } = await loginUser(email, password);
-      router.push(role && ROLE_HOME[role] ? ROLE_HOME[role] : "/");
+      router.push(redirectTo ?? (role && ROLE_HOME[role] ? ROLE_HOME[role] : "/"));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
@@ -172,5 +180,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }

@@ -53,10 +53,17 @@ export default function CheckoutClient({ course, userName, userEmail, userPhoneN
   const [loading, setLoading] = useState(false);
   const [error,   setError]   = useState<string | null>(null);
 
-  const gradient      = GRADIENTS[Number(course.id) % GRADIENTS.length] ?? GRADIENTS[0];
-  const proxiedImage  = toUploadUrl(course.image);
-  const gst           = Math.round(course.price * 0.18);
-  const total         = Math.round(course.price * 1.18);
+  const gradient        = GRADIENTS[Number(course.id) % GRADIENTS.length] ?? GRADIENTS[0];
+  const proxiedImage    = toUploadUrl(course.image);
+  // Discount is a percentage off course.price — mirrors PaymentService.ApplyDiscount
+  // on the backend so the amount shown here matches what Razorpay actually charges.
+  const discountPercent = course.discount ?? 0;
+  const discountedPrice = discountPercent > 0
+    ? Math.round(course.price * (1 - discountPercent / 100) * 100) / 100
+    : course.price;
+  const discountAmount = course.price - discountedPrice;
+  const gst             = Math.round(discountedPrice * 0.18);
+  const total           = Math.round(discountedPrice * 1.18);
 
   async function handlePay() {
     setError(null);
@@ -195,7 +202,10 @@ export default function CheckoutClient({ course, userName, userEmail, userPhoneN
         <div className="border-t border-[rgba(108,99,255,0.10)] pt-4 mb-4">
           {[
             { label: "Course price", value: `₹${course.price.toLocaleString("en-IN")}` },
-            { label: "Discount",     value: "₹0"                                        },
+            {
+              label: discountPercent > 0 ? `Discount (${discountPercent}%)` : "Discount",
+              value: discountAmount > 0 ? `− ₹${discountAmount.toLocaleString("en-IN")}` : "₹0",
+            },
             { label: "GST (18%)",    value: `₹${gst.toLocaleString("en-IN")}`           },
           ].map(({ label, value }) => (
             <div key={label} className="flex justify-between mb-2">
