@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
-function CyclingLine({ lines, paused, textSize = "text-[11px] sm:text-xs" }: { lines: [string, string, string]; paused: boolean; textSize?: string }) {
+function CyclingLine({ lines, paused, textSize = "text-[11px] sm:text-xs" }: { lines: string[]; paused: boolean; textSize?: string }) {
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ function CyclingLine({ lines, paused, textSize = "text-[11px] sm:text-xs" }: { l
 interface CardItem {
   image: string;
   name: string;
-  lines: [string, string, string];
+  lines: string[];
   tag: string;
   accent: string;
   bg: string;
@@ -106,9 +106,6 @@ const items: CardItem[] = [
   },
 ];
 
-const arrowColors: Record<string, string> = {
-  "bg-indigo-500": "text-indigo-500 border-indigo-200 bg-indigo-50 hover:bg-indigo-500",
-};
 
 function Card({
   item,
