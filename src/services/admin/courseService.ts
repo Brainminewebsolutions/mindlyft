@@ -35,6 +35,14 @@ export const courseService = {
       .patch<Course>(`/v1/courses/${id}`, formData)
       .then((r) => r.data),
 
+  updateStatus: (id: string, status: "ACTIVE" | "INACTIVE") => {
+    const fd = new FormData();
+    fd.append("status", status);
+    return apiAxios
+      .patch<Course>(`/v1/courses/${id}`, fd)
+      .then((r) => r.data);
+  },
+
   delete: (id: string) =>
     apiAxios
       .delete(`/v1/courses/${id}`)

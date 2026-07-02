@@ -50,7 +50,7 @@ export default function AdminCoursesPage() {
   const router = useRouter();
   const [search, setSearch] = useState("");
 
-  const { courses, loading, error, deleteCourse } = useCourses({ search });
+  const { courses, loading, error, deleteCourse, toggleCourseStatus } = useCourses({ search });
 
   const [deleteTarget, setDeleteTarget] = useState<Course | null>(null);
 
@@ -144,6 +144,7 @@ export default function AdminCoursesPage() {
                 courses={courses}
                 onEdit={(c) => router.push(`/admin/courses/${c.id}/edit`)}
                 onDelete={(c) => setDeleteTarget(c)}
+                onToggleStatus={toggleCourseStatus}
               />
             </div>
           )}

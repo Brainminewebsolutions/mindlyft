@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { MoreHorizontal, Pencil, Trash2, BookOpen, Wifi, MapPin } from "lucide-react";
+import { MoreHorizontal, Pencil, Trash2, BookOpen, Wifi, MapPin, Power, PowerOff } from "lucide-react";
 import { Badge }   from "@/components/ui/badge";
 import { Button }  from "@/components/ui/button";
 import {
@@ -11,12 +11,13 @@ import {
 import type { Course } from "@/types/admin/course";
 
 type Props = {
-  courses:  Course[];
-  onEdit:   (c: Course) => void;
-  onDelete: (c: Course) => void;
+  courses:        Course[];
+  onEdit:         (c: Course) => void;
+  onDelete:       (c: Course) => void;
+  onToggleStatus: (c: Course) => void;
 };
 
-type MenuState = { id: string; top: number; right: number } | null;
+type MenuState = { id: string; top?: number; bottom?: number; right: number } | null;
 
 function CourseTypeBadge({ type }: { type: string }) {
   if (type === "IIT")
@@ -28,6 +29,16 @@ function CourseTypeBadge({ type }: { type: string }) {
   return (
     <Badge variant="outline" className="border-blue-400/40 text-blue-600 dark:text-blue-400">
       Mindlyftai
+    </Badge>
+  );
+}
+
+function StatusBadge({ status }: { status: string }) {
+  if (status === "INACTIVE")
+    return <Badge variant="secondary">Inactive</Badge>;
+  return (
+    <Badge variant="outline" className="border-emerald-500/30 text-emerald-600 dark:text-emerald-400">
+      Active
     </Badge>
   );
 }
@@ -61,12 +72,21 @@ function CourseThumbnail({ name, src }: { name: string; src?: string }) {
   );
 }
 
-export function CourseTable({ courses, onEdit, onDelete }: Props) {
+export function CourseTable({ courses, onEdit, onDelete, onToggleStatus }: Props) {
   const [menu, setMenu] = useState<MenuState>(null);
+
+  const MENU_HEIGHT = 130;
 
   const openMenu = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    setMenu({ id, top: rect.bottom + 4, right: window.innerWidth - rect.right });
+    const right = window.innerWidth - rect.right;
+    const spaceBelow = window.innerHeight - rect.bottom;
+
+    if (spaceBelow < MENU_HEIGHT + 8) {
+      setMenu({ id, bottom: window.innerHeight - rect.top + 4, right });
+    } else {
+      setMenu({ id, top: rect.bottom + 4, right });
+    }
   };
 
   const closeMenu = () => setMenu(null);
@@ -99,6 +119,7 @@ export function CourseTable({ courses, onEdit, onDelete }: Props) {
                 <TableHead className="hidden md:table-cell">Instructor</TableHead>
                 <TableHead className="hidden lg:table-cell">Language</TableHead>
                 <TableHead>Price</TableHead>
+                <TableHead>Status</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -147,6 +168,10 @@ export function CourseTable({ courses, onEdit, onDelete }: Props) {
                       : `₹${course.price.toLocaleString("en-IN")}`}
                   </TableCell>
 
+                  <TableCell>
+                    <StatusBadge status={course.status} />
+                  </TableCell>
+
                   <TableCell className="text-right">
                     <Button
                       variant="ghost"
@@ -169,7 +194,7 @@ export function CourseTable({ courses, onEdit, onDelete }: Props) {
           <div className="fixed inset-0 z-40" onClick={closeMenu} />
           <div
             className="fixed z-50 w-40 overflow-hidden rounded-lg border border-border bg-popover shadow-xl"
-            style={{ top: menu.top, right: menu.right }}
+            style={{ top: menu.top, bottom: menu.bottom, right: menu.right }}
           >
             <button
               onClick={() => { onEdit(activeCourse); closeMenu(); }}
@@ -177,6 +202,22 @@ export function CourseTable({ courses, onEdit, onDelete }: Props) {
             >
               <Pencil className="h-3.5 w-3.5 text-muted-foreground" />
               Edit
+            </button>
+            <button
+              onClick={() => { onToggleStatus(activeCourse); closeMenu(); }}
+              className="flex w-full items-center gap-2.5 px-3 py-2 text-xs text-foreground transition hover:bg-accent"
+            >
+              {activeCourse.status === "INACTIVE" ? (
+                <>
+                  <Power className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                  Activate
+                </>
+              ) : (
+                <>
+                  <PowerOff className="h-3.5 w-3.5 text-muted-foreground" />
+                  Deactivate
+                </>
+              )}
             </button>
             <div className="mx-2 my-1 border-t border-border" />
             <button

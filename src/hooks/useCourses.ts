@@ -39,5 +39,11 @@ export function useCourses(filters: CourseListParams = {}) {
     await fetchCourses();
   };
 
-  return { courses, pagination, loading, error, refetch: fetchCourses, deleteCourse };
+  const toggleCourseStatus = async (course: Course) => {
+    const nextStatus = course.status === "ACTIVE" ? "INACTIVE" : "ACTIVE";
+    await courseService.updateStatus(course.id, nextStatus);
+    await fetchCourses();
+  };
+
+  return { courses, pagination, loading, error, refetch: fetchCourses, deleteCourse, toggleCourseStatus };
 }
