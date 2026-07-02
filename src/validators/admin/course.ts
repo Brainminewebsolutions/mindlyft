@@ -13,6 +13,7 @@ export const createCourseSchema = z.object({
   discount:     z.number().min(0, "Discount must be 0 or more").max(100, "Discount cannot exceed 100%").optional(),
   category:     z.string().optional(),
   displayOrder: z.number().int().min(0).optional(),
+  accessMonths: z.number().int().positive("Access months must be positive").optional(),
 });
 
 export const updateCourseSchema = createCourseSchema.partial();

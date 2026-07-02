@@ -172,6 +172,7 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
       discount:     defaultValues?.discount     ?? undefined,
       category:     defaultValues?.category     || "",
       displayOrder: defaultValues?.displayOrder ?? 0,
+      accessMonths: defaultValues?.accessMonths ?? undefined,
     },
   });
 
@@ -198,6 +199,7 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
     if (formValues.discount !== undefined)        fd.append("discount",     String(formValues.discount));
     if (formValues.category)                      fd.append("category",     formValues.category);
     if (formValues.displayOrder !== undefined)    fd.append("displayOrder", String(formValues.displayOrder));
+    if (formValues.accessMonths !== undefined)    fd.append("accessMonths", String(formValues.accessMonths));
 
     if (imageFile) {
       fd.append("image", imageFile, imageFile.name);
@@ -294,8 +296,8 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
         </div>
       </div>
 
-      {/* ── Course Type + Discount ── */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {/* ── Course Type + Discount + Access ── */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="space-y-1.5">
           <Label htmlFor="courseType">Course Type <span className="text-destructive">*</span></Label>
           <select
@@ -323,6 +325,20 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
             className={errors.discount ? "border-destructive focus-visible:ring-destructive" : ""}
           />
           {errors.discount && <p className="text-xs text-destructive">{errors.discount.message}</p>}
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="accessMonths">Access (months)</Label>
+          <Input
+            id="accessMonths"
+            type="number"
+            min="1"
+            step="1"
+            {...register("accessMonths", { valueAsNumber: true })}
+            placeholder="Leave blank for lifetime"
+            className={errors.accessMonths ? "border-destructive focus-visible:ring-destructive" : ""}
+          />
+          {errors.accessMonths && <p className="text-xs text-destructive">{errors.accessMonths.message}</p>}
         </div>
       </div>
 

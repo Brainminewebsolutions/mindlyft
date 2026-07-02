@@ -46,6 +46,7 @@ export type AdminOrder = {
   studentPhone:      string | null;
   product:           OrderProduct;
   amount:            number;
+  gstAmount:         number;
   currency:          string;
   status:            string;
   razorpayOrderId:   string;

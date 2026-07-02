@@ -10,6 +10,8 @@ export type OrderListParams = {
   search?:      string;
   status?:      string;
   productType?: string;
+  fromDate?:    string;
+  toDate?:      string;
   page?:        number;
   limit?:       number;
 };

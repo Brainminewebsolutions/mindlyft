@@ -117,7 +117,6 @@ export function CourseTable({ courses, onEdit, onDelete, onToggleStatus }: Props
                 <TableHead className="hidden sm:table-cell">Type</TableHead>
                 <TableHead className="hidden sm:table-cell">Duration</TableHead>
                 <TableHead className="hidden md:table-cell">Instructor</TableHead>
-                <TableHead className="hidden lg:table-cell">Language</TableHead>
                 <TableHead>Price</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
@@ -158,14 +157,29 @@ export function CourseTable({ courses, onEdit, onDelete, onToggleStatus }: Props
                     {course.instructor}
                   </TableCell>
 
-                  <TableCell className="hidden text-sm text-muted-foreground lg:table-cell">
-                    {course.language}
-                  </TableCell>
-
                   <TableCell className="text-sm font-medium text-foreground">
-                    {course.price === 0
-                      ? <span className="text-emerald-600 dark:text-emerald-400">Free</span>
-                      : `₹${course.price.toLocaleString("en-IN")}`}
+                    {course.price === 0 ? (
+                      <span className="text-emerald-600 dark:text-emerald-400">Free</span>
+                    ) : course.discount && course.discount > 0 ? (
+                      <div className="flex flex-col leading-tight">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-emerald-600 dark:text-emerald-400">
+                            ₹{Math.round(course.price * (1 - course.discount / 100)).toLocaleString("en-IN")}
+                          </span>
+                          <Badge
+                            variant="outline"
+                            className="border-emerald-500/30 px-1.5 py-0 text-[10px] text-emerald-600 dark:text-emerald-400"
+                          >
+                            -{course.discount}%
+                          </Badge>
+                        </div>
+                        <span className="text-xs text-muted-foreground line-through">
+                          ₹{course.price.toLocaleString("en-IN")}
+                        </span>
+                      </div>
+                    ) : (
+                      `₹${course.price.toLocaleString("en-IN")}`
+                    )}
                   </TableCell>
 
                   <TableCell>

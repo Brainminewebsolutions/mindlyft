@@ -22,13 +22,34 @@ const STATUS_COLORS: Record<string, string> = {
   FAILED:  "border-red-500/30 bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400",
 };
 
+// Format using local date parts — d.toISOString() converts to UTC first,
+// which shifts the date backwards for any timezone ahead of UTC (e.g. IST).
+function toDateInputValue(d: Date) {
+  const y   = d.getFullYear();
+  const m   = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function firstDayOfThisMonth() {
+  const d = new Date();
+  return toDateInputValue(new Date(d.getFullYear(), d.getMonth(), 1));
+}
+
+function lastDayOfThisMonth() {
+  const d = new Date();
+  return toDateInputValue(new Date(d.getFullYear(), d.getMonth() + 1, 0));
+}
+
 export default function OrdersPage() {
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("");
-  const [page,   setPage]   = useState(1);
+  const [search,   setSearch]   = useState("");
+  const [status,   setStatus]   = useState("");
+  const [fromDate, setFromDate] = useState(firstDayOfThisMonth);
+  const [toDate,   setToDate]   = useState(lastDayOfThisMonth);
+  const [page,     setPage]     = useState(1);
 
   const { orders, pagination, loading, error, refetch } = useOrders({
-    search, status, page, limit: 10,
+    search, status, fromDate, toDate, page, limit: 10,
   });
 
   return (
@@ -89,6 +110,26 @@ export default function OrdersPage() {
           <option value="PENDING">Pending</option>
           <option value="FAILED">Failed</option>
         </select>
+
+        <div className="flex items-center gap-1.5">
+          <Input
+            type="date"
+            value={fromDate}
+            max={toDate}
+            onChange={(e) => { setFromDate(e.target.value); setPage(1); }}
+            className="h-9 w-[145px] text-sm"
+            aria-label="From date"
+          />
+          <span className="text-xs text-muted-foreground">to</span>
+          <Input
+            type="date"
+            value={toDate}
+            min={fromDate}
+            onChange={(e) => { setToDate(e.target.value); setPage(1); }}
+            className="h-9 w-[145px] text-sm"
+            aria-label="To date"
+          />
+        </div>
 
         <Button variant="outline" size="icon" onClick={refetch} aria-label="Refresh">
           <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
@@ -162,6 +203,7 @@ function OrdersTable({ orders }: { orders: AdminOrder[] }) {
               <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground">Student</th>
               <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground">Product</th>
               <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground">Amount</th>
+              <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground hidden sm:table-cell">GST</th>
               <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground">Status</th>
               <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground hidden md:table-cell">Razorpay ID</th>
               <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground">Date</th>
@@ -193,6 +235,9 @@ function OrdersTable({ orders }: { orders: AdminOrder[] }) {
                 </td>
                 <td className="px-4 py-3 text-right font-semibold text-foreground">
                   {formatCurrency(order.amount)}
+                </td>
+                <td className="px-4 py-3 text-right text-muted-foreground hidden sm:table-cell">
+                  {formatCurrency(order.gstAmount)}
                 </td>
                 <td className="px-4 py-3">
                   <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${STATUS_COLORS[order.status] ?? ""}`}>

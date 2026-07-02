@@ -55,15 +55,12 @@ export default function CheckoutClient({ course, userName, userEmail, userPhoneN
 
   const gradient        = GRADIENTS[Number(course.id) % GRADIENTS.length] ?? GRADIENTS[0];
   const proxiedImage    = toUploadUrl(course.image);
-  // Discount is a percentage off course.price — mirrors PaymentService.ApplyDiscount
-  // on the backend so the amount shown here matches what Razorpay actually charges.
+  // GST is charged on the full course price; the discount is then subtracted
+  // from that price+GST figure to get the final total.
   const discountPercent = course.discount ?? 0;
-  const discountedPrice = discountPercent > 0
-    ? Math.round(course.price * (1 - discountPercent / 100) * 100) / 100
-    : course.price;
-  const discountAmount = course.price - discountedPrice;
-  const gst             = Math.round(discountedPrice * 0.18);
-  const total           = Math.round(discountedPrice * 1.18);
+  const discountAmount  = discountPercent > 0 ? Math.round(course.price * discountPercent) / 100 : 0;
+  const gst              = Math.round(course.price * 0.18);
+  const total             = Math.round(course.price * 1.18 - discountAmount);
 
   async function handlePay() {
     setError(null);

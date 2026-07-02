@@ -33,7 +33,7 @@ function getRoleFromToken(token: string): string | null {
   } catch { return null; }
 }
 
-export function proxy(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const token = req.cookies.get(AUTH_COOKIE)?.value;
   const role  = token ? getRoleFromToken(token) : null;
@@ -61,15 +61,21 @@ export function proxy(req: NextRequest) {
     }
   }
 
+  // Anything else at this point is the public marketing/course site. Admins
+  // are confined to /admin — they shouldn't browse the storefront as their
+  // own account (e.g. buying courses, registering for workshops).
+  if (role === "ADMIN") {
+    return NextResponse.redirect(new URL("/admin/dashboard", req.url));
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
+  // Runs on every route except Next.js internals, the API layer (which has
+  // its own auth), and static files — needed so the ADMIN redirect above can
+  // catch public site pages, not just the /admin, /employee, /student trees.
   matcher: [
-    "/admin/:path*",
-    "/employee/:path*",
-    "/student/:path*",
-    "/login",
-    "/register",
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)",
   ],
 };

@@ -26,6 +26,7 @@ export type Course = {
   courseType:       CourseType;
   category:         string | null;
   displayOrder:     number;
+  accessMonths:     number | null;
   createdAt:        string;
   updatedAt:        string;
   instructorDetail: InstructorDetail | null;
