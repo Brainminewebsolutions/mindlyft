@@ -36,6 +36,7 @@ jobs:
       - name: Deploy to Simply
         shell: pwsh
         run: |
+          $PSNativeCommandArgumentPassing = 'Legacy'
           $msdeploy = "C:\Program Files (x86)\IIS\Microsoft Web Deploy V3\msdeploy.exe"
           $arguments = @(
             "-verb:sync",
