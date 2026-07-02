@@ -10,7 +10,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <NavbarWrapper height={NAVBAR_HEIGHT} />
-      <div className="overflow-x-hidden">
+      <div className="overflow-x-clip">
         {children}
       </div>
       {/* <Chatbot /> */}
