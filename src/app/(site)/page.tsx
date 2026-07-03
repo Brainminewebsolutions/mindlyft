@@ -1,8 +1,4 @@
-import { Suspense } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, ArrowUpRight, Lock, Shield, ClipboardCheck, Folder, KeyRound, Activity } from "lucide-react";
-
+import { Suspense } from "react"; 
 import TestimonialsCard from '../../components/site/home/TestimonialsCard' 
 
 import WorkshopsCard from '../../components/site/home/WorkshopsCard'
@@ -12,7 +8,7 @@ import ToolSection from '../../components/site/home/ToolSection'
 import IITExpertiseSection from '@/components/site/home/IITExpertiseSection'
 import CoursesCard from '../../components/site/home/CoursesCard'
 import WhatWeDo from '@/components/site/home/WhatWeDo'
-import NextGenAI from '../../components/site/home/NextGenAIDynamic';
+// import NextGenAI from '../../components/site/home/NextGenAIDynamic';
 import Innovation from '../../components/site/home/Innovation'
  import OurClients from "@/components/site/home/OurClients";
  import GsapInit from "@/components/GsapInit";
@@ -41,7 +37,7 @@ export default function HomePage() {
                   <IITExpertiseSection />
                 </Suspense>
               </div>
-              <Suspense fallback={<div className="h-[600px]" />}>
+              <Suspense fallback={<div className="h-screen" />}>
                 <CoursesCard />
               </Suspense>
 
@@ -66,7 +62,7 @@ export default function HomePage() {
 
               <Innovation />
 
-               <NextGenAI />
+               {/* <NextGenAI /> */}
 
             </div>
           </div>

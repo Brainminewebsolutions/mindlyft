@@ -126,7 +126,7 @@ function LeaderCard({ leader }: { leader: Leader }) {
           )}
 
           {/* Bottom gradient overlay with name/designation */}
-          <div className="absolute bottom-0 left-0 right-0 z-10 pt-14 px-4 pb-4 bg-gradient-to-t from-violet-900/90 to-transparent">
+          <div className="absolute bottom-0 left-0 right-0 z-10 pt-14 px-4 pb-4  ">
             <h4 className="text-lg font-extrabold !text-white leading-tight drop-shadow">{leader.name}</h4>
             {leader.designation && (
               <p className="text-white text-base   mt-1 drop-shadow">{leader.designation}</p>
@@ -149,13 +149,13 @@ function LeaderCard({ leader }: { leader: Leader }) {
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="flex flex-col justify-center h-full px-7 py-8 text-white space-y-4">
+            <div className="flex flex-col justify-center h-full px-7 py-4 text-white space-y-4">
               <h4 className="text-xl font-bold">{leader.name}</h4>
               {leader.designation && (
                 <p className="text-white/70 text-sm font-medium">{leader.designation}</p>
               )}
               <div className="w-10 h-0.5 bg-white/30 rounded-full" />
-              <p className="text-sm text-white/85 leading-relaxed line-clamp-6">
+              <p className="text-sm text-white/85 leading-relaxed line-clamp-10">
                 {leader.description || "No description available."}
               </p>
             </div>

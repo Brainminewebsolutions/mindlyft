@@ -154,7 +154,7 @@ export default function CoursesCardClient({ courses }: { courses: Course[] }) {
       ) : (
         <div
           ref={stageRef}
-          className="relative w-full px-[3vw] py-20 min-[681px]:min-h-[80vh] max-[680px]:px-5"
+          className="relative w-full px-[3vw] py-8 min-[681px]:min-h-[80vh] min-[1101px]:min-h-[600px] max-[680px]:px-5"
         >
           {/* Noise texture */}
           <div
@@ -167,7 +167,7 @@ export default function CoursesCardClient({ courses }: { courses: Course[] }) {
           {triples.map((triple, i) => (
             <div
               key={i}
-              className={`triple-layer relative z-10 mb-12 flex w-full items-center justify-center last:mb-0 min-[681px]:absolute min-[681px]:inset-0 min-[681px]:mb-0 min-[681px]:px-[3vw] min-[681px]:py-20 ${
+              className={`triple-layer relative z-10 mb-12 flex w-full items-center justify-center last:mb-0 min-[681px]:absolute min-[681px]:inset-0 min-[681px]:mb-0 min-[681px]:px-[3vw] min-[681px]:py-8 ${
                 i % 2 === 0
                   ? "bg-[radial-gradient(ellipse_at_15%_20%,rgba(139,92,246,0.07)_0%,transparent_50%),radial-gradient(ellipse_at_85%_80%,rgba(124,58,237,0.06)_0%,transparent_45%)]"
                   : "bg-[rgba(248,248,252,0.6)] bg-[radial-gradient(ellipse_at_85%_20%,rgba(124,58,237,0.07)_0%,transparent_50%),radial-gradient(ellipse_at_15%_80%,rgba(59,130,246,0.07)_0%,transparent_45%)]"
@@ -224,15 +224,19 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
   return (
     <Link
       href={href}
-      className={`${cardClass} relative flex cursor-pointer flex-col overflow-hidden rounded-[24px] border border-[color:rgba(var(--a),0.15)] bg-white shadow-[0_8px_32px_rgba(var(--a),0.10),0_2px_8px_rgba(0,0,0,0.06)] will-change-transform`}
+      className={`${cardClass} relative flex min-h-[440px] cursor-pointer flex-col overflow-hidden rounded-[24px] border border-[color:rgba(var(--a),0.15)] bg-white shadow-[0_8px_32px_rgba(var(--a),0.10),0_2px_8px_rgba(0,0,0,0.06)] will-change-transform`}
       style={{ "--a": accentRgb } as React.CSSProperties}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {/* Image / gradient */}
-      <div className="relative h-[240px] w-full overflow-hidden">
+      <div className="relative h-[200px] w-full overflow-hidden">
+        {/* important-marked height: template-styles.css has an unlayered global
+            `img { height: auto }` rule, which beats Tailwind's layered utilities
+            regardless of specificity — without `!` this collapses to each
+            image's own aspect ratio instead of the fixed 240px container. */}
         {course.image ? (
-          <img src={course.image} alt={course.name} className="block h-full w-full object-cover" />
+          <img src={course.image} alt={course.name} className="block h-full! w-full object-cover" />
         ) : (
           <div className="h-full w-full bg-[linear-gradient(135deg,rgba(var(--a),0.85)_0%,rgba(var(--a),0.45)_100%)]" />
         )}
@@ -259,49 +263,46 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
 
       {/* Content */}
       <div className="flex flex-1 flex-col gap-3 p-5">
-        {/* Name */}
-        <h3 className={`${textClass} text-[clamp(1rem,1.4vw,1.2rem)] font-bold leading-snug text-[#0f0a1e] [font-family:var(--secondaryFont)]`}>
-          {course.name}
-        </h3>
+        {/* Name + stats + highlights — centered as a group in the space above the
+            button, so courses with less content (no highlights, short name) don't
+            end up top-heavy with one big empty gap before the button. */}
+        <div className="flex flex-1 flex-col justify-center gap-3">
+          <h3 className={`${textClass} text-[clamp(1rem,1.4vw,1.2rem)] font-bold leading-snug text-[#0f0a1e] [font-family:var(--secondaryFont)]`}>
+            {course.name}
+          </h3>
 
-        {/* Description */}
-        {course.description && (
-          <p className={`${textClass} line-clamp-2 text-[12.5px] leading-relaxed text-gray-400`}>
-            {course.description}
-          </p>
-        )}
+          {/* Stats row */}
+          <div className={`${textClass} flex flex-wrap gap-x-3 gap-y-1 text-[12px] text-gray-400`}>
+            <span className="flex items-center gap-1">
+              <Clock size={12} className="shrink-0" style={{ color: `rgba(${accentRgb},0.8)` }} />
+              {course.duration}h
+            </span>
+            <span className="flex items-center gap-1">
+              <Globe size={12} className="shrink-0" style={{ color: `rgba(${accentRgb},0.8)` }} />
+              {course.language}
+            </span>
+            <span className="flex items-center gap-1 max-w-[130px] truncate">
+              <User size={12} className="shrink-0" style={{ color: `rgba(${accentRgb},0.8)` }} />
+              {course.instructor}
+            </span>
+          </div>
 
-        {/* Stats row */}
-        <div className={`${textClass} flex flex-wrap gap-x-3 gap-y-1 text-[12px] text-gray-400`}>
-          <span className="flex items-center gap-1">
-            <Clock size={12} className="shrink-0" style={{ color: `rgba(${accentRgb},0.8)` }} />
-            {course.duration}h
-          </span>
-          <span className="flex items-center gap-1">
-            <Globe size={12} className="shrink-0" style={{ color: `rgba(${accentRgb},0.8)` }} />
-            {course.language}
-          </span>
-          <span className="flex items-center gap-1 max-w-[130px] truncate">
-            <User size={12} className="shrink-0" style={{ color: `rgba(${accentRgb},0.8)` }} />
-            {course.instructor}
-          </span>
+          {/* Highlights */}
+          {course.highlights && course.highlights.length > 0 && (
+            <ul className={`${textClass} space-y-1`}>
+              {course.highlights.slice(0, 2).map((h, idx) => (
+                <li key={idx} className="flex items-start gap-1.5 text-[12px] text-gray-500">
+                  <CheckCircle size={12} className="mt-0.5 shrink-0 text-violet-500" />
+                  {h}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-
-        {/* Highlights */}
-        {course.highlights && course.highlights.length > 0 && (
-          <ul className={`${textClass} space-y-1`}>
-            {course.highlights.slice(0, 2).map((h, idx) => (
-              <li key={idx} className="flex items-start gap-1.5 text-[12px] text-gray-500">
-                <CheckCircle size={12} className="mt-0.5 shrink-0 text-violet-500" />
-                {h}
-              </li>
-            ))}
-          </ul>
-        )}
 
         {/* Button */}
         <div
-          className={`${textClass} mt-auto inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[linear-gradient(135deg,rgba(var(--a),1)_0%,rgba(var(--a),0.75)_100%)] py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-95`}
+          className={`${textClass} inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[linear-gradient(135deg,rgba(var(--a),1)_0%,rgba(var(--a),0.75)_100%)] py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-95`}
         >
           View Course
           <ArrowRight size={14} strokeWidth={2.5} />

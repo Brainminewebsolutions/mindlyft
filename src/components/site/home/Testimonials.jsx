@@ -1,6 +1,6 @@
  "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
 import Image from "next/image";
 import { Star, Play, MessageSquare, Quote, ChevronLeft, ChevronRight } from "lucide-react";
@@ -163,14 +163,21 @@ function TestimonialCard({ item }) {
   );
 }
 
+const AUTO_SCROLL_INTERVAL = 3000;
+const CARD_STEP = 320;
+
 export default function Testimonials({ testimonials = [] }) {
   const scrollRef = useRef(null);
   const [dragging, setDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  // Paused while the user is dragging or hovering the track — a ref (not state)
+  // so pausing/resuming doesn't reset the auto-scroll interval's own timer.
+  const pausedRef = useRef(false);
 
   const onMouseDown = (e) => {
     setDragging(true);
+    pausedRef.current = true;
     setStartX(e.pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
   };
@@ -181,7 +188,27 @@ export default function Testimonials({ testimonials = [] }) {
     scrollRef.current.scrollLeft = scrollLeft - (x - startX);
   };
   const onMouseUp = () => setDragging(false);
-  const scrollBy = (dir) => scrollRef.current?.scrollBy({ left: dir * 320, behavior: "smooth" });
+  const onTrackEnter = () => { pausedRef.current = true; };
+  const onTrackLeave = () => { setDragging(false); pausedRef.current = false; };
+  const scrollBy = (dir) => scrollRef.current?.scrollBy({ left: dir * CARD_STEP, behavior: "smooth" });
+
+  useEffect(() => {
+    if (testimonials.length === 0) return;
+
+    const id = setInterval(() => {
+      const el = scrollRef.current;
+      if (!el || pausedRef.current) return;
+
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 5;
+      if (atEnd) {
+        el.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        el.scrollBy({ left: CARD_STEP, behavior: "smooth" });
+      }
+    }, AUTO_SCROLL_INTERVAL);
+
+    return () => clearInterval(id);
+  }, [testimonials.length]);
 
   return (
     <>
@@ -246,7 +273,8 @@ export default function Testimonials({ testimonials = [] }) {
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}
-            onMouseLeave={onMouseUp}
+            onMouseEnter={onTrackEnter}
+            onMouseLeave={onTrackLeave}
             style={{ cursor: dragging ? "grabbing" : "grab" }}
           >
             {testimonials.map((item) => (
