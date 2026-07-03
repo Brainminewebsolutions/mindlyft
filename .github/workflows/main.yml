@@ -42,7 +42,7 @@ jobs:
             "-verb:sync",
             "-allowUntrusted",
             "-useCheckSum",
-            "-retryAttempts:3",
+            "-retryAttempts:3", 
             "-retryInterval:5000",
             "-enableRule:AppOffline",
             "-disableLink:AppPoolExtension",
