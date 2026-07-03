@@ -15,7 +15,7 @@ import Innovation from '../../components/site/home/Innovation'
 import FeaturedSection from "@/components/site/home/FeaturedSection";
 import WhyChooseUs from "@/components/site/home/WhyChooseUs";
 import AiItSolutions from "@/components/site/home/AiItSolutions";
- 
+   
 export default function HomePage() {
   return (
     <>
