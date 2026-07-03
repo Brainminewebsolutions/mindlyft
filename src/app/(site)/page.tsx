@@ -1,5 +1,6 @@
-import { Suspense } from "react"; 
-import TestimonialsCard from '../../components/site/home/TestimonialsCard' 
+import { Suspense } from "react";
+import "@/app/template-styles.css";
+import TestimonialsCard from '../../components/site/home/TestimonialsCard'
 
 import WorkshopsCard from '../../components/site/home/WorkshopsCard'
 import VideoHeroSection from '../../components/site/home/VideoHeroSection'
@@ -47,7 +48,9 @@ export default function HomePage() {
 
               <WhatWeDo />
 
-              <OurClients />
+              <Suspense fallback={<div className="h-[400px]" />}>
+                <OurClients />
+              </Suspense>
 
               <Suspense fallback={<div className="h-[500px]" />}>
                 <WorkshopsCard />

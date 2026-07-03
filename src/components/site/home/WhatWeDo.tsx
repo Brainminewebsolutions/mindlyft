@@ -129,6 +129,7 @@ export default function WhatWeDo() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -159,6 +160,19 @@ export default function WhatWeDo() {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Only the active step's video plays — the other two stay paused so the
+  // section doesn't autoplay/download 3 videos at once.
+  useEffect(() => {
+    videoRefs.current.forEach((video, i) => {
+      if (!video) return;
+      if (i === activeIndex) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  }, [activeIndex]);
 
   const active = steps[activeIndex];
 
@@ -249,10 +263,13 @@ export default function WhatWeDo() {
               {steps.map((step, i) => (
   <video
     key={i}
-    autoPlay
+    ref={(el) => {
+      videoRefs.current[i] = el;
+    }}
     muted
     loop
     playsInline
+    preload={Math.abs(i - activeIndex) <= 1 ? "auto" : "none"}
     className={`absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-[550ms] ease-in-out ${
       i === activeIndex
         ? "z-[2] translate-y-0 scale-100 opacity-100"

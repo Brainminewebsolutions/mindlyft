@@ -26,17 +26,17 @@ const ITEMS = [
 export default function WhoWeAre({ bg = "bg-white" }: { bg?: string }) {
   return (
     <section className={`${bg} py-20 px-6 md:px-14 lg:px-24`}>
-      <div className="text-center mb-12">
+      <div className="text-center mb-50">
                 <AnimateIn delay={100} direction="right">
                   <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
-                     Who we &nbsp;
+                     Who we {" "}
                     <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
                       are
                     </span>
                   </h2>
                 </AnimateIn>
               </div>
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12  ">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 text-center lg:text-left items-center  ">
 
         {/* Image */}
         <div className="w-full lg:w-[45%] shrink-0">

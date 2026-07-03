@@ -132,7 +132,7 @@ gsap.set(cards[0], {
             card layers below (plain text-center on the pill alone has no effect,
             it's not the pill that needs centering, it's the pill within its row). */}
         <div className="pointer-events-none absolute top-6 left-0 z-50 flex w-full justify-center">
-          <span className="text-[10px] font-black uppercase tracking-[3px] px-3 py-1 rounded-full border border-violet-200 bg-violet-100 text-violet-700">
+          <span className="text-[20px] font-black uppercase tracking-[3px] px-3 py-1 rounded-full border border-violet-200 bg-violet-100 text-violet-700">
             C3iHub IIT Kanpur Certification Program
           </span>
         </div>
@@ -198,30 +198,21 @@ gsap.set(cards[0], {
 
                 {/* Left: content */}
                 <div className="relative z-[1] flex flex-col justify-between w-full md:w-[56%] p-8 md:p-10 lg:p-14 h-full">
-
-                  {/* Top: counter + program label */}
-                  <div className="flex items-center gap-3 py-1">
-                    <span className="text-[11px] tracking-[6px] font-extrabold uppercase" style={{ color: accent }}>
-                      0{i + 1}
-                    </span>
-                    <span
-                      className="text-[10px] font-black uppercase tracking-[3px] px-3 py-1 rounded-full border"
-                      style={{ color: accent, borderColor: `${accent}40`, backgroundColor: `${accent}10` }}
-                    >
-                     C3iHub IIT Kanpur Certification Program
-                    </span>
-                  </div>
-
+ 
                   {/* Name + tagline + description */}
                   <div className="flex flex-col gap-3">
-                    <h2 className="m-0 text-[clamp(1.8rem,3.5vw,3.2rem)] font-extrabold leading-tight tracking-tight text-gray-900 [font-family:var(--primaryFont,sans-serif)]">
+                    <h2 className="m-0 text-[clamp(2rem,3.8vw,3.5rem)] font-extrabold leading-tight tracking-tight text-gray-900 [font-family:var(--primaryFont,sans-serif)]">
                       {cat.name}
                     </h2>
+
+                     <p className="text-base font-medium italic text-violet-500">
+          Future-Proof Your Career with AI-Powered Cybersecurity
+            </p>
                     {/* <p className="m-0 text-sm md:text-base font-medium italic leading-snug" style={{ color: accent }}>
                       Future-Proof Your Career with AI-Powered Cybersecurity
                     </p> */}
                     {cat.description && (
-                      <p className="m-0 text-sm md:text-base leading-[1.8] text-gray-500 line-clamp-3">
+                      <p className="m-0 text-sm md:text-base leading-[1.8] text-gray-500 line-clamp-5">
                         {cat.description}
                       </p>
                     )}

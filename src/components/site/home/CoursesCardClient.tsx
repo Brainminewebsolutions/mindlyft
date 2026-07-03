@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
 import Link from "next/link";
+import Image from "next/image";
 import { Clock, ArrowRight, Globe, User, CheckCircle } from "lucide-react";
 import { getGsap, getScrollTrigger, onGsapReady } from "@/lib/gsap-config";
 import type { Course } from "@/types/admin/course";
@@ -231,12 +232,14 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
     >
       {/* Image / gradient */}
       <div className="relative h-[200px] w-full overflow-hidden">
-        {/* important-marked height: template-styles.css has an unlayered global
-            `img { height: auto }` rule, which beats Tailwind's layered utilities
-            regardless of specificity — without `!` this collapses to each
-            image's own aspect ratio instead of the fixed 240px container. */}
         {course.image ? (
-          <img src={course.image} alt={course.name} className="block h-full! w-full object-cover" />
+          <Image
+            src={course.image}
+            alt={course.name}
+            fill
+            sizes="(max-width: 680px) 100vw, (max-width: 1100px) 50vw, 33vw"
+            className="object-cover"
+          />
         ) : (
           <div className="h-full w-full bg-[linear-gradient(135deg,rgba(var(--a),0.85)_0%,rgba(var(--a),0.45)_100%)]" />
         )}

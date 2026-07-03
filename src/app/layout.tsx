@@ -4,7 +4,6 @@ import { Toaster }           from "sonner";
 import { ThemeProvider }  from "@/components/providers/ThemeProvider";
 import SessionProvider     from "@/components/providers/SessionProvider";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
-import LibraryLoader from "@/components/LibraryLoader";
 
 import "./globals.css";
 
@@ -57,7 +56,6 @@ export default function RootLayout({
         </ThemeProvider>
 
         <Toaster position="top-right" richColors closeButton />
-        <LibraryLoader />
       </body>
     </html>
   );

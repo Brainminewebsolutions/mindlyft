@@ -1,9 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "./swiper.css";
-@import "./remixicon.css";
-@import "./template-styles.css";
 
 @custom-variant dark (&:is(.dark *));
 

@@ -36,7 +36,7 @@ export default function IITCourseDetail({ course, chapters, proxiedImage }: Prop
     <div className="min-h-screen text-gray-900 [font-family:var(--primaryFont,sans-serif)]">
 
       {/* ── HERO ── */}
-      <IITCourseHero name={course.name} proxiedImage={proxiedImage} />
+      <IITCourseHero name={course.name} category={course.category} proxiedImage={proxiedImage} />
 
       {/* ── INFO ── bg: white (IITCourseInfo handles its own bg) */}
       <IITCourseInfo

@@ -6,7 +6,7 @@ export  const SITE_CONFIG = {
   logo2: "/MINDLYF_LOGO_new.png",
   logo3: "/mindlyftai-logo1.png",
   iitLogo: "/iit_kanpur_logo.png",
-  c3iHubLogo: "/C3ihub.jpeg",
+  c3iHubLogo: "/C3I_Hub-removebg-preview.png",
 
   // Institute Info
   name: "MindLyft AI",

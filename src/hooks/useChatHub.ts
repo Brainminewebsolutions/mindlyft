@@ -34,6 +34,10 @@ export interface ChatSessionDto {
 }
 
 interface UseChatHubOptions {
+  // Defaults to true so existing callers (employee dashboard) keep an
+  // always-on connection. The public chat widget passes false until the
+  // visitor actually opens it, so we don't open a socket on every page view.
+  enabled?: boolean;
   accessToken?: string | null;
   onNewSupportRequest?: (req: PendingChatRequestDto) => void;
   onRequestAccepted?: (sessionId: number) => void;
@@ -55,6 +59,8 @@ export function useChatHub(options: UseChatHubOptions) {
   cbRef.current = options;
 
   useEffect(() => {
+    if (options.enabled === false) return;
+
     let isMounted = true;
 
     const connection = new signalR.HubConnectionBuilder()
@@ -98,9 +104,10 @@ export function useChatHub(options: UseChatHubOptions) {
       connectionRef.current = null;
       connection.stop().catch(() => {});
     };
-    // Re-run only when the token changes (anonymous ↔ authenticated switch).
+    // Re-run when the token changes (anonymous ↔ authenticated switch) or
+    // when enabled flips from false to true.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [options.accessToken]);
+  }, [options.enabled, options.accessToken]);
 
   // ── Outbound methods ────────────────────────────────────────────────────────
 

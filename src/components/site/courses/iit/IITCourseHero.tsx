@@ -4,9 +4,10 @@ import { SITE_CONFIG } from "@/constants/siteConfig";
 interface Props {
   name:         string;
   proxiedImage: string | null;
+  category?:     string | null;
 }
 
-export default function IITCourseHero({ name, proxiedImage }: Props) {
+export default function IITCourseHero({ name, category, proxiedImage }: Props) {
   return (
     <div
       className="relative flex h-screen overflow-hidden"
@@ -27,9 +28,11 @@ export default function IITCourseHero({ name, proxiedImage }: Props) {
             <span className="text-sm font-bold text-gray-700 tracking-wide">C3iHub, IIT Kanpur</span>
           </div>
         </div>
+
+        <h3 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-violet-600!">{category}</h3>
  
         {/* Title */}
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-gray-900">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-black leading-tight tracking-tight text-gray-900">
           {name}
         </h1>
 

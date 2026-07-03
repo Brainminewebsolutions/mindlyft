@@ -28,6 +28,9 @@ export function ChatSupportWidget() {
   const [hoverStar,   setHoverStar]   = useState(0);
 
   const [pastHero, setPastHero] = useState(false);
+  // Keeps the SignalR connection closed until the visitor opens the widget
+  // (or a prior session is being resumed) instead of connecting on every page load.
+  const [connectEnabled, setConnectEnabled] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const typingTimer    = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -81,6 +84,7 @@ export function ChatSupportWidget() {
   }, []);
 
   const { requestSupport, reconnectSession, sendMessage, typingIndicator, endChat, submitReview } = useChatHub({
+    enabled: connectEnabled,
     onSessionCreated,
     onSessionRestored,
     onChatAccepted,
@@ -95,6 +99,7 @@ export function ChatSupportWidget() {
     if (token && sid) {
       setGuestToken(token);
       setSessionId(Number(sid));
+      setConnectEnabled(true);
       const t = setTimeout(() => {
         reconnectSession(token);
         setStep("waiting");
@@ -105,6 +110,7 @@ export function ChatSupportWidget() {
   }, []);
 
   const handleOpen = () => {
+    setConnectEnabled(true);
     const token = sessionStorage.getItem(GUEST_TOKEN_KEY);
     if (token) { setStep("waiting"); return; }
     setStep("form");

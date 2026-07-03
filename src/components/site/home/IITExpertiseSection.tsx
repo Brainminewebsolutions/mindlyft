@@ -1,7 +1,7 @@
 import { dotnetFetch } from "@/lib/api/dotnet-client";
 import type { CourseCategory } from "@/types/admin/courseCategory";
 import { SectionBadge } from "@/components/ui/SectionBadge";
-import { SITE_CONFIG } from "@/constants/siteConfig";
+import CollaborationLogos from "@/components/site/CollaborationLogos";
 import CourseCategorySection from "@/components/site/home/CourseCategory";
 
 interface CategoriesEnvelope {
@@ -44,23 +44,7 @@ export default async function IITExpertiseSection() {
             Industry-leading courses developed in collaboration with IIT experts — designed to take you from fundamentals to mastery.
           </p>
 
-          <div className="flex items-center justify-center gap-10 flex-wrap">
-            <div className="flex flex-col items-center shrink-0">
-              <div className="flex items-center justify-center w-48 h-40">
-                <img src={SITE_CONFIG?.logo1 ?? "/logo.png"} alt="MindLyft AI" className="object-contain w-full h-full" />
-              </div>
-              <p className="text-xl font-semibold text-gray-800">MindLyft AI</p>
-            </div>
-
-            <span className="text-3xl font-light text-gray-300 select-none shrink-0">×</span>
-
-            <div className="flex flex-col items-center shrink-0">
-              <div className="flex items-center justify-center w-48 h-40">
-                <img src="/C3ihub.jpeg" alt="C3iHub IIT Kanpur" className="object-contain w-full h-full" />
-              </div>
-              <p className="text-xl font-semibold text-gray-800">C3iHub IIT Kanpur</p>
-            </div>
-          </div>
+          <CollaborationLogos size="lg" showLabels className="justify-center" />
 
           <p className="text-gray-400 text-sm leading-relaxed max-w-xs mx-auto">
             Elevate your credentials with industry-recognised programs engineered at the forefront of technology.

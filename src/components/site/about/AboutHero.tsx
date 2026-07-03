@@ -11,26 +11,7 @@ type AboutHeroProps = {
 export default function AboutHero({ description }: AboutHeroProps) {
   return (
     <>
-      {/* ── Hero ── */}
-      {/* <div className="relative h-screen overflow-hidden">
-        <img
-          src={ABOUT_IMAGE}
-          alt="About MindlyftAI"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-violet-950/70 via-violet-900/30 to-transparent" />
-
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6">
-          <h1
-            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
-            style={{ color: "#ffffff", textShadow: "0 2px 16px rgba(0,0,0,0.6)" }}
-          >
-            We Shape{" "}
-            <span className="text-blue-200">Bright Futures</span>
-          </h1>
-        </div>
-      </div> */}
-
+        
       {/* ── Description section ── */}
     <div className="bg-white px-6 py-30">
   <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
@@ -53,7 +34,7 @@ export default function AboutHero({ description }: AboutHeroProps) {
           <div className="text-center">
                 <AnimateIn delay={100} direction="right">
                   <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
-                    About &nbsp;
+                    About{" "}
                     <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
                       Us
                     </span>

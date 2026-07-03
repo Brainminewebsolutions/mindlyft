@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FooterWatermark from "./FooterWatermark";
 import { MapPin, Mail, Phone } from "lucide-react";
+import { FacebookIcon, XIcon, InstagramIcon, LinkedinIcon } from "./SocialIcons";
 import {SITE_CONFIG} from "@/constants/siteConfig"
 
 const QUICK_LINKS = [
@@ -13,10 +14,10 @@ const QUICK_LINKS = [
 ];
 
 const SOCIAL = [
-  { icon: "ri-facebook-fill",  href: SITE_CONFIG.social.facebook,  label: "Facebook" },
-  { icon: "ri-twitter-x-line", href: SITE_CONFIG.social.x,         label: "Twitter" },
-  { icon: "ri-instagram-line", href: SITE_CONFIG.social.instagram,  label: "Instagram" },
-  { icon: "ri-linkedin-fill",  href: SITE_CONFIG.social.linkedin,   label: "LinkedIn" },
+  { icon: FacebookIcon,  href: SITE_CONFIG.social.facebook,  label: "Facebook" },
+  { icon: XIcon,         href: SITE_CONFIG.social.x,         label: "Twitter" },
+  { icon: InstagramIcon, href: SITE_CONFIG.social.instagram, label: "Instagram" },
+  { icon: LinkedinIcon,  href: SITE_CONFIG.social.linkedin,  label: "LinkedIn" },
 ];
 
 export default function SiteFooter() {
@@ -45,16 +46,16 @@ export default function SiteFooter() {
 
             {/* Social icons */}
             <div className="flex items-center gap-2 mt-6">
-              {SOCIAL.map(({ icon, href, label }) => (
+              {SOCIAL.map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noreferrer"
                   aria-label={label}
-                  className="flex items-center justify-center w-9 h-9 rounded-lg bg-violet-100 text-violet-500 hover:bg-violet-600 hover:text-white transition-colors text-base"
+                  className="flex items-center justify-center w-9 h-9 rounded-lg bg-violet-100 text-violet-500 hover:bg-violet-600 hover:text-white transition-colors"
                 >
-                  <i className={icon} />
+                  <Icon className="w-4 h-4" />
                 </a>
               ))}
             </div>

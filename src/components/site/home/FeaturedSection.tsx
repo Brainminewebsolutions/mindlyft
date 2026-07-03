@@ -1,6 +1,7 @@
  "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -50,7 +51,7 @@ interface CardItem {
 
 const items: CardItem[] = [
   {
-    image: "./AI_IT_Solution.jpeg",
+    image: "/AI_IT_Solution.jpeg",
     name: "AI & IT Solutions",
     lines: [
       "Building Intelligent Digital Solutions",
@@ -158,10 +159,12 @@ function Card({
   `}
   style={{ alignSelf: "stretch" }}
 >
-        <img
+        <Image
           src={item.image}
-          alt={item.name} style={{ height: "stretch" }}
-          className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+          alt={item.name}
+          fill
+          sizes="(max-width: 640px) 45vw, 500px"
+          className="object-cover object-center transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-black/30" />
  

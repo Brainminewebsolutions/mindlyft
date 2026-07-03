@@ -1,4 +1,4 @@
-import { SectionBadge } from "@/components/ui/SectionBadge";
+import CollaborationLogos from "@/components/site/CollaborationLogos";
 
 interface Props {
   name:        string;
@@ -14,7 +14,10 @@ export default function CourseCategoryHero({ name, description, image }: Props) 
     >
       {/* Left — text */}
       <div className="relative z-10 flex w-full flex-col justify-center gap-4 px-8 py-24 md:w-[54%] md:px-14 lg:px-20">
-        <SectionBadge variant="light">Professional Certification Program</SectionBadge>
+
+        {/* Collaboration mark */}
+        <CollaborationLogos size="md" />
+
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-gray-900">
           {name}
         </h1>

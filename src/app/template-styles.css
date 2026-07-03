@@ -22,7 +22,7 @@
 
 
 /* ====== public/assets/css/style.css ====== */
-﻿/*
+/*
 @File: Aixio Template Styles
 
 * This file contains the styling for the actual template, this
@@ -6200,7 +6200,7 @@ body {
   appearance: none;
 }
 /* ====== public/assets/css/header.css ====== */
-﻿.navbar-area {
+.navbar-area {
   z-index: 999;
   transition: 1s;
 }
@@ -6905,7 +6905,7 @@ body {
   }
 }
 /* ====== public/assets/css/footer.css ====== */
-﻿/*---------------------------------
+/*---------------------------------
     Footer CSS 
 -----------------------------------*/
 .footer-area.style-one {
@@ -7026,7 +7026,7 @@ body {
   }
 }
 /* ====== public/assets/css/responsive.css ====== */
-﻿@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 767px) {
   .sm-none {
     display: none !important;
   }
