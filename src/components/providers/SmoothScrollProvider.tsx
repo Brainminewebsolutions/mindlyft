@@ -4,32 +4,24 @@
  * SmoothScrollProvider
  * --------------------
  * Owns the Lenis smooth-scroll instance for public/marketing pages only.
- * Admin and student routes use native browser scroll — Lenis is skipped there
- * because it calls event.preventDefault() on every wheel event, which blocks
- * scrolling entirely when the page has no GSAP scroll animations.
+ * Mounted solely by the (site) route group's layout — admin/employee/student/
+ * auth route groups never render this, so they get native browser scroll.
+ * (Lenis calls event.preventDefault() on every wheel event, which blocks
+ * scrolling entirely on pages with no GSAP scroll animations to drive it.)
  */
 
 import { useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
 import Lenis from "lenis";
-
-// Routes that must NOT use Lenis — native scroll only.
-const NATIVE_SCROLL_PREFIXES = ["/admin", "/student", "/login", "/register"];
 
 export default function SmoothScrollProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
   const lenisRef = useRef<Lenis | null>(null);
   const tickerRef = useRef<((time: number) => void) | null>(null);
 
   useEffect(() => {
-    const useNative = NATIVE_SCROLL_PREFIXES.some((prefix) =>
-      pathname.startsWith(prefix)
-    );
-
     const cleanup = () => {
       const lenis = lenisRef.current;
       const tickerFn = tickerRef.current;
@@ -48,11 +40,6 @@ export default function SmoothScrollProvider({
       lenisRef.current = null;
       tickerRef.current = null;
     };
-
-    if (useNative) {
-      cleanup();
-      return;
-    }
 
     if (lenisRef.current) return;
 
@@ -98,7 +85,7 @@ export default function SmoothScrollProvider({
       clearInterval(intervalId);
       cleanup();
     };
-  }, [pathname]);
+  }, []);
 
   return <>{children}</>;
 }

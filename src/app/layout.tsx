@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster }           from "sonner";
 import SessionProvider     from "@/components/providers/SessionProvider";
-import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
 import "./globals.css";
 
@@ -75,11 +74,7 @@ export default function RootLayout({
 
       <body className="min-h-full flex flex-col">
         <SessionProvider>
-          {/* SmoothScrollProvider wires the npm Lenis instance to window.gsap
-              and fires the `gsap:ready` event that animation components wait for. */}
-          <SmoothScrollProvider>
-            {children}
-          </SmoothScrollProvider>
+          {children}
         </SessionProvider>
 
         <Toaster position="top-right" richColors closeButton />

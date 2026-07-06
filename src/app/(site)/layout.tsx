@@ -4,12 +4,13 @@ import Chatbot             from "../../components/site/home/Chatbot";
 import WhatsAppButton      from "../../components/site/home/WhatsAppButton";
 import { ChatSupportWidget } from "@/components/main/ChatSupportWidget";
 import LibraryLoader from "@/components/LibraryLoader";
+import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
 const NAVBAR_HEIGHT = 80;
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <SmoothScrollProvider>
       <LibraryLoader />
       <NavbarWrapper height={NAVBAR_HEIGHT} />
       <div className="overflow-x-clip">
@@ -19,6 +20,6 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <WhatsAppButton />
       <ChatSupportWidget />
       <SiteFooter />
-    </>
+    </SmoothScrollProvider>
   );
 }
