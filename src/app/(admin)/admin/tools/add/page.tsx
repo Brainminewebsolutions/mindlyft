@@ -9,15 +9,18 @@ import { Input }     from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { cn }        from "@/lib/utils";
 import { toolService } from "@/services/admin/toolService";
+import { prepareImageFile, ImageUploadError } from "@/lib/image-upload";
 
 // ─── Image picker ─────────────────────────────────────────────────────────────
 function ImagePickerField({
   imageFile,
   onFileSelected,
+  onImageError,
   onClear,
 }: {
   imageFile:      File | null;
   onFileSelected: (file: File) => void;
+  onImageError:   (message: string) => void;
   onClear:        () => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -69,8 +72,11 @@ function ImagePickerField({
         className="hidden"
         onChange={(e) => {
           const file = e.target.files?.[0];
-          if (file) onFileSelected(file);
           e.target.value = "";
+          if (!file) return;
+          prepareImageFile(file)
+            .then(onFileSelected)
+            .catch((err) => onImageError(err instanceof ImageUploadError ? err.message : "Could not process image"));
         }}
       />
     </div>
@@ -188,6 +194,7 @@ export default function AddToolPage() {
           <ImagePickerField
             imageFile={imageFile}
             onFileSelected={setImageFile}
+            onImageError={setError}
             onClear={() => setImageFile(null)}
           />
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { notify } from "@/lib/notify";
 import { ArrowLeft } from "lucide-react";
 import { Button }           from "@/components/ui/button";
 import { TestimonialForm }  from "@/components/admin/testimonials/TestimonialForm";
@@ -16,10 +16,10 @@ export default function AddTestimonialPage() {
     setSubmitting(true);
     try {
       await testimonialService.create(data);
-      toast.success("Testimonial created successfully.");
+      notify.success("Testimonial created successfully.");
       router.push("/admin/testimonials");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed to create testimonial.");
+      notify.error(err instanceof Error ? err.message : "Failed to create testimonial.");
       setSubmitting(false);
     }
   };

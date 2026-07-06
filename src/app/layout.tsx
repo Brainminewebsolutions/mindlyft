@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster }           from "sonner";
-import { ThemeProvider }  from "@/components/providers/ThemeProvider";
 import SessionProvider     from "@/components/providers/SessionProvider";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
@@ -17,10 +16,50 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = "https://www.mindlyftai.com";
+const SITE_NAME = "MindLyft AI";
+const SITE_DESCRIPTION =
+  "MindLyft AI bridges academia and industry with future-ready learning services, AI consulting, and scalable digital products.";
+
 export const metadata: Metadata = {
-  title: "Mindlyft AI",
-  description: "AI Startup & Technology Platform",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — Learning Services, AI Solutions & Innovative Products`,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  keywords: [
+    "MindLyft AI",
+    "AI training",
+    "industry-ready courses",
+    "AI consulting",
+    "IIT expertise",
+    "upskilling",
+    "workshops",
+    "ed-tech",
+  ],
   icons: { icon: "/favicon.ico" },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — Learning Services, AI Solutions & Innovative Products`,
+    description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: "/MINDLYF_LOGO_new.png",
+        width: 718,
+        height: 469,
+        alt: SITE_NAME,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} — Learning Services, AI Solutions & Innovative Products`,
+    description: SITE_DESCRIPTION,
+    images: ["/MINDLYF_LOGO_new.png"],
+  },
 };
 
 export default function RootLayout({
@@ -31,29 +70,17 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       data-scroll-behavior="smooth"
-      suppressHydrationWarning   /* next-themes injects class server-side */
     >
       <head></head>
 
       <body className="min-h-full flex flex-col">
-        {/*
-          ThemeProvider — default light, persists user choice via localStorage.
-          attribute="class" adds/removes the "dark" class on <html>.
-        */}
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          <SessionProvider>
-            {/* SmoothScrollProvider wires the npm Lenis instance to window.gsap
-                and fires the `gsap:ready` event that animation components wait for. */}
-            <SmoothScrollProvider>
-              {children}
-            </SmoothScrollProvider>
-          </SessionProvider>
-        </ThemeProvider>
+        <SessionProvider>
+          {/* SmoothScrollProvider wires the npm Lenis instance to window.gsap
+              and fires the `gsap:ready` event that animation components wait for. */}
+          <SmoothScrollProvider>
+            {children}
+          </SmoothScrollProvider>
+        </SessionProvider>
 
         <Toaster position="top-right" richColors closeButton />
       </body>

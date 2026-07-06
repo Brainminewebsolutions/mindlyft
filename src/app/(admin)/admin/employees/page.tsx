@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { notify } from "@/lib/notify";
 import { Plus, Search, RefreshCw } from "lucide-react";
 import { EMPLOYEE_CATEGORIES, EMPLOYEE_DEPARTMENTS } from "@/constants/employee";
 import { useEmployees }         from "@/hooks/useEmployees";
@@ -44,11 +44,11 @@ export default function EmployeesPage() {
     setDeleting(true);
     try {
       await deleteEmployee(selected.id);
-      toast.success(`"${selected.name}" deleted.`);
+      notify.success(`"${selected.name}" deleted.`);
       setDeleteOpen(false);
       setSelected(null);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed to delete employee.");
+      notify.error(err instanceof Error ? err.message : "Failed to delete employee.");
     } finally {
       setDeleting(false);
     }

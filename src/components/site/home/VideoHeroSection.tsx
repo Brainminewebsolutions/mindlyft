@@ -34,12 +34,13 @@ function AnimatedParts() {
       style={{ fontSize: "clamp(28px, 4.5vw, 60px)", minHeight: "1.2em" }}
     >
       <span
-        className="bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent"
+        className="bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_2px_18px_rgba(0,0,0,0.85)]"
         style={{
           display:    "inline-block",
           transition: "opacity 0.4s ease, transform 0.4s ease",
           opacity:    visible ? 1 : 0,
           transform:  visible ? "translateY(0)" : "translateY(-12px)",
+          WebkitTextStroke: "1px rgba(0,0,0,0.35)",
         }}
       >
         {PARTS[idx]}
@@ -78,14 +79,17 @@ export default function VideoHeroSection() {
         preload="none"
         className="absolute inset-0 w-full h-full object-cover object-center z-0"
       />
-
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[rgba(4,6,16,0.72)] via-[rgba(4,6,16,0.52)] to-[rgba(4,6,16,0.80)] z-[1]" />
-
+ 
       {/* Purple radial tint */}
       <div
         className="absolute inset-0 z-[1] pointer-events-none"
         style={{ background: "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(108,99,255,.18) 0%, transparent 70%)" }}
+      />
+
+      {/* Darkening vignette to keep headline legible over bright video frames */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse 70% 45% at 50% 46%, rgba(4,6,16,.55) 0%, transparent 75%)" }}
       />
 
       {/* Scan line */}

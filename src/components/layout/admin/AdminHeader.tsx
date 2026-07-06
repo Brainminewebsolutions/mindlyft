@@ -2,7 +2,6 @@
 
 import { Bell, Menu } from "lucide-react";
 import { Button }      from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Separator }   from "@/components/ui/separator";
 
 type Props = {
@@ -33,10 +32,6 @@ export function AdminHeader({ onMenuClick }: Props) {
           <Bell className="size-4" />
           <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-primary ring-2 ring-background" />
         </Button>
-
-        <Separator orientation="vertical" className="mx-1 h-5" />
-
-        <ThemeToggle />
 
         <Separator orientation="vertical" className="mx-1 h-5" />
 

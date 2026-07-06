@@ -4,8 +4,10 @@ import { useRef, useState, useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { notify } from "@/lib/notify";
 import { ImageIcon, UploadCloud, X } from "lucide-react";
 import { createWebinarSchema, type CreateWebinarSchema } from "@/validators/admin/webinar";
+import { prepareImageFile, ImageUploadError } from "@/lib/image-upload";
 import type { Webinar } from "@/types/admin/webinar";
 import { Input }     from "@/components/ui/input";
 import { Label }     from "@/components/ui/label";
@@ -68,7 +70,14 @@ function ImagePickerField({
         <UploadCloud className="ml-auto h-4 w-4 opacity-40" />
       </button>
       <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden"
-        onChange={(e) => { const f = e.target.files?.[0]; if (f) onFileSelected(f); e.target.value = ""; }} />
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          e.target.value = "";
+          if (!f) return;
+          prepareImageFile(f)
+            .then(onFileSelected)
+            .catch((err) => notify.error(err instanceof ImageUploadError ? err.message : "Could not process image"));
+        }} />
     </div>
   );
 }

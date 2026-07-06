@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { partnerService } from "@/services/admin/partnerService";
 import type { Partner } from "@/types/admin/partner";
 import { PARTNER_STATUSES } from "@/constants/partner";
+import { prepareImageFile, ImageUploadError } from "@/lib/image-upload";
 
 const STATUS_OPTIONS = PARTNER_STATUSES;
 
@@ -20,6 +21,7 @@ export default function EditPartnerPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error,      setError]      = useState<string | null>(null);
   const [preview,    setPreview]    = useState<string | null>(null);
+  const [logoFile,   setLogoFile]   = useState<File | null>(null);
 
   const [form, setForm] = useState({
     name:         "",
@@ -55,8 +57,14 @@ export default function EditPartnerPage() {
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    e.target.value = "";
     if (!file) return;
-    setPreview(URL.createObjectURL(file));
+    prepareImageFile(file)
+      .then((processed) => {
+        setLogoFile(processed);
+        setPreview(URL.createObjectURL(processed));
+      })
+      .catch((err) => setError(err instanceof ImageUploadError ? err.message : "Could not process image"));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -72,8 +80,7 @@ export default function EditPartnerPage() {
     fd.append("displayorder", String(form.displayorder));
     fd.append("status",       form.status);
 
-    const file = fileRef.current?.files?.[0];
-    if (file) fd.append("image", file);
+    if (logoFile) fd.append("image", logoFile);
 
     setSubmitting(true);
     try {
@@ -147,6 +154,7 @@ export default function EditPartnerPage() {
                     onClick={(e) => {
                       e.stopPropagation();
                       setPreview(partner.image ?? null);
+                      setLogoFile(null);
                       if (fileRef.current) fileRef.current.value = "";
                     }}>
                     <X className="h-3 w-3 text-white" />

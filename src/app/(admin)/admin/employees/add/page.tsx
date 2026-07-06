@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { notify } from "@/lib/notify";
 import { ArrowLeft } from "lucide-react";
 import { Button }          from "@/components/ui/button";
 import { EmployeeForm }    from "@/components/admin/employees/EmployeeForm";
@@ -16,10 +16,10 @@ export default function AddEmployeePage() {
     setSubmitting(true);
     try {
       await employeeService.create(data);
-      toast.success("Employee created successfully.");
+      notify.success("Employee created successfully.");
       router.push("/admin/employees");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed to create employee.");
+      notify.error(err instanceof Error ? err.message : "Failed to create employee.");
       setSubmitting(false);
     }
   };

@@ -40,9 +40,9 @@ const steps = [
       border: "border-violet-300",
       progress: "bg-gradient-to-r from-violet-600 to-violet-400",
     },
-    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80",
+    image: "/images/home/whatwedo/Learning.jpg",
     imageAlt: "Students learning",
-    
+
   },
   {
     number: "02",
@@ -74,7 +74,7 @@ const steps = [
       border: "border-indigo-300",
       progress: "bg-gradient-to-r from-indigo-500 to-indigo-400",
     },
-    image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80",
+    image: "/images/home/whatwedo/AI.jpg",
     imageAlt: "AI services",
   },
   {
@@ -107,7 +107,7 @@ const steps = [
       border: "border-blue-300",
       progress: "bg-gradient-to-r from-blue-500 to-blue-400",
     },
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
+    image: "/images/home/whatwedo/InnovativeProducts.jpeg",
     imageAlt: "Innovative products",
   },
 ];
@@ -248,7 +248,7 @@ export default function WhatWeDo() {
             />
 
             <div className="relative aspect-[4/3]">
-              {/* {steps.map((step, i) => (
+              {steps.map((step, i) => (
                 <img
                   key={i}
                   src={step.image}
@@ -259,8 +259,8 @@ export default function WhatWeDo() {
                       : "z-[1] translate-y-[14px] scale-[0.97] opacity-0"
                   }`}
                 />
-              ))} */}
-              {steps.map((step, i) => (
+              ))}
+              {/* {steps.map((step, i) => (
   <video
     key={i}
     ref={(el) => {
@@ -278,7 +278,7 @@ export default function WhatWeDo() {
   >
     <source src={step.video} type="video/mp4" />
   </video>
-))}
+))} */}
 
               {/* Tag pill */}
               {/* <div

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { toast } from "sonner";
+import { notify } from "@/lib/notify";
 import { ArrowLeft } from "lucide-react";
 import { Button }           from "@/components/ui/button";
 import { TestimonialForm }  from "@/components/admin/testimonials/TestimonialForm";
@@ -29,10 +29,10 @@ export default function EditTestimonialPage() {
     setSubmitting(true);
     try {
       await testimonialService.update(Number(id), data);
-      toast.success("Testimonial updated successfully.");
+      notify.success("Testimonial updated successfully.");
       router.push("/admin/testimonials");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed to update testimonial.");
+      notify.error(err instanceof Error ? err.message : "Failed to update testimonial.");
       setSubmitting(false);
     }
   };

@@ -4,6 +4,8 @@ import { useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { notify } from "@/lib/notify";
+import { prepareImageFile, ImageUploadError } from "@/lib/image-upload";
 import {
   createCourseSchema,
   type CreateCourseSchema,
@@ -135,8 +137,11 @@ function ImagePickerField({
         className="hidden"
         onChange={(e) => {
           const file = e.target.files?.[0];
-          if (file) onFileSelected(file);
           e.target.value = "";
+          if (!file) return;
+          prepareImageFile(file)
+            .then(onFileSelected)
+            .catch((err) => notify.error(err instanceof ImageUploadError ? err.message : "Could not process image"));
         }}
       />
     </div>

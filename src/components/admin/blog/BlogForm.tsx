@@ -2,6 +2,8 @@
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import { notify } from "@/lib/notify";
+import { prepareImageFile, ImageUploadError } from "@/lib/image-upload";
 import { ImageIcon, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -77,8 +79,11 @@ function ImagePicker({
         className="hidden"
         onChange={(e) => {
           const f = e.target.files?.[0];
-          if (f) onFile(f);
           e.target.value = "";
+          if (!f) return;
+          prepareImageFile(f)
+            .then(onFile)
+            .catch((err) => notify.error(err instanceof ImageUploadError ? err.message : "Could not process image"));
         }}
       />
     </div>

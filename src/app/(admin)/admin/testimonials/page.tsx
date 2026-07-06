@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { notify } from "@/lib/notify";
 import { Plus, RefreshCw } from "lucide-react";
 import { useTestimonials }          from "@/hooks/useTestimonials";
 import { TestimonialTable }         from "@/components/admin/testimonials/TestimonialTable";
@@ -31,11 +31,11 @@ export default function TestimonialsPage() {
     setDeleting(true);
     try {
       await deleteTestimonial(selected.id);
-      toast.success(`Testimonial from "${selected.name}" deleted.`);
+      notify.success(`Testimonial from "${selected.name}" deleted.`);
       setDeleteOpen(false);
       setSelected(null);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed to delete testimonial.");
+      notify.error(err instanceof Error ? err.message : "Failed to delete testimonial.");
     } finally {
       setDeleting(false);
     }

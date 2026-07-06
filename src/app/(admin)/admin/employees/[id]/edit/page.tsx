@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { notify } from "@/lib/notify";
 import { ArrowLeft } from "lucide-react";
 import { Button }          from "@/components/ui/button";
 import { EmployeeForm }    from "@/components/admin/employees/EmployeeForm";
@@ -20,7 +20,7 @@ export default function EditEmployeePage() {
   useEffect(() => {
     employeeService.getById(id)
       .then(setEmployee)
-      .catch(() => toast.error("Failed to load employee."))
+      .catch(() => notify.error("Failed to load employee."))
       .finally(() => setLoading(false));
   }, [id]);
 
@@ -28,10 +28,10 @@ export default function EditEmployeePage() {
     setSubmitting(true);
     try {
       await employeeService.update(id, data);
-      toast.success("Employee updated successfully.");
+      notify.success("Employee updated successfully.");
       router.push("/admin/employees");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed to update employee.");
+      notify.error(err instanceof Error ? err.message : "Failed to update employee.");
       setSubmitting(false);
     }
   };
