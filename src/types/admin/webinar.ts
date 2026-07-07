@@ -1,6 +1,7 @@
 export type Webinar = {
   id:               string;
   name:             string;
+  slug:             string;
   duration:         number;
   mode:             "Online" | "Offline";
   image?:           string | null;

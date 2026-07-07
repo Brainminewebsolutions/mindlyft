@@ -23,7 +23,7 @@ function IITCourseCard({ course, index }: { course: Course; index: number }) {
 
   return (
     <Link
-      href={`/courses/iit/${course.id}`}
+      href={`/courses/iit/${course.slug}`}
       className="group flex flex-col rounded-2xl border border-violet-100 bg-white overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
     >
       <div className="relative h-48 overflow-hidden shrink-0">

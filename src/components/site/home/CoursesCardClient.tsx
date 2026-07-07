@@ -208,7 +208,7 @@ type CourseCardProps = {
 };
 
 function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps) {
-  const href = course.courseType === "IIT" ? `/courses/iit/${course.id}` : `/courses/mindlyftai/${course.id}`;
+  const href = course.courseType === "IIT" ? `/courses/iit/${course.slug}` : `/courses/mindlyftai/${course.slug}`;
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const gsap = getGsap();

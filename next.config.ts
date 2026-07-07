@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "localhost", port: "7039", pathname: "/uploads/**" },
       { protocol: "https", hostname: "apimindlyftai.znexpos.com", pathname: "/uploads/**" },
+      { protocol: "https", hostname: "apimindlyftai.mindlyftai.com", pathname: "/uploads/**" },
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
     formats: ["image/avif", "image/webp"],

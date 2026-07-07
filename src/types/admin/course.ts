@@ -12,6 +12,7 @@ export type InstructorDetail = {
 export type Course = {
   id:               string;
   name:             string;
+  slug:             string;
   duration:         number;
   mode:             CourseMode;
   image:            string | null;

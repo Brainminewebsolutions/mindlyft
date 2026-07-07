@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const createCourseSchema = z.object({
   name:        z.string().min(1, "Course name is required"),
+  slug:        z.string().min(1, "Slug is required"),
   duration:    z.number({ error: "Duration is required" }).positive("Duration must be positive"),
   mode:        z.enum(["Online", "Offline"], { error: "Mode is required" }),
   image:       z.string().optional(),

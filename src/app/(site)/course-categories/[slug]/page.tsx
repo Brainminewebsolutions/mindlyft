@@ -1,5 +1,6 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { isNumericId } from "@/lib/slug";
 import CourseCategoryHero from "@/components/site/course-categories/CourseCategoryHero";
 import type { CourseCategory } from "@/types/admin/courseCategory";
 import type { Course } from "@/types/admin/course";
@@ -22,7 +23,19 @@ interface EmployeeEnvelope {
   data: { employees: Employee[] };
 }
 
-async function getCategory(id: string): Promise<CourseCategory | null> {
+async function getCategoryBySlug(slug: string): Promise<CourseCategory | null> {
+  try {
+    const envelope = await dotnetFetch<CategoryEnvelope>(
+      `/v1/course-categories/slug/${encodeURIComponent(slug)}`,
+      { next: { revalidate: 300 } } as RequestInit,
+    );
+    return envelope.isSuccess ? envelope.data : null;
+  } catch {
+    return null;
+  }
+}
+
+async function getCategoryById(id: string): Promise<CourseCategory | null> {
   try {
     const envelope = await dotnetFetch<CategoryEnvelope>(
       `/v1/course-categories/${id}`,
@@ -64,14 +77,19 @@ async function getInstructors(): Promise<Employee[]> {
 export default async function CourseCategoryDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { id } = await params;
+  const { slug } = await params;
 
   const [category, instructors] = await Promise.all([
-    getCategory(id),
+    getCategoryBySlug(slug),
     getInstructors(),
   ]);
+
+  if (!category && isNumericId(slug)) {
+    const byId = await getCategoryById(slug);
+    if (byId) redirect(`/course-categories/${byId.slug}`);
+  }
 
   if (!category) notFound();
 

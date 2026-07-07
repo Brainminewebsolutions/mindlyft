@@ -222,7 +222,7 @@ gsap.set(cards[0], {
                   <div className="flex flex-col gap-5">
                     <div className="h-px w-full" style={{ background: `linear-gradient(to right, ${accent}40, transparent)` }} />
                     <Link
-                      href={`/course-categories/${cat.id}`}
+                      href={`/course-categories/${cat.slug}`}
                       className="inline-flex w-fit items-center gap-2 px-8 py-3 rounded-full text-sm font-bold tracking-wide text-white transition-all hover:scale-105 hover:shadow-lg"
                       style={{ background: accent, boxShadow: `0 4px 20px ${accent}40` }}
                     >

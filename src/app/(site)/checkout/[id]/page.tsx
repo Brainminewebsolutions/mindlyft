@@ -43,7 +43,7 @@ export default async function CheckoutPage({
 
         {/* Back link */}
         <Link
-          href={course.courseType === "IIT" ? `/courses/iit/${course.id}` : `/courses/mindlyftai/${course.id}`}
+          href={course.courseType === "IIT" ? `/courses/iit/${course.slug}` : `/courses/mindlyftai/${course.slug}`}
           className="inline-flex items-center gap-1.5 text-[#6c63ff] text-[13px] font-semibold no-underline mb-8 hover:opacity-75 transition-opacity"
         >
           <ArrowLeft className="w-3.5 h-3.5" />

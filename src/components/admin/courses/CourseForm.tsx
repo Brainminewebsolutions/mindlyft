@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { notify } from "@/lib/notify";
+import { toSlug } from "@/lib/slug";
 import { prepareImageFile, ImageUploadError } from "@/lib/image-upload";
 import {
   createCourseSchema,
@@ -153,6 +154,7 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
   const [imageFile,     setImageFile]     = useState<File | null>(null);
   const [existingImage, setExistingImage] = useState(defaultValues?.image || "");
   const [highlights,    setHighlights]    = useState<string[]>(defaultValues?.highlights ?? []);
+  const [slugTouched,   setSlugTouched]   = useState(false);
 
   const { options: employeeOptions,  loading: loadingEmployees }  = useActiveEmployees();
   const { options: categoryOptions, loading: loadingCategories } = useCourseCategories();
@@ -161,11 +163,13 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<CreateCourseSchema>({
     resolver: zodResolver(createCourseSchema),
     defaultValues: {
       name:        defaultValues?.name        || "",
+      slug:        defaultValues?.slug        || "",
       duration:    defaultValues?.duration    ?? undefined,
       mode:        defaultValues?.mode        || undefined,
       image:       "",
@@ -191,9 +195,15 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
       setValue("category", defaultValues.category);
   }, [loadingCategories]);
 
+  const watchedName = watch("name");
+  useEffect(() => {
+    if (!slugTouched) setValue("slug", toSlug(watchedName || ""));
+  }, [watchedName]);
+
   const handleFormSubmit = async (formValues: CreateCourseSchema) => {
     const fd = new FormData();
     fd.append("name",       formValues.name);
+    fd.append("slug",       formValues.slug);
     fd.append("duration",   String(formValues.duration));
     fd.append("mode",       formValues.mode);
     fd.append("price",      String(formValues.price));
@@ -235,6 +245,19 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
           className={errors.name ? "border-destructive focus-visible:ring-destructive" : ""}
         />
         {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
+      </div>
+
+      {/* ── Slug ── */}
+      <div className="space-y-1.5">
+        <Label htmlFor="slug">Slug <span className="text-destructive">*</span></Label>
+        <Input
+          id="slug"
+          {...register("slug")}
+          onChange={(e) => { setSlugTouched(true); register("slug").onChange(e); }}
+          placeholder="full-stack-web-development"
+          className={errors.slug ? "border-destructive focus-visible:ring-destructive" : ""}
+        />
+        {errors.slug && <p className="text-xs text-destructive">{errors.slug.message}</p>}
       </div>
 
       {/* ── Duration + Mode ── */}

@@ -68,7 +68,7 @@ function ProjectCard({ webinar, index }: { webinar: Webinar | null; index: numbe
           </span>
           {webinar ? (
             <Link
-              href={`/workshops/${webinar.id}`}
+              href={`/workshops/${webinar.slug}`}
               className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 group-hover:bg-blue-500 text-white transition-colors duration-300 shadow-md"
               onClick={(e) => e.stopPropagation()}
             >

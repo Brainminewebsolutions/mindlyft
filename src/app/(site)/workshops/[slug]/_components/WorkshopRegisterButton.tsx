@@ -6,11 +6,12 @@ import Link from "next/link";
 
 interface Props {
   webinarId:   string;
+  slug:        string;
   productType: "Workshop" | "Webinar";
   price:       number;
 }
 
-export default function WorkshopRegisterButton({ webinarId, productType, price }: Props) {
+export default function WorkshopRegisterButton({ webinarId, slug, productType, price }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [done,    setDone]    = useState(false);
@@ -46,7 +47,7 @@ export default function WorkshopRegisterButton({ webinarId, productType, price }
       });
 
       if (res.status === 401) {
-        router.push(`/login?next=/workshops/${webinarId}`);
+        router.push(`/login?next=/workshops/${slug}`);
         return;
       }
 

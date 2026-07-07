@@ -419,7 +419,7 @@ gsap.set(cards[0], {
 
   {/* Button Below */}
   <Link
-    href={course.courseType === "IIT" ? `/courses/iit/${course.id}` : `/courses/mindlyftai/${course.id}`}
+    href={course.courseType === "IIT" ? `/courses/iit/${course.slug}` : `/courses/mindlyftai/${course.slug}`}
     className="inline-flex w-fit items-center gap-2 px-8 py-3 rounded-full text-sm font-bold tracking-wide text-white transition-all hover:scale-105 hover:shadow-lg"
     style={{
       background: accent,

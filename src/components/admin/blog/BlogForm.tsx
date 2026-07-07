@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { notify } from "@/lib/notify";
+import { toSlug } from "@/lib/slug";
 import { prepareImageFile, ImageUploadError } from "@/lib/image-upload";
 import { ImageIcon, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -14,15 +15,6 @@ import { blogCategoryService, blogTagService } from "@/services/admin/blogServic
 import { employeeService } from "@/services/admin/employeeService";
 import type { BlogDto, BlogCategoryDto, BlogTagDto } from "@/types/admin/blog";
 import type { Employee } from "@/types/admin/employee";
-
-function toSlug(value: string) {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .trim();
-}
 
 function ImagePicker({
   existingUrl,

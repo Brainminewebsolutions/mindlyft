@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import {
   Clock, Wifi, MapPin, User, Globe, ArrowLeft,
   ShoppingBag, BookOpen,
 } from "lucide-react";
 import { dotnetFetch } from "@/lib/api/dotnet-client";
 import { toUploadUrl } from "@/lib/api/image-url";
+import { isNumericId } from "@/lib/slug";
 import type { Course } from "@/types/admin/course";
 import type { CourseChapterItem } from "@/types/student/course";
 import IITCourseDetail from "@/components/site/courses/iit/IITCourseDetail";
@@ -23,7 +24,19 @@ interface ChaptersEnvelope {
   data: CourseChapterItem[];
 }
 
-async function getCourse(id: string): Promise<Course | null> {
+async function getCourseBySlug(slug: string): Promise<Course | null> {
+  try {
+    const envelope = await dotnetFetch<CourseEnvelope>(
+      `/v1/courses/slug/${encodeURIComponent(slug)}`,
+      { next: { revalidate: 300 } } as RequestInit,
+    );
+    return envelope.isSuccess ? envelope.data : null;
+  } catch {
+    return null;
+  }
+}
+
+async function getCourseById(id: string): Promise<Course | null> {
   try {
     const envelope = await dotnetFetch<CourseEnvelope>(
       `/v1/courses/${id}`,
@@ -56,13 +69,18 @@ const sectionTitle =
 export default async function CourseDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { id } = await params;
+  const { slug } = await params;
 
-  const [course, rawChapters] = await Promise.all([getCourse(id), getChapters(id)]);
-
+  let course = await getCourseBySlug(slug);
+  if (!course && isNumericId(slug)) {
+    const byId = await getCourseById(slug);
+    if (byId) redirect(`/courses/${byId.slug}`);
+  }
   if (!course) notFound();
+
+  const rawChapters = await getChapters(course.id);
 
   const instructor = course.instructorDetail;
 

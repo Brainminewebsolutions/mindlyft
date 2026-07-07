@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import {
   Clock, Wifi, MapPin, User, Globe, Calendar,
   CheckCircle2, Tag, ExternalLink, ArrowLeft,
 } from "lucide-react";
 import { dotnetFetch } from "@/lib/api/dotnet-client";
 import { toUploadUrl } from "@/lib/api/image-url";
+import { isNumericId } from "@/lib/slug";
 import type { Webinar } from "@/types/admin/webinar";
 import WorkshopRegisterButton from "./_components/WorkshopRegisterButton";
 
@@ -20,7 +21,19 @@ const GRADIENTS = [
 
 interface WebinarEnvelope { isSuccess: boolean; data: Webinar; }
 
-async function getWebinar(id: string): Promise<Webinar | null> {
+async function getWebinarBySlug(slug: string): Promise<Webinar | null> {
+  try {
+    const envelope = await dotnetFetch<WebinarEnvelope>(
+      `/v1/workshopWebinar/slug/${encodeURIComponent(slug)}`,
+      { next: { revalidate: 300 } } as RequestInit,
+    );
+    return envelope.isSuccess ? envelope.data : null;
+  } catch {
+    return null;
+  }
+}
+
+async function getWebinarById(id: string): Promise<Webinar | null> {
   try {
     const envelope = await dotnetFetch<WebinarEnvelope>(
       `/v1/workshopWebinar/${id}`,
@@ -35,10 +48,14 @@ async function getWebinar(id: string): Promise<Webinar | null> {
 export default async function WorkshopDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { id } = await params;
-  const webinar = await getWebinar(id);
+  const { slug } = await params;
+  let webinar = await getWebinarBySlug(slug);
+  if (!webinar && isNumericId(slug)) {
+    const byId = await getWebinarById(slug);
+    if (byId) redirect(`/workshops/${byId.slug}`);
+  }
   if (!webinar) notFound();
 
   const highlights: string[] = (() => {
@@ -46,7 +63,7 @@ export default async function WorkshopDetailPage({
     catch { return []; }
   })();
 
-  const gradient     = GRADIENTS[Number(id) % GRADIENTS.length] ?? GRADIENTS[0];
+  const gradient     = GRADIENTS[Number(webinar.id) % GRADIENTS.length] ?? GRADIENTS[0];
   const proxiedImage = toUploadUrl(webinar.image);
   const priceLabel   = webinar.price === 0 ? "Free" : `₹${webinar.price.toLocaleString("en-IN")}`;
   const ModeIcon     = webinar.mode === "Online" ? Wifi : MapPin;
@@ -207,6 +224,7 @@ export default async function WorkshopDetailPage({
             {/* Register CTA */}
             <WorkshopRegisterButton
               webinarId={webinar.id}
+              slug={webinar.slug}
               productType={webinar.type}
               price={webinar.price}
             />

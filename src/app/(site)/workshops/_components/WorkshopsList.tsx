@@ -40,7 +40,7 @@ function WorkshopCard({ item, index }: { item: Webinar; index: number }) {
 
   return (
     <Link
-      href={`/workshops/${item.id}`}
+      href={`/workshops/${item.slug}`}
       className="group flex flex-col rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
     >
       {/* Image */}
