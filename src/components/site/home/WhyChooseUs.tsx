@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { AnimateIn } from "@/components/ui/AnimateIn";
 import { ArrowRight, GraduationCap, BookOpen, Repeat2, FolderKanban, Briefcase, Mic2, TextAlignCenter } from "lucide-react";
 
 const reasons = [
@@ -77,25 +78,28 @@ export default function WhyChooseUs() {
             <div className="w-full lg:w-1/2 xl:w-5/12">
               <div className="wh-content md:mb-[30px]">
                 <SectionBadge variant="dark">Why Choose Mindlyft AI</SectionBadge>
-<h2
-                  className="section-title style-one font-secondary font-medium text-white mb-15"
-                  data-cue="slideInUp"
-                  data-delay="400">
-                  Why Mindlyft AI?
-                </h2>
-                <p className="text-offwhite mb-30" data-cue="slideInUp" data-delay="500">
-                  At Mindlyft AI, we are dedicated to empowering students, professionals, and businesses with industry-ready AI skills, intelligent solutions, and future-focused innovation.
-                </p>
-                <ul className="feature-list flex flex-wrap list-none p-0 mb-10 2xl:w-3/4" data-cue="slideInUp" data-delay="600">
-                  {reasons.map(({ icon: Icon, label }) => (
-                    <li key={label} className="relative font-semibold text-white">
-                      <span className="flex flex-col items-center justify-center rounded-full">
-                        <Icon size={16} />
-                      </span>
-                      {label}
-                    </li>
-                  ))}
-                </ul>
+                <AnimateIn direction="up" delay={400}>
+                  <h2 className="section-title style-one font-secondary font-medium text-white mb-15">
+                    Why Mindlyft AI?
+                  </h2>
+                </AnimateIn>
+                <AnimateIn direction="up" delay={500}>
+                  <p className="text-offwhite mb-30">
+                    At Mindlyft AI, we are dedicated to empowering students, professionals, and businesses with industry-ready AI skills, intelligent solutions, and future-focused innovation.
+                  </p>
+                </AnimateIn>
+                <AnimateIn direction="up" delay={600}>
+                  <ul className="feature-list flex flex-wrap list-none p-0 mb-10 2xl:w-3/4">
+                    {reasons.map(({ icon: Icon, label }) => (
+                      <li key={label} className="relative font-semibold text-white">
+                        <span className="flex flex-col items-center justify-center rounded-full">
+                          <Icon size={16} />
+                        </span>
+                        {label}
+                      </li>
+                    ))}
+                  </ul>
+                </AnimateIn>
                 <Link
                   href="/courses"
                   className="inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-full font-semibold text-white text-sm transition-opacity hover:opacity-90"
@@ -108,9 +112,9 @@ export default function WhyChooseUs() {
                 </Link>
               </div>
             </div>
-            <div className="w-full lg:w-1/2 xl:w-7/12 2xl:pl-12" data-cue="slideInUp" data-delay="400">
+            <AnimateIn direction="up" delay={400} className="w-full lg:w-1/2 xl:w-7/12 2xl:pl-12">
               <div className="wh-bg bg-f bg-1 round-10" />
-            </div>
+            </AnimateIn>
           </div>
 
           {/* ── Detailed cards — sub-part of wh-area ── */}

@@ -13,6 +13,7 @@ import CoursesCard from '../../components/site/home/CoursesCard'
 // import NextGenAI from '../../components/site/home/NextGenAIDynamic';
  import OurClients from "@/components/site/home/OurClients";
  import GsapInit from "@/components/GsapInit";
+import LibraryLoader from "@/components/LibraryLoader";
 import FeaturedSection from "@/components/site/home/FeaturedSection";
 
 // Below-the-fold, non-data-fetching sections — split into their own chunks
@@ -41,6 +42,7 @@ export default function HomePage() {
   return (
     <>
       <GsapInit />
+      <LibraryLoader />
       <>
         <div>
           <div className="cursor">

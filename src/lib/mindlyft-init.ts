@@ -423,10 +423,6 @@ export function initMindlyft() {
         }
     }
 
-    // ScrollCue — set by LibraryLoader via script injection
-    const scrollCue = (window as any).scrollCue;
-    if (scrollCue) scrollCue.init();
-
     //Price Range Slider
     const minPriceSlider = document.getElementById('minPrice') as HTMLInputElement | null;
     const maxPriceSlider = document.getElementById('maxPrice') as HTMLInputElement | null;

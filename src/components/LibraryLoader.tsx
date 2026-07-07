@@ -4,22 +4,14 @@ import { useEffect } from "react";
 
 export default function LibraryLoader() {
   useEffect(() => {
-    // scrollcue's npm package has no proper ESM/CJS exports, so we inject it
-    // as a script element. It sets window.scrollCue the same way the old
-    // Script tag in layout.tsx did, preserving identical runtime behaviour.
-    const script = document.createElement("script");
-    script.src = "/assets/js/scrollcue.min.js";
-    script.onload = () => {
-      // Swiper and mindlyft-init are deferred to this callback so they are
-      // code-split into a separate chunk and only loaded after scrollcue is ready.
-      import("swiper/bundle").then(({ default: Swiper }) => {
-        (window as any).Swiper = Swiper;
-        import("@/lib/mindlyft-init").then(({ initMindlyft }) => {
-          (window as any).initMindlyft = initMindlyft;
-        });
+    // Swiper and mindlyft-init are dynamically imported so they're code-split
+    // into their own chunk rather than bloating the initial JS bundle.
+    import("swiper/bundle").then(({ default: Swiper }) => {
+      (window as any).Swiper = Swiper;
+      import("@/lib/mindlyft-init").then(({ initMindlyft }) => {
+        (window as any).initMindlyft = initMindlyft;
       });
-    };
-    document.head.appendChild(script);
+    });
 
     // gsap + its plugins are dynamically imported (rather than statically at
     // module scope) so they're code-split into their own chunk instead of

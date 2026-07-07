@@ -2,7 +2,7 @@
 // browser before a file ever reaches the backend, so oversized camera
 // photos never make it into storage.
 
-export const MAX_IMAGE_UPLOAD_BYTES = 5 * 1024 * 1024; // 5MB
+export const MAX_IMAGE_UPLOAD_BYTES = 3 * 1024 * 1024; // 3MB
 const MAX_IMAGE_DIMENSION = 1920;
 const JPEG_QUALITY = 0.8;
 

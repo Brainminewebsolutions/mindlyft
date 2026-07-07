@@ -1,6 +1,7 @@
 import {ArrowUpRight, Lock} from "lucide-react";
 import Link from "next/link";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { AnimateIn } from "@/components/ui/AnimateIn";
 
 export default function AiItSolutions(){
     return(
@@ -9,12 +10,11 @@ export default function AiItSolutions(){
                   <div className="flex flex-wrap items-center">
                     <div className="w-full md:w-1/2 2xl:w-5/12 2xl:pr-12 md:mb-[30px]">
                       <SectionBadge variant="dark">AI &amp; IT Solutions</SectionBadge>
-<h2
-                        className="section-title style-one text-title font-medium mb-0"
-                        data-cue="slideInUp"
-                        data-delay="300">
-                        Ready to Experience AI-Powered Cybersecurity That Works
-                      </h2>
+                      <AnimateIn direction="up" delay={300}>
+                        <h2 className="section-title style-one text-title font-medium mb-0">
+                          Ready to Experience AI-Powered Cybersecurity That Works
+                        </h2>
+                      </AnimateIn>
                     </div>
                     <div className="w-full md:w-1/2 2xl:w-1/2 2xl:ml-[8.333%]">
                       <style>{`

@@ -114,7 +114,7 @@ export default function AddPartnerPage() {
                   <Upload className="h-8 w-8 text-muted-foreground/50" />
                   <p className="text-sm text-muted-foreground text-center">
                     Click to upload logo<br />
-                    <span className="text-xs">JPG, PNG, WEBP — max 5 MB</span>
+                    <span className="text-xs">JPG, PNG, WEBP — max 3 MB</span>
                   </p>
                 </>
               )}

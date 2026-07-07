@@ -29,6 +29,7 @@ export default function Innovation() {
             src="/assets/img/about/about-thumb-2.png"
             alt="About Thumbnail"
             className="about-thumb round-10 move-left"
+            suppressHydrationWarning
           />
 
           {/* Subtitle */}
@@ -85,6 +86,7 @@ export default function Innovation() {
           src="/assets/img/about/about-img-3.png"
           alt="About Image"
           className="about-img absolute bottom-0 z-[1] move-right"
+          suppressHydrationWarning
         />
       </section>
       {/* About Us Section End */}
