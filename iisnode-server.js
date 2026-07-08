@@ -4,7 +4,9 @@
 // That env-var must be set before requiring Next.js so config.js silently skips
 // loadWebpackHook() failures (webpack is not in the standalone trace).
 const http = require('http')
+const https = require('https')
 const net = require('net')
+const tls = require('tls')
 const path = require('path')
 
 process.env.NODE_ENV = 'production'
@@ -23,11 +25,12 @@ if (!Number.isFinite(keepAliveTimeout) || keepAliveTimeout < 0) {
 }
 
 // The SignalR chat hub is mapped at the .NET API root ("/hubs/chat"), not
-// under "/api". The site runs https in production while the API is still
-// plain http, so the browser can't connect to it directly (mixed-content
-// block on both the negotiate XHR and the ws:// upgrade). Requests under
-// "/hubs/" are proxied here — straight to the .NET backend, not to the local
-// Next.js instance — including the raw WebSocket upgrade.
+// under "/api". The site runs https in production; if the API is plain http
+// the browser can't connect to it directly (mixed-content block on both the
+// negotiate XHR and the ws:// upgrade). Requests under "/hubs/" are proxied
+// here — straight to the .NET backend (http or https, whichever
+// DOTNET_API_URL specifies), not to the local Next.js instance — including
+// the raw WebSocket upgrade.
 let hubBackend = null
 try {
   const origin = (process.env.DOTNET_API_URL || '').replace(/\/api\/?$/, '')
@@ -41,10 +44,11 @@ function isHubRequest(url) {
 }
 
 function proxyHubRequest(req, res) {
-  const proxyReq = http.request(
+  const isTls = hubBackend.protocol === 'https:'
+  const proxyReq = (isTls ? https : http).request(
     {
       hostname: hubBackend.hostname,
-      port: hubBackend.port || 80,
+      port: hubBackend.port || (isTls ? 443 : 80),
       path: req.url,
       method: req.method,
       headers: { ...req.headers, host: hubBackend.host },
@@ -63,7 +67,9 @@ function proxyHubRequest(req, res) {
 }
 
 function proxyHubUpgrade(req, clientSocket, head) {
-  const upstream = net.connect(hubBackend.port || 80, hubBackend.hostname, () => {
+  const isTls = hubBackend.protocol === 'https:'
+  const port = hubBackend.port || (isTls ? 443 : 80)
+  const onConnect = () => {
     const headers = { ...req.headers, host: hubBackend.host }
     let raw = `${req.method} ${req.url} HTTP/1.1\r\n`
     for (const [key, value] of Object.entries(headers)) {
@@ -74,7 +80,11 @@ function proxyHubUpgrade(req, clientSocket, head) {
     if (head && head.length) upstream.write(head)
     upstream.pipe(clientSocket)
     clientSocket.pipe(upstream)
-  })
+  }
+  const upstream = isTls
+    ? tls.connect({ host: hubBackend.hostname, port }, onConnect)
+    : net.connect(port, hubBackend.hostname, onConnect)
+
   upstream.on('error', (err) => {
     console.error('Hub upgrade proxy error:', err.message)
     clientSocket.destroy()
