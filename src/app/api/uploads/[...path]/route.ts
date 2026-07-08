@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { insecureDispatcher } from "@/lib/api/dotnet-client";
 
 // Strip trailing /api so static files at /uploads/... are reachable
 const BACKEND = (process.env.DOTNET_API_URL ?? "").replace(/\/api\/?$/, "");
@@ -11,7 +12,10 @@ export async function GET(
   const url = `${BACKEND}/uploads/${path.join("/")}`;
 
   try {
-    const res = await fetch(url, { next: { revalidate: 86400 } });
+    const res = await fetch(url, {
+      next: { revalidate: 86400 },
+      ...(insecureDispatcher ? { dispatcher: insecureDispatcher } : {}),
+    } as RequestInit);
     if (!res.ok) return new NextResponse(null, { status: 404 });
 
     return new NextResponse(res.body, {
