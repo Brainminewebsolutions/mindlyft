@@ -1,7 +1,10 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
 
+// Same-origin proxy (see src/app/api/backend/[...path]/route.ts) so the browser
+// never calls the .NET API directly — avoids mixed-content blocking when the
+// site is https but the API is still plain http.
 const apiAxios = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_DOTNET_API_URL,
+  baseURL: "/api/backend",
   headers: { "Content-Type": "application/json" },
 });
 
