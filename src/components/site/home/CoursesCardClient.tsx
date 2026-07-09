@@ -289,7 +289,7 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
               {course.instructor}
             </span>
           </div>
-
+ 
           {/* Highlights */}
           {course.highlights && course.highlights.length > 0 && (
             <ul className={`${textClass} space-y-1`}>

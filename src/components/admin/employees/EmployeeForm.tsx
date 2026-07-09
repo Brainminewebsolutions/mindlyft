@@ -176,11 +176,11 @@ export function EmployeeForm({ mode, defaultValues, onSubmit, onCancel, isLoadin
 
     if (photoFile)         fd.append("avatar", photoFile);
     else if (photoRemoved) fd.append("removeAvatar", "true");
-    else if (photoPreview) fd.append("avatar", photoPreview);
+    // else: no new file and not removed -> omit the field so the backend keeps the existing avatar
 
     if (videoFile)         fd.append("video", videoFile);
     else if (videoRemoved) fd.append("removeVideo", "true");
-    else if (videoPreview) fd.append("video", videoPreview);
+    // else: no new file and not removed -> omit the field so the backend keeps the existing video
 
     await onSubmit(fd);
   };

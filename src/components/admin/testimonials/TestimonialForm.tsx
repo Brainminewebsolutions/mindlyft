@@ -181,11 +181,11 @@ export function TestimonialForm({ mode, defaultValues, onSubmit, onCancel, isLoa
     fd.append("status", values.status ?? "ACTIVE");
     fd.append("order",  String(values.order ?? 0));
 
-    if (avatarFile)         fd.append("avatar", avatarFile);
-    else if (avatarPreview) fd.append("avatar", avatarPreview);
+    if (avatarFile) fd.append("avatar", avatarFile);
+    // else: no new file chosen -> omit the field so the backend keeps the existing avatar
 
-    if (videoFile)         fd.append("video", videoFile);
-    else if (videoPreview) fd.append("video", videoPreview);
+    if (videoFile) fd.append("video", videoFile);
+    // else: no new file chosen -> omit the field so the backend keeps the existing video
 
     await onSubmit(fd);
   };
