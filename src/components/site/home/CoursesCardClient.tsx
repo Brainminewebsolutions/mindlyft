@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 import Link from "next/link";
 import Image from "next/image";
 import { Clock, ArrowRight, Globe, User, CheckCircle } from "lucide-react";
@@ -139,10 +140,11 @@ export default function CoursesCardClient({ courses }: { courses: Course[] }) {
       {/* Section Header */}
     <div className="space-y-6 px-6 pt-10 pb-20 text-center">
         <SectionBadge variant="dark">Our Courses</SectionBadge>
-        <h2 className="text-4xl font-bold text-gray-900 md:text-5xl">
-          Expert-led courses designed to take you{" "}
-          <span className="text-violet-600">from fundamentals to mastery.</span>
-        </h2>
+        <Subheading
+          centered
+          text="Expert-led courses designed to take you"
+          highlight="from fundamentals to mastery."
+        />
         <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-violet-500 to-blue-500" />
       </div>
 

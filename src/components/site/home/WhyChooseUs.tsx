@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { ArrowRight, GraduationCap, BookOpen, Repeat2, FolderKanban, Briefcase, Mic2, TextAlignCenter } from "lucide-react";
 
@@ -79,9 +80,7 @@ export default function WhyChooseUs() {
               <div className="wh-content md:mb-[30px]">
                 <SectionBadge variant="dark">Why Choose Mindlyft AI</SectionBadge>
                 <AnimateIn direction="up" delay={400}>
-                  <h2 className="section-title style-one font-secondary font-medium text-white mb-15">
-                    Why Mindlyft AI?
-                  </h2>
+                  <Subheading className="!text-white mb-15" text="Why Mindlyft AI?" />
                 </AnimateIn>
                 <AnimateIn direction="up" delay={500}>
                   <p className="text-offwhite mb-30">

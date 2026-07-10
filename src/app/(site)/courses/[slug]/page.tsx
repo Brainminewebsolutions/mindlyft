@@ -200,9 +200,7 @@ export default async function CourseDetailPage({
                 ? <span className="text-[#22c55e]">Free</span>
                 : <span className="text-[#6c63ff]">{priceLabel}</span>}
             </p>
-            <p className="mb-5 text-xs text-[#999]">
-              One-time payment · Lifetime access
-            </p>
+             
 
             {/* CTA */}
             <Link

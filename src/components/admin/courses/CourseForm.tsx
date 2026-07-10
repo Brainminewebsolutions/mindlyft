@@ -207,7 +207,7 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
     fd.append("duration",   String(formValues.duration));
     fd.append("mode",       formValues.mode);
     fd.append("price",      String(formValues.price));
-    fd.append("instructorId", String(formValues.instructorId));
+    if (formValues.instructorId !== undefined) fd.append("instructorId", String(formValues.instructorId));
     fd.append("language",   formValues.language);
     if (formValues.description)                  fd.append("description", formValues.description);
     fd.append("courseType", formValues.courseType);
@@ -384,15 +384,15 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="instructorId">Instructor <span className="text-destructive">*</span></Label>
+          <Label htmlFor="instructorId">Instructor</Label>
           <select
             id="instructorId"
-            {...register("instructorId", { valueAsNumber: true })}
+            {...register("instructorId", { setValueAs: (v) => (v === "" ? undefined : Number(v)) })}
             disabled={loadingEmployees}
             className={cn(selectCls, errors.instructorId ? "border-destructive" : "", loadingEmployees ? "opacity-60" : "")}
           >
             <option value="">
-              {loadingEmployees ? "Loading instructors…" : "Select instructor"}
+              {loadingEmployees ? "Loading instructors…" : "No instructor"}
             </option>
             {employeeOptions.map((emp) => (
               <option key={emp.id} value={emp.employeeId}>

@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Calendar, Clock } from "lucide-react";
 import { toUploadUrl } from "@/lib/api/image-url";
@@ -105,10 +106,11 @@ export default function WorkshopsCardClient({ webinars }: { webinars: Webinar[] 
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <SectionBadge variant="dark">Workshops &amp; Webinars</SectionBadge>
-            <h2 className="py-4 text-4xl md:text-5xl font-bold text-gray-900 max-w-xl">
-              Hands-on sessions to{" "}
-              <span className="text-violet-600">accelerate your skills.</span>
-            </h2>
+            <Subheading
+              className="py-4 max-w-xl"
+              text="Hands-on sessions to"
+              highlight="accelerate your skills."
+            />
             <div className="w-16 h-1 bg-gradient-to-r from-violet-500 to-blue-500 rounded-full mt-4" />
           </div>
 
@@ -139,6 +141,22 @@ export default function WorkshopsCardClient({ webinars }: { webinars: Webinar[] 
         {cards.map((w, i) => (
           <ProjectCard key={w?.id ?? i} webinar={w} index={i} />
         ))}
+      </div>
+
+      {/* Prev / Next buttons — bottom */}
+      <div className="flex items-center justify-center gap-3 mt-8">
+        <button
+          onClick={() => scroll("left")}
+          className="flex items-center justify-center w-11 h-11 rounded-full border-2 border-gray-200 text-gray-500 hover:border-violet-500 hover:text-violet-600 transition-colors duration-200"
+        >
+          <ArrowLeft size={18} />
+        </button>
+        <button
+          onClick={() => scroll("right")}
+          className="flex items-center justify-center w-11 h-11 rounded-full border-2 border-gray-200 text-gray-500 hover:border-violet-500 hover:text-violet-600 transition-colors duration-200"
+        >
+          <ArrowRight size={18} />
+        </button>
       </div>
 
     </div>

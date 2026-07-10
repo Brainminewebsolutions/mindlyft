@@ -33,13 +33,13 @@ export default function IITCollaboration({ bg = "bg-white" }: { bg?: string }) {
             </p>
           </AnimateIn>
           <AnimateIn delay={300} direction="left">
-            <div className="flex items-center gap-5 px-6 py-4 rounded-2xl bg-white border border-gray-100 shadow-sm w-full">
+            <div className="flex items-center gap-5 px-6 py-4 rounded-2xl  w-full">
               {/* MindLyft AI */}
               <div className="flex flex-col items-center gap-2">
                 <div className="relative w-40 h-40 shrink-0">
                   <Image src={SITE_CONFIG.logo1} alt="MindLyft AI" fill className="object-contain object-center" />
                 </div>
-                <span className="text-[20px] font-semibold text-gray-400 tracking-wide whitespace-nowrap">{SITE_CONFIG.name}</span>
+                <span className="text-[20px] font-semibold text-gray-800 tracking-wide whitespace-nowrap">{SITE_CONFIG.name}</span>
               </div>
 
               <span className="text-gray-200 text-xl select-none pb-4">×</span>
@@ -49,7 +49,7 @@ export default function IITCollaboration({ bg = "bg-white" }: { bg?: string }) {
                 <div className="relative w-40 h-40 shrink-0">
                   <Image src={SITE_CONFIG.c3iHubLogo} alt="C3iHub IIT Kanpur" fill className="object-contain object-center" />
                 </div>
-                <span className="text-[20px] font-semibold text-gray-400 tracking-wide whitespace-nowrap">{SITE_CONFIG.C3ihub}</span>
+                <span className="text-[20px] font-semibold text-gray-800 tracking-wide whitespace-nowrap">{SITE_CONFIG.C3ihub}</span>
               </div>
             </div>
           </AnimateIn>

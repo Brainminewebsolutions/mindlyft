@@ -4,6 +4,7 @@ export const EMPLOYEE_CATEGORIES = [
   "Experts",
   "Board Of Directors",
   "Advisors",
+  "IIT Instructor"
 ] as const;
 
 export const EMPLOYEE_DEPARTMENTS = [

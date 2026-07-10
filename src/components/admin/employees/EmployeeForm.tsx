@@ -139,6 +139,7 @@ export function EmployeeForm({ mode, defaultValues, onSubmit, onCancel, isLoadin
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitted },
   } = useForm<FormValues>({
     resolver: zodResolver(schema) as Resolver<FormValues>,
@@ -192,6 +193,14 @@ export function EmployeeForm({ mode, defaultValues, onSubmit, onCancel, isLoadin
 
   const fieldErr = (msg?: string) =>
     msg ? <p className="text-xs text-destructive">{msg}</p> : null;
+
+  const charCount = (current: number, max: number) => (
+    <p className={`text-right text-xs ${current > max ? "text-destructive" : "text-muted-foreground"}`}>
+      {current}/{max}
+    </p>
+  );
+
+  const watchDescription = watch("description") ?? "";
 
   const errorCount = Object.keys(errors).length;
 
@@ -288,6 +297,7 @@ export function EmployeeForm({ mode, defaultValues, onSubmit, onCancel, isLoadin
                 id="description"
                 {...register("description")}
                 rows={4}
+                maxLength={350}
                 placeholder="Brief bio or role description…"
                 className={cn(
                   "w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground",
@@ -295,7 +305,10 @@ export function EmployeeForm({ mode, defaultValues, onSubmit, onCancel, isLoadin
                   errors.description ? "border-destructive focus:ring-destructive" : ""
                 )}
               />
-              {fieldErr(errors.description?.message)}
+              <div className="flex items-center justify-between">
+                {fieldErr(errors.description?.message) ?? <span />}
+                {charCount(watchDescription.length, 350)}
+              </div>
             </div>
           </SectionCard>
         </div>

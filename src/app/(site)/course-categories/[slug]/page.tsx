@@ -63,7 +63,7 @@ async function getCoursesByCategory(categoryName: string): Promise<Course[]> {
 async function getInstructors(): Promise<Employee[]> {
   try {
     const envelope = await dotnetFetch<EmployeeEnvelope>(
-      `/v1/employees?status=ACTIVE&limit=200&category=instructor`,
+      `/v1/employees?status=ACTIVE&limit=200&category=IIT Instructor`,
       { next: { revalidate: 300 } } as RequestInit,
     );
     if (!envelope.isSuccess) return [];

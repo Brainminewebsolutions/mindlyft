@@ -110,7 +110,7 @@ export default async function IITCourseDetailPage({ params }: { params: Promise<
             <p className="m-0 mb-1 text-[2rem] font-extrabold text-[#1a1046] [font-family:var(--secondaryFont,sans-serif)]">
               {course.price === 0 ? <span className="text-[#22c55e]">Free</span> : <span className="text-[#6c63ff]">{priceLabel}</span>}
             </p>
-            <p className="mb-5 text-xs text-[#999]">One-time payment · Lifetime access</p>
+            
             <Link href={`/checkout/${course.id}`} className="mb-3 box-border flex w-full items-center justify-center gap-2 rounded-[14px] bg-[#6c63ff] p-[15px] text-[15px] font-bold text-white no-underline transition-[background,transform] duration-200 hover:-translate-y-px hover:bg-[#5b52e0] hover:text-white [font-family:var(--primaryFont,sans-serif)]">
               <ShoppingBag className="h-4 w-4" />{course.price === 0 ? "Enrol for Free" : "Buy Now"}
             </Link>

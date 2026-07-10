@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -110,13 +111,19 @@ export default function OurTools({ cards: cardsProp }) {
         {/* Header */}
         <div className="relative z-[5] mb-0 text-center px-6">
           <SectionBadge variant="dark">Our Tools</SectionBadge>
-          <h2 className="mt-4 mb-3 text-[clamp(28px,4vw,48px)] font-extrabold leading-[1.1] tracking-[-0.04em] text-gray-900">
-            Powerful tools to
-            <br />
-            <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-              accelerate your growth
-            </span>
-          </h2>
+          <Subheading
+            centered
+            className="mt-4 mb-3 leading-[1.1] tracking-[-0.04em]"
+            text={
+              <>
+                Powerful tools to
+                <br />
+                <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
+                  accelerate your growth
+                </span>
+              </>
+            }
+          />
           <p className="mx-auto max-w-[400px] text-[15px] font-normal leading-[1.7] text-gray-500">
             Drag to explore or click any card — tools powering smarter learning and outcomes.
           </p>

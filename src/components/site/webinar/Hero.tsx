@@ -53,18 +53,7 @@ export default function Hero() {
           </div>
         </AnimateIn>
 
-        <AnimateIn delay={400}>
-          <div className="flex flex-wrap gap-x-10 gap-y-5">
-            {heroStats.map((stat) => (
-              <div key={stat.label}>
-                <div className="text-3xl font-extrabold bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-                  {stat.num}
-                </div>
-                <div className="text-xs font-medium text-gray-400 mt-0.5">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </AnimateIn>
+        
       </div>
     </section>
   );

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 import Image from "next/image";
 import { Star, Play, MessageSquare, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -233,14 +234,17 @@ export default function Testimonials({ testimonials = [] }) {
         <div className="mb-12 px-6 text-center">
           <SectionBadge variant="dark">Testimonials</SectionBadge>
 
-          <h2
-            className="mx-auto max-w-[560px] py-4 font-black leading-[1.12] tracking-tight text-[#111827]"
-            style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", letterSpacing: "-0.03em" }}
-          >
-            What Our Students
-            <br />
-            <span className="text-[#6c63ff]">Say About Us</span>
-          </h2>
+          <Subheading
+            centered
+            className="max-w-[560px] py-4 leading-[1.12] tracking-tight"
+            text={
+              <>
+                What Our Students
+                <br />
+                <span className="text-[#6c63ff]">Say About Us</span>
+              </>
+            }
+          />
 
           <p className="mx-auto mt-4 max-w-[400px] text-sm leading-[1.7] text-[#6b7280]">
             Real stories from real people who transformed their careers with MindLyft AI.

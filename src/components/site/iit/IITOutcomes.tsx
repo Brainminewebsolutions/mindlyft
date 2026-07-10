@@ -36,21 +36,22 @@ export default function IITOutcomes({ bg = "bg-white" }: { bg?: string }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
           {/* Featured card — spans 2 cols */}
-          <AnimateIn delay={300} direction="fade">
+          <AnimateIn delay={300} direction="fade" className="h-full lg:col-span-2">
             <div
-              className="group relative rounded-3xl p-8 overflow-hidden hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 h-full lg:col-span-2"
+              className="group relative rounded-3xl p-8 overflow-hidden hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 h-full"
               style={{ background: featured.bg, border: `1.5px solid ${featured.border}` }}
             >
-              <p className="absolute -right-4 -bottom-6 text-[130px] font-black opacity-[0.05] leading-none select-none" style={{ color: featured.accent }}>
-                {featured.num}
-              </p>
-              <div className="relative z-10">
-                <div className="h-1 w-10 rounded-full mb-5" style={{ background: featured.accent }} />
-                <p className="text-7xl font-extrabold mb-4 transition-transform duration-300 group-hover:scale-105 origin-left" style={{ color: featured.accent }}>
+              <div className="flex items-start gap-6">
+                <p
+                  className="shrink-0 text-6xl sm:text-7xl font-extrabold leading-none transition-transform duration-300 group-hover:scale-105"
+                  style={{ color: featured.accent }}
+                >
                   {featured.num}
                 </p>
-                <h4 className="text-xl font-bold text-gray-900 mb-2">{featured.title}</h4>
-                <p className="text-sm text-gray-500 leading-relaxed max-w-sm">{featured.desc}</p>
+                <div className="flex-1 min-w-0 border-l pl-6" style={{ borderColor: featured.border }}>
+                  <h4 className="text-xl font-bold text-gray-900 mb-1.5">{featured.title}</h4>
+                  <p className="text-sm text-gray-500 leading-relaxed max-w-sm">{featured.desc}</p>
+                </div>
               </div>
             </div>
           </AnimateIn>
@@ -62,14 +63,17 @@ export default function IITOutcomes({ bg = "bg-white" }: { bg?: string }) {
                 className="group relative rounded-3xl p-6 overflow-hidden hover:-translate-y-1.5 hover:shadow-lg transition-all duration-300 h-full"
                 style={{ background: cardBg, border: `1.5px solid ${border}` }}
               >
-                <div className="absolute -right-3 -bottom-4 text-[80px] font-black opacity-[0.05] leading-none select-none" style={{ color: accent }}>
-                  {num}
-                </div>
-                <div className="relative z-10">
-                  <div className="h-1 w-8 rounded-full mb-4" style={{ background: accent }} />
-                  <p className="text-4xl font-extrabold mb-2 group-hover:scale-105 transition-transform duration-300 origin-left" style={{ color: accent }}>{num}</p>
-                  <h4 className="text-sm font-bold text-gray-900 mb-1.5">{title}</h4>
-                  <p className="text-xs text-gray-500 leading-relaxed">{desc}</p>
+                <div className="flex items-start gap-4">
+                  <p
+                    className="shrink-0 text-4xl font-extrabold leading-none transition-transform duration-300 group-hover:scale-105"
+                    style={{ color: accent }}
+                  >
+                    {num}
+                  </p>
+                  <div className="flex-1 min-w-0 border-l pl-4" style={{ borderColor: border }}>
+                    <h4 className="text-sm font-bold text-gray-900 mb-1">{title}</h4>
+                    <p className="text-xs text-gray-500 leading-relaxed">{desc}</p>
+                  </div>
                 </div>
               </div>
             </AnimateIn>

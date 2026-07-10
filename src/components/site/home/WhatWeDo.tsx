@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { TrendingUp } from "lucide-react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 
 /**
  * Each step carries pre-composed Tailwind class strings instead of raw color
@@ -181,10 +182,12 @@ export default function WhatWeDo() {
       {/* Section Header */}
       <div className="mx-auto max-w-[1200px] px-12 pt-16 text-center">
         <SectionBadge variant = "dark">What We Do</SectionBadge>
-        <h2 className="m-0 text-[clamp(1.8rem,3.5vw,2.8rem)] font-black leading-[1.2] tracking-[-0.03em] text-[#111]">
-          Explore Our Top-Class Services and{" "}
-          <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">Unlock Your True Potential.</span>
-        </h2>
+        <Subheading
+          className="m-0 leading-[1.2] tracking-[-0.03em]"
+          text="Explore Our Top-Class Services and"
+          highlight="Unlock Your True Potential."
+          highlightClassName="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text !text-transparent"
+        />
       </div>
 
       <div className="relative mx-auto flex max-w-[1200px] items-start gap-16 px-12">

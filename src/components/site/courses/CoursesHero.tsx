@@ -32,22 +32,7 @@ export default function CoursesHero() {
               job-ready in weeks, not years.
             </p>
           </AnimateIn>
-          <AnimateIn delay={300}>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="#courses"
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition shadow-lg shadow-violet-200"
-              >
-                Browse Courses <ArrowDown className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/webinar"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 border border-gray-200 bg-white px-6 py-3 rounded-xl hover:border-violet-400 hover:text-violet-600 transition-all"
-              >
-                How it works <span className="text-base">↗</span>
-              </Link>
-            </div>
-          </AnimateIn>
+          
         </div>
 
         {/* Right — image */}

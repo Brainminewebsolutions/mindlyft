@@ -71,7 +71,7 @@ export default function VideoHeroSection() {
       {/* Background video */}
       <video
         ref={videoRef}
-        src="/Mindlyftai_hero.mp4"
+        src="https://www.mindlyftai.com/Mindlyftai_hero.mp4"
         autoPlay
         muted
         loop
