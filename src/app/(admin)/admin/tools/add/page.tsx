@@ -142,7 +142,7 @@ export default function AddToolPage() {
       <div className="rounded-xl border border-border bg-card p-6">
         <form onSubmit={handleSubmit} className="space-y-5 max-w-lg">
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-foreground">Title</label>
               <Input

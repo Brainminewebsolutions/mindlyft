@@ -44,7 +44,7 @@ export default function OurJourneyPage() {
 
       {/* Hero */}
       <section
-        className="relative h-screen flex items-center overflow-hidden px-6 pt-28 pb-16 md:px-[60px]"
+        className="relative min-h-screen flex items-center px-6 pt-28 pb-16 md:px-[60px]"
         style={{ backgroundImage: "url('/assets/img/hero/hero-bg-3.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/30 pointer-events-none" />

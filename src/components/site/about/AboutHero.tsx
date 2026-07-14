@@ -13,8 +13,8 @@ export default function AboutHero({ description }: AboutHeroProps) {
     <>
         
       {/* ── Description section ── */}
-    <div className="bg-white px-6 py-30">
-  <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+    <div className="bg-white px-6 py-14 md:py-30">
+  <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12">
     
     {/* Content Left */}
     <div className="flex-1 text-center md:text-left space-y-6">

@@ -180,7 +180,7 @@ export default function WhatWeDo() {
   return (
     <section ref={sectionRef} className="relative bg-white">
       {/* Section Header */}
-      <div className="mx-auto max-w-[1200px] px-12 pt-16 text-center">
+      <div className="mx-auto max-w-[1200px] px-6 pt-16 text-center lg:px-12">
         <SectionBadge variant = "dark">What We Do</SectionBadge>
         <Subheading
           className="m-0 leading-[1.2] tracking-[-0.03em]"
@@ -190,9 +190,9 @@ export default function WhatWeDo() {
         />
       </div>
 
-      <div className="relative mx-auto flex max-w-[1200px] items-start gap-16 px-12">
+      <div className="relative mx-auto flex max-w-[1200px] flex-col items-start gap-10 px-4 lg:flex-row lg:gap-16 lg:px-12">
         {/* LEFT — scrolling content */}
-        <div className="flex-1 py-[6vh]">
+        <div className="w-full flex-1 py-[6vh]">
           {steps.map((step, i) => {
             const isActive = i === activeIndex;
             return (
@@ -201,11 +201,20 @@ export default function WhatWeDo() {
                 ref={(el) => {
                   stepRefs.current[i] = el;
                 }}
-                className={`flex min-h-[80vh] items-center py-8 transition-opacity duration-[450ms] ease-out ${
+                className={`flex min-h-0 items-center py-8 transition-opacity duration-[450ms] ease-out lg:min-h-[80vh] ${
                   isActive ? "opacity-100" : "opacity-[0.22]"
                 }`}
               >
-                <div className={`max-w-[500px] rounded-3xl px-8 py-8 ${step.accent.sectionBg}`}>
+                <div className={`max-w-[500px] rounded-3xl px-4 py-8 ${step.accent.sectionBg}`}>
+                  {/* Image — shown per-step on mobile/tablet; desktop uses the shared sticky image on the right */}
+                  <div className="mb-6 overflow-hidden rounded-2xl lg:hidden">
+                    <img
+                      src={step.image}
+                      alt={step.imageAlt}
+                      className="aspect-[4/3] w-full object-cover"
+                    />
+                  </div>
+
                   {/* Headline */}
                   <h2 className="mb-8 text-[clamp(1.6rem,3vw,2.4rem)] font-black leading-[1.18] tracking-[-0.02em]">
                     <span className={step.accent.text}>{step.headline} </span>
@@ -241,8 +250,8 @@ export default function WhatWeDo() {
           })}
         </div>
 
-        {/* RIGHT — sticky image */}
-        <div className="py-8 pb-20 sticky top-[30vh] flex h-fit w-[460px] flex-shrink-0 flex-col gap-4">
+        {/* RIGHT — sticky shared image, desktop only; mobile/tablet show each step's own image inline instead */}
+        <div className="hidden lg:flex h-fit flex-col gap-4 lg:w-[460px] lg:flex-shrink-0 lg:sticky lg:top-[30vh] lg:py-8 lg:pb-20">
           <div
             className={`relative overflow-hidden rounded-2xl border border-violet-900/20 bg-[#0d0f1e] transition-shadow duration-[650ms] ease-in-out ${active.accent.cardShadow}`}
           >

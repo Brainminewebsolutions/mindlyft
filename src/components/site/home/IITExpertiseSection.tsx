@@ -29,7 +29,7 @@ export default async function IITExpertiseSection() {
   return (
     <>
       {/* ── IIT Collaboration Intro ── */}
-      <div className="h-screen bg-white flex items-center justify-center px-6 sm:px-10 lg:px-20 overflow-hidden">
+      <div className="min-h-screen bg-white flex items-center justify-center px-6 py-20 sm:px-10 lg:px-20">
         <div className="w-full max-w-3xl mx-auto flex flex-col items-center gap-5 text-center">
 
           <SectionBadge variant="dark">Powered by Research. Backed by Innovation.</SectionBadge>

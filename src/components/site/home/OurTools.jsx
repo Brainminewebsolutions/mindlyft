@@ -129,9 +129,13 @@ export default function OurTools({ cards: cardsProp }) {
           </p>
         </div>
 
-        {/* Stage */}
+        {/* Stage — orbit math below is fixed to a 560×560 coordinate space, so on
+            small screens we scale the whole thing down with a CSS transform rather
+            than recomputing RADIUS/CARD_W/CARD_H per breakpoint. The outer wrapper
+            reserves the visually-scaled footprint so layout doesn't leave a gap. */}
+        <div className="relative -mt-6 h-[280px] w-[280px] sm:-mt-10 sm:h-[364px] sm:w-[364px] md:-mt-12 md:h-[448px] md:w-[448px] lg:-mt-16 lg:h-[560px] lg:w-[560px]">
         <div
-          className="relative h-[560px] w-[560px] cursor-grab select-none touch-none active:cursor-grabbing -mt-16"
+          className="absolute left-1/2 top-1/2 h-[560px] w-[560px] origin-center -translate-x-1/2 -translate-y-1/2 scale-[0.5] sm:scale-[0.65] md:scale-[0.8] lg:scale-100 cursor-grab select-none touch-none active:cursor-grabbing"
           ref={containerRef}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
@@ -216,6 +220,7 @@ export default function OurTools({ cards: cardsProp }) {
               ✦
             </div>
           </div>
+        </div>
         </div>
 
         {/* Dot indicators */}

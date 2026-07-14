@@ -75,7 +75,7 @@ export default function AdminWebinarsPage() {
 
       {/* Stats */}
       {webinars.length > 0 && (
-        <div className="grid grid-cols-3 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           {[
             { label: "Total",     value: webinars.length, color: "text-foreground"                        },
             { label: "Workshops", value: workshopCount,   color: "text-amber-600 dark:text-amber-400"    },

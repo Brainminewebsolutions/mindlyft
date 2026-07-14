@@ -19,11 +19,11 @@ export default function FounderMessage({
   bg = "bg-blue-50",
 }: FounderMessageProps & { bg?: string }) {
   return (
-    <section className={`${bg} px-6 py-20`}>
+    <section className={`${bg} px-6 py-12 md:py-20`}>
       <div className="max-w-6xl mx-auto">
 
         {/* Section Label */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-8 md:mb-14">
           <span className="inline-block text-sm font-bold uppercase tracking-widest text-blue-600 bg-blue-100 px-4 py-2 rounded-full">
             Leadership
           </span>
@@ -40,7 +40,7 @@ export default function FounderMessage({
          
 
           {/* Right — Message */}
-          <div className="md:w-3/5 p-10 flex flex-col justify-center space-y-6">
+          <div className="md:w-3/5 p-6 md:p-10 flex flex-col justify-center space-y-6">
 
             {/* Quote Icon */}
             <div className="text-6xl text-blue-200 font-serif leading-none">"</div>

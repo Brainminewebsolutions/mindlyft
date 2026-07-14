@@ -6,7 +6,7 @@ import { AnimateIn } from "@/components/ui/AnimateIn";
 
 export default function CoursesHero() {
   return (
-    <section className="relative h-screen flex items-center overflow-hidden px-6 pt-28 pb-16 md:px-[60px]">
+    <section className="relative min-h-screen flex items-center px-6 pt-28 pb-16 md:px-[60px]">
       <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-violet-50 pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

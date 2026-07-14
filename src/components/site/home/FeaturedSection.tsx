@@ -134,13 +134,13 @@ function Card({
       viewport={{ once: true }}
       transition={{ duration: 0.45, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: isCenter ? -8 : -5, transition: { duration: 0.2 } }}
-      className={`group relative min-w-0 overflow-hidden flex flex-row bg-gradient-to-br ${item.bg} border ${item.border} rounded-2xl transition-shadow duration-300
+      className={`group relative w-full min-w-0 overflow-hidden flex flex-row bg-gradient-to-br ${item.bg} border ${item.border} rounded-2xl transition-shadow duration-300
         ${
           isCenter
-            ? "flex-[1.45] shadow-xl hover:shadow-2xl ring-2 ring-indigo-300/60"
-            : "flex-[0.77] shadow-sm hover:shadow-lg opacity-90 hover:opacity-100"
+            ? "sm:flex-[1.45] shadow-xl hover:shadow-2xl ring-2 ring-indigo-300/60"
+            : "sm:flex-[0.77] sm:self-center shadow-sm hover:shadow-lg opacity-90 hover:opacity-100"
         }`}
-      style={isCenter ? { height: "220px" } : { height: "150px", alignSelf: "center" }}
+      style={isCenter ? { height: "220px" } : { height: "150px" }}
     >
       {isCenter ? (
         <button

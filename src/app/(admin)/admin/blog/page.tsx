@@ -83,7 +83,7 @@ export default function AdminBlogPage() {
 
       {/* Stats */}
       {blogs.length > 0 && (
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
             { label: "Total",     value: blogs.length, cls: "text-foreground" },
             { label: "Published", value: published,    cls: "text-emerald-600 dark:text-emerald-400" },

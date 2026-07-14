@@ -65,7 +65,7 @@ export default async function BlogDetailPage({
     <main className="min-h-screen bg-[#f9f8ff]">
 
       {/* ── Hero ── */}
-      <div className="relative h-screen overflow-hidden">
+      <div className="relative h-[60vh] sm:h-[70vh] md:h-screen overflow-hidden">
         {/* Background */}
         {cover ? (
           <img src={cover} alt={blog.title} className="absolute inset-0 w-full h-full object-cover" />

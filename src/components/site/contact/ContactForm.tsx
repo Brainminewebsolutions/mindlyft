@@ -24,8 +24,8 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="bg-gray-50 px-6 py-20">
-      <div className="max-w-3xl mx-auto space-y-12">
+    <section className="bg-gray-50 px-6 py-12 md:py-20">
+      <div className="max-w-3xl mx-auto space-y-8 md:space-y-12">
 
         {/* Heading */}
         <div className="text-center space-y-4">
@@ -42,7 +42,7 @@ export default function ContactForm() {
         </div>
 
         {/* Form Card */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 md:p-10 space-y-6">
+        <div className="bg-white rounded-3xl shadow-xl p-5 sm:p-8 md:p-10 space-y-6">
 
           {/* Row 1 — Name + Phone */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

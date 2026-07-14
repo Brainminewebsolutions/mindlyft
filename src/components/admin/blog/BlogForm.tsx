@@ -88,7 +88,7 @@ type Props = {
   onSubmit:      (data: FormData) => Promise<void>;
   onCancel:      () => void;
   isLoading?:    boolean;
-};
+}; 
 
 export function BlogForm({ mode, defaultValues, onSubmit, onCancel, isLoading }: Props) {
   const [categories, setCategories] = useState<BlogCategoryDto[]>([]);

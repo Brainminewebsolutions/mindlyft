@@ -36,9 +36,9 @@ const features = [
 
 export default function WhyChooseMindlyft({ bg = "bg-white" }: { bg?: string }) {
   return (
-    <section className={`py-18 px-6 ${bg}`}>
+    <section className={`py-12 md:py-18 px-6 ${bg}`}>
       <div className="max-w-7xl mx-auto">
-         <div className="text-center mb-16">
+         <div className="text-center mb-10 md:mb-16">
           <AnimateIn delay={100} direction="right">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
                Mindlyft AI stands&nbsp;

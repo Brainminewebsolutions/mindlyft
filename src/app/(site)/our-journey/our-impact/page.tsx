@@ -86,7 +86,7 @@ export default function OurImpactPage() {
     <div className="min-h-screen bg-[#f9f8ff]">
 
       {/* ── Hero ── */}
-      <div className="relative h-screen overflow-hidden">
+      <div className="relative h-[60vh] sm:h-[70vh] md:h-screen overflow-hidden">
         <img
           src={HERO_IMAGE}
           alt="Our Impact"

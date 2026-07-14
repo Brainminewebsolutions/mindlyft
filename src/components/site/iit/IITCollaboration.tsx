@@ -33,30 +33,30 @@ export default function IITCollaboration({ bg = "bg-white" }: { bg?: string }) {
             </p>
           </AnimateIn>
           <AnimateIn delay={300} direction="left">
-            <div className="flex items-center gap-5 px-6 py-4 rounded-2xl  w-full">
+            <div className="flex flex-wrap items-center justify-center gap-4 px-6 py-4 rounded-2xl w-full sm:justify-start sm:gap-5">
               {/* MindLyft AI */}
               <div className="flex flex-col items-center gap-2">
-                <div className="relative w-40 h-40 shrink-0">
+                <div className="relative w-20 h-20 shrink-0 sm:w-28 sm:h-28 lg:w-40 lg:h-40">
                   <Image src={SITE_CONFIG.logo1} alt="MindLyft AI" fill className="object-contain object-center" />
                 </div>
-                <span className="text-[20px] font-semibold text-gray-800 tracking-wide whitespace-nowrap">{SITE_CONFIG.name}</span>
+                <span className="text-sm font-semibold text-gray-800 tracking-wide whitespace-nowrap sm:text-base lg:text-[20px]">{SITE_CONFIG.name}</span>
               </div>
 
               <span className="text-gray-200 text-xl select-none pb-4">×</span>
 
               {/* C3iHub */}
               <div className="flex flex-col items-center gap-2">
-                <div className="relative w-40 h-40 shrink-0">
+                <div className="relative w-20 h-20 shrink-0 sm:w-28 sm:h-28 lg:w-40 lg:h-40">
                   <Image src={SITE_CONFIG.c3iHubLogo} alt="C3iHub IIT Kanpur" fill className="object-contain object-center" />
                 </div>
-                <span className="text-[20px] font-semibold text-gray-800 tracking-wide whitespace-nowrap">{SITE_CONFIG.C3ihub}</span>
+                <span className="text-sm font-semibold text-gray-800 tracking-wide whitespace-nowrap sm:text-base lg:text-[20px]">{SITE_CONFIG.C3ihub}</span>
               </div>
             </div>
           </AnimateIn>
         </div>
 
         {/* Right — 2×2 cards */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {FEATURES.map(({ icon: Icon, title, desc, accent, bg: cardBg }, i) => (
             <AnimateIn key={title} delay={200 + i * 80} direction="up">
               <div

@@ -6,7 +6,7 @@ import { AnimateIn } from "@/components/ui/AnimateIn";
 export default function Hero() {
   return (
     <section
-      className="relative h-screen flex items-center overflow-hidden px-6 pb-16 pt-28 md:px-[60px]"
+      className="relative min-h-screen flex items-center px-6 pb-16 pt-28 md:px-[60px]"
       style={{
         backgroundImage: "url('/assets/img/hero/hero-bg-3.jpg')",
         backgroundSize: "cover",

@@ -6,7 +6,7 @@ import { AnimateIn } from "@/components/ui/AnimateIn";
 
 export default function WorkshopsHero({ count = 0 }: { count?: number }) {
   return (
-    <section className="relative h-screen flex items-center overflow-hidden px-6 pt-28 pb-16 md:px-[60px] bg-blue-50">
+    <section className="relative min-h-screen flex items-center px-6 pt-28 pb-16 md:px-[60px] bg-blue-50">
       <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
         {/* Left — content */}

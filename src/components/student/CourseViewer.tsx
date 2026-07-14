@@ -106,12 +106,12 @@ export function CourseViewer({ chapters }: Props) {
   );
 
   return (
-    <div className="flex gap-4 items-start">
+    <div className="flex flex-col lg:flex-row gap-4 items-start">
 
       {/* ══════════════════════════════════════════════════════
           LEFT — Chapter / lesson navigation (own card)
       ══════════════════════════════════════════════════════ */}
-      <aside className="w-72 lg:w-80 shrink-0 rounded-xl border border-border flex flex-col bg-white shadow-sm sticky top-[104px] max-h-[calc(100vh-120px)] overflow-hidden">
+      <aside className="w-full lg:w-72 xl:w-80 shrink-0 rounded-xl border border-border flex flex-col bg-white shadow-sm lg:sticky lg:top-[104px] lg:max-h-[calc(100vh-120px)] lg:overflow-hidden">
 
         {/* Sidebar header */}
         <div className="px-4 py-3.5 border-b border-border bg-gray-50 shrink-0">

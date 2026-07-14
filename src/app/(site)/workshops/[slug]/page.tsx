@@ -86,12 +86,13 @@ export default async function WorkshopDetailPage({
     day: "2-digit", month: "short", year: "numeric",
   });
   const durationLabel = `${webinar.duration} hr${webinar.duration === 1 ? "" : "s"}`;
+  const isPast = webinar.date < new Date().toISOString().slice(0, 10);
 
   return (
     <div className="min-h-screen bg-[#f5f3ff]">
 
       {/* ── Hero ── */}
-      <div className="relative h-screen overflow-hidden">
+      <div className="relative h-[60vh] sm:h-[70vh] md:h-screen overflow-hidden">
         {proxiedImage ? (
           <img src={proxiedImage} alt={webinar.name} className="absolute inset-0 w-full h-full object-cover" />
         ) : (
@@ -227,10 +228,11 @@ export default async function WorkshopDetailPage({
               slug={webinar.slug}
               productType={webinar.type}
               price={webinar.price}
+              isPast={isPast}
             />
 
-            {/* Join link — online sessions */}
-            {webinar.link && (
+            {/* Join link — online sessions, hidden once the session has ended */}
+            {webinar.link && !isPast && (
               <a
                 href={webinar.link}
                 target="_blank"

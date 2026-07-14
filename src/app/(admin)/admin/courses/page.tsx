@@ -87,7 +87,7 @@ export default function AdminCoursesPage() {
 
       {/* Stats row */}
       {courses.length > 0 && (
-        <div className="grid grid-cols-3 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           {[
             { label: "Total Courses", value: courses.length, color: "text-foreground"                     },
             { label: "Online",        value: onlineCount,    color: "text-sky-600 dark:text-sky-400"     },

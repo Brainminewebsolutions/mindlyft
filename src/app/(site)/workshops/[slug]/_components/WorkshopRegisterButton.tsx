@@ -9,13 +9,22 @@ interface Props {
   slug:        string;
   productType: "Workshop" | "Webinar";
   price:       number;
+  isPast?:     boolean;
 }
 
-export default function WorkshopRegisterButton({ webinarId, slug, productType, price }: Props) {
+export default function WorkshopRegisterButton({ webinarId, slug, productType, price, isPast = false }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [done,    setDone]    = useState(false);
   const [error,   setError]   = useState<string | null>(null);
+
+  if (isPast) {
+    return (
+      <div className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-gray-100 border border-gray-200 text-gray-500 text-sm font-bold">
+        Registration Closed — Session Ended
+      </div>
+    );
+  }
 
   if (price > 0) {
     return (

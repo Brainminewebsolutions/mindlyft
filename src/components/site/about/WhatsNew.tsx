@@ -16,8 +16,8 @@ const ITEMS = [
 
 export default function WhatsNew({ bg = "bg-white" }: { bg?: string }) {
   return (
-    <section className={`${bg} py-16 px-6 md:px-14 lg:px-24 text-center`}>
-       <div className="text-center mb-16">
+    <section className={`${bg} py-12 md:py-16 px-6 md:px-14 lg:px-24 text-center`}>
+       <div className="text-center mb-10 md:mb-16">
           <AnimateIn delay={100} direction="right">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
             What&apos;s&nbsp;

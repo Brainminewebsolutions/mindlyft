@@ -52,6 +52,7 @@ export const adminNavGroups: NavGroup[] = [
       { label: "Courses",           href: "/admin/courses",             icon: BookOpen },
       { label: "Course Categories", href: "/admin/course-categories",   icon: Tag      },
       { label: "Blog Articles",  href: "/admin/blog",     icon: Newspaper },
+      { label: "Blog Categories", href: "/admin/blog-categories", icon: Tag },
       { label: "Workshops",   href: "/admin/webinars",    icon: Video        },
       { label: "Tool Cards",  href: "/admin/tools",       icon: Wrench       },
       { label: "Enrollments",    href: "/admin/enrollments",           icon: ClipboardList },

@@ -66,7 +66,7 @@ export default function VideoHeroSection() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center">
+    <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center bg-[#040610]">
 
       {/* Background video */}
       <video
@@ -76,20 +76,14 @@ export default function VideoHeroSection() {
         muted
         loop
         playsInline
-        preload="none"
+        preload="auto"
         className="absolute inset-0 w-full h-full object-cover object-center z-0"
       />
  
       {/* Purple radial tint */}
       <div
         className="absolute inset-0 z-[1] pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(108,99,255,.18) 0%, transparent 70%)" }}
-      />
-
-      {/* Darkening vignette to keep headline legible over bright video frames */}
-      <div
-        className="absolute inset-0 z-[1] pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 70% 45% at 50% 46%, rgba(4,6,16,.55) 0%, transparent 75%)" }}
+        style={{ background: "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(108,99,255,.10) 0%, transparent 70%)" }}
       />
 
       {/* Scan line */}
@@ -118,12 +112,12 @@ export default function VideoHeroSection() {
         )}
         style={{ transition: "opacity 1s ease 1.4s" }}
       >
-        <div className="flex items-center gap-2.5">
-          <span className="h-px w-8 bg-gradient-to-r from-transparent to-violet-400/70" />
-          <span className="font-bold tracking-[0.18em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400 text-[24px] sm:text-[24px]">
-  Three Pillars, One Vision
-</span>
-          <span className="h-px w-8 bg-gradient-to-l from-transparent to-blue-400/70" />
+        <div className="flex items-center justify-center gap-2 sm:gap-2.5 px-4">
+          <span className="hidden h-px w-8 shrink-0 bg-gradient-to-r from-transparent to-violet-400/70 sm:block" />
+          <span className="whitespace-nowrap text-center font-bold tracking-[0.1em] sm:tracking-[0.18em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400 text-[13px] sm:text-[24px]">
+            Three Pillars, One Vision
+          </span>
+          <span className="hidden h-px w-8 shrink-0 bg-gradient-to-l from-transparent to-blue-400/70 sm:block" />
         </div>
         <Mouse size={20} color="rgba(180,200,255,.5)" strokeWidth={1.5} />
       </div>

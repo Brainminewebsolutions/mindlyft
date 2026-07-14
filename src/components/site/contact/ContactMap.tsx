@@ -5,8 +5,8 @@ import {SITE_CONFIG} from "@/constants/siteConfig";
   
 export default function ContactMap( ) {
   return (
-    <section className="bg-white px-6 py-20">
-      <div className="max-w-6xl mx-auto space-y-12">
+    <section className="bg-white px-6 py-12 md:py-20">
+      <div className="max-w-6xl mx-auto space-y-8 md:space-y-12">
 
         {/* Heading */}
         <div className="text-center space-y-4">

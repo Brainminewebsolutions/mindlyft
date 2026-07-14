@@ -268,12 +268,12 @@ export default function Testimonials({ testimonials = [] }) {
 
         {/* ── Cards row ── */}
         <div className="relative">
-          <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-20 bg-gradient-to-r from-[#f9fafb] to-transparent" />
-          <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-20 bg-gradient-to-l from-[#f9fafb] to-transparent" />
+          <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-6 bg-gradient-to-r from-[#f9fafb] to-transparent sm:w-12 md:w-20" />
+          <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-6 bg-gradient-to-l from-[#f9fafb] to-transparent sm:w-12 md:w-20" />
 
           <div
             ref={scrollRef}
-            className="t-scroll flex select-none gap-5 overflow-x-auto px-20 pb-8 pt-4"
+            className="t-scroll flex select-none gap-5 overflow-x-auto px-6 pb-8 pt-4 sm:px-12 md:px-20"
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}

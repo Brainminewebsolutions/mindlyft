@@ -171,8 +171,8 @@ export default function OurLeaders({ categories, bg = "bg-white" }: OurLeadersPr
   if (categories.length === 0) return null;
 
   return (
-    <section className={`${bg} px-6 py-20`}>
-      <div className="max-w-6xl mx-auto space-y-20">
+    <section className={`${bg} px-6 py-12 md:py-20`}>
+      <div className="max-w-6xl mx-auto space-y-12 md:space-y-20">
 
         {/* Heading */}
         <div className="text-center space-y-4">

@@ -109,7 +109,7 @@ export default async function CourseDetailPage({
     <div className="min-h-screen bg-[#f5f3ff] [font-family:var(--primaryFont,sans-serif)]">
 
       {/* ── Hero ── */}
-      <div className="relative h-screen overflow-hidden">
+      <div className="relative h-[60vh] sm:h-[70vh] md:h-screen overflow-hidden">
         {proxiedImage ? (
           <img src={proxiedImage} alt={course.name} className="absolute inset-0 w-full h-full object-cover" />
         ) : (

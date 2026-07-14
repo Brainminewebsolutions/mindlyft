@@ -51,7 +51,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="relative flex h-screen w-full overflow-hidden">
+    <div className="relative flex min-h-screen w-full">
 
       {/* ── Full-page background image ── */}
       <div className="absolute inset-0" style={{ backgroundImage: "url('/Sign_in.jpeg')", backgroundSize: "cover", backgroundPosition: "center" }} />
