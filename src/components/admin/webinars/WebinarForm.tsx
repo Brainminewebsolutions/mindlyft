@@ -94,7 +94,6 @@ type Props = {
 export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading }: Props) {
   const [imageFile,     setImageFile]     = useState<File | null>(null);
   const [existingImage, setExistingImage] = useState(defaultValues?.image ?? "");
-  const [slugTouched,   setSlugTouched]   = useState(false);
   const { options: employees, loading: loadingEmployees } = useActiveEmployees();
 
   const { register, handleSubmit, watch, setValue, control, formState: { errors } } = useForm<CreateWebinarSchema>({
@@ -109,7 +108,7 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
       instructor:       defaultValues?.instructor       ?? "",
       language:         defaultValues?.language         ?? undefined,
       subscriptionType: defaultValues?.subscriptionType ?? undefined,
-      status:           (defaultValues?.status as "Active" | "Inactive" | "Pending") ?? "Active",
+      status:           (defaultValues?.status as "Active" | "Inactive" | "Pending" | "Upcoming") ?? "Active",
       discount:         defaultValues?.discount         ?? undefined,
       type:             defaultValues?.type             ?? undefined,
       category:         defaultValues?.category         ?? "",
@@ -130,8 +129,8 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
   }, [isFree, setValue]);
 
   useEffect(() => {
-    if (!slugTouched) setValue("slug", toSlug(watchedName || ""));
-  }, [watchedName]);
+    setValue("slug", toSlug(watchedName || ""));
+  }, [watchedName, setValue]);
 
   const selectCls = cn(
     "h-9 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground",
@@ -172,13 +171,14 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
         {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
       </div>
 
-      {/* Slug */}
+      {/* Slug — auto-generated from Name, not directly editable */}
       <div className="space-y-1.5">
         <Label htmlFor="slug">Slug <span className="text-destructive">*</span></Label>
         <Input id="slug" {...register("slug")}
-          onChange={(e) => { setSlugTouched(true); register("slug").onChange(e); }}
+          readOnly
           placeholder="react-deep-dive-workshop"
-          className={errors.slug ? "border-destructive" : ""} />
+          className={cn("cursor-not-allowed bg-muted text-muted-foreground", errors.slug ? "border-destructive" : "")} />
+        <p className="text-xs text-muted-foreground">Auto-generated from the name.</p>
         {errors.slug && <p className="text-xs text-destructive">{errors.slug.message}</p>}
       </div>
 
@@ -261,6 +261,7 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
             <option value="Pending">Pending</option>
+            <option value="Upcoming">Upcoming</option>
           </select>
           {errors.status && <p className="text-xs text-destructive">{errors.status.message}</p>}
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Clock, Globe, User, ArrowRight, Wifi, MapPin, BookOpen, GraduationCap, BriefcaseBusiness, RefreshCw, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LineBadge } from "@/components/ui/LineBadge";
@@ -28,7 +29,13 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
       {/* Thumbnail */}
       <div className="relative h-44 overflow-hidden shrink-0">
         {img ? (
-          <img src={img} alt={course.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <Image
+            src={img}
+            alt={course.name}
+            fill
+            sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+          />
         ) : (
           <div className={`h-full w-full bg-gradient-to-br ${gradient} flex items-center justify-center`}>
             <BookOpen className="w-10 h-10 text-white/40" />

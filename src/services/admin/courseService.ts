@@ -2,11 +2,12 @@ import apiAxios from "@/lib/api/api-axios";
 import type { Course } from "@/types/admin/course";
 
 export type CourseListParams = {
-  search?: string;
-  mode?:   string;
-  status?: string;
-  page?:   number;
-  limit?:  number;
+  search?:     string;
+  mode?:       string;
+  status?:     string;
+  courseType?: string;
+  page?:       number;
+  limit?:      number;
 };
 
 export type CourseListResponse = {

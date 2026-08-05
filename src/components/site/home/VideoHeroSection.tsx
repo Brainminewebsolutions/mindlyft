@@ -1,8 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Mouse } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+// Igor Omilaev — "robot and human hands reaching toward AI text" — Unsplash License (free, no attribution required)
+// https://unsplash.com/photos/FHgWFzDDAOs
+const HERO_IMAGE_URL =
+  "https://images.unsplash.com/photo-1694903089438-bf28d4697d9a?fm=jpg&q=80&w=2400&auto=format&fit=crop";
 
 const PARTS = [
   "Elevating Learning",
@@ -50,7 +56,6 @@ function AnimatedParts() {
 }
 
 export default function VideoHeroSection() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -58,28 +63,19 @@ export default function VideoHeroSection() {
     return () => clearTimeout(t);
   }, []);
 
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.muted = true;
-    v.play().catch(() => {});
-  }, []);
-
   return (
     <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center bg-[#040610]">
 
-      {/* Background video */}
-      <video
-        ref={videoRef}
-        src="https://www.mindlyftai.com/Mindlyftai_hero.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        className="absolute inset-0 w-full h-full object-cover object-center z-0"
+      {/* Background image */}
+      <Image
+        src={HERO_IMAGE_URL}
+        alt="Human and AI hands reaching toward each other, symbolizing AI-powered learning"
+        fill
+        priority
+        sizes="100vw"
+        className="absolute inset-0 object-cover object-center z-0"
       />
- 
+
       {/* Purple radial tint */}
       <div
         className="absolute inset-0 z-[1] pointer-events-none"

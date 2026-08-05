@@ -25,8 +25,8 @@ export default function IntroductionVideo({ bg = "bg-white" }: { bg?: string }) 
           <video
             controls
             playsInline
+            preload="none"
             className="w-full h-96"
-            poster="" 
           >
             <source src="/introvideo.mp4" type="video/mp4" />
             Your browser does not support the video tag.

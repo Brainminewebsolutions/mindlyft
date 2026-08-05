@@ -10,7 +10,7 @@ export const createWebinarSchema = z.object({
   instructor:       z.string().min(1, "Instructor is required"),
   language:         z.string().min(1, "Language is required"),
   subscriptionType: z.enum(["Free", "Paid"], { error: "Subscription type is required" }),
-  status:           z.enum(["Active", "Inactive", "Pending"], { error: "Status is required" }),
+  status:           z.enum(["Active", "Inactive", "Pending", "Upcoming"], { error: "Status is required" }),
   discount:         z.number().min(0).max(100).optional(),
   type:             z.enum(["Workshop", "Webinar"], { error: "Type is required" }),
   category:         z.string().optional(),

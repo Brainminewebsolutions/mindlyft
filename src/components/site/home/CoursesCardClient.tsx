@@ -5,7 +5,7 @@ import { SectionBadge } from "@/components/ui/SectionBadge";
 import { Subheading } from "@/components/ui/Subheading";
 import Link from "next/link";
 import Image from "next/image";
-import { Clock, ArrowRight, Globe, User, CheckCircle } from "lucide-react";
+import { Clock, ArrowRight, Globe, User, CheckCircle, Sparkles } from "lucide-react";
 import { getGsap, getScrollTrigger, onGsapReady } from "@/lib/gsap-config";
 import type { Course } from "@/types/admin/course";
 
@@ -250,6 +250,14 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
         {course.courseType === "IIT" && (
           <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-widest text-violet-700 shadow-sm">
             IIT
+          </span>
+        )}
+
+        {/* Top-left: Upcoming highlight */}
+        {course.status === "UPCOMING" && (
+          <span className="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-[linear-gradient(135deg,#f59e0b_0%,#f97316_100%)] px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-[0_2px_10px_rgba(245,158,11,0.5)] animate-pulse">
+            <Sparkles size={10} strokeWidth={2.5} />
+            Upcoming
           </span>
         )}
 

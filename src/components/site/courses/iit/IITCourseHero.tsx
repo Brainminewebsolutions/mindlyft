@@ -16,7 +16,7 @@ export default function IITCourseHero({ name, category, proxiedImage }: Props) {
       {/* Image — stacked banner on mobile/tablet, absolute side panel at md+ */}
       <div className="relative w-full h-56 sm:h-72 order-first md:absolute md:right-0 md:top-0 md:order-none md:h-full md:w-[50%] md:pt-16">
         {proxiedImage ? (
-          <img src={proxiedImage} alt={name} className="h-full w-full object-cover" />
+          <Image src={proxiedImage} alt={name} fill priority sizes="(max-width: 767px) 100vw, 50vw" className="object-cover" />
         ) : (
           <div className="h-full w-full bg-gradient-to-br from-violet-200 via-violet-100 to-blue-100" />
         )}

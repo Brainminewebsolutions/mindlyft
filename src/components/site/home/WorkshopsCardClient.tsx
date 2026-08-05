@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
 import { Subheading } from "@/components/ui/Subheading";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Calendar, Clock } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Calendar, Clock, Sparkles } from "lucide-react";
 import { toUploadUrl } from "@/lib/api/image-url";
 import type { Webinar } from "@/types/admin/webinar";
 
@@ -39,6 +39,14 @@ function ProjectCard({ webinar, index }: { webinar: Webinar | null; index: numbe
       <span className="absolute top-5 left-5 text-[128px] font-black leading-none select-none pointer-events-none text-violet-200 group-hover:text-white/10 transition-colors duration-500">
         {num}
       </span>
+
+      {/* Upcoming highlight */}
+      {webinar?.status === "Upcoming" && (
+        <span className="absolute top-5 right-5 z-10 flex items-center gap-1 rounded-full bg-[linear-gradient(135deg,#f59e0b_0%,#f97316_100%)] px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-white shadow-[0_2px_10px_rgba(245,158,11,0.5)] animate-pulse">
+          <Sparkles size={10} strokeWidth={2.5} />
+          Upcoming
+        </span>
+      )}
 
       {/* Bottom info */}
       <div className="absolute bottom-0 left-0 right-0 p-6 z-10">

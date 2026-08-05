@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { dotnetFetch } from "@/lib/api/dotnet-client";
 import { Star, Quote } from "lucide-react";
 
@@ -48,7 +49,7 @@ function Stars({ rating }: { rating: number }) {
 
 function Avatar({ src, name, accent }: { src?: string; name: string; accent: string }) {
   if (src) {
-    return <img src={src} alt={name} className="h-full w-full object-cover" />;
+    return <Image src={src} alt={name} width={40} height={40} className="h-full w-full object-cover" />;
   }
   return (
     <span className="text-sm font-black" style={{ color: accent }}>

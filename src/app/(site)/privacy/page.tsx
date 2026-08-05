@@ -142,6 +142,8 @@ const SECTIONS = [
   },
 ];
 
+
+
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-[#f9f8ff]">

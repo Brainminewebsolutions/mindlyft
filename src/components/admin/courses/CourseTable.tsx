@@ -34,6 +34,18 @@ function CourseTypeBadge({ type }: { type: string }) {
 }
 
 function StatusBadge({ status }: { status: string }) {
+  if (status === "SUSPENDED")
+    return (
+      <Badge variant="outline" className="border-destructive/30 text-destructive">
+        Suspended
+      </Badge>
+    );
+  if (status === "UPCOMING")
+    return (
+      <Badge variant="outline" className="border-amber-500/30 text-amber-600 dark:text-amber-400">
+        Upcoming
+      </Badge>
+    );
   if (status === "INACTIVE")
     return <Badge variant="secondary">Inactive</Badge>;
   return (
@@ -48,6 +60,12 @@ function ModeBadge({ mode }: { mode: string }) {
     return (
       <Badge variant="outline" className="gap-1 border-sky-500/30 text-sky-600 dark:text-sky-400">
         <Wifi className="h-2.5 w-2.5" /> Online
+      </Badge>
+    );
+  if (mode === "Hybrid")
+    return (
+      <Badge variant="outline" className="gap-1 border-violet-500/30 text-violet-600 dark:text-violet-400">
+        <Wifi className="h-2.5 w-2.5" /> Hybrid
       </Badge>
     );
   return (

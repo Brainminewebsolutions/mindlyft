@@ -7,17 +7,26 @@ interface CoursesEnvelope {
   data: { courses: Course[] };
 }
 
-async function getPublicCourses(): Promise<Course[]> {
+async function fetchCoursesByStatus(status: string): Promise<Course[]> {
   try {
     const envelope = await dotnetFetch<CoursesEnvelope>(
-      "/v1/courses?status=ACTIVE",
+      `/v1/courses?status=${status}`,
       { next: { revalidate: 300 } } as RequestInit,
     );
-    const all = envelope.isSuccess ? (envelope.data?.courses ?? []) : [];
-    return all.filter((c) => c.courseType === "Mindlyftai");
+    return envelope.isSuccess ? (envelope.data?.courses ?? []) : [];
   } catch {
     return [];
   }
+}
+
+async function getPublicCourses(): Promise<Course[]> {
+  const [active, upcoming] = await Promise.all([
+    fetchCoursesByStatus("ACTIVE"),
+    fetchCoursesByStatus("UPCOMING"),
+  ]);
+  return [...active, ...upcoming]
+    .filter((c) => c.courseType === "Mindlyftai")
+    .sort((a, b) => a.displayOrder - b.displayOrder);
 }
 
 export default async function CoursesCard() {

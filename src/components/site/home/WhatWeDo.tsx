@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { TrendingUp } from "lucide-react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
 import { Subheading } from "@/components/ui/Subheading";
@@ -207,11 +208,13 @@ export default function WhatWeDo() {
               >
                 <div className={`max-w-[500px] rounded-3xl px-4 py-8 ${step.accent.sectionBg}`}>
                   {/* Image — shown per-step on mobile/tablet; desktop uses the shared sticky image on the right */}
-                  <div className="mb-6 overflow-hidden rounded-2xl lg:hidden">
-                    <img
+                  <div className="relative mb-6 aspect-[4/3] w-full overflow-hidden rounded-2xl lg:hidden">
+                    <Image
                       src={step.image}
                       alt={step.imageAlt}
-                      className="aspect-[4/3] w-full object-cover"
+                      fill
+                      sizes="(max-width: 1023px) 100vw, 500px"
+                      className="object-cover"
                     />
                   </div>
 
@@ -261,11 +264,14 @@ export default function WhatWeDo() {
 
             <div className="relative aspect-[4/3]">
               {steps.map((step, i) => (
-                <img
+                <Image
                   key={i}
                   src={step.image}
                   alt={step.imageAlt}
-                  className={`absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-[550ms] ease-in-out ${
+                  fill
+                  sizes="460px"
+                  priority={i === 0}
+                  className={`object-cover transition-[opacity,transform] duration-[550ms] ease-in-out ${
                     i === activeIndex
                       ? "z-[2] translate-y-0 scale-100 opacity-100"
                       : "z-[1] translate-y-[14px] scale-[0.97] opacity-0"

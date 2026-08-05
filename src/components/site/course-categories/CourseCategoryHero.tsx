@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CollaborationLogos from "@/components/site/CollaborationLogos";
 
 interface Props {
@@ -15,7 +16,7 @@ export default function CourseCategoryHero({ name, description, image }: Props) 
       {/* Image — stacked banner on mobile/tablet, absolute side panel at md+ */}
       <div className="relative w-full h-56 sm:h-72 order-first md:absolute md:right-0 md:top-16 md:order-none md:h-[calc(100%-4rem)] md:w-[50%]">
         {image ? (
-          <img src={image} alt={name} className="h-full w-full object-cover" />
+          <Image src={image} alt={name} fill priority sizes="(max-width: 767px) 100vw, 50vw" className="object-cover" />
         ) : (
           <div className="h-full w-full bg-gradient-to-br from-violet-200 via-violet-100 to-blue-100" />
         )}

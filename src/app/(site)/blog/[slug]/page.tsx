@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { User, Calendar, Tag, ArrowLeft } from "lucide-react";
 import { dotnetFetch } from "@/lib/api/dotnet-client";
@@ -68,7 +69,7 @@ export default async function BlogDetailPage({
       <div className="relative h-[60vh] sm:h-[70vh] md:h-screen overflow-hidden">
         {/* Background */}
         {cover ? (
-          <img src={cover} alt={blog.title} className="absolute inset-0 w-full h-full object-cover" />
+          <Image src={cover} alt={blog.title} fill priority sizes="100vw" className="object-cover" />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-violet-600 via-violet-500 to-blue-500" />
         )}

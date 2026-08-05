@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
 import {
   Clock, Wifi, MapPin, User, Globe, ArrowLeft,
@@ -111,7 +112,7 @@ export default async function CourseDetailPage({
       {/* ── Hero ── */}
       <div className="relative h-[60vh] sm:h-[70vh] md:h-screen overflow-hidden">
         {proxiedImage ? (
-          <img src={proxiedImage} alt={course.name} className="absolute inset-0 w-full h-full object-cover" />
+          <Image src={proxiedImage} alt={course.name} fill priority sizes="100vw" className="object-cover" />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-violet-600 via-violet-500 to-blue-500" />
         )}

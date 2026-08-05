@@ -38,6 +38,7 @@ function StatusBadge({ status }: { status: string }) {
     Inactive:  "border-gray-400/30 bg-gray-50 text-gray-500 dark:bg-gray-800/40 dark:text-gray-400",
     Pending:   "border-amber-500/30 bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400",
     Suspended: "border-red-500/30 bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-400",
+    Upcoming:  "border-sky-500/30 bg-sky-50 text-sky-700 dark:bg-sky-950/40 dark:text-sky-400",
   };
   return (
     <Badge variant="outline" className={map[status] ?? map.Inactive}>

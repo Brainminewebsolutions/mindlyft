@@ -22,6 +22,7 @@ import { employeeService }          from "@/services/admin/employeeService";
 import { courseCategoryService }    from "@/services/admin/courseCategoryService";
 import type { CourseCategory }      from "@/types/admin/courseCategory";
 import { LANGUAGES }               from "@/constants/languages";
+import { COURSE_STATUSES }         from "@/constants/course";
 
 // ─── Instructor dropdown ───────────────────────────────────────────────────────
 type EmployeeOption = { id: string; employeeId: number; name: string; designation?: string };
@@ -178,6 +179,7 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
       instructorId: defaultValues?.instructorId ?? undefined,
       language:    defaultValues?.language    || "",
       courseType:  defaultValues?.courseType  || undefined,
+      status:      defaultValues?.status      || "ACTIVE",
       discount:     defaultValues?.discount     ?? undefined,
       category:     defaultValues?.category     || "",
       displayOrder: defaultValues?.displayOrder ?? 0,
@@ -211,6 +213,7 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
     fd.append("language",   formValues.language);
     if (formValues.description)                  fd.append("description", formValues.description);
     fd.append("courseType", formValues.courseType);
+    if (formValues.status)                        fd.append("status",       formValues.status);
     if (formValues.discount !== undefined)        fd.append("discount",     String(formValues.discount));
     if (formValues.category)                      fd.append("category",     formValues.category);
     if (formValues.displayOrder !== undefined)    fd.append("displayOrder", String(formValues.displayOrder));
@@ -324,8 +327,8 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
         </div>
       </div>
 
-      {/* ── Course Type + Discount + Access ── */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      {/* ── Course Type + Status + Discount + Access ── */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-1.5">
           <Label htmlFor="courseType">Course Type <span className="text-destructive">*</span></Label>
           <select
@@ -338,6 +341,20 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
             <option value="IIT">IIT</option>
           </select>
           {errors.courseType && <p className="text-xs text-destructive">{errors.courseType.message}</p>}
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="status">Status</Label>
+          <select
+            id="status"
+            {...register("status")}
+            className={cn(selectCls, errors.status ? "border-destructive" : "")}
+          >
+            {COURSE_STATUSES.map((s) => (
+              <option key={s.value} value={s.value}>{s.label}</option>
+            ))}
+          </select>
+          {errors.status && <p className="text-xs text-destructive">{errors.status.message}</p>}
         </div>
 
         <div className="space-y-1.5">

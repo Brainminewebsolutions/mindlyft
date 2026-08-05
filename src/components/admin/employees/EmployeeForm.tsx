@@ -166,11 +166,14 @@ export function EmployeeForm({ mode, defaultValues, onSubmit, onCancel, isLoadin
     const fd = new FormData();
     fd.append("name",  values.name ?? "");
     fd.append("email", values.email ?? "");
-    if (values.phone)       fd.append("phone",       values.phone);
-    if (values.category)    fd.append("category",    values.category);
-    if (values.department)  fd.append("department",  values.department);
-    if (values.designation) fd.append("designation", values.designation);
-    if (values.description) fd.append("description", values.description);
+    // Always send these — even empty — so clearing a previously-set value in
+    // edit mode actually clears it instead of the field just being omitted
+    // (which the backend treats as "leave the existing value alone").
+    fd.append("phone",       values.phone       ?? "");
+    fd.append("category",    values.category    ?? "");
+    fd.append("department",  values.department  ?? "");
+    fd.append("designation", values.designation ?? "");
+    fd.append("description", values.description ?? "");
     if (values.password)              fd.append("password",    values.password);
     if (values.status)                fd.append("status",      values.status);
     if (values.displayOrder !== undefined) fd.append("displayOrder", String(values.displayOrder));
