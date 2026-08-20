@@ -1,6 +1,7 @@
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import type { CourseCategory } from "@/types/admin/courseCategory";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 import CollaborationLogos from "@/components/site/CollaborationLogos";
 import CourseCategorySection from "@/components/site/home/CourseCategory";
 
@@ -13,7 +14,7 @@ async function getCourseCategories(): Promise<CourseCategory[]> {
   try {
     const envelope = await dotnetFetch<CategoriesEnvelope>(
       "/v1/course-categories?status=Active",
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     const raw = envelope.isSuccess ? (envelope.data ?? []) : [];
     return Array.isArray(raw) ? raw : [];
@@ -28,17 +29,18 @@ export default async function IITExpertiseSection() {
   return (
     <>
       {/* ── IIT Collaboration Intro ── */}
-      <div className="h-screen bg-white flex items-center justify-center px-6 sm:px-10 lg:px-20 overflow-hidden">
+      <div className="min-h-screen bg-white flex items-center justify-center px-6 py-20 sm:px-10 lg:px-20">
         <div className="w-full max-w-3xl mx-auto flex flex-col items-center gap-5 text-center">
 
           <SectionBadge variant="dark">Powered by Research. Backed by Innovation.</SectionBadge>
 
-          <h2 className="text-lg sm:text-5xl font-bold leading-tight tracking-tight text-gray-900">
-            Strategic collaboration with{" "}
-            <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-              C3iHub, IIT Kanpur
-            </span>
-          </h2>
+          <Subheading
+            centered
+            className="leading-tight tracking-tight"
+            text="Strategic collaboration with"
+            highlight="C3iHub, IIT Kanpur"
+            highlightClassName="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text !text-transparent"
+          />
 
           <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl">
             Industry-leading courses developed in collaboration with IIT experts — designed to take you from fundamentals to mastery.

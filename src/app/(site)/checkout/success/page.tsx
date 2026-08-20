@@ -22,15 +22,15 @@ export default function CheckoutSuccessPage() {
         </h1>
 
         <p className="text-[#888] text-sm leading-[1.7] mb-8">
-          You&apos;re now enrolled. Head to your dashboard to start learning.
+          You&apos;re now enrolled. Head to your courses to start learning.
         </p>
 
         <Link
-          href="/student/dashboard"
+          href="/student/courses"
           className="inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-[14px] bg-[#6c63ff] text-white text-sm font-bold no-underline transition-all duration-200 hover:bg-[#5b52e0] hover:-translate-y-0.5"
           style={{ fontFamily: "var(--primaryFont, sans-serif)" }}
         >
-          Go to Dashboard
+          Go to My Courses
         </Link>
 
         <Link

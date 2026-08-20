@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 import Image from "next/image";
 import { Star, Play, MessageSquare, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -233,14 +234,17 @@ export default function Testimonials({ testimonials = [] }) {
         <div className="mb-12 px-6 text-center">
           <SectionBadge variant="dark">Testimonials</SectionBadge>
 
-          <h2
-            className="mx-auto max-w-[560px] py-4 font-black leading-[1.12] tracking-tight text-[#111827]"
-            style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", letterSpacing: "-0.03em" }}
-          >
-            What Our Students
-            <br />
-            <span className="text-[#6c63ff]">Say About Us</span>
-          </h2>
+          <Subheading
+            centered
+            className="max-w-[560px] py-4 leading-[1.12] tracking-tight"
+            text={
+              <>
+                What Our Students
+                <br />
+                <span className="text-[#6c63ff]">Say About Us</span>
+              </>
+            }
+          />
 
           <p className="mx-auto mt-4 max-w-[400px] text-sm leading-[1.7] text-[#6b7280]">
             Real stories from real people who transformed their careers with MindLyft AI.
@@ -264,12 +268,12 @@ export default function Testimonials({ testimonials = [] }) {
 
         {/* ── Cards row ── */}
         <div className="relative">
-          <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-20 bg-gradient-to-r from-[#f9fafb] to-transparent" />
-          <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-20 bg-gradient-to-l from-[#f9fafb] to-transparent" />
+          <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-6 bg-gradient-to-r from-[#f9fafb] to-transparent sm:w-12 md:w-20" />
+          <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-6 bg-gradient-to-l from-[#f9fafb] to-transparent sm:w-12 md:w-20" />
 
           <div
             ref={scrollRef}
-            className="t-scroll flex select-none gap-5 overflow-x-auto px-20 pb-8 pt-4"
+            className="t-scroll flex select-none gap-5 overflow-x-auto px-6 pb-8 pt-4 sm:px-12 md:px-20"
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}

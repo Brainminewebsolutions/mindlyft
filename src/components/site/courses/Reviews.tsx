@@ -1,4 +1,5 @@
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import Image from "next/image";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import { Star, Quote } from "lucide-react";
 
 interface Review {
@@ -23,7 +24,7 @@ async function getReviews(): Promise<Review[]> {
   try {
     const envelope = await dotnetFetch<ReviewsEnvelope>(
       "/v1/testimonials?status=ACTIVE&limit=50",
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? (envelope.data?.testimonials ?? []) : [];
   } catch {
@@ -48,7 +49,7 @@ function Stars({ rating }: { rating: number }) {
 
 function Avatar({ src, name, accent }: { src?: string; name: string; accent: string }) {
   if (src) {
-    return <img src={src} alt={name} className="h-full w-full object-cover" />;
+    return <Image src={src} alt={name} width={40} height={40} className="h-full w-full object-cover" />;
   }
   return (
     <span className="text-sm font-black" style={{ color: accent }}>

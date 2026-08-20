@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -110,21 +111,31 @@ export default function OurTools({ cards: cardsProp }) {
         {/* Header */}
         <div className="relative z-[5] mb-0 text-center px-6">
           <SectionBadge variant="dark">Our Tools</SectionBadge>
-          <h2 className="mt-4 mb-3 text-[clamp(28px,4vw,48px)] font-extrabold leading-[1.1] tracking-[-0.04em] text-gray-900">
-            Powerful tools to
-            <br />
-            <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-              accelerate your growth
-            </span>
-          </h2>
+          <Subheading
+            centered
+            className="mt-4 mb-3 leading-[1.1] tracking-[-0.04em]"
+            text={
+              <>
+                Powerful tools to
+                <br />
+                <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
+                  accelerate your growth
+                </span>
+              </>
+            }
+          />
           <p className="mx-auto max-w-[400px] text-[15px] font-normal leading-[1.7] text-gray-500">
             Drag to explore or click any card — tools powering smarter learning and outcomes.
           </p>
         </div>
 
-        {/* Stage */}
+        {/* Stage — orbit math below is fixed to a 560×560 coordinate space, so on
+            small screens we scale the whole thing down with a CSS transform rather
+            than recomputing RADIUS/CARD_W/CARD_H per breakpoint. The outer wrapper
+            reserves the visually-scaled footprint so layout doesn't leave a gap. */}
+        <div className="relative -mt-6 h-[280px] w-[280px] sm:-mt-10 sm:h-[364px] sm:w-[364px] md:-mt-12 md:h-[448px] md:w-[448px] lg:-mt-16 lg:h-[560px] lg:w-[560px]">
         <div
-          className="relative h-[560px] w-[560px] cursor-grab select-none touch-none active:cursor-grabbing -mt-16"
+          className="absolute left-1/2 top-1/2 h-[560px] w-[560px] origin-center -translate-x-1/2 -translate-y-1/2 scale-[0.5] sm:scale-[0.65] md:scale-[0.8] lg:scale-100 cursor-grab select-none touch-none active:cursor-grabbing"
           ref={containerRef}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
@@ -209,6 +220,7 @@ export default function OurTools({ cards: cardsProp }) {
               ✦
             </div>
           </div>
+        </div>
         </div>
 
         {/* Dot indicators */}

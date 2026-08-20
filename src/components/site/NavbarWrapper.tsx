@@ -1,5 +1,5 @@
 import { getSession }   from "@/lib/auth/session";
-import { dotnetFetch }  from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import SiteNavbar       from "./SiteNavbar";
 
 type CourseItem      = { id: string; name: string };
@@ -9,7 +9,7 @@ async function getActiveCourses(): Promise<CourseItem[]> {
   try {
     const env = await dotnetFetch<CoursesEnvelope>(
       "/v1/courses?status=ACTIVE",
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     if (!env.isSuccess || !Array.isArray(env.data?.courses)) return [];
     return env.data.courses.map(c => ({ id: c.id, name: c.name }));

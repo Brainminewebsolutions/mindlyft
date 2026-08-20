@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { notify } from "@/lib/notify";
+import { toSlug } from "@/lib/slug";
 import { prepareImageFile, ImageUploadError } from "@/lib/image-upload";
 import {
   createCourseSchema,
@@ -21,6 +22,7 @@ import { employeeService }          from "@/services/admin/employeeService";
 import { courseCategoryService }    from "@/services/admin/courseCategoryService";
 import type { CourseCategory }      from "@/types/admin/courseCategory";
 import { LANGUAGES }               from "@/constants/languages";
+import { COURSE_STATUSES }         from "@/constants/course";
 
 // ─── Instructor dropdown ───────────────────────────────────────────────────────
 type EmployeeOption = { id: string; employeeId: number; name: string; designation?: string };
@@ -153,6 +155,7 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
   const [imageFile,     setImageFile]     = useState<File | null>(null);
   const [existingImage, setExistingImage] = useState(defaultValues?.image || "");
   const [highlights,    setHighlights]    = useState<string[]>(defaultValues?.highlights ?? []);
+  const [slugTouched,   setSlugTouched]   = useState(false);
 
   const { options: employeeOptions,  loading: loadingEmployees }  = useActiveEmployees();
   const { options: categoryOptions, loading: loadingCategories } = useCourseCategories();
@@ -161,11 +164,13 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<CreateCourseSchema>({
     resolver: zodResolver(createCourseSchema),
     defaultValues: {
       name:        defaultValues?.name        || "",
+      slug:        defaultValues?.slug        || "",
       duration:    defaultValues?.duration    ?? undefined,
       mode:        defaultValues?.mode        || undefined,
       image:       "",
@@ -174,6 +179,7 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
       instructorId: defaultValues?.instructorId ?? undefined,
       language:    defaultValues?.language    || "",
       courseType:  defaultValues?.courseType  || undefined,
+      status:      defaultValues?.status      || "ACTIVE",
       discount:     defaultValues?.discount     ?? undefined,
       category:     defaultValues?.category     || "",
       displayOrder: defaultValues?.displayOrder ?? 0,
@@ -191,16 +197,23 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
       setValue("category", defaultValues.category);
   }, [loadingCategories]);
 
+  const watchedName = watch("name");
+  useEffect(() => {
+    if (!slugTouched) setValue("slug", toSlug(watchedName || ""));
+  }, [watchedName]);
+
   const handleFormSubmit = async (formValues: CreateCourseSchema) => {
     const fd = new FormData();
     fd.append("name",       formValues.name);
+    fd.append("slug",       formValues.slug);
     fd.append("duration",   String(formValues.duration));
     fd.append("mode",       formValues.mode);
     fd.append("price",      String(formValues.price));
-    fd.append("instructorId", String(formValues.instructorId));
+    if (formValues.instructorId !== undefined) fd.append("instructorId", String(formValues.instructorId));
     fd.append("language",   formValues.language);
     if (formValues.description)                  fd.append("description", formValues.description);
     fd.append("courseType", formValues.courseType);
+    if (formValues.status)                        fd.append("status",       formValues.status);
     if (formValues.discount !== undefined)        fd.append("discount",     String(formValues.discount));
     if (formValues.category)                      fd.append("category",     formValues.category);
     if (formValues.displayOrder !== undefined)    fd.append("displayOrder", String(formValues.displayOrder));
@@ -235,6 +248,19 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
           className={errors.name ? "border-destructive focus-visible:ring-destructive" : ""}
         />
         {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
+      </div>
+
+      {/* ── Slug ── */}
+      <div className="space-y-1.5">
+        <Label htmlFor="slug">Slug <span className="text-destructive">*</span></Label>
+        <Input
+          id="slug"
+          {...register("slug")}
+          onChange={(e) => { setSlugTouched(true); register("slug").onChange(e); }}
+          placeholder="full-stack-web-development"
+          className={errors.slug ? "border-destructive focus-visible:ring-destructive" : ""}
+        />
+        {errors.slug && <p className="text-xs text-destructive">{errors.slug.message}</p>}
       </div>
 
       {/* ── Duration + Mode ── */}
@@ -301,8 +327,8 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
         </div>
       </div>
 
-      {/* ── Course Type + Discount + Access ── */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      {/* ── Course Type + Status + Discount + Access ── */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-1.5">
           <Label htmlFor="courseType">Course Type <span className="text-destructive">*</span></Label>
           <select
@@ -315,6 +341,20 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
             <option value="IIT">IIT</option>
           </select>
           {errors.courseType && <p className="text-xs text-destructive">{errors.courseType.message}</p>}
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="status">Status</Label>
+          <select
+            id="status"
+            {...register("status")}
+            className={cn(selectCls, errors.status ? "border-destructive" : "")}
+          >
+            {COURSE_STATUSES.map((s) => (
+              <option key={s.value} value={s.value}>{s.label}</option>
+            ))}
+          </select>
+          {errors.status && <p className="text-xs text-destructive">{errors.status.message}</p>}
         </div>
 
         <div className="space-y-1.5">
@@ -361,15 +401,15 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="instructorId">Instructor <span className="text-destructive">*</span></Label>
+          <Label htmlFor="instructorId">Instructor</Label>
           <select
             id="instructorId"
-            {...register("instructorId", { valueAsNumber: true })}
+            {...register("instructorId", { setValueAs: (v) => (v === "" ? undefined : Number(v)) })}
             disabled={loadingEmployees}
             className={cn(selectCls, errors.instructorId ? "border-destructive" : "", loadingEmployees ? "opacity-60" : "")}
           >
             <option value="">
-              {loadingEmployees ? "Loading instructors…" : "Select instructor"}
+              {loadingEmployees ? "Loading instructors…" : "No instructor"}
             </option>
             {employeeOptions.map((emp) => (
               <option key={emp.id} value={emp.employeeId}>

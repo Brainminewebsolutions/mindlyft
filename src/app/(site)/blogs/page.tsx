@@ -1,4 +1,4 @@
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import BlogsClient, { type BlogItem, type Category } from "./_components/BlogsClient";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -34,8 +34,8 @@ async function fetchData(): Promise<{
   blogsByCategory: Record<number, BlogItem[]>;
 }> {
   const [catRes, blogRes] = await Promise.allSettled([
-    dotnetFetch<CatEnvelope>("/v1/blog-categories?status=Active", { next: { revalidate: 300 } } as RequestInit),
-    dotnetFetch<BlogEnvelope>("/v1/blogs?status=Active&limit=200", { next: { revalidate: 300 } } as RequestInit),
+    dotnetFetch<CatEnvelope>("/v1/blog-categories?status=Active", { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit),
+    dotnetFetch<BlogEnvelope>("/v1/blogs?status=Active&limit=200", { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit),
   ]);
 
   const apiCategories: ApiCategory[] =

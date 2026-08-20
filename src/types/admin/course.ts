@@ -1,4 +1,4 @@
-export type CourseMode = "Online" | "Offline";
+export type CourseMode = "Online" | "Offline" | "Hybrid";
 export type CourseType = "Mindlyftai" | "IIT";
 
 export type InstructorDetail = {
@@ -12,6 +12,7 @@ export type InstructorDetail = {
 export type Course = {
   id:               string;
   name:             string;
+  slug:             string;
   duration:         number;
   mode:             CourseMode;
   image:            string | null;
@@ -21,7 +22,7 @@ export type Course = {
   instructorId:     number | null;
   language:         string;
   highlights:       string[] | null;
-  status:           "ACTIVE" | "INACTIVE" | "SUSPENDED";
+  status:           "ACTIVE" | "INACTIVE" | "SUSPENDED" | "UPCOMING";
   discount:         number | null;
   courseType:       CourseType;
   category:         string | null;

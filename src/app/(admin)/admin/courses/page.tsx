@@ -9,7 +9,9 @@ import { Input }     from "@/components/ui/input";
 import { Badge }     from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { CourseTable } from "@/components/admin/courses/CourseTable";
+import { Pagination }  from "@/components/admin/Pagination";
 import { useCourses }  from "@/hooks/useCourses";
+import { COURSE_STATUSES } from "@/constants/course";
 import type { Course } from "@/types/admin/course";
 
 // ─── Delete confirm modal ──────────────────────────────────────────────────────
@@ -48,9 +50,14 @@ function DeleteConfirmModal({
 // ─── Page ──────────────────────────────────────────────────────────────────────
 export default function AdminCoursesPage() {
   const router = useRouter();
-  const [search, setSearch] = useState("");
+  const [search,     setSearch]     = useState("");
+  const [mode,       setMode]       = useState("");
+  const [courseType, setCourseType] = useState("");
+  const [status,     setStatus]     = useState("");
+  const [page,       setPage]       = useState(1);
 
-  const { courses, loading, error, deleteCourse, toggleCourseStatus } = useCourses({ search });
+  const { courses, pagination, loading, error, deleteCourse, toggleCourseStatus } =
+    useCourses({ search, mode, courseType, status, page, limit: 10 });
 
   const [deleteTarget, setDeleteTarget] = useState<Course | null>(null);
 
@@ -87,9 +94,9 @@ export default function AdminCoursesPage() {
 
       {/* Stats row */}
       {courses.length > 0 && (
-        <div className="grid grid-cols-3 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           {[
-            { label: "Total Courses", value: courses.length, color: "text-foreground"                     },
+            { label: "Total Courses", value: pagination?.total ?? courses.length, color: "text-foreground" },
             { label: "Online",        value: onlineCount,    color: "text-sky-600 dark:text-sky-400"     },
             { label: "Offline",       value: offlineCount,   color: "text-amber-600 dark:text-amber-400" },
           ].map((s) => (
@@ -112,14 +119,48 @@ export default function AdminCoursesPage() {
                 <Badge variant="secondary" className="text-xs">{courses.length}</Badge>
               )}
             </div>
-            <div className="relative w-full max-w-xs">
-              <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                placeholder="Search courses…"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-8 h-8 text-sm"
-              />
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="relative w-full max-w-xs">
+                <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  placeholder="Search courses…"
+                  value={search}
+                  onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                  className="pl-8 h-8 text-sm"
+                />
+              </div>
+
+              <select
+                value={mode}
+                onChange={(e) => { setMode(e.target.value); setPage(1); }}
+                className="h-8 rounded-md border border-input bg-background px-2 text-xs text-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
+              >
+                <option value="">All Modes</option>
+                <option value="Online">Online</option>
+                <option value="Offline">Offline</option>
+                <option value="Hybrid">Hybrid</option>
+              </select>
+
+              <select
+                value={courseType}
+                onChange={(e) => { setCourseType(e.target.value); setPage(1); }}
+                className="h-8 rounded-md border border-input bg-background px-2 text-xs text-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
+              >
+                <option value="">All Types</option>
+                <option value="Mindlyftai">Mindlyftai</option>
+                <option value="IIT">IIT</option>
+              </select>
+
+              <select
+                value={status}
+                onChange={(e) => { setStatus(e.target.value); setPage(1); }}
+                className="h-8 rounded-md border border-input bg-background px-2 text-xs text-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
+              >
+                <option value="">All Status</option>
+                {COURSE_STATUSES.map((s) => (
+                  <option key={s.value} value={s.value}>{s.label}</option>
+                ))}
+              </select>
             </div>
           </div>
         </CardHeader>
@@ -150,6 +191,8 @@ export default function AdminCoursesPage() {
           )}
         </CardContent>
       </Card>
+
+      <Pagination pagination={pagination} page={page} onPageChange={setPage} />
 
       {/* Delete confirm */}
       {deleteTarget && (

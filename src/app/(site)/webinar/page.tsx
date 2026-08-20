@@ -6,8 +6,7 @@ import About from "@/components/site/webinar/About";
 import HowItWorks from "@/components/site/webinar/HowItWorks";
 import LearningPath from "@/components/site/webinar/LearningPath";
 import Testimonials from "@/components/site/webinar/Testimonials";
-import Bonus from "@/components/site/webinar/Bonus";
-import CtaSection from "@/components/site/webinar/CtaSection";
+ import CtaSection from "@/components/site/webinar/CtaSection";
 
 export default function WebinarPage() {
   return (
@@ -20,7 +19,7 @@ export default function WebinarPage() {
       <HowItWorks    bg="bg-white" />
       <LearningPath  bg="bg-violet-50" />
       <Testimonials  bg="bg-white" />
-      <Bonus         bg="bg-violet-50" />
+     
       <CtaSection    bg="bg-white" />
     </div>
   );

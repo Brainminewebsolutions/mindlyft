@@ -10,11 +10,20 @@ interface Props {
 export default function IITCourseHero({ name, category, proxiedImage }: Props) {
   return (
     <div
-      className="relative flex h-screen overflow-hidden"
+      className="relative flex flex-col md:flex-row min-h-screen"
       style={{ background: "linear-gradient(135deg, #ffffff 0%, #fce8ff 60%, #f0d4ff 100%)" }}
     >
+      {/* Image — stacked banner on mobile/tablet, absolute side panel at md+ */}
+      <div className="relative w-full h-56 sm:h-72 order-first md:absolute md:right-0 md:top-0 md:order-none md:h-full md:w-[50%] md:pt-16">
+        {proxiedImage ? (
+          <Image src={proxiedImage} alt={name} fill priority sizes="(max-width: 767px) 100vw, 50vw" className="object-cover" />
+        ) : (
+          <div className="h-full w-full bg-gradient-to-br from-violet-200 via-violet-100 to-blue-100" />
+        )}
+      </div>
+
       {/* LEFT — content */}
-      <div className="relative z-10 flex w-full flex-col justify-center gap-6 px-8 py-24 md:w-[54%] md:px-14 lg:px-20">
+      <div className="relative z-10 flex w-full min-w-0 flex-col justify-center gap-6 px-6 py-10 sm:px-8 md:w-[50%] md:px-14 md:py-24 lg:px-20">
 
         {/* Collaboration badges */}
         <div className="flex items-center gap-3 flex-wrap">
@@ -36,15 +45,6 @@ export default function IITCourseHero({ name, category, proxiedImage }: Props) {
           {name}
         </h1>
 
-      </div>
-
-      {/* RIGHT — image */}
-      <div className="absolute right-0 top-0 hidden h-full w-[50%] md:block pt-16">
-        {proxiedImage ? (
-          <img src={proxiedImage} alt={name} className="h-full w-full object-cover" />
-        ) : (
-          <div className="h-full w-full bg-gradient-to-br from-violet-200 via-violet-100 to-blue-100" />
-        )}
       </div>
 
       {/* Bottom fade */}

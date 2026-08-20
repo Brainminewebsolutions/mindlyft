@@ -10,15 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 import { studentWorkshopService, type RegisteredWorkshop } from "@/services/student/studentWorkshopService";
-
-const API_BASE = process.env.NEXT_PUBLIC_DOTNET_API_URL ?? "";
-
-function resolveImage(path: string | null | undefined): string | null {
-  if (!path) return null;
-  if (path.startsWith("http")) return path;
-  if (!API_BASE) return null;
-  return `${API_BASE}${path.startsWith("/") ? path : `/${path}`}`;
-}
+import { toUploadUrl } from "@/lib/api/image-url";
 
 function formatDate(date: string) {
   return new Date(date).toLocaleDateString("en-IN", {
@@ -88,7 +80,7 @@ export default function StudentWorkshopsPage() {
 }
 
 function WorkshopCard({ workshop }: { workshop: RegisteredWorkshop }) {
-  const imageUrl = resolveImage(workshop.image);
+  const imageUrl = toUploadUrl(workshop.image);
   const isFree   = workshop.subscriptionType === "Free";
 
   return (

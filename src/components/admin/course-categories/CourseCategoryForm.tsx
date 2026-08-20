@@ -3,9 +3,9 @@
 import { useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import Image from "next/image";
 import { notify } from "@/lib/notify";
+import { toSlug } from "@/lib/slug";
 import { prepareImageFile, ImageUploadError } from "@/lib/image-upload";
 import { ImageIcon, UploadCloud, X } from "lucide-react";
 import { Input }     from "@/components/ui/input";
@@ -14,12 +14,10 @@ import { Button }    from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn }        from "@/lib/utils";
 import type { CourseCategory } from "@/types/admin/courseCategory";
-
-const schema = z.object({
-  name:        z.string().min(1, "Name is required"),
-  description: z.string().optional(),
-});
-type FormValues = z.infer<typeof schema>;
+import {
+  createCourseCategorySchema,
+  type CreateCourseCategorySchema,
+} from "@/validators/admin/courseCategory";
 
 type Props = {
   mode:           "create" | "edit";
@@ -102,18 +100,26 @@ function ImagePickerField({
 export function CourseCategoryForm({ mode, defaultValues, onSubmit, onCancel, isLoading }: Props) {
   const [imageFile,     setImageFile]     = useState<File | null>(null);
   const [existingImage, setExistingImage] = useState(defaultValues?.image || "");
+  const [slugTouched,   setSlugTouched]   = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
-    resolver: zodResolver(schema),
+  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<CreateCourseCategorySchema>({
+    resolver: zodResolver(createCourseCategorySchema),
     defaultValues: {
       name:        defaultValues?.name        || "",
+      slug:        defaultValues?.slug        || "",
       description: defaultValues?.description || "",
     },
   });
 
-  const handleFormSubmit = async (values: FormValues) => {
+  const watchedName = watch("name");
+  useEffect(() => {
+    if (!slugTouched) setValue("slug", toSlug(watchedName || ""));
+  }, [watchedName]);
+
+  const handleFormSubmit = async (values: CreateCourseCategorySchema) => {
     const fd = new FormData();
     fd.append("name", values.name);
+    fd.append("slug", values.slug);
     if (values.description) fd.append("description", values.description);
     if (imageFile) {
       fd.append("image", imageFile, imageFile.name);
@@ -136,6 +142,19 @@ export function CourseCategoryForm({ mode, defaultValues, onSubmit, onCancel, is
           className={errors.name ? "border-destructive focus-visible:ring-destructive" : ""}
         />
         {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
+      </div>
+
+      {/* Slug */}
+      <div className="space-y-1.5">
+        <Label htmlFor="slug">Slug <span className="text-destructive">*</span></Label>
+        <Input
+          id="slug"
+          {...register("slug")}
+          onChange={(e) => { setSlugTouched(true); register("slug").onChange(e); }}
+          placeholder="programming"
+          className={errors.slug ? "border-destructive focus-visible:ring-destructive" : ""}
+        />
+        {errors.slug && <p className="text-xs text-destructive">{errors.slug.message}</p>}
       </div>
 
       {/* Description */}

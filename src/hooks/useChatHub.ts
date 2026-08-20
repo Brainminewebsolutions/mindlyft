@@ -3,7 +3,13 @@
 import { useEffect, useRef, useCallback } from "react";
 import * as signalR from "@microsoft/signalr";
 
-const HUB_URL = `${process.env.NEXT_PUBLIC_DOTNET_API_URL}/hubs/chat`;
+// The hub is mapped at the API root ("/hubs/chat"), not under "/api".
+// In production the site is https while the API is still plain http, so the
+// browser must hit the same-origin path — iisnode-server.js proxies
+// "/hubs/*" (including the WebSocket upgrade) through to the .NET backend.
+// In dev there's no mixed-content concern, so connect to the API directly.
+const DOTNET_ORIGIN = (process.env.NEXT_PUBLIC_DOTNET_API_URL ?? "").replace(/\/api\/?$/, "");
+const HUB_URL = process.env.NODE_ENV === "production" ? "/hubs/chat" : `${DOTNET_ORIGIN}/hubs/chat`;
 
 export interface ChatMessageDto {
   id: number;

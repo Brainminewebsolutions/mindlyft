@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 
 export default function Innovation() {
   return (
@@ -36,18 +37,23 @@ export default function Innovation() {
           <SectionBadge variant="dark">Innovation</SectionBadge>
 
           {/* Title */}
-          <h2 className="section-title style-four font-medium !text-white/75 2xl:pr-6">
-            Building the Future With{" "}
-            <span className="thumb round-oval">
-              <img
-                src="/assets/img/about/about-thumb-4.jpg"
-                alt="Thumbnail"
-                className="round-oval"
-              />
-            </span>{" "}
-            AI-Powered Learning and Cybersecurity That Evolves{" "}
-            With Every Challenge — MindlyftAI Turns Complexity Into Clarity
-          </h2>
+          <Subheading
+            className="font-medium !text-white/75 2xl:pr-6"
+            text={
+              <>
+                Building the Future With{" "}
+                <span className="thumb round-oval">
+                  <img
+                    src="/assets/img/about/about-thumb-4.jpg"
+                    alt="Thumbnail"
+                    className="round-oval"
+                  />
+                </span>{" "}
+                AI-Powered Learning and Cybersecurity That Evolves{" "}
+                With Every Challenge — MindlyftAI Turns Complexity Into Clarity
+              </>
+            }
+          />
 
           {/* Rotating circle */}
           <style>{`

@@ -1,4 +1,4 @@
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import type { Course } from "@/types/admin/course";
 import IITHero from "@/components/site/iit/IITHero";
 import IITCollaboration from "@/components/site/iit/IITCollaboration";
@@ -17,7 +17,7 @@ async function getIITCourses(): Promise<Course[]> {
   try {
     const envelope = await dotnetFetch<CoursesEnvelope>(
       "/v1/courses?status=ACTIVE&limit=200",
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     const all = envelope.isSuccess ? (envelope.data?.courses ?? []) : [];
     return all.filter(c => c.courseType === "IIT");

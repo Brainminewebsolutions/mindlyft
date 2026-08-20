@@ -1,4 +1,4 @@
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import type { Course } from "@/types/admin/course";
 import CoursesCardClient from "./CoursesCardClient";
 
@@ -7,17 +7,26 @@ interface CoursesEnvelope {
   data: { courses: Course[] };
 }
 
-async function getPublicCourses(): Promise<Course[]> {
+async function fetchCoursesByStatus(status: string): Promise<Course[]> {
   try {
     const envelope = await dotnetFetch<CoursesEnvelope>(
-      "/v1/courses?status=ACTIVE",
-      { next: { revalidate: 300 } } as RequestInit,
+      `/v1/courses?status=${status}`,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
-    const all = envelope.isSuccess ? (envelope.data?.courses ?? []) : [];
-    return all.filter((c) => c.courseType === "Mindlyftai");
+    return envelope.isSuccess ? (envelope.data?.courses ?? []) : [];
   } catch {
     return [];
   }
+}
+
+async function getPublicCourses(): Promise<Course[]> {
+  const [active, upcoming] = await Promise.all([
+    fetchCoursesByStatus("ACTIVE"),
+    fetchCoursesByStatus("UPCOMING"),
+  ]);
+  return [...active, ...upcoming]
+    .filter((c) => c.courseType === "Mindlyftai")
+    .sort((a, b) => a.displayOrder - b.displayOrder);
 }
 
 export default async function CoursesCard() {

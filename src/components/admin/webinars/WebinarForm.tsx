@@ -5,6 +5,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { notify } from "@/lib/notify";
+import { toSlug } from "@/lib/slug";
 import { ImageIcon, UploadCloud, X } from "lucide-react";
 import { createWebinarSchema, type CreateWebinarSchema } from "@/validators/admin/webinar";
 import { prepareImageFile, ImageUploadError } from "@/lib/image-upload";
@@ -99,6 +100,7 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
     resolver: zodResolver(createWebinarSchema),
     defaultValues: {
       name:             defaultValues?.name             ?? "",
+      slug:             defaultValues?.slug             ?? "",
       duration:         defaultValues?.duration         ?? undefined,
       mode:             defaultValues?.mode             ?? undefined,
       description:      defaultValues?.description      ?? "",
@@ -106,7 +108,7 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
       instructor:       defaultValues?.instructor       ?? "",
       language:         defaultValues?.language         ?? undefined,
       subscriptionType: defaultValues?.subscriptionType ?? undefined,
-      status:           (defaultValues?.status as "Active" | "Inactive" | "Pending") ?? "Active",
+      status:           (defaultValues?.status as "Active" | "Inactive" | "Pending" | "Upcoming") ?? "Active",
       discount:         defaultValues?.discount         ?? undefined,
       type:             defaultValues?.type             ?? undefined,
       category:         defaultValues?.category         ?? "",
@@ -119,11 +121,16 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
 
   const watchedMode             = watch("mode");
   const watchedSubscriptionType = useWatch({ control, name: "subscriptionType" });
+  const watchedName             = useWatch({ control, name: "name" });
   const isFree                  = watchedSubscriptionType === "Free";
 
   useEffect(() => {
     if (isFree) setValue("price", 0);
   }, [isFree, setValue]);
+
+  useEffect(() => {
+    setValue("slug", toSlug(watchedName || ""));
+  }, [watchedName, setValue]);
 
   const selectCls = cn(
     "h-9 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground",
@@ -133,6 +140,7 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
   const handleFormSubmit = async (values: CreateWebinarSchema) => {
     const fd = new FormData();
     fd.append("name",             values.name);
+    fd.append("slug",             values.slug);
     fd.append("duration",         String(values.duration));
     fd.append("mode",             values.mode);
     fd.append("price",            values.subscriptionType === "Free" ? "0" : String(values.price ?? 0));
@@ -161,6 +169,17 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
         <Input id="name" {...register("name")} placeholder="e.g. React Deep Dive Workshop"
           className={errors.name ? "border-destructive" : ""} />
         {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
+      </div>
+
+      {/* Slug — auto-generated from Name, not directly editable */}
+      <div className="space-y-1.5">
+        <Label htmlFor="slug">Slug <span className="text-destructive">*</span></Label>
+        <Input id="slug" {...register("slug")}
+          readOnly
+          placeholder="react-deep-dive-workshop"
+          className={cn("cursor-not-allowed bg-muted text-muted-foreground", errors.slug ? "border-destructive" : "")} />
+        <p className="text-xs text-muted-foreground">Auto-generated from the name.</p>
+        {errors.slug && <p className="text-xs text-destructive">{errors.slug.message}</p>}
       </div>
 
       {/* Type + Mode */}
@@ -242,6 +261,7 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
             <option value="Pending">Pending</option>
+            <option value="Upcoming">Upcoming</option>
           </select>
           {errors.status && <p className="text-xs text-destructive">{errors.status.message}</p>}
         </div>

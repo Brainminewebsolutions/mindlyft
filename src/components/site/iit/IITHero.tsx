@@ -17,14 +17,12 @@ export default function IITHero({ bg = "bg-white" }: { bg?: string }) {
 
       {/* Content */}
       <div className="relative z-10 max-w-2xl">
-        <AnimateIn delay={0}>
-          <LineBadge className="mb-6">IIT Kanpur · C3iHub · Mindlyft AI</LineBadge>
-        </AnimateIn>
+        
         <AnimateIn delay={100}>
           <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight mb-6">
-            Your roadmap to a career{" "}
+            Advance Your Career with {" "}
             <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-              shaped by IIT
+              C3iHub IIT Kanpur AI Programs
             </span>
           </h1>
         </AnimateIn>
@@ -34,22 +32,7 @@ export default function IITHero({ bg = "bg-white" }: { bg?: string }) {
             students through India&apos;s most prestigious technical institute — IIT Kanpur.
           </p>
         </AnimateIn>
-        <AnimateIn delay={300}>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="#courses"
-              className="rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition shadow-lg shadow-violet-200"
-            >
-              Explore Opportunities
-            </Link>
-            <Link
-              href="#placement"
-              className="rounded-xl border border-gray-200 bg-white/80 backdrop-blur-sm px-6 py-3 text-sm font-semibold text-gray-700 hover:border-violet-300 hover:text-violet-600 transition"
-            >
-              View Placement Data
-            </Link>
-          </div>
-        </AnimateIn>
+        
       </div>
     </section>
   );

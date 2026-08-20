@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Clock, User, Tag, ArrowRight } from "lucide-react";
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import { toUploadUrl } from "@/lib/api/image-url";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -33,7 +33,7 @@ async function getPublishedBlogs(): Promise<BlogItem[]> {
   try {
     const envelope = await dotnetFetch<BlogListEnvelope>(
       "/v1/blogs?status=Active&limit=200",
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? (envelope.data?.blogs ?? []) : [];
   } catch {

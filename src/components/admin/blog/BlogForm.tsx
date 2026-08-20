@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { notify } from "@/lib/notify";
+import { toSlug } from "@/lib/slug";
 import { prepareImageFile, ImageUploadError } from "@/lib/image-upload";
 import { ImageIcon, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -11,18 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { blogCategoryService, blogTagService } from "@/services/admin/blogService";
-import { employeeService } from "@/services/admin/employeeService";
 import type { BlogDto, BlogCategoryDto, BlogTagDto } from "@/types/admin/blog";
-import type { Employee } from "@/types/admin/employee";
-
-function toSlug(value: string) {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .trim();
-}
 
 function ImagePicker({
   existingUrl,
@@ -96,19 +86,18 @@ type Props = {
   onSubmit:      (data: FormData) => Promise<void>;
   onCancel:      () => void;
   isLoading?:    boolean;
-};
+}; 
 
 export function BlogForm({ mode, defaultValues, onSubmit, onCancel, isLoading }: Props) {
   const [categories, setCategories] = useState<BlogCategoryDto[]>([]);
   const [tags,       setTags]       = useState<BlogTagDto[]>([]);
-  const [employees,  setEmployees]  = useState<Employee[]>([]);
 
   const [title,           setTitle]          = useState(defaultValues?.title ?? "");
   const [slug,            setSlug]           = useState(defaultValues?.slug ?? "");
   const [slugTouched,     setSlugTouched]    = useState(false);
   const [excerpt,         setExcerpt]        = useState(defaultValues?.excerpt ?? "");
   const [categoryId,      setCategoryId]     = useState(defaultValues?.blogCategoryId ?? "");
-  const [employeeId,      setEmployeeId]     = useState(defaultValues?.employeeId ?? "");
+  const [authorName,      setAuthorName]     = useState(defaultValues?.authorName ?? "");
   const [readTime,        setReadTime]       = useState(String(defaultValues?.readTimeMinutes ?? 0));
   const [status,          setStatus]         = useState(defaultValues?.status ?? "Pending");
   const [selectedTagIds,  setSelectedTagIds] = useState<string[]>(
@@ -121,7 +110,6 @@ export function BlogForm({ mode, defaultValues, onSubmit, onCancel, isLoading }:
   useEffect(() => {
     blogCategoryService.list("Active").then(setCategories).catch(() => {});
     blogTagService.list().then(setTags).catch(() => {});
-    employeeService.list({ limit: 200 }).then((r) => setEmployees(r.employees)).catch(() => {});
   }, []);
 
   const handleTitleChange = (v: string) => {
@@ -152,7 +140,7 @@ export function BlogForm({ mode, defaultValues, onSubmit, onCancel, isLoading }:
     fd.append("Slug",            slug.trim());
     fd.append("BlogCategoryId",  categoryId);
     if (excerpt)    fd.append("Excerpt",         excerpt.trim());
-    if (employeeId) fd.append("EmployeeId",      employeeId);
+    if (authorName) fd.append("AuthorName",      authorName.trim());
     fd.append("ReadTimeMinutes", readTime || "0");
     if (mode === "edit") fd.append("Status", status);
     selectedTagIds.forEach((id) => fd.append("TagIds", id));
@@ -231,17 +219,14 @@ export function BlogForm({ mode, defaultValues, onSubmit, onCancel, isLoading }:
         </div>
 
         <div className="space-y-1.5">
-          <Label>Author</Label>
-          <select
-            value={employeeId}
-            onChange={(e) => setEmployeeId(e.target.value)}
-            className={selectCls}
-          >
-            <option value="">Select author (optional)</option>
-            {employees.map((e) => (
-              <option key={e.id} value={e.employeeId}>{e.name}</option>
-            ))}
-          </select>
+          <Label htmlFor="authorName">Author</Label>
+          <input
+            id="authorName"
+            value={authorName}
+            onChange={(e) => setAuthorName(e.target.value)}
+            placeholder="e.g. Jane Doe"
+            className={fieldCls("authorName")}
+          />
         </div>
       </div>
 

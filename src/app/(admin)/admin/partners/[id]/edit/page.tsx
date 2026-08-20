@@ -165,7 +165,7 @@ export default function EditPartnerPage() {
                   <Upload className="h-8 w-8 text-muted-foreground/50" />
                   <p className="text-sm text-muted-foreground text-center">
                     Click to upload new logo<br />
-                    <span className="text-xs">JPG, PNG, WEBP — max 3 MB</span>
+                    <span className="text-xs">JPG, PNG, WEBP — max 2 MB</span>
                   </p>
                 </>
               )}

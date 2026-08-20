@@ -34,7 +34,7 @@ const PALETTE = [
 // interface Props {
 //   iitCourses?: Course[];
 // }
-
+  
 interface Props {
   categories?: CourseCategoryItem[];
 }
@@ -131,8 +131,8 @@ gsap.set(cards[0], {
             centering wrapper since it's a static sibling of the absolute, full-screen
             card layers below (plain text-center on the pill alone has no effect,
             it's not the pill that needs centering, it's the pill within its row). */}
-        <div className="pointer-events-none absolute top-6 left-0 z-50 flex w-full justify-center">
-          <span className="text-[20px] font-black uppercase tracking-[3px] px-3 py-1 rounded-full border border-violet-200 bg-violet-100 text-violet-700">
+        <div className="pointer-events-none absolute top-6 left-0 z-50 flex w-full justify-center px-4">
+          <span className="max-w-full truncate whitespace-nowrap text-[10px] sm:text-sm md:text-base lg:text-[20px] font-black uppercase tracking-[1px] sm:tracking-[2px] lg:tracking-[3px] px-3 py-1 rounded-full border border-violet-200 bg-violet-100 text-violet-700">
             C3iHub IIT Kanpur Certification Program
           </span>
         </div>
@@ -143,7 +143,7 @@ gsap.set(cards[0], {
             style={{ zIndex: 1 }}
           >
             <div
-              className="relative overflow-hidden w-full max-w-[1280px] h-[60vh] md:h-[70vh] lg:h-[78vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col justify-center items-center gap-4 p-8 md:p-10 lg:p-14"
+              className="relative overflow-hidden w-full max-w-[1280px] h-[75vh] lg:h-[78vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col justify-center items-center gap-4 p-8 md:p-10 lg:p-14"
               style={{ background: PALETTE[0].bg }}
             >
               <div
@@ -170,12 +170,12 @@ gsap.set(cards[0], {
               style={{ zIndex: i + 1 }}
             >
               <div
-                className="relative overflow-hidden w-full max-w-[1280px] h-[60vh] md:h-[70vh] lg:h-[78vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-row"
+                className="relative overflow-hidden w-full max-w-[1280px] h-[75vh] lg:h-[78vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col lg:flex-row"
                 style={{ background: bg }}
               >
-                {/* Right: full-height background image */}
+                {/* Image — stacked block on mobile/tablet, absolute side panel from lg up */}
                 {cat.image && (
-                  <div className="absolute right-0 top-0 w-[48%] h-full hidden md:block pointer-events-none">
+                  <div className="relative w-full h-[30%] shrink-0 lg:absolute lg:right-0 lg:top-0 lg:h-full lg:w-[48%] lg:shrink pointer-events-none">
                     <Image
                       src={cat.image}
                       alt={cat.name}
@@ -184,7 +184,7 @@ gsap.set(cards[0], {
                       unoptimized
                     />
                     <div
-                      className="absolute inset-0"
+                      className="absolute inset-0 hidden lg:block"
                       style={{ background: `linear-gradient(to right, ${bg} 0%, ${bg}cc 10%, ${bg}55 35%, transparent 65%)` }}
                     />
                   </div>
@@ -197,33 +197,33 @@ gsap.set(cards[0], {
                 />
 
                 {/* Left: content */}
-                <div className="relative z-[1] flex flex-col justify-between w-full md:w-[56%] p-8 md:p-10 lg:p-14 h-full">
- 
+                <div className="relative z-[1] flex flex-1 lg:flex-none min-h-0 min-w-0 flex-col justify-between gap-2 overflow-hidden w-full lg:w-[52%] p-5 md:p-7 lg:p-8 lg:h-full">
+
                   {/* Name + tagline + description */}
-                  <div className="flex flex-col gap-3">
-                    <h2 className="m-0 text-[clamp(2rem,3.8vw,3.5rem)] font-extrabold leading-tight tracking-tight text-gray-900 [font-family:var(--primaryFont,sans-serif)]">
+                  <div className="flex flex-col gap-1.5 md:gap-2.5">
+                    <h2 className="m-0 text-[clamp(1.6rem,5vw,3.5rem)] font-extrabold leading-tight tracking-tight text-gray-900 [font-family:var(--primaryFont,sans-serif)]">
                       {cat.name}
                     </h2>
 
-                     <p className="text-base font-medium italic text-violet-500">
+                     <p className="text-base md:text-lg font-medium italic text-violet-500">
           Future-Proof Your Career with AI-Powered Cybersecurity
             </p>
                     {/* <p className="m-0 text-sm md:text-base font-medium italic leading-snug" style={{ color: accent }}>
                       Future-Proof Your Career with AI-Powered Cybersecurity
                     </p> */}
                     {cat.description && (
-                      <p className="m-0 text-sm md:text-base leading-[1.8] text-gray-500 line-clamp-5">
+                      <p className="m-0 text-base md:text-lg leading-[1.5] md:leading-[1.6] text-gray-500 line-clamp-3 md:line-clamp-4 lg:line-clamp-5">
                         {cat.description}
                       </p>
                     )}
                   </div>
 
                   {/* CTA */}
-                  <div className="flex flex-col gap-5">
+                  <div className="flex flex-col gap-2 md:gap-3">
                     <div className="h-px w-full" style={{ background: `linear-gradient(to right, ${accent}40, transparent)` }} />
                     <Link
-                      href={`/course-categories/${cat.id}`}
-                      className="inline-flex w-fit items-center gap-2 px-8 py-3 rounded-full text-sm font-bold tracking-wide text-white transition-all hover:scale-105 hover:shadow-lg"
+                      href={`/course-categories/${cat.slug}`}
+                      className="inline-flex w-fit items-center gap-2 px-8 py-2.5 rounded-full text-base font-bold tracking-wide text-white transition-all hover:scale-105 hover:shadow-lg"
                       style={{ background: accent, boxShadow: `0 4px 20px ${accent}40` }}
                     >
                       Explore Courses
@@ -242,11 +242,11 @@ gsap.set(cards[0], {
           style={{ zIndex: items.length + 1 }}
         >
           <div
-            className="relative overflow-hidden w-full max-w-[1280px] h-[60vh] md:h-[70vh] lg:h-[78vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-row"
+            className="relative overflow-hidden w-full max-w-[1280px] h-[75vh] lg:h-[78vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col lg:flex-row"
             style={{ background: "#F5F3FF" }}
           >
-            {/* Right Image */}
-            <div className="absolute right-0 top-0 p-2 w-[48%] h-full hidden md:block pointer-events-none">
+            {/* Image — stacked block on mobile/tablet, absolute side panel from lg up */}
+            <div className="relative w-full h-[30%] shrink-0 lg:absolute lg:right-0 lg:top-0 lg:h-full lg:w-[48%] lg:p-2 lg:shrink pointer-events-none">
               <Image
                 src="/images/Certifcate.jpeg"
                 alt="Certificate of Completion"
@@ -255,43 +255,43 @@ gsap.set(cards[0], {
               />
               {/* Only a thin edge vignette — the certificate itself has text
                   that needs to stay legible, unlike the ambient category photos. */}
-              
+
               {/* Floating verified badge — kept near the top so it doesn't sit over
                   the certificate's own signature/footer text or the page's fixed
                   chat widgets in the bottom-right corner of the viewport. */}
-              <div className="absolute top-6 right-6 z-[2] flex items-center gap-2 rounded-full border border-white/60 bg-white/90 px-4 py-2 shadow-[0_8px_24px_rgba(139,92,246,0.25)] backdrop-blur-sm">
+              <div className="absolute top-3 right-3 md:top-6 md:right-6 z-[2] flex items-center gap-2 rounded-full border border-white/60 bg-white/90 px-3 py-1.5 md:px-4 md:py-2 shadow-[0_8px_24px_rgba(139,92,246,0.25)] backdrop-blur-sm">
                 <BadgeCheck className="h-4 w-4 text-violet-600" />
                 <span className="text-xs font-bold text-gray-800">Verified &amp; Shareable</span>
               </div>
             </div>
 
-            
+
 
             {/* Left Content */}
-            <div className="relative z-[1] flex flex-col justify-between w-full md:w-[56%] p-8 md:p-10 lg:p-14 h-full">
+            <div className="relative z-[1] flex flex-1 lg:flex-none min-h-0 min-w-0 flex-col justify-between gap-1.5 overflow-hidden w-full lg:w-[52%] p-5 md:p-7 lg:p-8 lg:h-full">
 
               {/* Top: counter + badge */}
-              <div className="flex items-center gap-3 py-1">
-                 
-                <span className="text-[10px] font-black uppercase tracking-[3px] px-3 py-1 rounded-full border border-violet-200 bg-violet-100 text-violet-700">
+              <div className="flex items-center gap-3">
+
+                <span className="text-xs font-black uppercase tracking-[3px] px-3 py-1 rounded-full border border-violet-200 bg-violet-100 text-violet-700">
                   Joint Certification
                 </span>
               </div>
 
               {/* Main Content */}
-              <div className="flex flex-col gap-4">
-                <h2 className="m-0 text-[clamp(2rem,4vw,4rem)] font-extrabold leading-tight tracking-tight text-gray-900 [font-family:'Playfair_Display',Georgia,serif]">
+              <div className="flex flex-col gap-1.5 md:gap-3">
+                <h2 className="m-0 text-[clamp(1.6rem,4.5vw,3.5rem)] font-extrabold leading-tight tracking-tight text-gray-900 [font-family:'Playfair_Display',Georgia,serif]">
                   Certificate of <span className="text-violet-600">Completion</span>
                 </h2>
-                <p className="m-0 text-sm md:text-base leading-[1.8] text-gray-500">
+                <p className="m-0 text-base md:text-lg leading-[1.5] md:leading-[1.6] text-gray-500">
                   Earn a Joint Certification from MindLyft AI and C3iHub IIT Kanpur upon successful completion of the program.
                 </p>
-                <ul className="m-0 flex flex-col gap-2.5 pt-1">
+                <ul className="m-0 flex flex-col gap-1.5">
                   {[
                     "Jointly issued by MindLyft AI & IIT Kanpur",
                     "Digitally verifiable certificate",
                    ].map((point) => (
-                    <li key={point} className="flex items-center gap-2.5 text-sm text-gray-600">
+                    <li key={point} className="flex items-center gap-2.5 text-base text-gray-600">
                       <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-100">
                         <Check className="h-3 w-3 text-violet-600" strokeWidth={3} />
                       </span>
@@ -302,11 +302,11 @@ gsap.set(cards[0], {
               </div>
 
               {/* CTA */}
-              <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-2 md:gap-3">
                 <div className="h-px w-full bg-gradient-to-r from-violet-400/40 to-transparent" />
                 <Link
                   href="/courses"
-                  className="inline-flex w-fit items-center gap-2 px-8 py-3 rounded-full text-sm font-bold tracking-wide text-white transition-all hover:scale-105 hover:shadow-lg"
+                  className="inline-flex w-fit items-center gap-2 px-8 py-2.5 rounded-full text-base font-bold tracking-wide text-white transition-all hover:scale-105 hover:shadow-lg"
                   style={{ background: "#8B5CF6", boxShadow: "0 4px 20px #8B5CF640" }}
                 >
                   Get Certified

@@ -6,10 +6,7 @@ import { AnimateIn } from "@/components/ui/AnimateIn";
 
 export default function WorkshopsHero({ count = 0 }: { count?: number }) {
   return (
-    <section className="relative h-screen flex items-center overflow-hidden px-6 pt-28 pb-16 md:px-[60px]">
-      {/* Soft gradient bg */}
-      <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-violet-50 pointer-events-none" />
-
+    <section className="relative min-h-screen flex items-center px-6 pt-28 pb-16 md:px-[60px] bg-blue-50">
       <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
         {/* Left — content */}
@@ -28,19 +25,9 @@ export default function WorkshopsHero({ count = 0 }: { count?: number }) {
           <AnimateIn delay={200}>
             <p className="text-lg text-gray-600 leading-relaxed max-w-md mb-10">
               Practical, instructor-led sessions designed to sharpen real-world skills.{" "}
-              {count > 0 && <span className="font-semibold text-violet-600">{count} workshops available.</span>}
-            </p>
+             </p>
           </AnimateIn>
-          <AnimateIn delay={300}>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="#workshops"
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition shadow-lg shadow-violet-200"
-              >
-                Browse Workshops <ArrowDown className="w-4 h-4" />
-              </Link>
-            </div>
-          </AnimateIn>
+          
         </div>
 
         {/* Right — image */}

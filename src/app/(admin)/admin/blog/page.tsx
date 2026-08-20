@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { BlogTable } from "@/components/admin/blog/BlogTable";
+import { Pagination } from "@/components/admin/Pagination";
 import { useBlogs } from "@/hooks/useBlogs";
 import type { BlogDto } from "@/types/admin/blog";
 
@@ -46,9 +47,10 @@ function DeleteModal({
 export default function AdminBlogPage() {
   const router = useRouter();
   const [search,       setSearch]       = useState("");
+  const [page,         setPage]         = useState(1);
   const [deleteTarget, setDeleteTarget] = useState<BlogDto | null>(null);
 
-  const { blogs, loading, error, deleteBlog } = useBlogs({ search, limit: 50 });
+  const { blogs, pagination, loading, error, deleteBlog } = useBlogs({ search, page, limit: 10 });
 
   const published = blogs.filter((b) => b.status === "Active").length;
   const drafts    = blogs.filter((b) => b.status === "Pending").length;
@@ -83,9 +85,9 @@ export default function AdminBlogPage() {
 
       {/* Stats */}
       {blogs.length > 0 && (
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
-            { label: "Total",     value: blogs.length, cls: "text-foreground" },
+            { label: "Total",     value: pagination?.total ?? blogs.length, cls: "text-foreground" },
             { label: "Published", value: published,    cls: "text-emerald-600 dark:text-emerald-400" },
             { label: "Drafts",    value: drafts,       cls: "text-amber-600 dark:text-amber-400" },
           ].map((s) => (
@@ -113,7 +115,7 @@ export default function AdminBlogPage() {
               <Input
                 placeholder="Search articles…"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => { setSearch(e.target.value); setPage(1); }}
                 className="pl-8 h-8 text-sm"
               />
             </div>
@@ -145,6 +147,8 @@ export default function AdminBlogPage() {
           )}
         </CardContent>
       </Card>
+
+      <Pagination pagination={pagination} page={page} onPageChange={setPage} />
 
       {deleteTarget && (
         <DeleteModal

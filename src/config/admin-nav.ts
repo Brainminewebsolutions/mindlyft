@@ -17,6 +17,8 @@ import {
   Handshake,
   Newspaper,
   Tag,
+  FileText,
+  Milestone,
   type LucideIcon,
 } from "lucide-react";
 
@@ -52,6 +54,7 @@ export const adminNavGroups: NavGroup[] = [
       { label: "Courses",           href: "/admin/courses",             icon: BookOpen },
       { label: "Course Categories", href: "/admin/course-categories",   icon: Tag      },
       { label: "Blog Articles",  href: "/admin/blog",     icon: Newspaper },
+      { label: "Blog Categories", href: "/admin/blog-categories", icon: Tag },
       { label: "Workshops",   href: "/admin/webinars",    icon: Video        },
       { label: "Tool Cards",  href: "/admin/tools",       icon: Wrench       },
       { label: "Enrollments",    href: "/admin/enrollments",           icon: ClipboardList },
@@ -59,16 +62,11 @@ export const adminNavGroups: NavGroup[] = [
       { label: "Orders",        href: "/admin/orders",                icon: CreditCard    },
       { label: "Testimonials",       href: "/admin/testimonials", icon: MessageSquare },
       { label: "Recruiting Partners", href: "/admin/partners",     icon: Handshake     },
+      { label: "Resources", href: "/admin/resources", icon: FileText },
+      { label: "Our Journey", href: "/admin/our-journey", icon: Milestone },
     ],
   },
-  {
-    label: "System",
-    items: [
-      { label: "Announcements", href: "/admin/announcements",  icon: Bell,       badge: "3" },
-      { label: "Roles",         href: "/admin/settings/roles", icon: ShieldCheck },
-      { label: "Settings",      href: "/admin/settings",       icon: Settings    },
-    ],
-  },
+   
 ];
 
 export const adminBottomNav = [

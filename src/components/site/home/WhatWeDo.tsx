@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { TrendingUp } from "lucide-react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 
 /**
  * Each step carries pre-composed Tailwind class strings instead of raw color
@@ -179,17 +181,19 @@ export default function WhatWeDo() {
   return (
     <section ref={sectionRef} className="relative bg-white">
       {/* Section Header */}
-      <div className="mx-auto max-w-[1200px] px-12 pt-16 text-center">
+      <div className="mx-auto max-w-[1200px] px-6 pt-16 text-center lg:px-12">
         <SectionBadge variant = "dark">What We Do</SectionBadge>
-        <h2 className="m-0 text-[clamp(1.8rem,3.5vw,2.8rem)] font-black leading-[1.2] tracking-[-0.03em] text-[#111]">
-          Explore Our Top-Class Services and{" "}
-          <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">Unlock Your True Potential.</span>
-        </h2>
+        <Subheading
+          className="m-0 leading-[1.2] tracking-[-0.03em]"
+          text="Explore Our Top-Class Services and"
+          highlight="Unlock Your True Potential."
+          highlightClassName="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text !text-transparent"
+        />
       </div>
 
-      <div className="relative mx-auto flex max-w-[1200px] items-start gap-16 px-12">
+      <div className="relative mx-auto flex max-w-[1200px] flex-col items-start gap-10 px-4 lg:flex-row lg:gap-16 lg:px-12">
         {/* LEFT — scrolling content */}
-        <div className="flex-1 py-[6vh]">
+        <div className="w-full flex-1 py-[6vh]">
           {steps.map((step, i) => {
             const isActive = i === activeIndex;
             return (
@@ -198,11 +202,22 @@ export default function WhatWeDo() {
                 ref={(el) => {
                   stepRefs.current[i] = el;
                 }}
-                className={`flex min-h-[80vh] items-center py-8 transition-opacity duration-[450ms] ease-out ${
+                className={`flex min-h-0 items-center py-8 transition-opacity duration-[450ms] ease-out lg:min-h-[80vh] ${
                   isActive ? "opacity-100" : "opacity-[0.22]"
                 }`}
               >
-                <div className={`max-w-[500px] rounded-3xl px-8 py-8 ${step.accent.sectionBg}`}>
+                <div className={`max-w-[500px] rounded-3xl px-4 py-8 ${step.accent.sectionBg}`}>
+                  {/* Image — shown per-step on mobile/tablet; desktop uses the shared sticky image on the right */}
+                  <div className="relative mb-6 aspect-[4/3] w-full overflow-hidden rounded-2xl lg:hidden">
+                    <Image
+                      src={step.image}
+                      alt={step.imageAlt}
+                      fill
+                      sizes="(max-width: 1023px) 100vw, 500px"
+                      className="object-cover"
+                    />
+                  </div>
+
                   {/* Headline */}
                   <h2 className="mb-8 text-[clamp(1.6rem,3vw,2.4rem)] font-black leading-[1.18] tracking-[-0.02em]">
                     <span className={step.accent.text}>{step.headline} </span>
@@ -238,8 +253,8 @@ export default function WhatWeDo() {
           })}
         </div>
 
-        {/* RIGHT — sticky image */}
-        <div className="py-8 pb-20 sticky top-[30vh] flex h-fit w-[460px] flex-shrink-0 flex-col gap-4">
+        {/* RIGHT — sticky shared image, desktop only; mobile/tablet show each step's own image inline instead */}
+        <div className="hidden lg:flex h-fit flex-col gap-4 lg:w-[460px] lg:flex-shrink-0 lg:sticky lg:top-[30vh] lg:py-8 lg:pb-20">
           <div
             className={`relative overflow-hidden rounded-2xl border border-violet-900/20 bg-[#0d0f1e] transition-shadow duration-[650ms] ease-in-out ${active.accent.cardShadow}`}
           >
@@ -249,11 +264,14 @@ export default function WhatWeDo() {
 
             <div className="relative aspect-[4/3]">
               {steps.map((step, i) => (
-                <img
+                <Image
                   key={i}
                   src={step.image}
                   alt={step.imageAlt}
-                  className={`absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-[550ms] ease-in-out ${
+                  fill
+                  sizes="460px"
+                  priority={i === 0}
+                  className={`object-cover transition-[opacity,transform] duration-[550ms] ease-in-out ${
                     i === activeIndex
                       ? "z-[2] translate-y-0 scale-100 opacity-100"
                       : "z-[1] translate-y-[14px] scale-[0.97] opacity-0"

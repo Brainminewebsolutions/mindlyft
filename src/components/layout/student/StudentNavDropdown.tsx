@@ -3,11 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, User, LogOut, LayoutDashboard, BookOpen, Video, Wrench } from "lucide-react";
+import { ChevronDown, User, LogOut, BookOpen, Video, Wrench } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const STUDENT_NAV = [
-  { href: "/student/dashboard", label: "Dashboard",  icon: LayoutDashboard },
   { href: "/student/courses",   label: "My Courses", icon: BookOpen        },
   { href: "/student/workshops", label: "Workshops",  icon: Wrench          },
   { href: "/student/webinars",  label: "Webinars",   icon: Video           },

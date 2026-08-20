@@ -1,8 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Mouse } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+// Igor Omilaev — "robot and human hands reaching toward AI text" — Unsplash License (free, no attribution required)
+// https://unsplash.com/photos/FHgWFzDDAOs
+const HERO_IMAGE_URL =
+  "https://images.unsplash.com/photo-1694903089438-bf28d4697d9a?fm=jpg&q=80&w=2400&auto=format&fit=crop";
 
 const PARTS = [
   "Elevating Learning",
@@ -50,7 +56,6 @@ function AnimatedParts() {
 }
 
 export default function VideoHeroSection() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -58,38 +63,23 @@ export default function VideoHeroSection() {
     return () => clearTimeout(t);
   }, []);
 
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.muted = true;
-    v.play().catch(() => {});
-  }, []);
-
   return (
-    <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center">
+    <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center bg-[#040610]">
 
-      {/* Background video */}
-      <video
-        ref={videoRef}
-        src="/Mindlyftai_hero.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="none"
-        className="absolute inset-0 w-full h-full object-cover object-center z-0"
+      {/* Background image */}
+      <Image
+        src={HERO_IMAGE_URL}
+        alt="Human and AI hands reaching toward each other, symbolizing AI-powered learning"
+        fill
+        priority
+        sizes="100vw"
+        className="absolute inset-0 object-cover object-center z-0"
       />
- 
+
       {/* Purple radial tint */}
       <div
         className="absolute inset-0 z-[1] pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(108,99,255,.18) 0%, transparent 70%)" }}
-      />
-
-      {/* Darkening vignette to keep headline legible over bright video frames */}
-      <div
-        className="absolute inset-0 z-[1] pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 70% 45% at 50% 46%, rgba(4,6,16,.55) 0%, transparent 75%)" }}
+        style={{ background: "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(108,99,255,.10) 0%, transparent 70%)" }}
       />
 
       {/* Scan line */}
@@ -118,12 +108,12 @@ export default function VideoHeroSection() {
         )}
         style={{ transition: "opacity 1s ease 1.4s" }}
       >
-        <div className="flex items-center gap-2.5">
-          <span className="h-px w-8 bg-gradient-to-r from-transparent to-violet-400/70" />
-          <span className="font-bold tracking-[0.18em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400 text-[24px] sm:text-[24px]">
-  Three Pillars, One Vision
-</span>
-          <span className="h-px w-8 bg-gradient-to-l from-transparent to-blue-400/70" />
+        <div className="flex items-center justify-center gap-2 sm:gap-2.5 px-4">
+          <span className="hidden h-px w-8 shrink-0 bg-gradient-to-r from-transparent to-violet-400/70 sm:block" />
+          <span className="whitespace-nowrap text-center font-bold tracking-[0.1em] sm:tracking-[0.18em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400 text-[13px] sm:text-[24px]">
+            Three Pillars, One Vision
+          </span>
+          <span className="hidden h-px w-8 shrink-0 bg-gradient-to-l from-transparent to-blue-400/70 sm:block" />
         </div>
         <Mouse size={20} color="rgba(180,200,255,.5)" strokeWidth={1.5} />
       </div>

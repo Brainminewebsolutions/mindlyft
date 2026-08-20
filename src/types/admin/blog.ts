@@ -31,7 +31,6 @@ export type BlogDto = {
   slug:            string;
   excerpt:         string | null;
   coverImageUrl:   string | null;
-  employeeId:      string | null;
   authorName:      string | null;
   blogCategoryId:  string;
   categoryName:    string;

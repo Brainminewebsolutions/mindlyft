@@ -171,8 +171,8 @@ export default function OurLeaders({ categories, bg = "bg-white" }: OurLeadersPr
   if (categories.length === 0) return null;
 
   return (
-    <section className={`${bg} px-6 py-20`}>
-      <div className="max-w-6xl mx-auto space-y-20">
+    <section className={`${bg} px-6 py-12 md:py-20`}>
+      <div className="max-w-6xl mx-auto space-y-12 md:space-y-20">
 
         {/* Heading */}
         <div className="text-center space-y-4">
@@ -222,29 +222,29 @@ export default function OurLeaders({ categories, bg = "bg-white" }: OurLeadersPr
           </div>
         ))}
 
- <div className="text-center space-y-4">
+        <div className="text-center space-y-4 hidden">
           <span className="inline-block text-sm font-bold uppercase tracking-widest text-blue-600 bg-blue-100 px-4 py-2 rounded-full">
             Our Team
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
-           Meet Our Expert <span className="text-blue-600">Upskill Team</span>
+            Meet Our Expert <span className="text-blue-600">Upskill Team</span>
           </h2>
           <div className="w-16 h-1 bg-blue-600 rounded-full mx-auto" />
           <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-           Learn from experienced mentors who turn potential into performance and ambition into achievement.
+            Learn from experienced mentors who turn potential into performance and ambition into achievement.
           </p>
         </div>
       </div>
-      <div className="space-y-12">
-       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-  {upskillTeam.map((leader) => (
-    <LeaderCard
-      key={leader.name}
-      leader={leader}
-    />
-  ))}
-</div>
-</div>
+      <div className="space-y-12 hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {upskillTeam.map((leader) => (
+            <LeaderCard
+              key={leader.name}
+              leader={leader}
+            />
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

@@ -9,15 +9,7 @@ import { Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
 import { Input }    from "@/components/ui/input";
 import { Label }    from "@/components/ui/label";
 import { loginUser } from "@/lib/services/authClientService";
-
-const ROLE_HOME: Record<string, string> = {
-  ADMIN:      "/admin/dashboard",
-  TEACHER:    "/employee/dashboard",
-  ACCOUNTANT: "/employee/dashboard",
-  STAFF:      "/employee/dashboard",
-  EMPLOYEE:   "/employee/dashboard",
-  STUDENT:    "/student/dashboard",
-};
+import { ROLE_DASHBOARD, type Role } from "@/lib/auth/types";
 
 // Only allow same-site relative paths — a raw "//evil.com" or absolute URL
 // from the query string could otherwise be used as an open redirect.
@@ -42,7 +34,8 @@ function LoginForm() {
     setLoading(true);
     try {
       const { role } = await loginUser(email, password);
-      router.push(redirectTo ?? (role && ROLE_HOME[role] ? ROLE_HOME[role] : "/"));
+      const home = role ? ROLE_DASHBOARD[role as Role] : undefined;
+      router.push(redirectTo ?? home ?? "/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
@@ -51,7 +44,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="relative flex h-screen w-full overflow-hidden">
+    <div className="relative flex min-h-screen w-full">
 
       {/* ── Full-page background image ── */}
       <div className="absolute inset-0" style={{ backgroundImage: "url('/Sign_in.jpeg')", backgroundSize: "cover", backgroundPosition: "center" }} />

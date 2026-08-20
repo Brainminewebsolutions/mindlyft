@@ -1,7 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { User, Calendar, Tag, ArrowLeft } from "lucide-react";
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import { toUploadUrl } from "@/lib/api/image-url";
 import ChapterViewer from "./_components/ChapterViewer";
 
@@ -35,7 +36,7 @@ async function getBlog(slug: string): Promise<BlogDetail | null> {
   try {
     const envelope = await dotnetFetch<BlogEnvelope>(
       `/v1/blogs/slug/${encodeURIComponent(slug)}`,
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? envelope.data : null;
   } catch {
@@ -65,10 +66,10 @@ export default async function BlogDetailPage({
     <main className="min-h-screen bg-[#f9f8ff]">
 
       {/* ── Hero ── */}
-      <div className="relative h-screen overflow-hidden">
+      <div className="relative h-[60vh] sm:h-[70vh] md:h-screen overflow-hidden">
         {/* Background */}
         {cover ? (
-          <img src={cover} alt={blog.title} className="absolute inset-0 w-full h-full object-cover" />
+          <Image src={cover} alt={blog.title} fill priority sizes="100vw" className="object-cover" />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-violet-600 via-violet-500 to-blue-500" />
         )}

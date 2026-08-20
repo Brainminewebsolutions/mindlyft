@@ -6,7 +6,7 @@ import { AnimateIn } from "@/components/ui/AnimateIn";
 export default function Hero() {
   return (
     <section
-      className="relative h-screen flex items-center overflow-hidden px-6 pb-16 pt-28 md:px-[60px]"
+      className="relative min-h-screen flex items-center px-6 pb-16 pt-28 md:px-[60px]"
       style={{
         backgroundImage: "url('/assets/img/hero/hero-bg-3.jpg')",
         backgroundSize: "cover",
@@ -53,18 +53,7 @@ export default function Hero() {
           </div>
         </AnimateIn>
 
-        <AnimateIn delay={400}>
-          <div className="flex flex-wrap gap-x-10 gap-y-5">
-            {heroStats.map((stat) => (
-              <div key={stat.label}>
-                <div className="text-3xl font-extrabold bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-                  {stat.num}
-                </div>
-                <div className="text-xs font-medium text-gray-400 mt-0.5">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </AnimateIn>
+        
       </div>
     </section>
   );

@@ -46,6 +46,9 @@ export const blogCategoryService = {
       })
       .then((r) => r.data),
 
+  getById: (id: string) =>
+    apiAxios.get<BlogCategoryDto>(`/v1/blog-categories/${id}`).then((r) => r.data),
+
   create: (formData: FormData) =>
     apiAxios.post<BlogCategoryDto>("/v1/blog-categories", formData).then((r) => r.data),
 

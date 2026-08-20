@@ -118,7 +118,7 @@ export default function AdminToolsPage() {
 
       {/* Stats */}
       {tools.length > 0 && (
-        <div className="grid grid-cols-3 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           {[
             { label: "Total",    value: tools.length,  color: "text-foreground"                        },
             { label: "Active",   value: activeCount,   color: "text-emerald-600 dark:text-emerald-400" },

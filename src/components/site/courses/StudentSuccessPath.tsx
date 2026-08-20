@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { LineBadge } from "@/components/ui/LineBadge";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 
@@ -25,9 +26,19 @@ export default function StudentSuccessPath({ bg = "bg-violet-50" }: { bg?: strin
             </h2>
           </AnimateIn>
           <AnimateIn delay={200} direction="left">
-            <p className="text-base text-gray-500 leading-relaxed max-w-md">
+            <p className="text-base text-gray-500 leading-relaxed max-w-md mb-8">
               Our structured curriculum is designed to accelerate your career trajectory from foundational knowledge to industry-ready expertise.
             </p>
+          </AnimateIn>
+          <AnimateIn delay={300} direction="left">
+            <div className="relative w-full max-w-md h-64 sm:h-80 rounded-3xl overflow-hidden shadow-xl">
+              <Image
+                src="/assets/img/about/wh-img-2.jpg"
+                alt="Student success"
+                fill
+                className="object-cover object-center"
+              />
+            </div>
           </AnimateIn>
         </div>
 

@@ -1,8 +1,22 @@
+import { Agent } from "undici";
+
 const BASE_URL = process.env.DOTNET_API_URL;
 
 if (!BASE_URL && process.env.NODE_ENV !== "test") {
   console.warn("[dotnet-client] DOTNET_API_URL is not set");
 }
+
+// Single source of truth for how long ISR-cached backend responses stay fresh
+// (`{ next: { revalidate: REVALIDATE_SECONDS } }`). Change this to retune every
+// site page at once instead of editing each fetch call individually.
+export const REVALIDATE_SECONDS = 0;
+
+// The local .NET dev server uses the ASP.NET Core self-signed dev cert (dotnet dev-certs),
+// which Node's fetch won't trust. Skip cert verification only for that local HTTPS target.
+export const insecureDispatcher =
+  process.env.NODE_ENV === "development" && BASE_URL?.startsWith("https://localhost")
+    ? new Agent({ connect: { rejectUnauthorized: false } })
+    : undefined;
 
 export class ApiError extends Error {
   constructor(
@@ -37,7 +51,12 @@ export async function dotnetFetch<T>(
   const timer = setTimeout(() => controller.abort(), 5000);
 
   try {
-    const res = await fetch(url, { ...options, headers, signal: controller.signal });
+    const res = await fetch(url, {
+      ...options,
+      headers,
+      signal: controller.signal,
+      ...(insecureDispatcher ? { dispatcher: insecureDispatcher } : {}),
+    } as RequestInit);
     clearTimeout(timer);
 
     if (!res.ok) {

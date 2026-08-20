@@ -13,10 +13,10 @@ export const ROUTES = {
   coursesMindlyft: "/courses/mindlyftai",
   iit:             "/iit",               // legacy — keep for backward compat
 
-  courseIIT:      (id: string | number) => `/courses/iit/${id}`,
-  courseMindlyft: (id: string | number) => `/courses/mindlyftai/${id}`,
+  courseIIT:      (slug: string) => `/courses/iit/${slug}`,
+  courseMindlyft: (slug: string) => `/courses/mindlyftai/${slug}`,
 
-  courseCategory: (id: string | number) => `/course-categories/${id}`,
+  courseCategory: (slug: string) => `/course-categories/${slug}`,
 
   // ── Blog ─────────────────────────────────────────────────
   blogs:      "/blogs",
@@ -25,7 +25,7 @@ export const ROUTES = {
   // ── Webinars / Workshops ─────────────────────────────────
   webinar:    "/webinar",
   webinars:   "/webinars",
-  workshop:   (id: string | number) => `/workshops/${id}`,
+  workshop:   (slug: string) => `/workshops/${slug}`,
 
   // ── Checkout ─────────────────────────────────────────────
   checkout:         (id: string | number) => `/checkout/${id}`,
@@ -38,6 +38,6 @@ export const ROUTES = {
 
   // ── Dashboards ───────────────────────────────────────────
   adminDashboard:   "/admin/dashboard",
-  studentDashboard: "/student/dashboard",
+  studentDashboard: "/student/courses",
   employeeDashboard:"/employee/dashboard",
 } as const;

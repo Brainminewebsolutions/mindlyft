@@ -2,9 +2,10 @@
 
 import { useEffect, useRef } from "react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 import Link from "next/link";
 import Image from "next/image";
-import { Clock, ArrowRight, Globe, User, CheckCircle } from "lucide-react";
+import { Clock, ArrowRight, Globe, User, CheckCircle, Sparkles } from "lucide-react";
 import { getGsap, getScrollTrigger, onGsapReady } from "@/lib/gsap-config";
 import type { Course } from "@/types/admin/course";
 
@@ -139,10 +140,11 @@ export default function CoursesCardClient({ courses }: { courses: Course[] }) {
       {/* Section Header */}
     <div className="space-y-6 px-6 pt-10 pb-20 text-center">
         <SectionBadge variant="dark">Our Courses</SectionBadge>
-        <h2 className="text-4xl font-bold text-gray-900 md:text-5xl">
-          Expert-led courses designed to take you{" "}
-          <span className="text-violet-600">from fundamentals to mastery.</span>
-        </h2>
+        <Subheading
+          centered
+          text="Expert-led courses designed to take you"
+          highlight="from fundamentals to mastery."
+        />
         <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-violet-500 to-blue-500" />
       </div>
 
@@ -208,7 +210,7 @@ type CourseCardProps = {
 };
 
 function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps) {
-  const href = course.courseType === "IIT" ? `/courses/iit/${course.id}` : `/courses/mindlyftai/${course.id}`;
+  const href = course.courseType === "IIT" ? `/courses/iit/${course.slug}` : `/courses/mindlyftai/${course.slug}`;
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const gsap = getGsap();
@@ -251,6 +253,14 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
           </span>
         )}
 
+        {/* Top-left: Upcoming highlight */}
+        {course.status === "UPCOMING" && (
+          <span className="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-[linear-gradient(135deg,#f59e0b_0%,#f97316_100%)] px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-[0_2px_10px_rgba(245,158,11,0.5)] animate-pulse">
+            <Sparkles size={10} strokeWidth={2.5} />
+            Upcoming
+          </span>
+        )}
+
         {/* Bottom: mode + category badges */}
         <div className={`${textClass} absolute bottom-3 left-3 right-3 flex flex-wrap items-center gap-1.5`}>
           <span className="rounded-full bg-[color:rgba(var(--a),0.85)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur-[8px]">
@@ -289,7 +299,7 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
               {course.instructor}
             </span>
           </div>
-
+ 
           {/* Highlights */}
           {course.highlights && course.highlights.length > 0 && (
             <ul className={`${textClass} space-y-1`}>

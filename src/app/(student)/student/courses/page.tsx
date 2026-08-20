@@ -10,15 +10,7 @@ import { Loader2, BookOpen, Wifi, MapPin, Clock, User, Globe, IndianRupee, PlayC
 
 import { studentCoursesService } from "@/services/student/studentCoursesService";
 import type { PurchasedCourse }  from "@/types/student/course";
-
-const API_BASE = process.env.NEXT_PUBLIC_DOTNET_API_URL ?? "";
-
-function resolveImage(path: string | null): string | null {
-  if (!path) return null;
-  if (path.startsWith("http")) return path;
-  if (!API_BASE) return null;
-  return `${API_BASE}${path.startsWith("/") ? path : `/${path}`}`;
-}
+import { toUploadUrl } from "@/lib/api/image-url";
 
 export default function StudentCoursesPage() {
   const [courses, setCourses] = useState<PurchasedCourse[]>([]);
@@ -76,7 +68,7 @@ export default function StudentCoursesPage() {
 
 function CourseCard({ course }: { course: PurchasedCourse }) {
   const gradient  = "linear-gradient(135deg, hsl(var(--primary)/0.15), hsl(var(--primary)/0.05))";
-  const imageUrl  = resolveImage(course.courseImage);
+  const imageUrl  = toUploadUrl(course.courseImage);
 
   return (
     <Card className="overflow-hidden transition hover:shadow-md">

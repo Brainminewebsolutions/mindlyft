@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Clock, Globe, User, ArrowRight, Wifi, MapPin, BookOpen, GraduationCap, BriefcaseBusiness, RefreshCw, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LineBadge } from "@/components/ui/LineBadge";
@@ -28,7 +29,13 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
       {/* Thumbnail */}
       <div className="relative h-44 overflow-hidden shrink-0">
         {img ? (
-          <img src={img} alt={course.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <Image
+            src={img}
+            alt={course.name}
+            fill
+            sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+          />
         ) : (
           <div className={`h-full w-full bg-gradient-to-br ${gradient} flex items-center justify-center`}>
             <BookOpen className="w-10 h-10 text-white/40" />
@@ -91,13 +98,13 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
         {/* Buttons */}
         <div className="flex gap-2 pt-3 border-t border-gray-100">
           <Link
-            href={`/courses/mindlyftai/${course.id}`}
+            href={`/courses/mindlyftai/${course.slug}`}
             className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-violet-300 py-2 text-xs font-semibold text-violet-600 transition-all hover:bg-violet-50 active:scale-95"
           >
             View Program <ArrowRight className="w-3 h-3" />
           </Link>
           <Link
-            href={`/courses/mindlyftai/${course.id}?action=buy`}
+            href={`/courses/mindlyftai/${course.slug}?action=buy`}
             className="flex flex-1 items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 py-2 text-xs font-semibold text-white transition-all hover:opacity-90 active:scale-95"
           >
             Buy Now

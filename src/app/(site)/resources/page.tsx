@@ -1,80 +1,12 @@
 import Link from "next/link";
 import {
-  BookOpen, FileText, Video, Wrench, GraduationCap,
-  Lightbulb, Download, ArrowRight, Newspaper, Globe,
+  GraduationCap, ArrowRight, Newspaper, Globe, Lightbulb,
 } from "lucide-react";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
+import ResourcesClient, { type ResourceItem } from "./_components/ResourcesClient";
 
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1600&q=80";
-
-const CATEGORIES = [
-  {
-    icon: BookOpen,
-    label: "Guides & eBooks",
-    color: "from-violet-600 to-violet-400",
-    glow: "bg-violet-50 border-violet-100",
-    items: [
-      { title: "Beginner's Guide to Artificial Intelligence", desc: "A complete walkthrough of AI fundamentals — concepts, terminology, and real-world applications." },
-      { title: "Machine Learning Roadmap 2025", desc: "Step-by-step path from Python basics to deploying ML models in production." },
-      { title: "Data Science Handbook", desc: "Covers data wrangling, EDA, visualization, and statistical modeling with practical examples." },
-    ],
-  },
-  {
-    icon: FileText,
-    label: "Cheatsheets",
-    color: "from-blue-600 to-blue-400",
-    glow: "bg-blue-50 border-blue-100",
-    items: [
-      { title: "Python for Data Science Cheatsheet", desc: "Key libraries, syntax, and patterns — NumPy, Pandas, Matplotlib at a glance." },
-      { title: "SQL Quick Reference", desc: "Essential SQL queries, joins, aggregations, and window functions in one sheet." },
-      { title: "Deep Learning Formulas", desc: "Activation functions, loss functions, optimizers, and key architecture diagrams." },
-    ],
-  },
-  {
-    icon: Video,
-    label: "Video Tutorials",
-    color: "from-indigo-600 to-violet-500",
-    glow: "bg-indigo-50 border-indigo-100",
-    items: [
-      { title: "Intro to Neural Networks (Free Series)", desc: "5-part series covering perceptrons, backpropagation, and CNNs with code walkthroughs." },
-      { title: "Build Your First ChatBot", desc: "End-to-end tutorial: intent recognition, NLP pipeline, and deploying with FastAPI." },
-      { title: "Computer Vision with OpenCV", desc: "Image processing, object detection, and face recognition from scratch." },
-    ],
-  },
-  {
-    icon: Wrench,
-    label: "AI Tools & Demos",
-    color: "from-blue-500 to-cyan-500",
-    glow: "bg-cyan-50 border-cyan-100",
-    items: [
-      { title: "Resume Analyzer (AI-Powered)", desc: "Upload your resume and get instant feedback on ATS score, keywords, and improvements." },
-      { title: "Career Path Recommender", desc: "Answer a few questions and get a personalized AI & tech career roadmap." },
-      { title: "Dataset Explorer", desc: "Browse curated public datasets for practice projects in ML and data science." },
-    ],
-  },
-  {
-    icon: GraduationCap,
-    label: "Career Resources",
-    color: "from-violet-500 to-blue-600",
-    glow: "bg-violet-50 border-violet-100",
-    items: [
-      { title: "AI Job Interview Prep Kit", desc: "Top 100 interview questions with model answers for data science and ML roles." },
-      { title: "LinkedIn Profile Optimization Guide", desc: "How to write a profile that gets noticed by AI/ML recruiters." },
-      { title: "Portfolio Project Ideas", desc: "10 project ideas across computer vision, NLP, and predictive analytics to build your portfolio." },
-    ],
-  },
-  {
-    icon: Newspaper,
-    label: "Research & Articles",
-    color: "from-indigo-500 to-blue-500",
-    glow: "bg-indigo-50 border-indigo-100",
-    items: [
-      { title: "The State of AI in India 2025", desc: "Industry trends, job market analysis, and skill demand report for the Indian AI ecosystem." },
-      { title: "Top 10 AI Breakthroughs of 2024", desc: "From GPT-4 to multimodal models — key advancements explained for practitioners." },
-      { title: "Ethics in Artificial Intelligence", desc: "Bias, fairness, and responsible AI — a practical guide for developers and researchers." },
-    ],
-  },
-];
 
 const QUICK_LINKS = [
   { icon: GraduationCap, label: "Explore Courses",    href: "/courses",   color: "text-violet-600 bg-violet-50" },
@@ -83,12 +15,47 @@ const QUICK_LINKS = [
   { icon: Newspaper,     label: "Blog & Insights",    href: "/blogs",     color: "text-violet-600 bg-violet-50" },
 ];
 
-export default function ResourcesPage() {
+type ApiResource = {
+  id:           number;
+  name:         string;
+  description:  string | null;
+  image:        string | null;
+  type:         "File" | "Link";
+  displayOrder: number;
+  status:       string;
+  url:          string | null;
+};
+
+type ResourcesEnvelope = { isSuccess: boolean; data: ApiResource[] };
+
+async function getActiveResources(): Promise<ResourceItem[]> {
+  try {
+    const envelope = await dotnetFetch<ResourcesEnvelope>(
+      "/v1/resources?status=Active",
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
+    );
+    if (!envelope.isSuccess || !Array.isArray(envelope.data)) return [];
+    return envelope.data.map((r) => ({
+      id:          r.id,
+      name:        r.name,
+      description: r.description,
+      image:       r.image,
+      type:        r.type,
+      url:         r.url,
+    }));
+  } catch {
+    return [];
+  }
+}
+
+export default async function ResourcesPage() {
+  const resources = await getActiveResources();
+
   return (
     <div className="min-h-screen bg-[#f9f8ff]">
 
       {/* ── Hero ── */}
-      <div className="relative h-screen overflow-hidden">
+      <div className="relative h-[60vh] sm:h-[70vh] md:h-screen overflow-hidden">
         <img
           src={HERO_IMAGE}
           alt="Resources"
@@ -136,50 +103,8 @@ export default function ResourcesPage() {
         </div>
       </div>
 
-      {/* ── Resource categories ── */}
-      <div className="max-w-[1100px] mx-auto px-[6vw] pb-20 space-y-14">
-        {CATEGORIES.map(({ icon: Icon, label, color, glow, items }) => (
-          <section key={label}>
-            {/* Section header */}
-            <div className="flex items-center gap-3 mb-6">
-              <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center shrink-0`}>
-                <Icon className="w-5 h-5 text-white" />
-              </div>
-              <h2
-                className="text-xl font-bold text-gray-900"
-                style={{ color: "#1a1046" }}
-              >
-                {label}
-              </h2>
-              <div className="flex-1 h-px bg-violet-100 ml-2" />
-            </div>
-
-            {/* Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {items.map((item) => (
-                <div
-                  key={item.title}
-                  className={`relative bg-white border ${glow} rounded-2xl p-5 hover:shadow-lg transition-shadow group cursor-pointer`}
-                >
-                  <div className={`inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-gradient-to-r ${color} text-white mb-3`}>
-                    <Download className="w-3 h-3" />
-                    Free
-                  </div>
-                  <h3 className="text-[15px] font-bold text-gray-900 mb-2 leading-snug group-hover:text-violet-700 transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">
-                    {item.desc}
-                  </p>
-                  <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-violet-600 group-hover:gap-2 transition-all">
-                    Access Resource <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
+      {/* ── Resources ── */}
+      <ResourcesClient resources={resources} />
 
       {/* ── CTA banner ── */}
       <div className="mx-[6vw] mb-20 rounded-3xl overflow-hidden relative">

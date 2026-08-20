@@ -42,9 +42,9 @@ const values = [
 
 export default function CompanyValues({ bg = "bg-white" }: { bg?: string }) {
   return (
-    <section className={`py-24 px-6 ${bg}`}>
+    <section className={`py-14 md:py-24 px-6 ${bg}`}>
       <div className="max-w-7xl mx-auto">
-         <div className="text-center mb-16">
+         <div className="text-center mb-10 md:mb-16">
           <AnimateIn delay={0} direction="right"><LineBadge className="justify-center mb-5"> Our Values</LineBadge></AnimateIn>
           <AnimateIn delay={100} direction="right">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">

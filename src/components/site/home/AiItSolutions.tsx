@@ -1,6 +1,7 @@
 import {ArrowUpRight, Lock} from "lucide-react";
 import Link from "next/link";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 
 export default function AiItSolutions(){
@@ -11,9 +12,10 @@ export default function AiItSolutions(){
                     <div className="w-full md:w-1/2 2xl:w-5/12 2xl:pr-12 md:mb-[30px]">
                       <SectionBadge variant="dark">AI &amp; IT Solutions</SectionBadge>
                       <AnimateIn direction="up" delay={300}>
-                        <h2 className="section-title style-one text-title font-medium mb-0">
-                          Ready to Experience AI-Powered Cybersecurity That Works
-                        </h2>
+                        <Subheading
+                          className="font-medium mb-0"
+                          text="Ready to Experience AI-Powered Cybersecurity That Works"
+                        />
                       </AnimateIn>
                     </div>
                     <div className="w-full md:w-1/2 2xl:w-1/2 2xl:ml-[8.333%]">

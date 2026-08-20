@@ -7,7 +7,7 @@ export const createEmployeeSchema = z.object({
   category:    z.string().optional(),
   department:  z.string().optional(),
   designation: z.string().optional(),
-  description:  z.string().optional(),
+  description:  z.string().max(350, "Maximum 350 characters").optional(),
   displayOrder: z.number().int().min(0).optional(),
   password:    z.union([
     z.string().min(8, "Minimum 8 characters")
@@ -24,7 +24,7 @@ export const updateEmployeeSchema = z.object({
   category:    z.string().optional(),
   department:  z.string().optional(),
   designation: z.string().optional(),
-  description:  z.string().optional(),
+  description:  z.string().max(350, "Maximum 350 characters").optional(),
   displayOrder: z.number().int().min(0).optional(),
   password:    z.union([z.string().min(8), z.literal("")]).optional(),
   status:      z.enum(["ACTIVE", "INACTIVE", "SUSPENDED"]).optional(),

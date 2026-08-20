@@ -25,8 +25,8 @@ const ITEMS = [
 
 export default function WhoWeAre({ bg = "bg-white" }: { bg?: string }) {
   return (
-    <section className={`${bg} py-20 px-6 md:px-14 lg:px-24`}>
-      <div className="text-center mb-50">
+    <section className={`${bg} py-12 md:py-20 px-6 md:px-14 lg:px-24`}>
+      <div className="text-center mb-10 md:mb-16">
                 <AnimateIn delay={100} direction="right">
                   <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
                      Who we {" "}

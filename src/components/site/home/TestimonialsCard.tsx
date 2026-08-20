@@ -1,4 +1,4 @@
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import Testimonials from "./Testimonials";
 
 interface Testimonial {
@@ -26,7 +26,7 @@ async function getTestimonials(): Promise<Testimonial[]> {
   try {
     const envelope = await dotnetFetch<TestimonialsEnvelope>(
       "/v1/testimonials?status=ACTIVE&limit=50",
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? (envelope.data?.testimonials ?? []) : [];
   } catch {

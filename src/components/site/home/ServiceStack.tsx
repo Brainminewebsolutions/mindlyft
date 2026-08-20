@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Subheading } from "@/components/ui/Subheading";
 import Link from "next/link";
 import Image from "next/image";
 import { Clock, Globe, Monitor, User, ArrowUpRight, Tag } from "lucide-react";
@@ -126,12 +127,13 @@ gsap.set(cards[0], {
         <SectionBadge variant="dark">Powered by Research. Backed by Innovation.</SectionBadge>
 
         {/* Heading */}
-        <h2 className="text-lg sm:text-5xl font-bold leading-tight tracking-tight text-gray-900">
-          Strategic collaboration with{" "}
-          <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-             C3iHub, IIT Kanpur
-          </span>
-        </h2>
+        <Subheading
+          centered
+          className="leading-tight tracking-tight"
+          text="Strategic collaboration with"
+          highlight="C3iHub, IIT Kanpur"
+          highlightClassName="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text !text-transparent"
+        />
 
         {/* Subtitle */}
         <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl">
@@ -419,7 +421,7 @@ gsap.set(cards[0], {
 
   {/* Button Below */}
   <Link
-    href={course.courseType === "IIT" ? `/courses/iit/${course.id}` : `/courses/mindlyftai/${course.id}`}
+    href={course.courseType === "IIT" ? `/courses/iit/${course.slug}` : `/courses/mindlyftai/${course.slug}`}
     className="inline-flex w-fit items-center gap-2 px-8 py-3 rounded-full text-sm font-bold tracking-wide text-white transition-all hover:scale-105 hover:shadow-lg"
     style={{
       background: accent,

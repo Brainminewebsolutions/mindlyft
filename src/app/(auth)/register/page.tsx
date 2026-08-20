@@ -71,7 +71,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-[#f7f7f9]">
+    <div className="flex min-h-screen w-full bg-[#f7f7f9]">
 
       {/* ── Left decorative panel ── */}
       <div className="relative hidden lg:flex lg:w-[46%] xl:w-[42%] flex-col overflow-hidden">

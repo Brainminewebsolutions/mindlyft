@@ -2,9 +2,9 @@ import { AnimateIn } from "@/components/ui/AnimateIn";
 
 export default function IntroductionVideo({ bg = "bg-white" }: { bg?: string }) {
   return (
-    <section className={`${bg} py-20 px-6 md:px-14 lg:px-24`}>
+    <section className={`${bg} py-12 md:py-20 px-6 md:px-14 lg:px-24`}>
       <div className="max-w-5xl mx-auto">
- <div className="text-center mb-16">
+ <div className="text-center mb-10 md:mb-16">
           <AnimateIn delay={100} direction="right">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
                Watch a Short Introduction&nbsp;
@@ -25,8 +25,8 @@ export default function IntroductionVideo({ bg = "bg-white" }: { bg?: string }) 
           <video
             controls
             playsInline
+            preload="none"
             className="w-full h-96"
-            poster="" 
           >
             <source src="/introvideo.mp4" type="video/mp4" />
             Your browser does not support the video tag.

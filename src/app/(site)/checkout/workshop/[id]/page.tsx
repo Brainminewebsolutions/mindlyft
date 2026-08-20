@@ -2,7 +2,7 @@ import Link           from "next/link";
 import { redirect }   from "next/navigation";
 import { notFound }   from "next/navigation";
 import { ArrowLeft, Lock } from "lucide-react";
-import { dotnetFetch }  from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import { getSession }   from "@/lib/auth/session";
 import type { Webinar } from "@/types/admin/webinar";
 import WorkshopCheckoutClient from "../_components/WorkshopCheckoutClient";
@@ -13,7 +13,7 @@ async function getWebinar(id: string): Promise<Webinar | null> {
   try {
     const envelope = await dotnetFetch<WebinarEnvelope>(
       `/v1/workshopWebinar/${id}`,
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? envelope.data : null;
   } catch {
@@ -34,14 +34,14 @@ export default async function WorkshopCheckoutPage({
   const webinar = await getWebinar(id);
   if (!webinar) notFound();
 
-  if (webinar.price === 0) redirect(`/workshops/${id}`);
+  if (webinar.price === 0) redirect(`/workshops/${webinar.slug}`);
 
   return (
     <div className="min-h-screen bg-[#f9f9fb]" style={{ fontFamily: "var(--primaryFont, sans-serif)" }}>
       <div className="max-w-[680px] mx-auto px-[6vw] pt-10 pb-20">
 
         <Link
-          href={`/workshops/${webinar.id}`}
+          href={`/workshops/${webinar.slug}`}
           className="inline-flex items-center gap-1.5 text-[#6c63ff] text-[13px] font-semibold no-underline mb-8 hover:opacity-75 transition-opacity"
         >
           <ArrowLeft className="w-3.5 h-3.5" />

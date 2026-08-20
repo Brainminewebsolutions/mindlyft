@@ -6,7 +6,7 @@ import { AnimateIn } from "@/components/ui/AnimateIn";
 
 export default function CoursesHero() {
   return (
-    <section className="relative h-screen flex items-center overflow-hidden px-6 pt-28 pb-16 md:px-[60px]">
+    <section className="relative min-h-screen flex items-center px-6 pt-28 pb-16 md:px-[60px]">
       <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-violet-50 pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -32,22 +32,7 @@ export default function CoursesHero() {
               job-ready in weeks, not years.
             </p>
           </AnimateIn>
-          <AnimateIn delay={300}>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="#courses"
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition shadow-lg shadow-violet-200"
-              >
-                Browse Courses <ArrowDown className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/webinar"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-700 border border-gray-200 bg-white px-6 py-3 rounded-xl hover:border-violet-400 hover:text-violet-600 transition-all"
-              >
-                How it works <span className="text-base">↗</span>
-              </Link>
-            </div>
-          </AnimateIn>
+          
         </div>
 
         {/* Right — image */}

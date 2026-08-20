@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { Users, BookOpen, Globe, TrendingUp, Award, Heart, ArrowRight, Quote, Star } from "lucide-react";
+import { Users, BookOpen, Globe, TrendingUp, Award, Heart, ArrowRight } from "lucide-react";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
+import MilestonesTimeline, { type Milestone } from "./_components/MilestonesTimeline";
 
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80";
@@ -12,81 +14,61 @@ const STATS = [
   { icon: Award,      value: "10+",   label: "Industry Awards",      color: "from-blue-500 to-violet-500"  },
   { icon: Heart,      value: "95%",   label: "Learner Satisfaction", color: "from-violet-600 to-blue-500"  },
 ];
+ 
 
-const STORIES = [
-  {
-    name: "Aisha Sharma",
-    role: "ML Engineer at Google",
-    location: "Mumbai",
-    quote: "Mindlyft AI's curriculum was exactly what I needed to break into ML. Within 6 months of completing the course, I had an offer from Google.",
-    avatar: "AS",
-    gradient: "from-violet-500 to-blue-500",
-    stars: 5,
-  },
-  {
-    name: "Rahul Verma",
-    role: "AI Product Manager",
-    location: "Bengaluru",
-    quote: "The hands-on projects and mentorship transformed my career. I went from a sales background to leading AI product strategy at a top startup.",
-    avatar: "RV",
-    gradient: "from-blue-600 to-violet-500",
-    stars: 5,
-  },
-  {
-    name: "Priya Nair",
-    role: "Data Scientist at Flipkart",
-    location: "Pune",
-    quote: "The community and network I built through Mindlyft AI has been invaluable. Real learning, real connections, real results.",
-    avatar: "PN",
-    gradient: "from-indigo-500 to-blue-500",
-    stars: 5,
-  },
-  {
-    name: "Karan Mehta",
-    role: "Deep Learning Engineer at NVIDIA",
-    location: "Hyderabad",
-    quote: "I had zero ML background. After 4 months with MindlyftAI, I cracked NVIDIA's technical rounds. The structured path made all the difference.",
-    avatar: "KM",
-    gradient: "from-violet-600 to-blue-400",
-    stars: 5,
-  },
-  {
-    name: "Sneha Patil",
-    role: "NLP Researcher at IIT Bombay",
-    location: "Pune",
-    quote: "The research-oriented modules and faculty guidance at MindlyftAI helped me publish my first NLP paper and secure a research position at IIT.",
-    avatar: "SP",
-    gradient: "from-blue-500 to-indigo-600",
-    stars: 5,
-  },
-  {
-    name: "Arjun Das",
-    role: "Freelance AI Consultant",
-    location: "Kolkata",
-    quote: "MindlyftAI gave me the confidence and skills to go independent. I now consult for 3 startups and earn 3x what I did in my corporate job.",
-    avatar: "AD",
-    gradient: "from-violet-500 to-blue-600",
-    stars: 5,
-  },
-];
+type ApiOurJourneyMedia = {
+  id:   string;
+  url:  string;
+  type: "Image" | "Video";
+};
 
-const MILESTONES = [
-  { year: "Jan 2024", title: "MindlyftAI Founded",         desc: "Launched with a mission to make AI education accessible across India."       },
-  { year: "Mar 2024", title: "First IIT Collaboration",    desc: "Partnered with IIT Bombay to deliver AI workshops for 150 graduate students." },
-  { year: "May 2024", title: "1,000 Students Enrolled",    desc: "Crossed our first major milestone — 1,000 learners in just 4 months."        },
-  { year: "Jul 2024", title: "EdTech Expo Recognition",    desc: "Featured among top 10 EdTech startups at the Bengaluru Innovation Expo."     },
-  { year: "Sep 2024", title: "ML Bootcamp Batch 3",        desc: "Completed our 3rd bootcamp with 94% placement rate for graduates."           },
-  { year: "Nov 2024", title: "AI Summit — 300 Attendees",  desc: "Hosted our largest event — the AI in Education Summit in Mumbai."            },
-  { year: "Jan 2025", title: "25,000 Students Milestone",  desc: "Reached 25,000 enrolled learners across 40+ cities in India."               },
-  { year: "Apr 2025", title: "50+ Awards Won",             desc: "Recognised with 50+ industry awards for excellence in AI education."         },
-];
+type ApiOurJourney = {
+  id:          string;
+  name:        string;
+  description: string | null;
+  date:        string;
+  media:       ApiOurJourneyMedia[];
+};
 
-export default function OurImpactPage() {
+type OurJourneyEnvelope = { isSuccess: boolean; data: ApiOurJourney[] };
+
+function formatMonthYear(dateStr: string): string {
+  const d = new Date(dateStr);
+  if (Number.isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+}
+
+async function getMilestones(): Promise<Milestone[]> {
+  try {
+    const envelope = await dotnetFetch<OurJourneyEnvelope>(
+      "/v1/our-journey?type=OurImpact&status=Active",
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
+    );
+    if (!envelope.isSuccess || !Array.isArray(envelope.data)) return [];
+    // API returns newest-first; a growth timeline reads best oldest-to-newest.
+    return envelope.data
+      .slice()
+      .reverse()
+      .map((j) => ({
+        id:    j.id,
+        label: formatMonthYear(j.date),
+        title: j.name,
+        desc:  j.description,
+        media: j.media.map((m) => ({ id: m.id, url: m.url, type: m.type })),
+      }));
+  } catch {
+    return [];
+  }
+}
+
+export default async function OurImpactPage() {
+  const milestones = await getMilestones();
+
   return (
     <div className="min-h-screen bg-[#f9f8ff]">
 
       {/* ── Hero ── */}
-      <div className="relative h-screen overflow-hidden">
+      <div className="relative h-[60vh] sm:h-[70vh] md:h-screen overflow-hidden">
         <img
           src={HERO_IMAGE}
           alt="Our Impact"
@@ -130,88 +112,20 @@ export default function OurImpactPage() {
       </div>
 
       {/* ── Milestones timeline ── */}
-      <div className="max-w-[1100px] mx-auto px-[6vw] pb-16">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center shrink-0">
-            <TrendingUp className="w-5 h-5 text-white" />
-          </div>
-          <h2 className="text-xl font-bold" style={{ color: "#1a1046" }}>Our Journey So Far</h2>
-          <div className="flex-1 h-px bg-violet-100 ml-2" />
-        </div>
-
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-[88px] top-0 bottom-0 w-px bg-violet-100 hidden sm:block" />
-
-          <div className="space-y-4">
-            {MILESTONES.map((m, i) => (
-              <div key={i} className="flex gap-4 items-start">
-                {/* Year pill */}
-                <div className="shrink-0 w-[80px] text-right hidden sm:block pt-3">
-                  <span className="text-xs font-bold text-violet-600 bg-violet-50 border border-violet-100 px-2 py-1 rounded-full">
-                    {m.year}
-                  </span>
-                </div>
-                {/* Dot */}
-                <div className="shrink-0 hidden sm:flex flex-col items-center pt-[14px]">
-                  <div className="w-3 h-3 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 ring-4 ring-violet-50" />
-                </div>
-                {/* Card */}
-                <div className="flex-1 bg-white rounded-2xl border border-violet-100 shadow-sm px-5 py-4 hover:shadow-md transition-shadow">
-                  <span className="text-xs font-bold text-violet-600 sm:hidden mb-1 block">{m.year}</span>
-                  <p className="text-[15px] font-bold text-gray-900 mb-1" style={{ color: "#1a1046" }}>{m.title}</p>
-                  <p className="text-sm text-gray-500">{m.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ── Success stories ── */}
-      <div className="max-w-[1100px] mx-auto px-[6vw] pb-20">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center shrink-0">
-            <Quote className="w-5 h-5 text-white" />
-          </div>
-          <h2 className="text-xl font-bold" style={{ color: "#1a1046" }}>Success Stories</h2>
-          <div className="flex-1 h-px bg-violet-100 ml-2" />
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {STORIES.map((story) => (
-            <div
-              key={story.name}
-              className="bg-white rounded-2xl border border-violet-100 shadow-sm p-6 hover:shadow-lg transition-shadow group"
-            >
-              {/* Stars */}
-              <div className="flex gap-0.5 mb-4">
-                {Array.from({ length: story.stars }).map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <p className="text-gray-600 text-sm leading-relaxed mb-5 italic">
-                &ldquo;{story.quote}&rdquo;
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3 pt-4 border-t border-violet-50">
-                <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${story.gradient} flex items-center justify-center text-white text-xs font-bold shrink-0`}>
-                  {story.avatar}
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-gray-900">{story.name}</p>
-                  <p className="text-xs text-violet-600 font-medium">{story.role}</p>
-                  <p className="text-xs text-gray-400">{story.location}</p>
-                </div>
-              </div>
+      {milestones.length > 0 && (
+        <div className="max-w-[1100px] mx-auto px-[6vw] pb-16">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center shrink-0">
+              <TrendingUp className="w-5 h-5 text-white" />
             </div>
-          ))}
-        </div>
-      </div>
+            <h2 className="text-xl font-bold" style={{ color: "#1a1046" }}>Our Journey So Far</h2>
+            <div className="flex-1 h-px bg-violet-100 ml-2" />
+          </div>
 
+          <MilestonesTimeline milestones={milestones} />
+        </div>
+      )}
+ 
       {/* ── CTA banner ── */}
       <div className="mx-[6vw] mb-20 rounded-3xl overflow-hidden relative">
         <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-blue-500" />
