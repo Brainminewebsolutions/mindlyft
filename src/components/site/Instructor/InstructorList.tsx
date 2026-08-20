@@ -80,7 +80,7 @@ export default function InstructorList({
                       {instructor.designation && (
                         <p className="text-sm font-medium mb-2" style={{ color }}>{instructor.designation}</p>
                       )}
-                      <p className="text-xs leading-relaxed text-gray-600 line-clamp-6">
+                      <p className="text-xs leading-relaxed text-gray-600 line-clamp-10">
                         {instructor.description}
                       </p>
                     </div>

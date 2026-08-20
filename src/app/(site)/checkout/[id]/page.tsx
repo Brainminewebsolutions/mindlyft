@@ -2,7 +2,7 @@ import Link           from "next/link";
 import { redirect }   from "next/navigation";
 import { notFound }   from "next/navigation";
 import { ArrowLeft, Lock } from "lucide-react";
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import { getSession }  from "@/lib/auth/session";
 import type { Course } from "@/types/admin/course";
 import CheckoutClient  from "../_components/CheckoutClient";
@@ -16,7 +16,7 @@ async function getCourse(id: string): Promise<Course | null> {
   try {
     const envelope = await dotnetFetch<CourseEnvelope>(
       `/v1/courses/${id}`,
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? envelope.data : null;
   } catch {

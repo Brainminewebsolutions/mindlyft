@@ -1,7 +1,7 @@
 import AboutHero from "@/components/site/about/AboutHero";
 import FounderMessage from "@/components/site/about/FounderMessage";
 import OurLeaders from "@/components/site/about/OurLeaders";
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import type { Employee } from "@/types/admin/employee";
 import VisionMission from "@/components/site/about/VisionMission";
 import CompanyValues from "@/components/site/about/CompanyValues ";
@@ -40,14 +40,14 @@ async function getTeamCategories() {
   try {
     const env = await dotnetFetch<EmployeeEnvelope>(
       "/v1/employees?status=ACTIVE&limit=200",
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     if (!env.isSuccess || !Array.isArray(env.data?.employees)) return [];
 
     const grouped = new Map<string, Employee[]>();
     for (const emp of env.data.employees) {
       const key = emp.category?.trim();
-      if (!key) continue;
+      if (!key || key.toLowerCase() === "iit instructor") continue;
       if (!grouped.has(key)) grouped.set(key, []);
       grouped.get(key)!.push(emp);
     }
@@ -56,6 +56,8 @@ async function getTeamCategories() {
       "founder & co-founder",
       "advisors",
       "board of directors",
+      "experts",
+      "upskill",
       "instructor",
     ];
 

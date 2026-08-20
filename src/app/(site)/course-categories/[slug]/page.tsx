@@ -1,5 +1,5 @@
 import { notFound, redirect } from "next/navigation";
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import { isNumericId } from "@/lib/slug";
 import CourseCategoryHero from "@/components/site/course-categories/CourseCategoryHero";
 import type { CourseCategory } from "@/types/admin/courseCategory";
@@ -27,7 +27,7 @@ async function getCategoryBySlug(slug: string): Promise<CourseCategory | null> {
   try {
     const envelope = await dotnetFetch<CategoryEnvelope>(
       `/v1/course-categories/slug/${encodeURIComponent(slug)}`,
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? envelope.data : null;
   } catch {
@@ -39,7 +39,7 @@ async function getCategoryById(id: string): Promise<CourseCategory | null> {
   try {
     const envelope = await dotnetFetch<CategoryEnvelope>(
       `/v1/course-categories/${id}`,
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? envelope.data : null;
   } catch {
@@ -51,7 +51,7 @@ async function getCoursesByCategory(categoryName: string): Promise<Course[]> {
   try {
     const envelope = await dotnetFetch<CoursesEnvelope>(
       `/v1/courses?status=ACTIVE&limit=200`,
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     const all = envelope.isSuccess ? (envelope.data?.courses ?? []) : [];
     return all.filter(c => c.category?.toLowerCase() === categoryName.toLowerCase());
@@ -64,7 +64,7 @@ async function getInstructors(): Promise<Employee[]> {
   try {
     const envelope = await dotnetFetch<EmployeeEnvelope>(
       `/v1/employees?status=ACTIVE&limit=200&category=IIT Instructor`,
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     if (!envelope.isSuccess) return [];
     return (envelope.data?.employees ?? []);

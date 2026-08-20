@@ -17,6 +17,8 @@ import {
   Handshake,
   Newspaper,
   Tag,
+  FileText,
+  Milestone,
   type LucideIcon,
 } from "lucide-react";
 
@@ -60,16 +62,11 @@ export const adminNavGroups: NavGroup[] = [
       { label: "Orders",        href: "/admin/orders",                icon: CreditCard    },
       { label: "Testimonials",       href: "/admin/testimonials", icon: MessageSquare },
       { label: "Recruiting Partners", href: "/admin/partners",     icon: Handshake     },
+      { label: "Resources", href: "/admin/resources", icon: FileText },
+      { label: "Our Journey", href: "/admin/our-journey", icon: Milestone },
     ],
   },
-  {
-    label: "System",
-    items: [
-      { label: "Announcements", href: "/admin/announcements",  icon: Bell,       badge: "3" },
-      { label: "Roles",         href: "/admin/settings/roles", icon: ShieldCheck },
-      { label: "Settings",      href: "/admin/settings",       icon: Settings    },
-    ],
-  },
+   
 ];
 
 export const adminBottomNav = [

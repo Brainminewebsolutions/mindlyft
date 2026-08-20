@@ -1,4 +1,4 @@
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import type { Webinar } from "@/types/admin/webinar";
 import WebinarsList from "./_components/WebinarsList";
 
@@ -8,7 +8,7 @@ async function getWebinars(): Promise<Webinar[]> {
   try {
     const envelope = await dotnetFetch<Envelope>(
       "/v1/workshopWebinar?status=Active&type=Webinar",
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? (envelope.data ?? []) : [];
   } catch {

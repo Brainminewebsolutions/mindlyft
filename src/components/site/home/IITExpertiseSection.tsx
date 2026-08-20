@@ -1,4 +1,4 @@
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import type { CourseCategory } from "@/types/admin/courseCategory";
 import { SectionBadge } from "@/components/ui/SectionBadge";
 import { Subheading } from "@/components/ui/Subheading";
@@ -14,7 +14,7 @@ async function getCourseCategories(): Promise<CourseCategory[]> {
   try {
     const envelope = await dotnetFetch<CategoriesEnvelope>(
       "/v1/course-categories?status=Active",
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     const raw = envelope.isSuccess ? (envelope.data ?? []) : [];
     return Array.isArray(raw) ? raw : [];

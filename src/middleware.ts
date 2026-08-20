@@ -1,14 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { AUTH_COOKIE } from "@/lib/auth/types";
-
-const ROLE_PREFIX: Record<string, string> = {
-  ADMIN:      "/admin",
-  TEACHER:    "/employee",
-  ACCOUNTANT: "/employee",
-  STAFF:      "/employee",
-  EMPLOYEE:   "/employee",
-  STUDENT:    "/student",
-};
+import { AUTH_COOKIE, ROLE_DASHBOARD, type Role } from "@/lib/auth/types";
 
 const PROTECTED_PREFIXES: Record<string, string[]> = {
   "/admin":    ["ADMIN"],
@@ -40,8 +31,8 @@ export function middleware(req: NextRequest) {
 
   if (AUTH_PATHS.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
     if (role) {
-      const home = ROLE_PREFIX[role] ?? "/";
-      return NextResponse.redirect(new URL(home + "/dashboard", req.url));
+      const home = ROLE_DASHBOARD[role as Role] ?? "/";
+      return NextResponse.redirect(new URL(home, req.url));
     }
     return NextResponse.next();
   }
@@ -54,8 +45,8 @@ export function middleware(req: NextRequest) {
         return NextResponse.redirect(loginUrl);
       }
       if (!allowedRoles.includes(role)) {
-        const home = ROLE_PREFIX[role] ?? "/";
-        return NextResponse.redirect(new URL(home + "/dashboard", req.url));
+        const home = ROLE_DASHBOARD[role as Role] ?? "/";
+        return NextResponse.redirect(new URL(home, req.url));
       }
       return NextResponse.next();
     }

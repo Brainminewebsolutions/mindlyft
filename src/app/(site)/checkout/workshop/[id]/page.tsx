@@ -2,7 +2,7 @@ import Link           from "next/link";
 import { redirect }   from "next/navigation";
 import { notFound }   from "next/navigation";
 import { ArrowLeft, Lock } from "lucide-react";
-import { dotnetFetch }  from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import { getSession }   from "@/lib/auth/session";
 import type { Webinar } from "@/types/admin/webinar";
 import WorkshopCheckoutClient from "../_components/WorkshopCheckoutClient";
@@ -13,7 +13,7 @@ async function getWebinar(id: string): Promise<Webinar | null> {
   try {
     const envelope = await dotnetFetch<WebinarEnvelope>(
       `/v1/workshopWebinar/${id}`,
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? envelope.data : null;
   } catch {

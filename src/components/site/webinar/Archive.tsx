@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import type { Webinar } from "@/types/admin/webinar";
 import { LineBadge } from "@/components/ui/LineBadge";
 import { AnimateIn } from "@/components/ui/AnimateIn";
@@ -16,7 +16,7 @@ async function getPastWebinars(): Promise<Webinar[]> {
   try {
     const envelope = await dotnetFetch<Envelope>(
       "/v1/workshopWebinar?status=Active&type=Webinar",
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     const items = envelope.isSuccess ? (envelope.data ?? []) : [];
 

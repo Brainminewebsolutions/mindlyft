@@ -38,6 +38,6 @@ export const ROUTES = {
 
   // ── Dashboards ───────────────────────────────────────────
   adminDashboard:   "/admin/dashboard",
-  studentDashboard: "/student/dashboard",
+  studentDashboard: "/student/courses",
   employeeDashboard:"/employee/dashboard",
 } as const;

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import { Star, Quote } from "lucide-react";
 
 interface Review {
@@ -24,7 +24,7 @@ async function getReviews(): Promise<Review[]> {
   try {
     const envelope = await dotnetFetch<ReviewsEnvelope>(
       "/v1/testimonials?status=ACTIVE&limit=50",
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? (envelope.data?.testimonials ?? []) : [];
   } catch {

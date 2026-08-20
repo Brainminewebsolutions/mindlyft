@@ -1,4 +1,4 @@
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import type { Course } from "@/types/admin/course";
 import CoursesCardClient from "./CoursesCardClient";
 
@@ -11,7 +11,7 @@ async function fetchCoursesByStatus(status: string): Promise<Course[]> {
   try {
     const envelope = await dotnetFetch<CoursesEnvelope>(
       `/v1/courses?status=${status}`,
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? (envelope.data?.courses ?? []) : [];
   } catch {

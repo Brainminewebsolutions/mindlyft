@@ -5,7 +5,7 @@ import {
   Clock, Wifi, MapPin, User, Globe, Calendar,
   CheckCircle2, Tag, ExternalLink, ArrowLeft,
 } from "lucide-react";
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import { toUploadUrl } from "@/lib/api/image-url";
 import { isNumericId } from "@/lib/slug";
 import type { Webinar } from "@/types/admin/webinar";
@@ -26,7 +26,7 @@ async function getWebinarBySlug(slug: string): Promise<Webinar | null> {
   try {
     const envelope = await dotnetFetch<WebinarEnvelope>(
       `/v1/workshopWebinar/slug/${encodeURIComponent(slug)}`,
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? envelope.data : null;
   } catch {
@@ -38,7 +38,7 @@ async function getWebinarById(id: string): Promise<Webinar | null> {
   try {
     const envelope = await dotnetFetch<WebinarEnvelope>(
       `/v1/workshopWebinar/${id}`,
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? envelope.data : null;
   } catch {

@@ -6,6 +6,11 @@ if (!BASE_URL && process.env.NODE_ENV !== "test") {
   console.warn("[dotnet-client] DOTNET_API_URL is not set");
 }
 
+// Single source of truth for how long ISR-cached backend responses stay fresh
+// (`{ next: { revalidate: REVALIDATE_SECONDS } }`). Change this to retune every
+// site page at once instead of editing each fetch call individually.
+export const REVALIDATE_SECONDS = 0;
+
 // The local .NET dev server uses the ASP.NET Core self-signed dev cert (dotnet dev-certs),
 // which Node's fetch won't trust. Skip cert verification only for that local HTTPS target.
 export const insecureDispatcher =

@@ -42,5 +42,5 @@ export const ROLE_DASHBOARD: Record<Role, string> = {
   ACCOUNTANT: "/employee/dashboard",
   STAFF:      "/employee/dashboard",
   EMPLOYEE:   "/employee/dashboard",
-  STUDENT:    "/student/dashboard",
+  STUDENT:    "/student/courses",
 };

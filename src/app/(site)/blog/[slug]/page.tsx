@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { User, Calendar, Tag, ArrowLeft } from "lucide-react";
-import { dotnetFetch } from "@/lib/api/dotnet-client";
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import { toUploadUrl } from "@/lib/api/image-url";
 import ChapterViewer from "./_components/ChapterViewer";
 
@@ -36,7 +36,7 @@ async function getBlog(slug: string): Promise<BlogDetail | null> {
   try {
     const envelope = await dotnetFetch<BlogEnvelope>(
       `/v1/blogs/slug/${encodeURIComponent(slug)}`,
-      { next: { revalidate: 300 } } as RequestInit,
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? envelope.data : null;
   } catch {

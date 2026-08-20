@@ -2,15 +2,7 @@ import Link from "next/link";
 import { Calendar, TrendingUp, ArrowRight, Users, BookOpen, Globe, Award } from "lucide-react";
 import { LineBadge } from "@/components/ui/LineBadge";
 import { AnimateIn } from "@/components/ui/AnimateIn";
-
-const MILESTONES = [
-  { year: "Jan 2024", title: "MindLyft AI Founded",        desc: "Launched with a mission to make AI education accessible across India." },
-  { year: "Mar 2024", title: "First IIT Collaboration",    desc: "Partnered with IIT Kanpur C3iHub to deliver AI workshops for 150 graduate students." },
-  { year: "May 2024", title: "500 Students Enrolled",      desc: "Crossed our first major milestone — 500 learners in just 4 months." },
-  { year: "Jul 2024", title: "EdTech Expo Recognition",    desc: "Featured among top 10 EdTech startups at the Bengaluru Innovation Expo." },
-  { year: "Sep 2024", title: "ML Bootcamp Batch 3",        desc: "Completed our 3rd bootcamp with 94% placement rate for graduates." },
-  { year: "Nov 2024", title: "AI Summit — 300 Attendees",  desc: "Hosted our largest event — the AI in Education Summit in Mumbai." },
-];
+import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 
 const STATS = [
   { icon: Users,     value: "500+",  label: "Students Enrolled",    accent: "#8B5CF6", bg: "#f5f3ff" },
@@ -38,7 +30,47 @@ const EXPLORE = [
   },
 ];
 
-export default function OurJourneyPage() {
+type ApiOurJourney = {
+  id:          string;
+  type:        "Event" | "OurImpact";
+  name:        string;
+  description: string | null;
+  date:        string;
+};
+
+type OurJourneyEnvelope = { isSuccess: boolean; data: ApiOurJourney[] };
+
+type Milestone = { id: string; label: string; title: string; desc: string | null };
+
+function formatMonthYear(dateStr: string): string {
+  const d = new Date(dateStr);
+  if (Number.isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+}
+
+async function getKeyMilestones(): Promise<Milestone[]> {
+  try {
+    const envelope = await dotnetFetch<OurJourneyEnvelope>(
+      "/v1/our-journey?type=OurImpact&status=Active",
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
+    );
+    if (!envelope.isSuccess || !Array.isArray(envelope.data)) return [];
+    // API returns newest-first; flip to chronological order and keep the most recent handful.
+    const chronological = envelope.data.slice().reverse();
+    return chronological.slice(-6).map((j) => ({
+      id:    j.id,
+      label: formatMonthYear(j.date),
+      title: j.name,
+      desc:  j.description,
+    }));
+  } catch {
+    return [];
+  }
+}
+
+export default async function OurJourneyPage() {
+  const milestones = await getKeyMilestones();
+
   return (
     <div className="min-h-screen bg-white">
 
@@ -114,42 +146,44 @@ export default function OurJourneyPage() {
       </section>
 
       {/* Timeline */}
-      <section className="bg-violet-50 px-6 py-24 md:px-[60px]">
-        <div className="max-w-3xl mx-auto">
-          <AnimateIn delay={0} direction="fade"><LineBadge className="justify-center mb-5">Timeline</LineBadge></AnimateIn>
-          <AnimateIn delay={100} direction="fade">
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 text-center leading-tight mb-14">
-              Key{" "}
-              <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">milestones</span>
-            </h2>
-          </AnimateIn>
+      {milestones.length > 0 && (
+        <section className="bg-violet-50 px-6 py-24 md:px-[60px]">
+          <div className="max-w-3xl mx-auto">
+            <AnimateIn delay={0} direction="fade"><LineBadge className="justify-center mb-5">Timeline</LineBadge></AnimateIn>
+            <AnimateIn delay={100} direction="fade">
+              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 text-center leading-tight mb-14">
+                Key{" "}
+                <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">milestones</span>
+              </h2>
+            </AnimateIn>
 
-          <div className="relative">
-            <div className="absolute left-[88px] top-0 bottom-0 w-px bg-violet-200 hidden sm:block" />
-            <div className="flex flex-col gap-4">
-              {MILESTONES.map((m, i) => (
-                <AnimateIn key={m.year} delay={200 + i * 70} direction="left">
-                  <div className="flex gap-4 items-start">
-                    <div className="shrink-0 w-[80px] text-right hidden sm:block pt-3">
-                      <span className="text-xs font-bold text-violet-600 bg-white border border-violet-200 px-2 py-1 rounded-full whitespace-nowrap">
-                        {m.year}
-                      </span>
+            <div className="relative">
+              <div className="absolute left-[88px] top-0 bottom-0 w-px bg-violet-200 hidden sm:block" />
+              <div className="flex flex-col gap-4">
+                {milestones.map((m, i) => (
+                  <AnimateIn key={m.id} delay={200 + i * 70} direction="left">
+                    <div className="flex gap-4 items-start">
+                      <div className="shrink-0 w-[80px] text-right hidden sm:block pt-3">
+                        <span className="text-xs font-bold text-violet-600 bg-white border border-violet-200 px-2 py-1 rounded-full whitespace-nowrap">
+                          {m.label}
+                        </span>
+                      </div>
+                      <div className="shrink-0 hidden sm:flex flex-col items-center pt-[14px]">
+                        <div className="w-3 h-3 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 ring-4 ring-violet-100" />
+                      </div>
+                      <div className="flex-1 bg-white rounded-2xl border border-gray-100 shadow-sm px-5 py-4 hover:shadow-md hover:border-violet-200 transition-all duration-300">
+                        <span className="text-xs font-bold text-violet-600 sm:hidden mb-1 block">{m.label}</span>
+                        <p className="text-sm font-bold text-gray-900 mb-1">{m.title}</p>
+                        {m.desc && <p className="text-xs text-gray-500 leading-relaxed">{m.desc}</p>}
+                      </div>
                     </div>
-                    <div className="shrink-0 hidden sm:flex flex-col items-center pt-[14px]">
-                      <div className="w-3 h-3 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 ring-4 ring-violet-100" />
-                    </div>
-                    <div className="flex-1 bg-white rounded-2xl border border-gray-100 shadow-sm px-5 py-4 hover:shadow-md hover:border-violet-200 transition-all duration-300">
-                      <span className="text-xs font-bold text-violet-600 sm:hidden mb-1 block">{m.year}</span>
-                      <p className="text-sm font-bold text-gray-900 mb-1">{m.title}</p>
-                      <p className="text-xs text-gray-500 leading-relaxed">{m.desc}</p>
-                    </div>
-                  </div>
-                </AnimateIn>
-              ))}
+                  </AnimateIn>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
     </div>
   );
