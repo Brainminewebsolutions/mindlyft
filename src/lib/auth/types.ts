@@ -38,9 +38,9 @@ export const ACCESS_TOKEN_COOKIE = "access_token";
 
 export const ROLE_DASHBOARD: Record<Role, string> = {
   ADMIN:      "/admin/dashboard",
-  TEACHER:    "/employee/dashboard",
-  ACCOUNTANT: "/employee/dashboard",
-  STAFF:      "/employee/dashboard",
-  EMPLOYEE:   "/employee/dashboard",
+  TEACHER:    "/employee/support",
+  ACCOUNTANT: "/employee/support",
+  STAFF:      "/employee/support",
+  EMPLOYEE:   "/employee/support",
   STUDENT:    "/student/courses",
 };
