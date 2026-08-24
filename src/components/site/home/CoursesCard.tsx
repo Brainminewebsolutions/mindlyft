@@ -4,29 +4,19 @@ import CoursesCardClient from "./CoursesCardClient";
 
 interface CoursesEnvelope {
   isSuccess: boolean;
-  data: { courses: Course[] };
-}
-
-async function fetchCoursesByStatus(status: string): Promise<Course[]> {
-  try {
-    const envelope = await dotnetFetch<CoursesEnvelope>(
-      `/v1/courses?status=${status}`,
-      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
-    );
-    return envelope.isSuccess ? (envelope.data?.courses ?? []) : [];
-  } catch {
-    return [];
-  }
+  data: Course[];
 }
 
 async function getPublicCourses(): Promise<Course[]> {
-  const [active, upcoming] = await Promise.all([
-    fetchCoursesByStatus("ACTIVE"),
-    fetchCoursesByStatus("UPCOMING"),
-  ]);
-  return [...active, ...upcoming]
-    .filter((c) => c.courseType === "Mindlyftai")
-    .sort((a, b) => a.displayOrder - b.displayOrder);
+  try {
+    const envelope = await dotnetFetch<CoursesEnvelope>(
+      "/v1/courses/public?courseType=Mindlyftai",
+      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
+    );
+    return envelope.isSuccess ? (envelope.data ?? []) : [];
+  } catch {
+    return [];
+  }
 }
 
 export default async function CoursesCard() {

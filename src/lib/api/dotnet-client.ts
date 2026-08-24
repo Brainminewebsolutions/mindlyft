@@ -11,6 +11,12 @@ if (!BASE_URL && process.env.NODE_ENV !== "test") {
 // site page at once instead of editing each fetch call individually.
 export const REVALIDATE_SECONDS = 0;
 
+// Course detail pages (course + chapters-with-contents) hit a genuinely slow
+// backend query. With REVALIDATE_SECONDS=0 every navigation re-fetches live
+// and blocks for several seconds with no cached fallback. These pages keep
+// their own cache window so repeat visits are served instantly instead.
+export const COURSE_DETAIL_REVALIDATE_SECONDS = 300;
+
 // The local .NET dev server uses the ASP.NET Core self-signed dev cert (dotnet dev-certs),
 // which Node's fetch won't trust. Skip cert verification only for that local HTTPS target.
 export const insecureDispatcher =

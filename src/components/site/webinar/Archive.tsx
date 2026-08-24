@@ -15,7 +15,7 @@ type Envelope = { isSuccess: boolean; data: Webinar[] };
 async function getPastWebinars(): Promise<Webinar[]> {
   try {
     const envelope = await dotnetFetch<Envelope>(
-      "/v1/workshopWebinar?status=Active&type=Webinar",
+      "/v1/workshopWebinar/public?type=Webinar",
       { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     const items = envelope.isSuccess ? (envelope.data ?? []) : [];

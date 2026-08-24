@@ -10,17 +10,16 @@ import IITCoursesGrid from "@/components/site/courses/IITCoursesGrid";
 
 type CoursesEnvelope = {
   isSuccess: boolean;
-  data: { courses: Course[] };
+  data: Course[];
 };
 
 async function getIITCourses(): Promise<Course[]> {
   try {
     const envelope = await dotnetFetch<CoursesEnvelope>(
-      "/v1/courses?status=ACTIVE&limit=200",
+      "/v1/courses/public?courseType=IIT",
       { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
-    const all = envelope.isSuccess ? (envelope.data?.courses ?? []) : [];
-    return all.filter(c => c.courseType === "IIT");
+    return envelope.isSuccess ? (envelope.data ?? []) : [];
   } catch {
     return [];
   }

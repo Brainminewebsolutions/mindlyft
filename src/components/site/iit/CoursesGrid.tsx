@@ -41,9 +41,11 @@ function IITCourseCard({ course, index }: { course: Course; index: number }) {
         )}
 
         <div className="absolute top-3 left-3 flex gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-white bg-violet-600/80 backdrop-blur-sm px-2.5 py-0.5 rounded-full">
-            IIT
-          </span>
+          {course.courseType === "IIT" && (
+            <span className="text-[10px] font-bold uppercase tracking-wider text-white bg-violet-600/80 backdrop-blur-sm px-2.5 py-0.5 rounded-full">
+              IIT
+            </span>
+          )}
           {course.category && (
             <span className="text-[10px] font-semibold text-white bg-black/40 backdrop-blur-sm px-2.5 py-0.5 rounded-full">
               {course.category}
@@ -122,16 +124,16 @@ export default function CoursesGrid({ courses, bg = "bg-white" }: { courses: Cou
   return (
     <div className={`${bg} px-6 py-12`}>
     <div className="max-w-7xl mx-auto">
-      <LineBadge className="justify-center mb-8">IIT Programs</LineBadge>
+      <LineBadge className="justify-center mb-8">Explore Our Courses</LineBadge>
       <div className="flex items-center justify-between gap-4 mb-10">
         <p className="text-sm text-gray-500">
-          {courses.length} IIT program{courses.length !== 1 ? "s" : ""} available
+          {courses.length} course{courses.length !== 1 ? "s" : ""} available
         </p>
         <div className="relative w-full sm:w-72 shrink-0">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
           <input
             type="text"
-            placeholder="Search IIT programs…"
+            placeholder="Search courses…"
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="w-full pl-9 pr-4 py-2.5 text-sm text-gray-900 bg-white border border-violet-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-400 focus:border-violet-400 placeholder:text-gray-400"
@@ -151,7 +153,7 @@ export default function CoursesGrid({ courses, bg = "bg-white" }: { courses: Cou
             <BookOpen className="w-7 h-7 text-violet-400" />
           </div>
           <p className="text-gray-600 font-semibold">
-            {search ? `No programs match "${search}"` : "No IIT programs available"}
+            {search ? `No courses match "${search}"` : "No courses available"}
           </p>
           <p className="text-sm text-gray-400 mt-1">Check back soon!</p>
         </div>

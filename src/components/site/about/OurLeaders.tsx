@@ -167,6 +167,104 @@ function LeaderCard({ leader }: { leader: Leader }) {
   );
 }
 
+// Flat, non-flip card for the Upskill roster — description is shown directly
+// on the card instead of requiring a hover-flip.
+function UpskillLeaderCard({ leader }: { leader: Leader }) {
+  return (
+    <div className="flex overflow-hidden rounded-3xl border border-violet-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg">
+      {/* Media */}
+      <div className="relative h-56 w-32 shrink-0 sm:w-40">
+        {leader.video ? (
+          <video
+            src={leader.video}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <LeaderAvatar name={leader.name} imageUrl={leader.imageUrl} />
+        )}
+
+        {leader.subject && (
+          <div className="absolute left-2 top-2 z-10 rounded-full bg-violet-700 px-2 py-0.5 text-[10px] font-bold text-white">
+            {leader.subject}
+          </div>
+        )}
+      </div>
+
+      {/* Info */}
+      <div className="flex min-w-0 flex-1 flex-col p-3">
+        <h4 className="text-sm font-extrabold leading-tight text-gray-900">{leader.name}</h4>
+        {leader.designation && (
+          <p className="mt-0.5 text-xs font-semibold text-violet-600">{leader.designation}</p>
+        )}
+        <div className="my-1.5 h-0.5 w-8 rounded-full bg-violet-200" />
+        <p className="flex-1 text-sm leading-relaxed text-gray-600 line-clamp-4">
+          {leader.description || "No description available."}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// Upskill gets its own violet-panel treatment (deeper accent + highlighted
+// background) instead of the default category styling — kept as a separate
+// component since its heading/background/card accent all differ together.
+function UpskillCategory({ category }: { category: Category }) {
+  return (
+    <div className="space-y-4 bg-violet-50 rounded-3xl p-4 md:p-6">
+
+      {/* Category Heading */}
+      <div className="mb-3 flex items-center justify-center gap-4">
+        <div className="h-px w-16 bg-violet-500" />
+        <span className="text-2xl font-semibold uppercase tracking-[0.3em] text-violet-800">
+          {category.title}
+        </span>
+        <div className="h-px w-16 bg-violet-500" />
+      </div>
+
+      {/* Leaders Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        {category.leaders.map((leader) => (
+          <UpskillLeaderCard key={leader.name} leader={leader} />
+        ))}
+      </div>
+
+    </div>
+  );
+}
+
+function DefaultCategory({ category }: { category: Category }) {
+  return (
+    <div className="space-y-8">
+
+      {/* Category Heading */}
+      <div>
+        <div>
+          <div className="mb-6 flex items-center justify-center gap-4">
+            <div className="h-px w-16 bg-violet-300" />
+            <span className="text-2xl font-semibold uppercase tracking-[0.3em] text-violet-600">
+              {category.title}
+            </span>
+            <div className="h-px w-16 bg-violet-300" />
+          </div>
+        </div>
+        <div className="flex-1 h-px bg-gray-200 ml-2" />
+      </div>
+
+      {/* Leaders Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {category.leaders.map((leader) => (
+          <LeaderCard key={leader.name} leader={leader} />
+        ))}
+      </div>
+
+    </div>
+  );
+}
+
 export default function OurLeaders({ categories, bg = "bg-white" }: OurLeadersProps & { bg?: string }) {
   if (categories.length === 0) return null;
 
@@ -190,37 +288,11 @@ export default function OurLeaders({ categories, bg = "bg-white" }: OurLeadersPr
         </div>
 
         {/* Categories */}
-        {categories.map((category) => (
-          <div key={category.title} className="space-y-8">
-
-            {/* Category Heading */}
-            <div>
-               
-              <div>
-                {/* <h3 className="text-2xl font-bold text-gray-900">
-                
-                </h3> */}
-                <div className="mb-6 flex items-center justify-center gap-4">
-        <div className="h-px w-16 bg-violet-300" />
-        <span className="text-2xl font-semibold uppercase tracking-[0.3em] text-violet-600">
-           {category.title}
-        </span>
-        <div className="h-px w-16 bg-violet-300" />
-      </div>
-
-              </div>
-              <div className="flex-1 h-px bg-gray-200 ml-2" />
-            </div>
-
-            {/* Leaders Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {category.leaders.map((leader) => (
-                <LeaderCard key={leader.name} leader={leader} />
-              ))}
-            </div>
-
-          </div>
-        ))}
+        {categories.map((category) =>
+          category.title.toLowerCase() === "upskill"
+            ? <UpskillCategory key={category.title} category={category} />
+            : <DefaultCategory key={category.title} category={category} />
+        )}
 
         <div className="text-center space-y-4 hidden">
           <span className="inline-block text-sm font-bold uppercase tracking-widest text-blue-600 bg-blue-100 px-4 py-2 rounded-full">

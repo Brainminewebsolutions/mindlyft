@@ -3,16 +3,16 @@ import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import SiteNavbar       from "./SiteNavbar";
 
 type CourseItem      = { id: string; name: string };
-type CoursesEnvelope = { isSuccess: boolean; data: { courses: CourseItem[] } };
+type CoursesEnvelope = { isSuccess: boolean; data: CourseItem[] };
 
 async function getActiveCourses(): Promise<CourseItem[]> {
   try {
     const env = await dotnetFetch<CoursesEnvelope>(
-      "/v1/courses?status=ACTIVE",
+      "/v1/courses/public",
       { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
-    if (!env.isSuccess || !Array.isArray(env.data?.courses)) return [];
-    return env.data.courses.map(c => ({ id: c.id, name: c.name }));
+    if (!env.isSuccess || !Array.isArray(env.data)) return [];
+    return env.data.map(c => ({ id: c.id, name: c.name }));
   } catch {
     return [];
   }

@@ -15,6 +15,14 @@ import CoursesCard from '../../components/site/home/CoursesCard'
  import GsapInit from "@/components/GsapInit";
 import LibraryLoader from "@/components/LibraryLoader";
 import FeaturedSection from "@/components/site/home/FeaturedSection";
+import {
+  IITExpertiseSkeleton,
+  CoursesSkeleton,
+  ToolsSkeleton,
+  OurClientsSkeleton,
+  WorkshopsSkeleton,
+  TestimonialsSkeleton,
+} from "@/components/site/home/HomeSkeletons";
 
 // Below-the-fold, non-data-fetching sections — split into their own chunks
 // so they don't bloat the initial JS bundle the hero/above-fold content needs.
@@ -56,30 +64,30 @@ export default function HomePage() {
               <FeaturedSection />
   
               <div id="iit-courses">
-                <Suspense fallback={<div className="h-screen" />}>
+                <Suspense fallback={<IITExpertiseSkeleton />}>
                   <IITExpertiseSection />
                 </Suspense>
               </div>
-              <Suspense fallback={<div className="h-screen" />}>
+              <Suspense fallback={<CoursesSkeleton />}>
                 <CoursesCard />
               </Suspense>
 
-              <Suspense fallback={<div className="h-64" />}>
+              <Suspense fallback={<ToolsSkeleton />}>
                 <ToolSection />
               </Suspense>
 
               <WhatWeDo />
 
-              <Suspense fallback={<div className="h-[400px]" />}>
+              <Suspense fallback={<OurClientsSkeleton />}>
                 <OurClients />
               </Suspense>
 
-              <Suspense fallback={<div className="h-[500px]" />}>
+              <Suspense fallback={<WorkshopsSkeleton />}>
                 <WorkshopsCard />
               </Suspense>
               <WhyChooseUs />
 
-              <Suspense fallback={<div className="h-[400px]" />}>
+              <Suspense fallback={<TestimonialsSkeleton />}>
                 <TestimonialsCard />
               </Suspense>
 

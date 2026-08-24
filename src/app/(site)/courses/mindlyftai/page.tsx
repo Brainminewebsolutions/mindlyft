@@ -9,24 +9,23 @@ import CoursesGrid from "@/components/site/iit/CoursesGrid";
 
 type CoursesEnvelope = {
   isSuccess: boolean;
-  data: { courses: Course[] };
+  data: Course[];
 };
 
 async function getCourses(): Promise<Course[]> {
   try {
     const envelope = await dotnetFetch<CoursesEnvelope>(
-      "/v1/courses?status=ACTIVE&limit=200",
+      "/v1/courses/public?courseType=Mindlyftai",
       { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
-    return envelope.isSuccess ? (envelope.data?.courses ?? []) : [];
+    return envelope.isSuccess ? (envelope.data ?? []) : [];
   } catch {
     return [];
   }
 }
 
 export default async function MindlyftAICoursesPage() {
-  const all = await getCourses();
-  const courses = all.filter(c => c.courseType !== "IIT");
+  const courses = await getCourses();
 
   return (
     <div className="min-h-screen bg-white">

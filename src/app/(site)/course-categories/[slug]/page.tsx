@@ -15,7 +15,7 @@ interface CategoryEnvelope {
 
 interface CoursesEnvelope {
   isSuccess: boolean;
-  data: { courses: Course[] };
+  data: Course[];
 }
 
 interface EmployeeEnvelope {
@@ -50,11 +50,10 @@ async function getCategoryById(id: string): Promise<CourseCategory | null> {
 async function getCoursesByCategory(categoryName: string): Promise<Course[]> {
   try {
     const envelope = await dotnetFetch<CoursesEnvelope>(
-      `/v1/courses?status=ACTIVE&limit=200`,
+      `/v1/courses/public?category=${encodeURIComponent(categoryName)}`,
       { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
-    const all = envelope.isSuccess ? (envelope.data?.courses ?? []) : [];
-    return all.filter(c => c.category?.toLowerCase() === categoryName.toLowerCase());
+    return envelope.isSuccess ? (envelope.data ?? []) : [];
   } catch {
     return [];
   }

@@ -9,7 +9,7 @@ type Envelope = { isSuccess: boolean; data: Webinar[] };
 async function getWorkshops(): Promise<Webinar[]> {
   try {
     const envelope = await dotnetFetch<Envelope>(
-      "/v1/workshopWebinar?status=Active&type=Workshop",
+      "/v1/workshopWebinar/public?type=Workshop",
       { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     return envelope.isSuccess ? (envelope.data ?? []) : [];
