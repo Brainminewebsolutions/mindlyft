@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
-import { Clock, Wifi, MapPin, User, Globe, ArrowLeft, ShoppingBag, BookOpen } from "lucide-react";
+import { Clock, Wifi, MapPin, User, Globe, ArrowLeft, ShoppingBag, BookOpen, Sparkles } from "lucide-react";
 import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import { toUploadUrl } from "@/lib/api/image-url";
 import { isNumericId } from "@/lib/slug";
@@ -112,9 +112,15 @@ export default async function IITCourseDetailPage({ params }: { params: Promise<
               {course.price === 0 ? <span className="text-[#22c55e]">Free</span> : <span className="text-[#6c63ff]">{priceLabel}</span>}
             </p>
             
-            <Link href={`/checkout/${course.id}`} className="mb-3 box-border flex w-full items-center justify-center gap-2 rounded-[14px] bg-[#6c63ff] p-[15px] text-[15px] font-bold text-white no-underline transition-[background,transform] duration-200 hover:-translate-y-px hover:bg-[#5b52e0] hover:text-white [font-family:var(--primaryFont,sans-serif)]">
-              <ShoppingBag className="h-4 w-4" />{course.price === 0 ? "Enrol for Free" : "Buy Now"}
-            </Link>
+            {course.status === "UPCOMING" ? (
+              <div className="mb-3 flex w-full items-center justify-center gap-2 rounded-[14px] bg-[linear-gradient(135deg,#f59e0b_0%,#f97316_100%)] p-[15px] text-[15px] font-bold text-white [font-family:var(--primaryFont,sans-serif)]">
+                <Sparkles className="h-4 w-4" />Coming Soon
+              </div>
+            ) : (
+              <Link href={`/checkout/${course.id}`} className="mb-3 box-border flex w-full items-center justify-center gap-2 rounded-[14px] bg-[#6c63ff] p-[15px] text-[15px] font-bold text-white no-underline transition-[background,transform] duration-200 hover:-translate-y-px hover:bg-[#5b52e0] hover:text-white [font-family:var(--primaryFont,sans-serif)]">
+                <ShoppingBag className="h-4 w-4" />{course.price === 0 ? "Enrol for Free" : "Buy Now"}
+              </Link>
+            )}
             {chapters.length > 0 && (
               <div className="mb-4 flex items-center gap-2 rounded-[10px] bg-[#f5f3ff] px-3 py-2.5">
                 <BookOpen className="h-[13px] w-[13px] shrink-0 text-[#6c63ff]" />

@@ -1,13 +1,14 @@
 import Link from "next/link";
-import { Award, ShoppingBag } from "lucide-react";
+import { ShoppingBag, Sparkles } from "lucide-react";
 
 interface Props {
   courseId:  string;
   price:     number;
   discount?: number | null;
+  status?:   string;
 }
 
-export default function IITEnrolCard({ courseId, price, discount }: Props) {
+export default function IITEnrolCard({ courseId, price, discount, status }: Props) {
   const discounted = discount && discount > 0
     ? Math.round(price * (1 - discount / 100))
     : null;
@@ -32,13 +33,20 @@ export default function IITEnrolCard({ courseId, price, discount }: Props) {
             )}
            </div>
         </div>
-        <Link
-          href={`/checkout/${courseId}`}
-          className="inline-flex items-center gap-2 rounded-xl bg-violet-600 hover:bg-violet-700 px-8 py-3.5 text-sm font-bold text-white transition-all hover:scale-[1.02] shadow-[0_4px_20px_rgba(139,92,246,0.3)] no-underline shrink-0"
-        >
-          <ShoppingBag className="w-4 h-4" />
-          {price === 0 ? "Enrol for Free" : "Enrol Now"}
-        </Link>
+        {status === "UPCOMING" ? (
+          <div className="inline-flex items-center gap-2 rounded-xl bg-[linear-gradient(135deg,#f59e0b_0%,#f97316_100%)] px-8 py-3.5 text-sm font-bold text-white shadow-[0_4px_20px_rgba(245,158,11,0.3)] shrink-0">
+            <Sparkles className="w-4 h-4" />
+            Coming Soon
+          </div>
+        ) : (
+          <Link
+            href={`/checkout/${courseId}`}
+            className="inline-flex items-center gap-2 rounded-xl bg-violet-600 hover:bg-violet-700 px-8 py-3.5 text-sm font-bold text-white transition-all hover:scale-[1.02] shadow-[0_4px_20px_rgba(139,92,246,0.3)] no-underline shrink-0"
+          >
+            <ShoppingBag className="w-4 h-4" />
+            {price === 0 ? "Enrol for Free" : "Enrol Now"}
+          </Link>
+        )}
       </div>
     </div>
   );

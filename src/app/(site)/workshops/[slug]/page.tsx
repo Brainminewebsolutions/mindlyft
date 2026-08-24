@@ -230,6 +230,7 @@ export default async function WorkshopDetailPage({
               productType={webinar.type}
               price={webinar.price}
               isPast={isPast}
+              status={webinar.status}
             />
 
             {/* Join link — online sessions, hidden once the session has ended */}

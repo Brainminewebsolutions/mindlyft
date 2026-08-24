@@ -3,7 +3,7 @@ import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
 import {
   Clock, Wifi, MapPin, User, Globe, ArrowLeft,
-  ShoppingBag, BookOpen,
+  ShoppingBag, BookOpen, Sparkles,
 } from "lucide-react";
 import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import { toUploadUrl } from "@/lib/api/image-url";
@@ -204,13 +204,20 @@ export default async function CourseDetailPage({
              
 
             {/* CTA */}
-            <Link
-              href={`/checkout/${course.id}`}
-              className="mb-3 box-border flex w-full items-center justify-center gap-2 rounded-[14px] bg-[#6c63ff] p-[15px] text-[15px] font-bold text-white no-underline transition-[background,transform] duration-200 hover:-translate-y-px hover:bg-[#5b52e0] hover:text-white [font-family:var(--primaryFont,sans-serif)]"
-            >
-              <ShoppingBag className="h-4 w-4" />
-              {course.price === 0 ? "Enrol for Free" : "Buy Now"}
-            </Link>
+            {course.status === "UPCOMING" ? (
+              <div className="mb-3 flex w-full items-center justify-center gap-2 rounded-[14px] bg-[linear-gradient(135deg,#f59e0b_0%,#f97316_100%)] p-[15px] text-[15px] font-bold text-white [font-family:var(--primaryFont,sans-serif)]">
+                <Sparkles className="h-4 w-4" />
+                Coming Soon
+              </div>
+            ) : (
+              <Link
+                href={`/checkout/${course.id}`}
+                className="mb-3 box-border flex w-full items-center justify-center gap-2 rounded-[14px] bg-[#6c63ff] p-[15px] text-[15px] font-bold text-white no-underline transition-[background,transform] duration-200 hover:-translate-y-px hover:bg-[#5b52e0] hover:text-white [font-family:var(--primaryFont,sans-serif)]"
+              >
+                <ShoppingBag className="h-4 w-4" />
+                {course.price === 0 ? "Enrol for Free" : "Buy Now"}
+              </Link>
+            )}
 
             {/* Quick stats */}
             {chapters.length > 0 && (

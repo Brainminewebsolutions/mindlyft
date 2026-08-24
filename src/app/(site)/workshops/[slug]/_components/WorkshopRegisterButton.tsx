@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Sparkles } from "lucide-react";
 
 interface Props {
   webinarId:   string;
@@ -10,13 +11,23 @@ interface Props {
   productType: "Workshop" | "Webinar";
   price:       number;
   isPast?:     boolean;
+  status?:     string;
 }
 
-export default function WorkshopRegisterButton({ webinarId, slug, productType, price, isPast = false }: Props) {
+export default function WorkshopRegisterButton({ webinarId, slug, productType, price, isPast = false, status }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [done,    setDone]    = useState(false);
   const [error,   setError]   = useState<string | null>(null);
+
+  if (status === "Upcoming") {
+    return (
+      <div className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-[linear-gradient(135deg,#f59e0b_0%,#f97316_100%)] text-white text-sm font-bold">
+        <Sparkles className="w-4 h-4" />
+        Coming Soon
+      </div>
+    );
+  }
 
   if (isPast) {
     return (
