@@ -2,27 +2,27 @@ import Link from "next/link";
 import { ShoppingBag, Sparkles } from "lucide-react";
 
 interface Props {
-  courseId:  string;
-  price:     number;
-  discount?: number | null;
-  status?:   string;
+  courseId:      string;
+  price:         number;
+  discount?:     number | null;
+  discountPrice: number;
+  status?:       string;
 }
 
-export default function IITEnrolCard({ courseId, price, discount, status }: Props) {
-  const discounted = discount && discount > 0
-    ? Math.round(price * (1 - discount / 100))
-    : null;
+export default function IITEnrolCard({ courseId, price, discount, discountPrice, status }: Props) {
+  const hasDiscount = !!discount && discount > 0 && price > 0;
 
   return (
     <div className="overflow-hidden rounded-2xl border border-violet-200 shadow-[0_8px_32px_rgba(139,92,246,0.10)]">
       <div className="h-1 w-full bg-gradient-to-r from-violet-500 to-blue-500" />
       <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-6 bg-white">
         <div className="flex items-center gap-4">
-          
+
           <div>
-            {discounted !== null ? (
+            {hasDiscount ? (
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-black text-violet-700">₹{discounted.toLocaleString("en-IN")}</span>
+                <span className="text-3xl font-black text-violet-700">₹{Math.round(discountPrice).toLocaleString("en-IN")}</span>
+                <span className="text-xs font-semibold text-gray-400">+ GST</span>
                 <span className="text-sm text-gray-400 line-through">₹{price.toLocaleString("en-IN")}</span>
                 <span className="text-xs font-bold text-violet-600 bg-violet-50 border border-violet-200 px-2 py-0.5 rounded-full">{discount}% OFF</span>
               </div>

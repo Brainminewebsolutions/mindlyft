@@ -13,6 +13,11 @@ export type Webinar = {
   subscriptionType: "Free" | "Paid";
   status:           "Active" | "Inactive" | "Pending" | "Suspended" | "Upcoming";
   discount?:        number | null;
+  discountAmount:   number;
+  discountPrice:    number;
+  gstPer:           number;
+  gstAmount:        number;
+  finalPrice:       number;
   type:             "Workshop" | "Webinar";
   category?:        string | null;
   date:             string; // "YYYY-MM-DD"

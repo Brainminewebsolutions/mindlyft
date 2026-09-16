@@ -3,11 +3,13 @@ import { requireSession } from "@/lib/auth/session";
 import { unwrapDotnet, ApiError } from "@/lib/api/dotnet-client";
 
 interface CreateOrderResponse {
+  orderId:         number;
   razorpayOrderId: string;
   amountInPaise:   number;
   currency:        string;
   productName:     string;
   keyId:           string;
+  paymentUrl:      string;
 }
 
 export async function POST(req: NextRequest) {

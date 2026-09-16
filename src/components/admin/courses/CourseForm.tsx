@@ -155,7 +155,9 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
   const [imageFile,     setImageFile]     = useState<File | null>(null);
   const [existingImage, setExistingImage] = useState(defaultValues?.image || "");
   const [highlights,    setHighlights]    = useState<string[]>(defaultValues?.highlights ?? []);
-  const [slugTouched,   setSlugTouched]   = useState(false);
+  // In edit mode the course already has a slug — treat it as "touched" so the
+  // name-watcher effect below doesn't silently regenerate (and clobber) it on load.
+  const [slugTouched,   setSlugTouched]   = useState(mode === "edit" && !!defaultValues?.slug);
 
   const { options: employeeOptions,  loading: loadingEmployees }  = useActiveEmployees();
   const { options: categoryOptions, loading: loadingCategories } = useCourseCategories();

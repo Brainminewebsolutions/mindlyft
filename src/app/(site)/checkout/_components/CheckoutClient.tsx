@@ -18,11 +18,13 @@ interface Props {
 }
 
 interface RazorpayOrderData {
+  orderId:         number;
   razorpayOrderId: string;
   amountInPaise:   number;
   currency:        string;
   productName:     string;
   keyId:           string;
+  paymentUrl:      string;
 }
 
 const GRADIENTS = [
@@ -55,12 +57,12 @@ export default function CheckoutClient({ course, userName, userEmail, userPhoneN
 
   const gradient        = GRADIENTS[Number(course.id) % GRADIENTS.length] ?? GRADIENTS[0];
   const proxiedImage    = toUploadUrl(course.image);
-  // GST is charged on the full course price; the discount is then subtracted
-  // from that price+GST figure to get the final total.
+  // Pricing (discount/GST/total) comes straight from the API — server is the
+  // single source of truth, so this never has to be recomputed/duplicated here.
   const discountPercent = course.discount ?? 0;
-  const discountAmount  = discountPercent > 0 ? Math.round(course.price * discountPercent) / 100 : 0;
-  const gst              = Math.round(course.price * 0.18);
-  const total             = Math.round(course.price * 1.18 - discountAmount);
+  const discountAmount  = course.discountAmount;
+  const gst              = course.gstAmount;
+  const total             = course.finalPrice;
 
   async function handlePay() {
     setError(null);
@@ -94,11 +96,12 @@ export default function CheckoutClient({ course, userName, userEmail, userPhoneN
       }
 
       const order = json as RazorpayOrderData;
+      const retryUrl = `/checkout/${course.id}`;
 
       const rzp = new (
         (window as unknown as Record<string, unknown>).Razorpay as new (
           opts: Record<string, unknown>
-        ) => { open(): void }
+        ) => { open(): void; on(event: string, cb: (response: unknown) => void): void }
       )({
         key:         order.keyId,
         amount:      order.amountInPaise,
@@ -129,13 +132,20 @@ export default function CheckoutClient({ course, userName, userEmail, userPhoneN
             });
 
             if (vRes.ok) {
-              router.push("/checkout/success");
+              router.push("/checkout/success?type=course");
             } else {
+              // Payment succeeded at Razorpay but our verification failed —
+              // this is a payment-result outcome, not a checkout-form error,
+              // so it gets its own screen rather than an inline message.
               const vJson = await vRes.json();
-              setError(vJson.error ?? "Payment verification failed. Contact support.");
+              router.push(
+                `/checkout/failed?reason=${encodeURIComponent(vJson.error ?? "We couldn't verify your payment. If any amount was deducted, contact support with your payment ID.")}&retryUrl=${encodeURIComponent(retryUrl)}`,
+              );
             }
           } catch {
-            setError("Payment verification failed. Contact support.");
+            router.push(
+              `/checkout/failed?reason=${encodeURIComponent("We couldn't verify your payment. If any amount was deducted, contact support with your payment ID.")}&retryUrl=${encodeURIComponent(retryUrl)}`,
+            );
           } finally {
             setLoading(false);
           }
@@ -143,6 +153,17 @@ export default function CheckoutClient({ course, userName, userEmail, userPhoneN
         modal: {
           ondismiss: () => setLoading(false),
         },
+      });
+
+      // Hard failures inside Razorpay's own UI (card declined, etc.) — the
+      // user attempted payment, so this is a payment-result outcome too.
+      rzp.on("payment.failed", (response: unknown) => {
+        const description =
+          (response as { error?: { description?: string } })?.error?.description;
+        setLoading(false);
+        router.push(
+          `/checkout/failed?reason=${encodeURIComponent(description || "Your payment could not be completed. Please try again.")}&retryUrl=${encodeURIComponent(retryUrl)}`,
+        );
       });
 
       rzp.open();
@@ -203,7 +224,7 @@ export default function CheckoutClient({ course, userName, userEmail, userPhoneN
               label: discountPercent > 0 ? `Discount (${discountPercent}%)` : "Discount",
               value: discountAmount > 0 ? `− ₹${discountAmount.toLocaleString("en-IN")}` : "₹0",
             },
-            { label: "GST (18%)",    value: `₹${gst.toLocaleString("en-IN")}`           },
+            { label: `GST (${course.gstPer}%)`, value: `₹${gst.toLocaleString("en-IN")}` },
           ].map(({ label, value }) => (
             <div key={label} className="flex justify-between mb-2">
               <span className="text-[#999] text-[13px]">{label}</span>

@@ -15,11 +15,13 @@ interface Props {
 }
 
 interface RazorpayOrderData {
+  orderId:         number;
   razorpayOrderId: string;
   amountInPaise:   number;
   currency:        string;
   productName:     string;
   keyId:           string;
+  paymentUrl:      string;
 }
 
 const GRADIENTS = [
@@ -50,10 +52,14 @@ export default function WorkshopCheckoutClient({ webinar, userName, userEmail, u
   const [loading, setLoading] = useState(false);
   const [error,   setError]   = useState<string | null>(null);
 
-  const gradient     = GRADIENTS[Number(webinar.id) % GRADIENTS.length] ?? GRADIENTS[0];
-  const proxiedImage = toUploadUrl(webinar.image);
-  const gst          = Math.round(webinar.price * 0.18);
-  const total        = Math.round(webinar.price * 1.18);
+  const gradient        = GRADIENTS[Number(webinar.id) % GRADIENTS.length] ?? GRADIENTS[0];
+  const proxiedImage    = toUploadUrl(webinar.image);
+  // Pricing (discount/GST/total) comes straight from the API — server is the
+  // single source of truth, so this never has to be recomputed/duplicated here.
+  const discountPercent = webinar.discount ?? 0;
+  const discountAmount  = webinar.discountAmount;
+  const gst             = webinar.gstAmount;
+  const total           = webinar.finalPrice;
 
   const dateFormatted = new Date(webinar.date).toLocaleDateString("en-IN", {
     day: "2-digit", month: "short", year: "numeric",
@@ -91,11 +97,12 @@ export default function WorkshopCheckoutClient({ webinar, userName, userEmail, u
       }
 
       const order = json as RazorpayOrderData;
+      const retryUrl = `/checkout/workshop/${webinar.id}`;
 
       const rzp = new (
         (window as unknown as Record<string, unknown>).Razorpay as new (
           opts: Record<string, unknown>
-        ) => { open(): void }
+        ) => { open(): void; on(event: string, cb: (response: unknown) => void): void }
       )({
         key:         order.keyId,
         amount:      order.amountInPaise,
@@ -125,18 +132,36 @@ export default function WorkshopCheckoutClient({ webinar, userName, userEmail, u
               }),
             });
             if (vRes.ok) {
-              router.push("/checkout/success");
+              router.push(`/checkout/success?type=${webinar.type.toLowerCase()}`);
             } else {
+              // Payment succeeded at Razorpay but our verification failed —
+              // this is a payment-result outcome, not a checkout-form error,
+              // so it gets its own screen rather than an inline message.
               const vJson = await vRes.json();
-              setError(vJson.error ?? "Payment verification failed. Contact support.");
+              router.push(
+                `/checkout/failed?reason=${encodeURIComponent(vJson.error ?? "We couldn't verify your payment. If any amount was deducted, contact support with your payment ID.")}&retryUrl=${encodeURIComponent(retryUrl)}`,
+              );
             }
           } catch {
-            setError("Payment verification failed. Contact support.");
+            router.push(
+              `/checkout/failed?reason=${encodeURIComponent("We couldn't verify your payment. If any amount was deducted, contact support with your payment ID.")}&retryUrl=${encodeURIComponent(retryUrl)}`,
+            );
           } finally {
             setLoading(false);
           }
         },
         modal: { ondismiss: () => setLoading(false) },
+      });
+
+      // Hard failures inside Razorpay's own UI (card declined, etc.) — the
+      // user attempted payment, so this is a payment-result outcome too.
+      rzp.on("payment.failed", (response: unknown) => {
+        const description =
+          (response as { error?: { description?: string } })?.error?.description;
+        setLoading(false);
+        router.push(
+          `/checkout/failed?reason=${encodeURIComponent(description || "Your payment could not be completed. Please try again.")}&retryUrl=${encodeURIComponent(retryUrl)}`,
+        );
       });
 
       rzp.open();
@@ -188,9 +213,12 @@ export default function WorkshopCheckoutClient({ webinar, userName, userEmail, u
         {/* Price breakdown */}
         <div className="border-t border-[rgba(108,99,255,0.10)] pt-4 mb-4">
           {[
-            { label: "Price",    value: `₹${webinar.price.toLocaleString("en-IN")}` },
-            { label: "Discount", value: "₹0"                                         },
-            { label: "GST (18%)", value: `₹${gst.toLocaleString("en-IN")}`           },
+            { label: "Price", value: `₹${webinar.price.toLocaleString("en-IN")}` },
+            {
+              label: discountPercent > 0 ? `Discount (${discountPercent}%)` : "Discount",
+              value: discountAmount > 0 ? `− ₹${discountAmount.toLocaleString("en-IN")}` : "₹0",
+            },
+            { label: `GST (${webinar.gstPer}%)`, value: `₹${gst.toLocaleString("en-IN")}` },
           ].map(({ label, value }) => (
             <div key={label} className="flex justify-between mb-2">
               <span className="text-[#999] text-[13px]">{label}</span>

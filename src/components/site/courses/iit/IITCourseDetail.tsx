@@ -70,7 +70,7 @@ export default function IITCourseDetail({ course, chapters, proxiedImage }: Prop
       {/* ── ENROL ── violet */}
       <div className={section("violet")}>
         <div className={inner}>
-          <IITEnrolCard courseId={course.id} price={course.price} discount={course.discount} status={course.status} />
+          <IITEnrolCard courseId={course.id} price={course.price} discount={course.discount} discountPrice={course.discountPrice} status={course.status} />
         </div>
       </div>
 

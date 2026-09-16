@@ -24,6 +24,11 @@ export type Course = {
   highlights:       string[] | null;
   status:           "ACTIVE" | "INACTIVE" | "SUSPENDED" | "UPCOMING";
   discount:         number | null;
+  discountAmount:   number;
+  discountPrice:    number;
+  gstPer:           number;
+  gstAmount:        number;
+  finalPrice:       number;
   courseType:       CourseType;
   category:         string | null;
   displayOrder:     number;

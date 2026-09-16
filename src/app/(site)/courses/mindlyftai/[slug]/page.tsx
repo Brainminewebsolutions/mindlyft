@@ -55,6 +55,7 @@ export default async function MindlyftAICourseDetailPage({ params }: { params: P
   const totalLessons = chapters.reduce((sum, ch) => sum + ch.contents.length, 0);
   const proxiedImage = toUploadUrl(course.image);
   const priceLabel   = course.price === 0 ? "Free" : `₹${course.price.toLocaleString("en-IN")}`;
+  const hasDiscount  = course.price > 0 && (course.discount ?? 0) > 0;
   const highlights   = course.highlights ?? [];
   const ModeIcon     = course.mode === "Online" ? Wifi : MapPin;
 
@@ -108,10 +109,25 @@ export default async function MindlyftAICourseDetailPage({ params }: { params: P
         </div>
         <div className="sticky top-20 overflow-hidden rounded-[20px] border border-[#6c63ff]/15 bg-white shadow-[0_16px_48px_rgba(108,99,255,0.10)]">
           <div className="p-6">
-            <p className="m-0 mb-1 text-[2rem] font-extrabold text-[#1a1046] [font-family:var(--secondaryFont,sans-serif)]">
-              {course.price === 0 ? <span className="text-[#22c55e]">Free</span> : <span className="text-[#6c63ff]">{priceLabel}</span>}
-            </p>
-            
+            <div className="mb-1">
+              {course.price === 0 ? (
+                <p className="m-0 text-[2rem] font-extrabold text-[#22c55e] [font-family:var(--secondaryFont,sans-serif)]">Free</p>
+              ) : hasDiscount ? (
+                <>
+                  <div className="mb-1 flex items-center gap-2">
+                    <span className="text-sm font-semibold text-[#aaa] line-through">₹{course.price.toLocaleString("en-IN")}</span>
+                    <span className="rounded-full bg-[#fee2e2] px-2 py-0.5 text-[11px] font-bold text-[#dc2626]">{course.discount}% OFF</span>
+                  </div>
+                  <p className="m-0 text-[2rem] font-extrabold text-[#6c63ff] [font-family:var(--secondaryFont,sans-serif)]">
+                    ₹{Math.round(course.discountPrice).toLocaleString("en-IN")}
+                    <span className="ml-1.5 align-middle text-sm font-semibold text-[#999]">+ GST</span>
+                  </p>
+                </>
+              ) : (
+                <p className="m-0 text-[2rem] font-extrabold text-[#6c63ff] [font-family:var(--secondaryFont,sans-serif)]">{priceLabel}</p>
+              )}
+            </div>
+
             {course.status === "UPCOMING" ? (
               <div className="mb-3 flex w-full items-center justify-center gap-2 rounded-[14px] bg-[linear-gradient(135deg,#f59e0b_0%,#f97316_100%)] p-[15px] text-[15px] font-bold text-white [font-family:var(--primaryFont,sans-serif)]">
                 <Sparkles className="h-4 w-4" />Coming Soon

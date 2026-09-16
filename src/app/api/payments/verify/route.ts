@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireSession } from "@/lib/auth/session";
+import { getSession } from "@/lib/auth/session";
 import { unwrapDotnet, ApiError } from "@/lib/api/dotnet-client";
 
+// The backend's verify endpoint is [AllowAnonymous] (payments made via the
+// anonymous /payment/{orderId} link have no session), so a session here is
+// used to attribute the request when present, but is never required.
 export async function POST(req: NextRequest) {
   try {
-    const { token } = await requireSession();
-    const body      = await req.json();
+    const session = await getSession();
+    const body    = await req.json();
 
     await unwrapDotnet<void>(
       "/v1/payments/verify",
@@ -18,13 +21,11 @@ export async function POST(req: NextRequest) {
           razorpaySignature: body.razorpaySignature,
         }),
       },
-      token,
+      session?.token,
     );
 
     return NextResponse.json({ success: true });
   } catch (err) {
-    if (err instanceof Error && err.message === "Unauthenticated")
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     if (err instanceof ApiError)
       return NextResponse.json({ error: err.message }, { status: err.status });
     console.error("[payments/verify POST]", err);
