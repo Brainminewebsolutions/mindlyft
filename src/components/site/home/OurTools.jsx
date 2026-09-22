@@ -194,7 +194,6 @@ export default function OurTools({ cards: cardsProp }) {
                       width={48}
                       height={48}
                       className="h-12 w-12 shrink-0 rounded-[10px] object-cover"
-                      unoptimized
                     />
                   ) : (
                     <div className="h-12 w-12 shrink-0 rounded-[10px] bg-violet-50" />

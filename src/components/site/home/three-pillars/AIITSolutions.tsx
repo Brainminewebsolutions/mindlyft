@@ -114,7 +114,6 @@ function ServicesCarousel() {
                 src={service.image}
                 alt={service.title}
                 fill
-                unoptimized
                 sizes="(max-width: 640px) 100vw, 420px"
                 className="object-cover"
               />
@@ -298,7 +297,6 @@ export default function AIITSolutions() {
                   src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=90"
                   alt="Section image"
                   fill
-                  unoptimized
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                 />

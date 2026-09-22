@@ -4,17 +4,10 @@ import { useRef } from "react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
 import { Subheading } from "@/components/ui/Subheading";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Calendar, Clock, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Calendar, Clock, Sparkles, GraduationCap } from "lucide-react";
 import { toUploadUrl } from "@/lib/api/image-url";
 import type { Webinar } from "@/types/admin/webinar";
-
-const FALLBACK_IMAGES = [
-  "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80",
-  "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80",
-  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
-  "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
-  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80",
-];
 
 function formatTime(time: string) {
   const [h, m] = time.split(":").map(Number);
@@ -24,20 +17,26 @@ function formatTime(time: string) {
 
 function ProjectCard({ webinar, index }: { webinar: Webinar | null; index: number }) {
   const num = String(index + 1).padStart(2, "0");
-  const imgSrc = webinar
-    ? (toUploadUrl(webinar.image ?? "") || FALLBACK_IMAGES[index % FALLBACK_IMAGES.length])
-    : FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
+  const imgSrc = webinar ? toUploadUrl(webinar.image ?? "") : null;
 
   return (
     <div className="flex flex-col w-[320px] sm:w-[360px] flex-shrink-0 h-[480px] overflow-hidden rounded-2xl group cursor-pointer bg-white border border-violet-100">
 
       {/* Image — 40% of card height */}
       <div className="relative h-[40%] w-full shrink-0 overflow-hidden">
-        <img
-          src={imgSrc}
-          alt={webinar?.name ?? "Coming Soon"}
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
+        {imgSrc ? (
+          <Image
+            src={imgSrc}
+            alt={webinar?.name ?? "Coming Soon"}
+            fill
+            sizes="(max-width: 640px) 320px, 360px"
+            className="object-cover object-center"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(135deg,rgba(139,92,246,0.85)_0%,rgba(59,130,246,0.60)_100%)]">
+            <GraduationCap size={40} className="text-white/40" strokeWidth={1.5} />
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
         {/* Counter */}

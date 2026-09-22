@@ -16,7 +16,7 @@ function AvatarImg({ src, name, accent, fontSize = "1rem" }) {
         {(name || "?").slice(0, 2).toUpperCase()}
       </div>
     );
-  return <Image src={src} alt={name || ""} fill style={{ objectFit: "cover" }} unoptimized />;
+  return <Image src={src} alt={name || ""} fill sizes="48px" style={{ objectFit: "cover" }} />;
 }
 
 function Stars({ count = 5, color = "#f59e0b" }) {

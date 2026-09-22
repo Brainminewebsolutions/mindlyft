@@ -267,8 +267,8 @@ gsap.set(cards[0], {
                       src={course.image}
                       alt={course.name}
                       fill
+                      sizes="48vw"
                       className="object-cover"
-                      unoptimized
                     />
                     {/* fade from card bg color on left edge */}
                     <div

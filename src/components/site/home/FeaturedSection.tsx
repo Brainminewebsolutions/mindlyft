@@ -70,7 +70,7 @@ const items: CardItem[] = [
     href: "/ai-it-solutions",
   },
   {
-    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=90",
+    image: "/images/placeholders/education.jpg",
     name: "Education",
     lines: [
       "Empowering Future Innovators",
@@ -88,7 +88,7 @@ const items: CardItem[] = [
     href: "#iit-courses",
   },
   {
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&q=90",
+    image: "/images/placeholders/innovation.jpg",
     name: "Innovation",
     lines: [
       "Transforming Ideas into Reality",

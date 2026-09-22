@@ -51,7 +51,7 @@ export default function CourseCategory({ categories }: Props) {
             className="flex items-center justify-center px-[18px] pb-[18px] md:px-9 md:pb-9"
           >
             <div
-              className="relative overflow-hidden w-full max-w-[1280px] h-[75vh] lg:h-[78vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col justify-center items-center gap-4 p-8 md:p-10 lg:p-14"
+              className="relative overflow-hidden w-full max-w-[1280px] min-h-[50vh] lg:h-[78vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col justify-center items-center gap-4 p-8 md:p-10 lg:p-14"
               style={{ background: PALETTE[0].bg }}
             >
               <div
@@ -77,18 +77,18 @@ export default function CourseCategory({ categories }: Props) {
               className="flex items-center justify-center px-[18px] pb-[18px] md:px-9 md:pb-9"
             >
               <div
-                className="relative overflow-hidden w-full max-w-[1280px] h-[80vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col lg:flex-row"
+                className="relative overflow-hidden w-full max-w-[1280px] lg:h-[80vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col lg:flex-row"
                 style={{ background: bg }}
               >
                 {/* Image — stacked block on mobile/tablet, absolute side panel from lg up */}
                 {cat.image && (
-                  <div className="relative w-full h-[30%] shrink-0 lg:absolute lg:right-0 lg:top-0 lg:h-full lg:w-[48%] lg:shrink pointer-events-none">
+                  <div className="relative w-full aspect-[16/9] shrink-0 lg:absolute lg:right-0 lg:top-0 lg:aspect-auto lg:h-full lg:w-[48%] lg:shrink pointer-events-none">
                     <Image
                       src={cat.image}
                       alt={cat.name}
                       fill
+                      sizes="(max-width: 1023px) 100vw, 48vw"
                       className="object-cover"
-                      unoptimized
                     />
                     <div
                       className="absolute inset-0 hidden lg:block"
@@ -148,11 +148,11 @@ export default function CourseCategory({ categories }: Props) {
           className="flex items-center justify-center px-[18px] pb-[18px] md:px-9 md:pb-9"
         >
           <div
-            className="relative overflow-hidden w-full max-w-[1280px] h-[80vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col lg:flex-row"
+            className="relative overflow-hidden w-full max-w-[1280px] lg:h-[80vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col lg:flex-row"
             style={{ background: "#F5F3FF" }}
           >
             {/* Image — stacked block on mobile/tablet, absolute side panel from lg up */}
-            <div className="relative w-full h-[30%] shrink-0 lg:absolute lg:right-0 lg:top-0 lg:h-full lg:w-[48%] lg:p-2 lg:shrink pointer-events-none">
+            <div className="relative w-full aspect-[16/9] shrink-0 lg:absolute lg:right-0 lg:top-0 lg:aspect-auto lg:h-full lg:w-[48%] lg:p-2 lg:shrink pointer-events-none">
               <Image
                 src="/images/Certifcate.jpeg"
                 alt="Certificate of Completion"
