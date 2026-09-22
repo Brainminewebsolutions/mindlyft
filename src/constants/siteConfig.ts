@@ -18,7 +18,7 @@ export  const SITE_CONFIG = {
   phone: "+91 9975670303",
   whatsapp: "+919975670303",
   email: "info@mindlyftai.com",
-  address: "2nd Floor, ABC Tiara,Opposite Akurdi Railway Station, Nigadi Pradhikaran, Pimpri-Chinchwad, Pune.",
+  address: "2nd Floor, ABC Tiara, opposite Akurdi Railway Station Road, Pradhikaran, Nigdi, Pimpri-Chinchwad, Maharashtra 411035",
   hours: "Mon - Sat: 9:00 AM – 6:00 PM",
 
   // Social Media

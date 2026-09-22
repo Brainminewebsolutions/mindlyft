@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Clock, Globe, Monitor, User, ArrowUpRight, Tag } from "lucide-react";
 import { getGsap, getScrollTrigger, onGsapReady } from "@/lib/gsap-config";
 import type { Course } from "@/types/admin/course";
-import { SITE_CONFIG } from "@/constants/siteConfig";
+import CollaborationLogos from "@/components/site/CollaborationLogos";
 
 // NOTE: no `import gsap from "gsap"` — we use window.gsap so we share the same
 // GSAP instance that main.js integrated with Lenis.  The npm bundle creates a
@@ -141,39 +141,7 @@ gsap.set(cards[0], {
         </p>
 
         {/* Collaboration logos */}
-        <div className="flex items-center justify-center gap-10 flex-wrap">
-  {/* MindLyft */}
-  <div className="flex flex-col items-center shrink-0">
-    <div className="flex items-center justify-center w-48 h-40">
-      <img
-        src={SITE_CONFIG?.logo1 ?? "/logo.png"}
-        alt="MindLyft AI"
-        className="object-contain w-full h-full"
-      />
-    </div>
-    <p className="text-xl font-semibold text-gray-800">
-      MindLyft AI
-    </p>
-  </div>
-
-  <span className="text-3xl font-light text-gray-300 select-none shrink-0">
-    ×
-  </span>
-
-  {/* C3iHub */}
-  <div className="flex flex-col items-center shrink-0">
-    <div className="flex items-center justify-center w-48 h-40">
-      <img
-        src="/C3ihub.jpeg"
-        alt="C3iHub IIT Kanpur"
-        className="object-contain w-full h-full"
-      />
-    </div>
-    <p className="text-xl font-semibold text-gray-800">
-      C3iHub IIT Kanpur
-    </p>
-  </div>
-</div>
+        <CollaborationLogos size="lg" showLabels className="justify-center" />
         <div>
            
           <p className="text-gray-400 text-sm leading-relaxed max-w-xs mx-auto">

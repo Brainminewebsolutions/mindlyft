@@ -1,5 +1,8 @@
 "use client";
 
+import { Subheading } from "@/components/ui/Subheading";
+import { Section } from "@/components/ui/Section";
+
 const LOGOS = [
   { name: "Ministry of Culture, Government of India", logo: "/assets/img/partners/ministry-of-culture.png" },
   { name: "ISRO",                                     logo: "/assets/img/partners/isro.png" },
@@ -13,8 +16,15 @@ export default function MembersWorkWith({ bg = "bg-white" }: { bg?: string }) {
   const track = [...LOGOS, ...LOGOS];
 
   return (
-    <section className={`${bg} py-14 px-6 md:px-14 lg:px-24 text-center overflow-hidden hidden  `}>
-      <h2 className="text-3xl md:text-4xl font-black text-violet-600 mb-2">Our members work with</h2>
+    <Section bg={bg} centered className="overflow-hidden hidden">
+      <Subheading
+        as="h2"
+        centered
+        color="violet"
+        size="lg"
+        className="font-black mb-2"
+        text="Our members work with"
+      />
       <p className="text-sm font-semibold text-gray-700 mb-12">Strategic Collaborations Driving AI Innovation</p>
 
       <div className="bg-violet-50 rounded-2xl py-12 overflow-hidden">
@@ -42,6 +52,6 @@ export default function MembersWorkWith({ bg = "bg-white" }: { bg?: string }) {
           animation-play-state: paused;
         }
       `}</style>
-    </section>
+    </Section>
   );
 }

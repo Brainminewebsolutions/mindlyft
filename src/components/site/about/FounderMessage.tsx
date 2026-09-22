@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { Subheading } from "@/components/ui/Subheading";
+import { Section } from "@/components/ui/Section";
 
 type FounderMessageProps = {
   founderName: string;
@@ -19,7 +21,7 @@ export default function FounderMessage({
   bg = "bg-blue-50",
 }: FounderMessageProps & { bg?: string }) {
   return (
-    <section className={`${bg} px-6 py-12 md:py-20`}>
+    <Section bg={bg}>
       <div className="max-w-6xl mx-auto">
 
         {/* Section Label */}
@@ -27,10 +29,16 @@ export default function FounderMessage({
           <span className="inline-block text-sm font-bold uppercase tracking-widest text-blue-600 bg-blue-100 px-4 py-2 rounded-full">
             Leadership
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 leading-tight">
-            Message from our{" "}
-            <span className="text-blue-600">Founder & MD</span>
-          </h2>
+          <Subheading
+            as="h2"
+            centered
+            color="black"
+            size="xl"
+            className="mt-4 leading-tight"
+            highlightClassName="!text-blue-600"
+            text="Message from our"
+            highlight="Founder & MD"
+          />
           <div className="w-16 h-1 bg-blue-600 rounded-full mx-auto mt-4" />
         </div>
 
@@ -94,6 +102,6 @@ export default function FounderMessage({
         </div>
 
       </div>
-    </section>
+    </Section>
   );
 }

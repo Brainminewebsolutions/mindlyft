@@ -1,5 +1,7 @@
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { LineBadge } from "@/components/ui/LineBadge";
+import { Subheading } from "@/components/ui/Subheading";
+import { Section } from "@/components/ui/Section";
 
 export default function VisionMission({ bg = "bg-white" }: { bg?: string }) {
     const stats = [
@@ -18,16 +20,19 @@ export default function VisionMission({ bg = "bg-white" }: { bg?: string }) {
 ];
 
   return (
-    <section className={`${bg} py-10 px-6`}>
+    <Section bg={bg}>
       <div className="text-center mb-10 md:mb-16">
                 <AnimateIn delay={0} direction="right"><LineBadge className="justify-center mb-5"> Our Purpose</LineBadge></AnimateIn>
                 <AnimateIn delay={100} direction="right">
-                  <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
-                    Vision &&nbsp;
-                    <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-                      Mission
-                    </span>
-                  </h2>
+                  <Subheading
+                    as="h2"
+                    centered
+                    color="violet"
+                    size="xl"
+                    className="leading-tight mb-4"
+                    text="Vision &"
+                    highlight="Mission"
+                  />
                 </AnimateIn>
               </div>
       <div className="max-w-6xl mx-auto">
@@ -119,6 +124,6 @@ export default function VisionMission({ bg = "bg-white" }: { bg?: string }) {
     ))}
   </div>
 </div>
-    </section>
+    </Section>
   );
 }

@@ -40,9 +40,17 @@ const Innovation = dynamic(() => import("@/components/site/home/Innovation"), {
 });
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: "AI Course in Pune — Gen AI, Agentic AI, Cyber Security & Data Analytics",
   description:
-    "Explore MindLyft AI's learning services, AI consulting, and innovative products — bridging academia and industry with IIT-backed expertise.",
+    "Join the best AI course in Pune at MindLyft AI. Industry-ready Gen AI, Agentic AI, Cyber Security and Data Analytics courses in Pune with IIT-backed expertise.",
+  keywords: [
+    "AI course in Pune",
+    "Cyber Security course in Pune",
+    "Gen AI course in Pune",
+    "Agentic AI course in Pune",
+    "Data Analytics courses in Pune",
+    "MindLyft AI",
+  ],
   alternates: { canonical: "/" },
 };
 

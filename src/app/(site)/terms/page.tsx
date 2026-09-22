@@ -51,7 +51,7 @@ const SECTIONS = [
     title: "Contact Us",
     content: [
       "If you have any questions regarding these Terms & Conditions, please contact us at legal@mindlyftai.com or visit our Contact page.",
-      "For grievances, you may write to us at our registered address: 2nd Floor, ABC Tiara, Opposite Akurdi Railway Station, Nigadi Pradhikaran, Pimpri-Chinchwad, Pune.",
+      "For grievances, you may write to us at our registered address: 2nd Floor, ABC Tiara, opposite Akurdi Railway Station Road, Pradhikaran, Nigdi, Pimpri-Chinchwad, Maharashtra 411035.",
     ],
   },
 ];

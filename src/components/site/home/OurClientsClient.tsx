@@ -2,8 +2,8 @@
 
 import { useRef, useEffect, useCallback, useState } from "react";
 import Image from "next/image";
-import { SectionBadge } from "@/components/ui/SectionBadge";
 import type { Partner } from "@/types/admin/partner";
+import { SectionBadge } from "@/components/ui/SectionBadge";
 
 // ─── Tooltip ─────────────────────────────────────────────────────────────────
 
@@ -35,9 +35,9 @@ function PartnerTooltip({ partner, anchorX, anchorY }: TooltipProps) {
       <div className="bg-white border border-neutral-200/80 rounded-2xl shadow-[0_20px_60px_-10px_rgba(0,0,0,0.18)] w-64 p-5">
         <div className="flex items-center gap-3 mb-3">
           {/* Logo or initial */}
-          <div className="w-11 h-11 rounded-xl bg-neutral-100 flex items-center justify-center shrink-0 overflow-hidden">
+          <div className="relative w-11 h-11 rounded-xl bg-neutral-100 flex items-center justify-center shrink-0 overflow-hidden">
             {partner.image
-              ? <Image src={partner.image} alt={partner.name} width={44} height={44} className="h-full w-full object-contain p-1" />
+              ? <Image src={partner.image} alt={partner.name} fill sizes="44px" className="object-contain p-1" />
               : <span className="text-base font-bold text-neutral-600">{partner.name.charAt(0)}</span>
             }
           </div>
@@ -66,9 +66,9 @@ function PartnerTooltip({ partner, anchorX, anchorY }: TooltipProps) {
 function PartnerLogo({ partner }: { partner: Partner }) {
   return (
     <div className="relative flex flex-col items-center justify-center gap-2 select-none">
-      <div className="w-20 h-20 rounded-2xl bg-white group-hover:bg-white group-hover:shadow-md transition-all duration-300 flex items-center justify-center overflow-hidden border border-neutral-200/60">
+      <div className="relative w-30 h-20 rounded-2xl bg-white group-hover:bg-white group-hover:shadow-md transition-all duration-300 flex items-center justify-center overflow-hidden border border-neutral-200/60">
         {partner.image
-          ? <Image src={partner.image} alt={partner.name} width={80} height={80} className="h-full w-full object-contain p-2" />
+          ? <Image src={partner.image} alt={partner.name} fill sizes="80px" className="object-contain p-2" />
           : <span className="text-lg font-bold text-neutral-600 group-hover:text-violet-600 transition-colors duration-300">
               {partner.name.charAt(0)}
             </span>
@@ -117,10 +117,12 @@ export default function OurClientsClient({ partners }: { partners: Partner[] }) 
     <>
       <section className="relative w-full py-20 bg-[#F8F7F4]">
 
-        {/* Badge + divider */}
-        <div className="flex flex-col items-center justify-center mb-14 gap-3">
-          <SectionBadge variant="dark">Our Recruiting Partners</SectionBadge>
-          
+        {/* Heading + description */}
+        <div className="flex flex-col items-center justify-center text-center mb-14 px-6">
+          <SectionBadge variant="dark">Recruiting partners</SectionBadge>
+          <p className="max-w-[760px] text-sm sm:text-base leading-relaxed text-gray-600">
+            From Data Analytics to Cybersecurity, MindLyft AI learners go on to build careers across IT services, consulting, BFSI and global product companies.
+          </p>
         </div>
 
         {/* Marquee */}

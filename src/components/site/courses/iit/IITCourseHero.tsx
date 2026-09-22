@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { SITE_CONFIG } from "@/constants/siteConfig";
+import CollaborationLogos from "@/components/site/CollaborationLogos";
 
 interface Props {
   name:         string;
@@ -23,20 +23,10 @@ export default function IITCourseHero({ name, category, proxiedImage }: Props) {
       </div>
 
       {/* LEFT — content */}
-      <div className="relative z-10 flex w-full min-w-0 flex-col justify-center gap-6 px-6 py-10 sm:px-8 md:w-[50%] md:px-14 md:py-24 lg:px-20">
+      <div className="relative z-10 flex w-full min-w-0 flex-col justify-center gap-6 px-6 pt-16 pb-10 sm:px-8 md:w-[50%] md:px-14 md:pt-32 md:pb-24 lg:px-20">
 
         {/* Collaboration badges */}
-        <div className="flex items-center gap-3 flex-wrap">
-          <div className="flex items-center gap-3">
-            <Image src={SITE_CONFIG.logo1} alt="Mindlyft AI" width={100} height={100} className="rounded object-contain" />
-            <span className="text-sm font-bold text-gray-700 tracking-wide">Mindlyft AI</span>
-          </div>
-          <span className="text-gray-400 text-lg font-light">×</span>
-          <div className="flex items-center gap-3">
-            <Image src={SITE_CONFIG.c3iHubLogo} alt="C3iHub IIT Kanpur" width={100} height={100} className="rounded object-contain" />
-            <span className="text-sm font-bold text-gray-700 tracking-wide">C3iHub, IIT Kanpur</span>
-          </div>
-        </div>
+        <CollaborationLogos size="sm" layout="inline" showLabels />
 
         <h3 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-violet-600!">{category}</h3>
  

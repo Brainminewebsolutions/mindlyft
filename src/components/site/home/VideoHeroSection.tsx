@@ -2,13 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Mouse } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Igor Omilaev — "robot and human hands reaching toward AI text" — Unsplash License (free, no attribution required)
-// https://unsplash.com/photos/FHgWFzDDAOs
-const HERO_IMAGE_URL =
-  "https://images.unsplash.com/photo-1694903089438-bf28d4697d9a?fm=jpg&q=80&w=2400&auto=format&fit=crop";
+// Banner carousel — add more images here and the hero rotates through them.
+const HERO_SLIDES = [
+  {
+    src: "/images/home/homehero.jpeg",
+    alt: "Human and AI hands reaching toward each other, symbolizing AI-powered learning",
+  },
+];
+const SLIDE_INTERVAL_MS = 5000;
 
 const PARTS = [
   "Elevating Learning",
@@ -57,24 +62,40 @@ function AnimatedParts() {
 
 export default function VideoHeroSection() {
   const [loaded, setLoaded] = useState(false);
+  const [slide,  setSlide]  = useState(0);
 
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 80);
     return () => clearTimeout(t);
   }, []);
 
+  useEffect(() => {
+    if (HERO_SLIDES.length < 2) return;
+    const t = setInterval(() => setSlide((i) => (i + 1) % HERO_SLIDES.length), SLIDE_INTERVAL_MS);
+    return () => clearInterval(t);
+  }, []);
+
   return (
-    <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center bg-[#040610]">
+    <section className="relative w-full min-h-screen overflow-hidden flex flex-col bg-[#040610]">
 
       {/* Background image */}
-      <Image
-        src={HERO_IMAGE_URL}
-        alt="Human and AI hands reaching toward each other, symbolizing AI-powered learning"
-        fill
-        priority
-        sizes="100vw"
-        className="absolute inset-0 object-cover object-center z-0"
-      />
+      {HERO_SLIDES.map((s, i) => (
+        <Image
+          key={s.src}
+          src={s.src}
+          alt={s.alt}
+          fill
+          priority={i === 0}
+          sizes="100vw"
+          className={cn(
+            "absolute inset-0 object-cover object-center z-0 transition-opacity duration-1000 ease-in-out",
+            i === slide ? "opacity-100" : "opacity-0"
+          )}
+        />
+      ))}
+
+      {/* Dark overlay for headline legibility */}
+      <div className="absolute inset-0 z-[1] bg-black/40 pointer-events-none" />
 
       {/* Purple radial tint */}
       <div
@@ -91,16 +112,46 @@ export default function VideoHeroSection() {
       {/* Hero content */}
       <div
         className={cn(
-          "relative z-[3] flex flex-col items-center text-center px-6 pt-[120px] pb-20 max-w-[1100px] w-full transition-all duration-[900ms] ease-in-out",
+          "relative z-[3] flex flex-1 flex-col px-6 pt-[120px] pb-12 max-w-[1300px] w-full mx-auto text-center lg:text-left transition-all duration-[900ms] ease-in-out",
           loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-[30px]"
         )}
       >
-        <h1 className="font-extrabold tracking-[-0.02em] text-white mb-[22px] w-full">
+        {/* Heading (left) + description (right) */}
+        <div className="grid flex-1 grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-14">
+          <h1 className="font-extrabold tracking-[-0.02em] !text-white text-3xl sm:text-4xl lg:text-5xl leading-tight w-full drop-shadow-[0_2px_18px_rgba(0,0,0,0.6)]">
+            <span className="bg-gradient-to-r from-violet-300 to-blue-300 bg-clip-text text-transparent">
+              AI course in Pune
+            </span>{" "}
+            — IIT Kanpur-backed training in AI, data analytics and cybersecurity
+          </h1>
+
+          <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-white/90 drop-shadow-[0_1px_10px_rgba(0,0,0,0.6)]">
+            Looking for the right AI course in Pune? MindLyft AI offers hands-on, project-based training in Data Analytics, Generative AI, Agentic AI, and Cybersecurity, backed by a joint certification with IIT Kanpur&apos;s C3iHub and mentorship from working industry experts. Whether you are starting your career or upskilling into AI, every program is built around real projects and outcomes that actually matter to employers, not just a certificate to add to your profile. Learn offline at our Akurdi campus in Pimpri-Chinchwad, or choose a hybrid batch that fits around your working week.
+          </p>
+        </div>
+
+        {/* Buttons — pinned to the bottom of the hero */}
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4">
+          <Link
+            href="/contact"
+            className="px-6 py-3 rounded-xl text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600 shadow-lg transition-colors"
+          >
+            Book a Free Demo Class
+          </Link>
+          <Link
+            href="/courses"
+            className="px-6 py-3 rounded-xl text-sm sm:text-base font-semibold text-white border border-white/70 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors"
+          >
+            Download Course Syllabus
+          </Link>
+        </div>
+
+        {/* <div className="w-full">
           <AnimatedParts />
-        </h1>
+        </div> */}
       </div>
 
-      {/* Scroll hint */}
+      {/* Scroll hint ("Three Pillars, One Vision") — hidden
       <div
         className={cn(
           "absolute bottom-8 left-1/2 -translate-x-1/2 z-[4] flex flex-col items-center gap-2 pointer-events-none animate-[mlBounce_2s_ease-in-out_infinite]",
@@ -116,7 +167,7 @@ export default function VideoHeroSection() {
           <span className="hidden h-px w-8 shrink-0 bg-gradient-to-l from-transparent to-blue-400/70 sm:block" />
         </div>
         <Mouse size={20} color="rgba(180,200,255,.5)" strokeWidth={1.5} />
-      </div>
+      </div> */}
 
       {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-[140px] bg-gradient-to-t from-[#040610] to-transparent z-[2] pointer-events-none" />

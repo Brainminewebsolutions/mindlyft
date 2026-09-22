@@ -202,8 +202,8 @@ export default function WhatWeDo() {
                 ref={(el) => {
                   stepRefs.current[i] = el;
                 }}
-                className={`flex min-h-0 items-center py-8 transition-opacity duration-[450ms] ease-out lg:min-h-[80vh] ${
-                  isActive ? "opacity-100" : "opacity-[0.22]"
+                className={`flex min-h-0 items-center py-8 opacity-100 transition-opacity duration-[450ms] ease-out lg:min-h-[80vh] ${
+                  isActive ? "" : "lg:opacity-[0.22]"
                 }`}
               >
                 <div className={`max-w-[500px] rounded-3xl px-4 py-8 ${step.accent.sectionBg}`}>

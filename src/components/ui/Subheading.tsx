@@ -1,12 +1,37 @@
 import { cn } from "@/lib/utils";
 
+type SubheadingColor = "mixed" | "black" | "violet";
+type SubheadingSize  = "sm" | "md" | "lg" | "xl";
+
 interface SubheadingProps {
   text:                React.ReactNode;
   highlight?:          React.ReactNode;
   centered?:           boolean;
   className?:          string;
   highlightClassName?: string;
+  as?:                 "h2" | "h3";
+  color?:              SubheadingColor;
+  size?:               SubheadingSize;
 }
+
+const TEXT_COLOR: Record<SubheadingColor, string> = {
+  mixed:  "!text-gray-900",
+  black:  "!text-gray-900",
+  violet: "!text-violet-600",
+};
+
+const HIGHLIGHT_COLOR: Record<SubheadingColor, string> = {
+  mixed:  "!text-violet-600",
+  black:  "!text-gray-900",
+  violet: "!text-violet-600",
+};
+
+const SIZE: Record<SubheadingSize, string> = {
+  sm: "text-xl md:text-2xl",
+  md: "text-2xl md:text-3xl",
+  lg: "text-3xl md:text-4xl",
+  xl: "text-4xl md:text-5xl",
+};
 
 export function Subheading({
   text,
@@ -14,19 +39,24 @@ export function Subheading({
   centered = false,
   className,
   highlightClassName,
+  as: Tag = "h3",
+  color = "mixed",
+  size = "md",
 }: SubheadingProps) {
   return (
-    <h3
+    <Tag
       className={cn(
-        "text-2xl font-bold !text-gray-900 md:text-3xl",
+        "font-bold",
+        SIZE[size],
+        TEXT_COLOR[color],
         centered && "mx-auto text-center",
         className
       )}
     >
       {text}
       {highlight && (
-        <span className={cn("!text-violet-600", highlightClassName)}> {highlight}</span>
+        <span className={cn(HIGHLIGHT_COLOR[color], highlightClassName)}> {highlight}</span>
       )}
-    </h3>
+    </Tag>
   );
 }

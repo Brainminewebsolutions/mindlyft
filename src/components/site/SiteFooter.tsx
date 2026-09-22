@@ -6,11 +6,12 @@ import { FacebookIcon, XIcon, InstagramIcon, LinkedinIcon } from "./SocialIcons"
 import {SITE_CONFIG} from "@/constants/siteConfig"
 
 const QUICK_LINKS = [
-  { label: "About",   href: "/about" },
-  { label: "Courses", href: "/courses" },
-  { label: "Blog",    href: "/blogs" },
-  { label: "Contact", href: "/contact" },
-  { label: "Login",   href: "/login" },
+  { label: "About",      href: "/about" },
+  { label: "Courses",    href: "/courses" },
+  { label: "Blog",       href: "/blogs" },
+  { label: "New Letter", href: "#" },
+  { label: "Contact",    href: "/contact" },
+  { label: "Login",      href: "/login" },
 ];
 
 const SOCIAL = [
@@ -89,8 +90,8 @@ export default function SiteFooter() {
               <li className="flex gap-3 text-gray-500">
                 <MapPin size={15} className="shrink-0 mt-0.5 text-violet-400" />
                 <span className="text-base leading-relaxed">
-                    2nd Floor, ABC Tiara, Opposite Akurdi Railway Station,
-                    Nigadi Pradhikaran, Pimpri-Chinchwad, Pune.
+                    2nd Floor, ABC Tiara, opposite Akurdi Railway Station Road,
+                    Pradhikaran, Nigdi, Pimpri-Chinchwad, Maharashtra 411035
                 </span>
               </li>
               <li className="flex gap-3 items-center">

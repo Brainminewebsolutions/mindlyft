@@ -1,4 +1,7 @@
 "use client";
+import { Subheading } from "@/components/ui/Subheading";
+import { Section } from "@/components/ui/Section";
+
 const upskillTeam = [
   {
     name: "Ajinkya Panday",
@@ -220,7 +223,7 @@ function UpskillCategory({ category }: { category: Category }) {
       <div className="mb-3 flex items-center justify-center gap-4">
         <div className="h-px w-16 bg-violet-500" />
         <span className="text-2xl font-semibold uppercase tracking-[0.3em] text-violet-800">
-          {category.title}
+          Meet Our Upskill Team
         </span>
         <div className="h-px w-16 bg-violet-500" />
       </div>
@@ -269,7 +272,7 @@ export default function OurLeaders({ categories, bg = "bg-white" }: OurLeadersPr
   if (categories.length === 0) return null;
 
   return (
-    <section className={`${bg} px-6 py-12 md:py-20`}>
+    <Section bg={bg}>
       <div className="max-w-6xl mx-auto space-y-12 md:space-y-20">
 
         {/* Heading */}
@@ -277,9 +280,15 @@ export default function OurLeaders({ categories, bg = "bg-white" }: OurLeadersPr
           <span className="inline-block text-sm font-bold uppercase tracking-widest text-blue-600 bg-blue-100 px-4 py-2 rounded-full">
             Our Team
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
-            Meet Our <span className="text-blue-600">Leaders</span>
-          </h2>
+          <Subheading
+            as="h2"
+            centered
+            color="black"
+            size="xl"
+            highlightClassName="!text-blue-600"
+            text="Meet Our"
+            highlight="Leaders"
+          />
           <div className="w-16 h-1 bg-blue-600 rounded-full mx-auto" />
           <p className="text-gray-500 text-lg max-w-2xl mx-auto">
             Our experienced and dedicated team of educators is committed to
@@ -298,9 +307,15 @@ export default function OurLeaders({ categories, bg = "bg-white" }: OurLeadersPr
           <span className="inline-block text-sm font-bold uppercase tracking-widest text-blue-600 bg-blue-100 px-4 py-2 rounded-full">
             Our Team
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
-            Meet Our Expert <span className="text-blue-600">Upskill Team</span>
-          </h2>
+          <Subheading
+            as="h2"
+            centered
+            color="black"
+            size="xl"
+            highlightClassName="!text-blue-600"
+            text="Meet Our Expert"
+            highlight="Upskill Team"
+          />
           <div className="w-16 h-1 bg-blue-600 rounded-full mx-auto" />
           <p className="text-gray-500 text-lg max-w-2xl mx-auto">
             Learn from experienced mentors who turn potential into performance and ambition into achievement.
@@ -317,6 +332,6 @@ export default function OurLeaders({ categories, bg = "bg-white" }: OurLeadersPr
           ))}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

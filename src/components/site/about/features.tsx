@@ -1,4 +1,6 @@
 import { AnimateIn } from "@/components/ui/AnimateIn";
+import { Subheading } from "@/components/ui/Subheading";
+import { Section } from "@/components/ui/Section";
 import {
   Brain,
   Briefcase,
@@ -36,16 +38,19 @@ const features = [
 
 export default function WhyChooseMindlyft({ bg = "bg-white" }: { bg?: string }) {
   return (
-    <section className={`py-12 md:py-18 px-6 ${bg}`}>
+    <Section bg={bg}>
       <div className="max-w-7xl mx-auto">
          <div className="text-center mb-10 md:mb-16">
           <AnimateIn delay={100} direction="right">
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
-               Mindlyft AI stands&nbsp;
-              <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-               out because we blend
-              </span>
-            </h2>
+            <Subheading
+              as="h2"
+              centered
+              color="violet"
+              size="xl"
+              className="leading-tight mb-4"
+              text="Mindlyft AI stands"
+              highlight="out because we blend"
+            />
           </AnimateIn>
           <AnimateIn delay={200} direction="right">
             <p className="text-base text-gray-500 leading-relaxed max-w-2xl mx-auto">
@@ -109,8 +114,8 @@ export default function WhyChooseMindlyft({ bg = "bg-white" }: { bg?: string }) 
           })}
         </div>
       </div>
-      
-    </section>
+
+    </Section>
     
   );
 }

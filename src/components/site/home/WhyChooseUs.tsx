@@ -6,23 +6,14 @@ import { motion } from "framer-motion";
 import { SectionBadge } from "@/components/ui/SectionBadge";
 import { Subheading } from "@/components/ui/Subheading";
 import { AnimateIn } from "@/components/ui/AnimateIn";
-import { ArrowRight, GraduationCap, BookOpen, Repeat2, FolderKanban, Briefcase, Mic2, TextAlignCenter } from "lucide-react";
-
-const reasons = [
-  { icon: GraduationCap, label: "Expert Faculty with Hands-on Experience" },
-  { icon: BookOpen,       label: "Industry-Based Course Curriculum"         },
-  { icon: Repeat2,        label: "Jumbo Pass: Never Before, Never After"    },
-  { icon: FolderKanban,   label: "Work on Real Life Data Projects"           },
-  { icon: Briefcase,      label: "Placement Assistance"                      },
-  { icon: Mic2,           label: "Guest Lectures from Industry Experts"      },
-];
+import { ArrowRight, GraduationCap, BookOpen, Repeat2, FolderKanban, Briefcase, Mic2 } from "lucide-react";
 
 const details = [
   {
     icon: GraduationCap,
     num: "01",
     title: "Expert Faculty with Hands-on Experience",
-    desc: "Our faculty is one of our core strengths. At Mindlyft AI, learners are guided by experienced AI professionals who bring real-world industry knowledge along with a strong passion for teaching. This ensures a learning experience that is both practical and highly engaging.",
+    desc: "Our faculty is our core strength. Every program is led by practising AI professionals who bring live industry context into the classroom, so you learn how decisions are made on real systems, not just how algorithms work on paper.",
     grad: "from-blue-600 to-violet-500",
     glow: "rgba(37,99,235,0.18)",
   },
@@ -30,7 +21,7 @@ const details = [
     icon: BookOpen,
     num: "02",
     title: "Industry-Based Course Curriculum",
-    desc: "Our curriculum is carefully designed to align with current industry demands and emerging AI trends. It covers not only core concepts but also modern tools, frameworks & technologies required to build real-world AI systems, ensuring learners stay relevant in a rapidly evolving landscape.",
+    desc: "Each curriculum is mapped to current hiring requirements and reviewed regularly. You work with the same frameworks, tools and workflows that teams use in production, which keeps your skills relevant as the AI landscape shifts.",
     grad: "from-blue-600 to-violet-500",
     glow: "rgba(37,99,235,0.18)",
   },
@@ -38,7 +29,7 @@ const details = [
     icon: Repeat2,
     num: "03",
     title: "Jumbo Pass: Never Before, Never After",
-    desc: "With Mindlyft AI's Jumbo Pass, learners can attend multiple live sessions and revisit concepts with different instructors over a set period. This flexible approach improves clarity, strengthens retention and supports learning at your own pace.",
+    desc: "The Jumbo Pass lets you attend multiple live sessions and revisit the same concepts with different instructors over a set period. If a topic does not click the first time, you get another perspective on it at no extra cost.",
     grad: "from-blue-600 to-violet-500",
     glow: "rgba(37,99,235,0.18)",
   },
@@ -46,7 +37,7 @@ const details = [
     icon: FolderKanban,
     num: "04",
     title: "Work on Real Life Data Projects",
-    desc: "Learners will work on real-world projects across multiple domains, gaining hands-on experience in solving practical problems. These projects are designed to simulate industry scenarios, helping learners build a strong portfolio and develop problem-solving skills.",
+    desc: "You build across multiple domains using real datasets and real problem statements. By the end of your program you leave with a portfolio you can walk an interviewer through, not a folder of tutorial exercises.",
     grad: "from-blue-600 to-violet-500",
     glow: "rgba(37,99,235,0.18)",
   },
@@ -54,7 +45,7 @@ const details = [
     icon: Briefcase,
     num: "05",
     title: "Placement Assistance",
-    desc: "We provide end-to-end career support from resume building and LinkedIn optimization to mock interviews, interview preparation and job opportunities. Our goal is to ensure that learners are fully prepared to enter the job market with confidence, clarity and the right career opportunities.",
+    desc: "End-to-end career support covering resume building, LinkedIn optimisation, mock technical and HR interviews, and active job referrals. Our placement team works with you until you are genuinely interview-ready.",
     grad: "from-blue-600 to-violet-500",
     glow: "rgba(37,99,235,0.18)",
   },
@@ -62,7 +53,7 @@ const details = [
     icon: Mic2,
     num: "06",
     title: "Guest Lectures from Industry Experts",
-    desc: "Regular sessions and webinars conducted by industry professionals provide insights into current trends, real-world applications and emerging technologies. These interactions help learners stay updated and gain valuable industry perspectives.",
+    desc: "Regular sessions and webinars from senior practitioners give you a direct line to how AI is being deployed right now, which roles are opening up, and what hiring managers are actually screening for.",
     grad: "from-blue-600 to-violet-500",
     glow: "rgba(37,99,235,0.18)",
   },
@@ -75,29 +66,22 @@ export default function WhyChooseUs() {
         <Image alt="Shape" className="section-shape-one absolute bottom-0 left-0 z-[-1]" src="/assets/img/box-shape-2.png" width={600} height={400} />
         <Image alt="Shape" className="section-shape-two absolute top-0 z-[-1]" src="/assets/img/box-shape-3.png" width={600} height={400} />
         <div className="container-fluid style-one">
-          <div className="flex flex-wrap items-center">
-            <div className="w-full lg:w-1/2 xl:w-5/12">
-              <div className="wh-content md:mb-[30px]">
+          <div className="flex flex-wrap items-stretch">
+            <div className="w-full lg:w-1/2 xl:w-5/12 flex">
+              <div className="wh-content md:mb-[30px] flex flex-col justify-center">
                 <SectionBadge variant="dark">Why Choose Mindlyft AI</SectionBadge>
                 <AnimateIn direction="up" delay={400}>
-                  <Subheading className="!text-white mb-15" text="Why Mindlyft AI?" />
+                  <Subheading
+                    className="!text-white mb-15"
+                    text="Why Choose MindLyft AI"
+                    highlight="for AI Training in Pune?"
+                    highlightClassName="!text-violet-200"
+                  />
                 </AnimateIn>
                 <AnimateIn direction="up" delay={500}>
                   <p className="text-offwhite mb-30">
-                    At Mindlyft AI, we are dedicated to empowering students, professionals, and businesses with industry-ready AI skills, intelligent solutions, and future-focused innovation.
+                    We are an AI-first institute in Pune built on three things learners consistently ask for: teachers who have actually done the work, a syllabus that matches what companies are hiring for, and genuine support until you land the role.
                   </p>
-                </AnimateIn>
-                <AnimateIn direction="up" delay={600}>
-                  <ul className="feature-list flex flex-wrap list-none p-0 mb-10 2xl:w-3/4">
-                    {reasons.map(({ icon: Icon, label }) => (
-                      <li key={label} className="relative font-semibold text-white">
-                        <span className="flex flex-col items-center justify-center rounded-full">
-                          <Icon size={16} />
-                        </span>
-                        {label}
-                      </li>
-                    ))}
-                  </ul>
                 </AnimateIn>
                 <Link
                   href="/courses"
@@ -112,7 +96,7 @@ export default function WhyChooseUs() {
               </div>
             </div>
             <AnimateIn direction="up" delay={400} className="w-full lg:w-1/2 xl:w-7/12 2xl:pl-12">
-              <div className="wh-bg bg-f bg-1 round-10" />
+              <div className="wh-bg bg-f bg-1 round-10" style={{ height: "480px" }} />
             </AnimateIn>
           </div>
 

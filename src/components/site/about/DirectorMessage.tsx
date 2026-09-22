@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { Subheading } from "@/components/ui/Subheading";
+import { Section } from "@/components/ui/Section";
 
 type DirectorMessageProps = {
   directorName: string;
@@ -19,7 +21,7 @@ export default function DirectorMessage({
   bg = "bg-violet-50",
 }: DirectorMessageProps & { bg?: string }) {
   return (
-    <section className={`${bg} px-6 py-12 md:py-20`}>
+    <Section bg={bg}>
       <div className="max-w-6xl mx-auto">
 
         {/* Section Label */}
@@ -27,10 +29,15 @@ export default function DirectorMessage({
           <span className="inline-block text-sm font-bold uppercase tracking-widest text-violet-600 bg-violet-100 px-4 py-2 rounded-full">
             Leadership
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 leading-tight">
-            Meet our{" "}
-            <span className="text-violet-600">Chairman</span>
-          </h2>
+          <Subheading
+            as="h2"
+            centered
+            color="mixed"
+            size="xl"
+            className="mt-4 leading-tight"
+            text="Meet our honorable"
+            highlight="Chairman"
+          />
           <div className="w-16 h-1 bg-violet-600 rounded-full mx-auto mt-4" />
         </div>
 
@@ -84,6 +91,6 @@ export default function DirectorMessage({
         </div>
 
       </div>
-    </section>
+    </Section>
   );
 }

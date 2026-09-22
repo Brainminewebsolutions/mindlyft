@@ -1,4 +1,6 @@
 import { AnimateIn } from "@/components/ui/AnimateIn";
+import { Subheading } from "@/components/ui/Subheading";
+import { Section } from "@/components/ui/Section";
 
 const ITEMS = [
   {
@@ -25,15 +27,18 @@ const ITEMS = [
 
 export default function WhoWeAre({ bg = "bg-white" }: { bg?: string }) {
   return (
-    <section className={`${bg} py-12 md:py-20 px-6 md:px-14 lg:px-24`}>
+    <Section bg={bg}>
       <div className="text-center mb-10 md:mb-16">
                 <AnimateIn delay={100} direction="right">
-                  <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
-                     Who we {" "}
-                    <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-                      are
-                    </span>
-                  </h2>
+                  <Subheading
+                    as="h2"
+                    centered
+                    color="violet"
+                    size="xl"
+                    className="leading-tight mb-4"
+                    text="Who we"
+                    highlight="are"
+                  />
                 </AnimateIn>
               </div>
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 text-center lg:text-left items-center  ">
@@ -62,6 +67,6 @@ export default function WhoWeAre({ bg = "bg-white" }: { bg?: string }) {
         </div>
 
       </div>
-    </section>
+    </Section>
   );
 }

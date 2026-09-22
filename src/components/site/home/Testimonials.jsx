@@ -146,12 +146,14 @@ function TestimonialCard({ item }) {
 
           <div>
             <Quote size={20} color={item.accent} className="mb-2.5 opacity-60" />
-            <p className="m-0 text-[0.875rem] leading-[1.75] text-[#374151]">
-              {item.review?.length > 300 ? item.review.slice(0, 300) + "…" : item.review}
+            <p className="m-0 line-clamp-8 text-justify text-[0.875rem] leading-[1.75] text-[#374151]">
+              {item.review}
             </p>
           </div>
 
-          <Stars color={item.accent} />
+          <div className="mt-auto">
+            <Stars color={item.accent} />
+          </div>
         </div>
       )}
 

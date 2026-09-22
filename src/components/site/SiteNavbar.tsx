@@ -13,7 +13,36 @@ import { SITE_CONFIG } from "@/constants/siteConfig";
 
 type NavChild  = { label: string; href: string };
 type NavItem   = { label: string; href: string; children?: NavChild[] };
-type NavCourse = { id: string; name: string };
+type NavCourse = { id: string; name: string; slug: string; courseType: string };
+
+const courseHref = (c: NavCourse) =>
+  c.courseType === "IIT" ? `/courses/iit/${c.slug}` : `/courses/mindlyftai/${c.slug}`;
+
+// Closing on mouseleave immediately makes the dropdown vanish while the
+// cursor is still crossing the small gap between the trigger and the panel
+// (especially on a diagonal path) — a short delay gives it time to land on
+// the dropdown before it closes.
+function useHoverDropdown(delay = 150) {
+  const [open, setOpen] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
+
+  return {
+    open,
+    onMouseEnter: () => {
+      if (timer.current) clearTimeout(timer.current);
+      setOpen(true);
+    },
+    onMouseLeave: () => {
+      timer.current = setTimeout(() => setOpen(false), delay);
+    },
+    close: () => {
+      if (timer.current) clearTimeout(timer.current);
+      setOpen(false);
+    },
+  };
+}
 
 interface NavUser { name: string; email: string; role: string; }
 interface Props    { user?: NavUser | null; height?: number; courses?: NavCourse[]; }
@@ -22,44 +51,30 @@ interface Props    { user?: NavUser | null; height?: number; courses?: NavCourse
 
 const NAV: NavItem[] = [
   { label: "Home",       href: "/"           },
-  { label: "Academy",    href: "/academy"    }, // rendered via AcademyDesktopItem / AcademyMobileItem
- { label: "Resources",  href: "/resources"  },
-  { label: "Blogs",      href: "/blogs"      },
-  { label: "Our Journey", href: "/our-journey", children: [
-    { label: "Events",     href: "/our-journey/events"     },
-    { label: "Our Impact", href: "/our-journey/our-impact" },
+  { label: "About Us",   href: "/about", children: [
+    { label: "Our Journey", href: "/our-journey" },
   ]},
-  { label: "About",      href: "/about"      },
+  { label: "Courses",    href: "/courses"    }, // rendered via CoursesDesktopItem / mobile accordion
+  { label: "Blogs",      href: "/blogs"      },
+  { label: "Resources",  href: "/resources"  },
+  { label: "Placements", href: "#" },
   { label: "Contact",    href: "/contact"    },
 ];
 
-// ── Academy mega-dropdown (desktop) ──────────────────────────────────────────
+// ── Courses dropdown (desktop) ────────────────────────────────────────────────
 
-const ACADEMY_LEFT = [
-  { label: "IIT",       href: "/iit"       },
-  { label: "Courses",   href: "/courses"   },
-  { label: "Workshops", href: "/workshops" },
-  { label: "Webinars",  href: "/webinar"  },
-];
-
-function AcademyDesktopItem({ pathname, scrolled }: { pathname: string; scrolled: boolean }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  const isActive =
-    pathname.startsWith("/courses") ||
-    pathname.startsWith("/workshops") ||
-    pathname.startsWith("/webinars");
+function CoursesDesktopItem({ pathname, courses }: { pathname: string; courses: NavCourse[] }) {
+  const { open, onMouseEnter, onMouseLeave, close } = useHoverDropdown();
+  const isActive = pathname === "/courses" || pathname.startsWith("/courses/");
 
   return (
     <div
-      ref={ref}
       className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <Link
-        href="/academy"
+        href="/courses"
         className={cn(
           "flex items-center gap-1.5 px-3 py-2 rounded-lg text-[15px] font-semibold transition-colors",
           open || isActive
@@ -67,7 +82,7 @@ function AcademyDesktopItem({ pathname, scrolled }: { pathname: string; scrolled
             : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
         )}
       >
-        Academy
+        Courses
         <ChevronDown
           size={13}
           strokeWidth={2.2}
@@ -76,25 +91,38 @@ function AcademyDesktopItem({ pathname, scrolled }: { pathname: string; scrolled
       </Link>
 
       <div className={cn(
-        "absolute top-[calc(100%+4px)] left-0 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.12)] z-50 transition-all duration-200",
+        "absolute top-[calc(100%+4px)] left-0 w-[300px] bg-white border border-gray-200 rounded-xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.12)] z-50 transition-all duration-200",
         open ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2 pointer-events-none"
       )}>
-        <div className="p-2 w-[160px]">
-          {ACADEMY_LEFT.map(item => {
-            const isItemActive = pathname.startsWith(item.href);
+        <div className="p-1.5 max-h-[70vh] overflow-y-auto">
+          <Link
+            href="/courses"
+            onClick={close}
+            className={cn(
+              "block px-3 py-2 rounded-lg text-[13px] font-semibold transition-colors",
+              pathname === "/courses"
+                ? "text-indigo-600 bg-indigo-50"
+                : "text-gray-900 hover:bg-gray-50"
+            )}
+          >
+            All Courses
+          </Link>
+          {courses.length > 0 && <div className="h-px bg-gray-100 my-1 mx-1.5" />}
+          {courses.map(course => {
+            const href = courseHref(course);
             return (
               <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
+                key={course.id}
+                href={href}
+                onClick={close}
                 className={cn(
-                  "flex items-center px-3 py-2.5 rounded-lg text-[13px] font-semibold transition-colors",
-                  isItemActive
-                    ? "text-indigo-600 bg-indigo-50"
+                  "block px-3 py-2 rounded-lg text-[13px] transition-colors",
+                  pathname === href
+                    ? "text-indigo-600 bg-indigo-50 font-medium"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                 )}
               >
-                {item.label}
+                {course.name}
               </Link>
             );
           })}
@@ -107,9 +135,12 @@ function AcademyDesktopItem({ pathname, scrolled }: { pathname: string; scrolled
 // ── Desktop dropdown item ─────────────────────────────────────────────────────
 
 function DesktopItem({ item, pathname, scrolled }: { item: NavItem; pathname: string; scrolled: boolean }) {
-  const [open, setOpen] = useState(false);
+  const { open, onMouseEnter, onMouseLeave, close } = useHoverDropdown();
   const ref = useRef<HTMLDivElement>(null);
-  const isActive = pathname === item.href || item.children?.some(c => pathname === c.href);
+  const isActive =
+    pathname === item.href ||
+    (item.href === "/courses" && pathname.startsWith("/courses/")) ||
+    item.children?.some(c => pathname.startsWith(c.href));
 
   if (!item.children) {
     return (
@@ -128,7 +159,7 @@ function DesktopItem({ item, pathname, scrolled }: { item: NavItem; pathname: st
   }
 
   return (
-    <div ref={ref} className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+    <div ref={ref} className="relative" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <Link
         href={item.href}
         className={cn(
@@ -158,7 +189,7 @@ function DesktopItem({ item, pathname, scrolled }: { item: NavItem; pathname: st
             <Link
               key={child.href}
               href={child.href}
-              onClick={() => setOpen(false)}
+              onClick={close}
               className={cn(
                 "block px-3 py-2 rounded-lg text-[13px] transition-colors",
                 pathname === child.href
@@ -177,13 +208,6 @@ function DesktopItem({ item, pathname, scrolled }: { item: NavItem; pathname: st
 
 // ── Mobile nav (accordion) ────────────────────────────────────────────────────
 
-const ACADEMY_MOBILE_ITEMS = [
-  { label: "IIT",       href: "/iit"       },
-  { label: "Courses",   href: "/courses"   },
-  { label: "Workshops", href: "/workshops" },
-  { label: "Webinars",  href: "/webinar"  },
-];
-
 function MobileNav({
   pathname,
   onClose,
@@ -198,13 +222,13 @@ function MobileNav({
   return (
     <ul className="space-y-0.5">
       {NAV.map(item => {
-        const isAcademy = item.label === "Academy";
-        const isActive  = isAcademy
-          ? pathname.startsWith("/courses") || pathname.startsWith("/workshops") || pathname.startsWith("/webinars")
-          : pathname === item.href || item.children?.some(c => pathname.startsWith(c.href));
-        const isOpen    = openItem === item.label;
+        const isActive =
+          pathname === item.href ||
+          (item.href === "/courses" && pathname.startsWith("/courses/")) ||
+          item.children?.some(c => pathname.startsWith(c.href));
+        const isOpen = openItem === item.label;
 
-        if (isAcademy) {
+        if (item.label === "Courses") {
           return (
             <li key={item.label}>
               <button
@@ -217,7 +241,7 @@ function MobileNav({
                     : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
                 )}
               >
-                Academy
+                Courses
                 <ChevronDown
                   size={14}
                   strokeWidth={2.2}
@@ -228,26 +252,38 @@ function MobileNav({
               {isOpen && (
                 <ul className="mt-0.5 ml-3 pl-3 border-l-2 border-indigo-100 space-y-0.5 pb-1">
                   <li>
-                    <p className="px-3 pt-2 pb-0.5 text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                      Academy
-                    </p>
+                    <Link
+                      href="/courses"
+                      onClick={onClose}
+                      className={cn(
+                        "block px-3 py-2 rounded-lg text-[13px] font-semibold transition-colors",
+                        pathname === "/courses"
+                          ? "text-indigo-600 bg-indigo-50"
+                          : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                      )}
+                    >
+                      All Courses
+                    </Link>
                   </li>
-                  {ACADEMY_MOBILE_ITEMS.map(child => (
-                    <li key={child.href}>
-                      <Link
-                        href={child.href}
-                        onClick={onClose}
-                        className={cn(
-                          "block px-3 py-2 rounded-lg text-[13px] transition-colors",
-                          pathname === child.href
-                            ? "text-indigo-600 font-medium bg-indigo-50"
-                            : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
-                        )}
-                      >
-                        {child.label}
-                      </Link>
-                    </li>
-                  ))}
+                  {courses.map(course => {
+                    const href = courseHref(course);
+                    return (
+                      <li key={course.id}>
+                        <Link
+                          href={href}
+                          onClick={onClose}
+                          className={cn(
+                            "block px-3 py-2 rounded-lg text-[13px] transition-colors",
+                            pathname === href
+                              ? "text-indigo-600 font-medium bg-indigo-50"
+                              : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                          )}
+                        >
+                          {course.name}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </li>
@@ -398,8 +434,8 @@ export default function SiteNavbar({ user, height, courses = [] }: Props) {
             {/* Desktop nav */}
             <nav className="hidden xl:flex items-center gap-0.5">
               {NAV.map(item =>
-                item.label === "Academy" ? (
-                  <AcademyDesktopItem key="academy" pathname={pathname} scrolled={scrolled} />
+                item.label === "Courses" ? (
+                  <CoursesDesktopItem key="courses" pathname={pathname} courses={courses} />
                 ) : (
                   <DesktopItem key={item.href + item.label} item={item} pathname={pathname} scrolled={scrolled} />
                 )

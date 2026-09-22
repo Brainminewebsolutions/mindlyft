@@ -1,8 +1,7 @@
-import Image from "next/image";
 import { GraduationCap, Shield, Briefcase, Zap } from "lucide-react";
 import { LineBadge } from "@/components/ui/LineBadge";
 import { AnimateIn } from "@/components/ui/AnimateIn";
-import { SITE_CONFIG } from "@/constants/siteConfig";
+import CollaborationLogos from "@/components/site/CollaborationLogos";
 
 const FEATURES = [
   { icon: GraduationCap, title: "Academic Excellence",     desc: "Learn through programs aligned with world-class academic standards.",                  accent: "#8B5CF6", bg: "#ede9fe" },
@@ -29,29 +28,15 @@ export default function IITCollaboration({ bg = "bg-white" }: { bg?: string }) {
           </AnimateIn>
           <AnimateIn delay={200} direction="left">
             <p className="text-base text-gray-500 leading-relaxed mb-8">
-              By bringing together Mindlyft AI&apos;s industry-facing learning platform and IIT Bombay C3iHub&apos;s research depth in cybersecurity, this partnership bridges academic excellence and industry-ready skills.
+              By bringing together Mindlyft AI&apos;s industry-facing learning platform and IIT Kanpur C3iHub&apos;s research depth in cybersecurity, this partnership bridges academic excellence and industry-ready skills.
             </p>
           </AnimateIn>
           <AnimateIn delay={300} direction="left">
-            <div className="flex flex-wrap items-center justify-center gap-4 px-6 py-4 rounded-2xl w-full sm:justify-start sm:gap-5">
-              {/* MindLyft AI */}
-              <div className="flex flex-col items-center gap-2">
-                <div className="relative w-20 h-20 shrink-0 sm:w-28 sm:h-28 lg:w-40 lg:h-40">
-                  <Image src={SITE_CONFIG.logo1} alt="MindLyft AI" fill className="object-contain object-center" />
-                </div>
-                <span className="text-sm font-semibold text-gray-800 tracking-wide whitespace-nowrap sm:text-base lg:text-[20px]">{SITE_CONFIG.name}</span>
-              </div>
-
-              <span className="text-gray-200 text-xl select-none pb-4">×</span>
-
-              {/* C3iHub */}
-              <div className="flex flex-col items-center gap-2">
-                <div className="relative w-20 h-20 shrink-0 sm:w-28 sm:h-28 lg:w-40 lg:h-40">
-                  <Image src={SITE_CONFIG.c3iHubLogo} alt="C3iHub IIT Kanpur" fill className="object-contain object-center" />
-                </div>
-                <span className="text-sm font-semibold text-gray-800 tracking-wide whitespace-nowrap sm:text-base lg:text-[20px]">{SITE_CONFIG.C3ihub}</span>
-              </div>
-            </div>
+            <CollaborationLogos
+              size="responsive"
+              showLabels
+              className="justify-center px-6 py-4 rounded-2xl w-full sm:justify-start"
+            />
           </AnimateIn>
         </div>
 

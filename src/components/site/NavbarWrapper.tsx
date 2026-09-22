@@ -2,7 +2,7 @@ import { getSession }   from "@/lib/auth/session";
 import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import SiteNavbar       from "./SiteNavbar";
 
-type CourseItem      = { id: string; name: string };
+type CourseItem      = { id: string; name: string; slug: string; courseType: string };
 type CoursesEnvelope = { isSuccess: boolean; data: CourseItem[] };
 
 async function getActiveCourses(): Promise<CourseItem[]> {
@@ -12,7 +12,7 @@ async function getActiveCourses(): Promise<CourseItem[]> {
       { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
     );
     if (!env.isSuccess || !Array.isArray(env.data)) return [];
-    return env.data.map(c => ({ id: c.id, name: c.name }));
+    return env.data.map(c => ({ id: c.id, name: c.name, slug: c.slug, courseType: c.courseType }));
   } catch {
     return [];
   }

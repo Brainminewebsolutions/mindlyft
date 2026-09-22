@@ -1,16 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, BadgeCheck, Check } from "lucide-react";
-import { getGsap, getScrollTrigger, onGsapReady } from "@/lib/gsap-config";
 import type { CourseCategory as CourseCategoryItem } from "@/types/admin/courseCategory";
-
-// NOTE: no `import gsap from "gsap"` — we use window.gsap so we share the same
-// GSAP instance that main.js integrated with Lenis.  The npm bundle creates a
-// second, independent instance whose ScrollTrigger reads window.scrollY
-// directly; Lenis keeps that value at 0, so scrub animations never fire.
 
 const PALETTE = [
   {
@@ -41,97 +34,13 @@ interface Props {
 
 export default function CourseCategory({ categories }: Props) {
   const items = categories ?? [];
-  // const courses = iitCourses ?? [];
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const wrapper = wrapperRef.current;
-    if (!wrapper) return;
-
-    const cancel = onGsapReady(() => {
-      const gsap = getGsap();
-      const ScrollTrigger = getScrollTrigger();
-      if (!gsap || !ScrollTrigger) return;
-
-      const ctx = gsap.context(() => {
-        const cards = Array.from(
-          wrapper.querySelectorAll<HTMLElement>(".ss-card")
-        );
-        if (cards.length === 0) return;
-
-      gsap.set(cards, {
-  opacity: 0,
-  y: 80,
-  scale: 0.96,
-  pointerEvents: "none",
-});
-
-gsap.set(cards[0], {
-  opacity: 1,
-  y: 0,
-  scale: 1,
-  pointerEvents: "auto",
-});
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: wrapper,
-            start: "top top",
-            end: `+=${cards.length * 100}%`,
-            pin: true,
-            scrub: 1.2,
-            anticipatePin: 1,
-          },
-        });
-
-        // First card animates in at position 0
-        tl.to(cards[0], { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power2.inOut" }, 0);
-
-        cards.forEach((card, i) => {
-          if (i === 0) return;
-          const t = i;
-        tl.to(cards[i - 1], {
-  opacity: 0,
-  y: -50,
-  scale: 0.92,
-  pointerEvents: "none",
-  duration: 0.8,
-}, t);
-       tl.to(card, {
-  opacity: 1,
-  y: 0,
-  scale: 1,
-  pointerEvents: "auto",
-  duration: 0.8,
-}, t);
-        });
-
-        requestAnimationFrame(() => ScrollTrigger.refresh());
-      }, wrapper);
-
-      (wrapper as any)._gsapCtx = ctx;
-    });
-
-    return () => {
-      cancel();
-      const ctx = (wrapper as any)._gsapCtx;
-      if (ctx) ctx.revert();
-    };
-  }, []);
 
   return (
     <section className="relative bg-white overflow-x-hidden isolate">
-        
-      {/* ── Stacking category cards ── */}
-      <div
-        ref={wrapperRef}
-        className="relative h-screen overflow-hidden bg-gradient-to-b from-violet-50 to-white isolate"
-      >
-        {/* Floating badge above the stacking cards — needs its own z-index and a
-            centering wrapper since it's a static sibling of the absolute, full-screen
-            card layers below (plain text-center on the pill alone has no effect,
-            it's not the pill that needs centering, it's the pill within its row). */}
-        <div className="pointer-events-none absolute top-6 left-0 z-50 flex w-full justify-center px-4">
+
+      {/* ── Category cards ── */}
+      <div className="relative overflow-hidden bg-gradient-to-b from-violet-50 to-white isolate py-9 md:py-12">
+        <div className="flex w-full justify-center px-4 mb-8">
           <span className="max-w-full truncate whitespace-nowrap text-[10px] sm:text-sm md:text-base lg:text-[20px] font-black uppercase tracking-[1px] sm:tracking-[2px] lg:tracking-[3px] px-3 py-1 rounded-full border border-violet-200 bg-violet-100 text-violet-700">
             C3iHub IIT Kanpur Certification Program
           </span>
@@ -139,8 +48,7 @@ gsap.set(cards[0], {
         {/* Empty state */}
         {items.length === 0 && (
           <div
-            className="ss-card absolute top-0 left-0 w-full h-full flex items-center justify-center pt-[98px] px-[18px] pb-[18px] md:pt-[116px] md:px-9 md:pb-9 [will-change:transform,opacity]"
-            style={{ zIndex: 1 }}
+            className="flex items-center justify-center px-[18px] pb-[18px] md:px-9 md:pb-9"
           >
             <div
               className="relative overflow-hidden w-full max-w-[1280px] h-[75vh] lg:h-[78vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col justify-center items-center gap-4 p-8 md:p-10 lg:p-14"
@@ -166,11 +74,10 @@ gsap.set(cards[0], {
           return (
             <div
               key={cat.id}
-              className="ss-card absolute top-0 left-0 w-full h-full flex items-center justify-center pt-[98px] px-[18px] pb-[18px] md:pt-[116px] md:px-9 md:pb-9 [will-change:transform,opacity]"
-              style={{ zIndex: i + 1 }}
+              className="flex items-center justify-center px-[18px] pb-[18px] md:px-9 md:pb-9"
             >
               <div
-                className="relative overflow-hidden w-full max-w-[1280px] h-[75vh] lg:h-[78vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col lg:flex-row"
+                className="relative overflow-hidden w-full max-w-[1280px] h-[80vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col lg:flex-row"
                 style={{ background: bg }}
               >
                 {/* Image — stacked block on mobile/tablet, absolute side panel from lg up */}
@@ -238,11 +145,10 @@ gsap.set(cards[0], {
         })}
         {/* Final Certificate Card */}
         <div
-          className="ss-card absolute top-0 left-0 w-full h-full flex items-center justify-center pt-[98px] px-[18px] pb-[18px] md:pt-[116px] md:px-9 md:pb-9 [will-change:transform,opacity]"
-          style={{ zIndex: items.length + 1 }}
+          className="flex items-center justify-center px-[18px] pb-[18px] md:px-9 md:pb-9"
         >
           <div
-            className="relative overflow-hidden w-full max-w-[1280px] h-[75vh] lg:h-[78vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col lg:flex-row"
+            className="relative overflow-hidden w-full max-w-[1280px] h-[80vh] rounded-3xl md:rounded-[36px] border border-white/80 shadow-[0_12px_50px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,0.9)] flex flex-col lg:flex-row"
             style={{ background: "#F5F3FF" }}
           >
             {/* Image — stacked block on mobile/tablet, absolute side panel from lg up */}
@@ -288,8 +194,8 @@ gsap.set(cards[0], {
                 </p>
                 <ul className="m-0 flex flex-col gap-1.5">
                   {[
-                    "Jointly issued by MindLyft AI & IIT Kanpur",
-                    "Digitally verifiable certificate",
+                    "Every skill earned, every hour counted",
+                    "Sealed with authority, built on real learning",
                    ].map((point) => (
                     <li key={point} className="flex items-center gap-2.5 text-base text-gray-600">
                       <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-100">

@@ -1,16 +1,21 @@
 import { AnimateIn } from "@/components/ui/AnimateIn";
+import { Subheading } from "@/components/ui/Subheading";
+import { Section } from "@/components/ui/Section";
 
 export default function Members() {
   return (
-   <section className="py-10 bg-white">
+   <Section>
      <div className="text-center mb-16">
           <AnimateIn delay={100} direction="right">
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
-              Our Members&nbsp;
-              <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-               Work With
-              </span>
-            </h2>
+            <Subheading
+              as="h2"
+              centered
+              color="violet"
+              size="xl"
+              className="leading-tight mb-4"
+              text="Our Members"
+              highlight="Work With"
+            />
           </AnimateIn>
           <AnimateIn delay={200} direction="right">
             <p className="text-base text-gray-500 leading-relaxed max-w-2xl mx-auto">
@@ -38,7 +43,7 @@ export default function Members() {
         </div>
       </div>
 
-     
-    </section>
+
+    </Section>
   );
 }
