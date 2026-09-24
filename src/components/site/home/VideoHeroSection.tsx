@@ -122,7 +122,7 @@ export default function VideoHeroSection() {
             <span className="bg-gradient-to-r from-violet-300 to-blue-300 bg-clip-text text-transparent">
               AI course in Pune
             </span>{" "}
-            — IIT Kanpur-backed training in AI, data analytics and cybersecurity
+            — C3iHub IIT Kanpur-backed training in AI, data analytics and cybersecurity
           </h1>
 
           <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-white/90 drop-shadow-[0_1px_10px_rgba(0,0,0,0.6)]">

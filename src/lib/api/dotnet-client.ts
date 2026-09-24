@@ -17,6 +17,17 @@ export const REVALIDATE_SECONDS = 0;
 // their own cache window so repeat visits are served instantly instead.
 export const COURSE_DETAIL_REVALIDATE_SECONDS = 300;
 
+// Home page sections backed by rarely-changing admin data (partners,
+// testimonials, tools) are cached for this long. Admin create/update/delete
+// through the backend proxy busts the matching tag, so edits still show up
+// immediately. Tag names match the API path segment (/v1/<tag>).
+export const HOME_SECTION_REVALIDATE_SECONDS = 3600;
+export const HOME_CACHE_TAGS = ["partners", "testimonials", "tools"] as const;
+export type HomeCacheTag = (typeof HOME_CACHE_TAGS)[number];
+
+export const cachedHomeSection = (tag: HomeCacheTag) =>
+  ({ next: { revalidate: HOME_SECTION_REVALIDATE_SECONDS, tags: [tag] } }) as RequestInit;
+
 // The local .NET dev server uses the ASP.NET Core self-signed dev cert (dotnet dev-certs),
 // which Node's fetch won't trust. Skip cert verification only for that local HTTPS target.
 export const insecureDispatcher =

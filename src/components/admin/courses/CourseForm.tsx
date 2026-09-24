@@ -25,7 +25,9 @@ import { LANGUAGES }               from "@/constants/languages";
 import { COURSE_STATUSES }         from "@/constants/course";
 
 // ─── Instructor dropdown ───────────────────────────────────────────────────────
-type EmployeeOption = { id: string; employeeId: number; name: string; designation?: string };
+type EmployeeOption = { id: string; employeeId: number; name: string; designation?: string; category: string };
+
+const INSTRUCTOR_CATEGORIES = ["Instructor", "IIT Instructor", "Upskill"] as const;
 
 function useActiveEmployees() {
   const [options, setOptions] = useState<EmployeeOption[]>([]);
@@ -36,13 +38,14 @@ function useActiveEmployees() {
       .then((data) =>
         setOptions(
           data.employees
-            .filter((e) => e.category?.toLowerCase() === "instructor")
             .map((e) => ({
               id:          e.id,
               employeeId:  e.employeeId,
               name:        e.name,
               designation: e.designation,
+              category:    INSTRUCTOR_CATEGORIES.find((c) => c.toLowerCase() === e.category?.trim().toLowerCase()) ?? "",
             }))
+            .filter((e) => e.category !== "")
         )
       )
       .catch(() => {})
@@ -413,11 +416,19 @@ export function CourseForm({ mode, defaultValues, onSubmit, onCancel, isLoading 
             <option value="">
               {loadingEmployees ? "Loading instructors…" : "No instructor"}
             </option>
-            {employeeOptions.map((emp) => (
-              <option key={emp.id} value={emp.employeeId}>
-                {emp.name}{emp.designation ? ` — ${emp.designation}` : ""}
-              </option>
-            ))}
+            {INSTRUCTOR_CATEGORIES.map((cat) => {
+              const group = employeeOptions.filter((emp) => emp.category === cat);
+              if (group.length === 0) return null;
+              return (
+                <optgroup key={cat} label={cat === "Upskill" ? "UpSkill Instructor" : cat}>
+                  {group.map((emp) => (
+                    <option key={emp.id} value={emp.employeeId}>
+                      {emp.name}{emp.designation ? ` — ${emp.designation}` : ""}
+                    </option>
+                  ))}
+                </optgroup>
+              );
+            })}
           </select>
           {errors.instructorId && <p className="text-xs text-destructive">{errors.instructorId.message}</p>}
         </div>

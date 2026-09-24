@@ -1,4 +1,4 @@
-import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
+import { dotnetFetch, cachedHomeSection } from "@/lib/api/dotnet-client";
 import type { Partner } from "@/types/admin/partner";
 import OurClientsClient from "./OurClientsClient";
 
@@ -11,7 +11,7 @@ async function getActivePartners(): Promise<Partner[]> {
   try {
     const envelope = await dotnetFetch<PartnersEnvelope>(
       "/v1/partners?status=Active",
-      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
+      cachedHomeSection("partners"),
     );
     const partners = envelope.isSuccess ? (envelope.data ?? []) : [];
     return Array.isArray(partners) ? partners : [];

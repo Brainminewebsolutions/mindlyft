@@ -51,14 +51,18 @@ interface Props    { user?: NavUser | null; height?: number; courses?: NavCourse
 
 const NAV: NavItem[] = [
   { label: "Home",       href: "/"           },
+  { label: "Academy",   href: "/academy", children: [
+    { label: "IIT Programs", href: "/iit"       },
+    { label: "Workshops",    href: "/workshops" },
+    { label: "Webinars",     href: "/webinars"  },
+  ]},
+  { label: "Courses",   href: "/courses"    }, // rendered via CoursesDesktopItem / mobile accordion
+  { label: "Blogs",      href: "/blogs"      },
+  { label: "Resources",  href: "/resources"  },
   { label: "About Us",   href: "/about", children: [
     { label: "Our Journey", href: "/our-journey" },
   ]},
-  { label: "Courses",    href: "/courses"    }, // rendered via CoursesDesktopItem / mobile accordion
-  { label: "Blogs",      href: "/blogs"      },
-  { label: "Resources",  href: "/resources"  },
-  { label: "Placements", href: "#" },
-  { label: "Contact",    href: "/contact"    },
+  { label: "Contact",   href: "/contact"    },
 ];
 
 // ── Courses dropdown (desktop) ────────────────────────────────────────────────

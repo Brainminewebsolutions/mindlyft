@@ -1,4 +1,4 @@
-import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
+import { dotnetFetch, cachedHomeSection } from "@/lib/api/dotnet-client";
 import OurTools from "@/components/site/home/OurTools";
 
 type ToolApiItem = {
@@ -28,7 +28,7 @@ async function getActiveTools(): Promise<CarouselCard[]> {
   try {
     const envelope = await dotnetFetch<ToolsEnvelope>(
       "/v1/tools?status=ACTIVE",
-      { next: { revalidate: REVALIDATE_SECONDS } } as RequestInit,
+      cachedHomeSection("tools"),
     );
     if (!envelope.isSuccess || !Array.isArray(envelope.data)) return [];
     return envelope.data.map((t) => ({

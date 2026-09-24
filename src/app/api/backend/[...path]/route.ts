@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { insecureDispatcher } from "@/lib/api/dotnet-client";
+import { revalidateTag } from "next/cache";
+import { insecureDispatcher, HOME_CACHE_TAGS } from "@/lib/api/dotnet-client";
 
 // Same-origin passthrough so browser code never has to call the .NET API
 // directly (avoids mixed-content blocking when the API is plain http but
@@ -24,6 +25,13 @@ async function proxy(req: NextRequest, path: string[]) {
       redirect: "manual",
       ...(insecureDispatcher ? { dispatcher: insecureDispatcher } : {}),
     } as RequestInit);
+
+    if (hasBody && res.ok) {
+      const segments = path.map((p) => p.toLowerCase());
+      for (const tag of HOME_CACHE_TAGS) {
+        if (segments.includes(tag)) revalidateTag(tag);
+      }
+    }
 
     return new NextResponse(res.body, {
       status: res.status,
