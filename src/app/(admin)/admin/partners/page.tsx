@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Handshake, Plus, Trash2, Pencil, ExternalLink } from "lucide-react";
@@ -123,9 +124,9 @@ export default function AdminPartnersPage() {
                 <div key={p.id} className="flex items-center gap-4 px-6 py-4 hover:bg-muted/30 transition-colors">
 
                   {/* Logo */}
-                  <div className="h-12 w-12 shrink-0 rounded-lg border border-border bg-muted overflow-hidden flex items-center justify-center">
+                  <div className="relative h-12 w-12 shrink-0 rounded-lg border border-border bg-muted overflow-hidden flex items-center justify-center">
                     {p.image
-                      ? <img src={p.image} alt={p.name} className="h-full w-full object-contain p-1" />
+                      ? <Image src={p.image} alt={p.name} fill sizes="48px" className="object-contain p-1" />
                       : <Handshake className="h-5 w-5 text-muted-foreground/40" />
                     }
                   </div>

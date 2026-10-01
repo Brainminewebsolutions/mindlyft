@@ -91,12 +91,12 @@ export default async function MindlyftAICourseDetailPage({ params }: { params: P
           {highlights.length > 0 && <div className="mb-10"><Skills highlights={highlights} color={COLOR} bgColor={BG_COLOR} /></div>}
           {course.description && (
             <div className="mb-10">
-              <p className={sectionTitle}>About This Course</p>
+              <h2 className={sectionTitle}>About This Course</h2>
               <p className="m-0 text-[0.95rem] leading-[1.85] text-[#555]">{course.description}</p>
             </div>
           )}
           <div className="mb-10">
-            <p className={sectionTitle}>Course Info</p>
+            <h2 className={sectionTitle}>Course Info</h2>
             <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-3.5">
               {[{ Icon: User, label: "Instructor", value: course.instructor }, { Icon: Globe, label: "Language", value: course.language }, { Icon: Clock, label: "Duration", value: `${course.duration} hours` }, { Icon: ModeIcon, label: "Mode", value: course.mode }].map(({ Icon, label, value }) => (
                 <div key={label} className="rounded-[14px] border border-[#6c63ff]/10 bg-white p-[18px] shadow-[0_2px_12px_rgba(108,99,255,0.05)]">
@@ -154,7 +154,7 @@ export default async function MindlyftAICourseDetailPage({ params }: { params: P
       {chapters.length > 0 && <div className="mx-auto max-w-[1100px] px-[6vw] pb-10"><Syllabus chapters={chapters} totalLessons={totalLessons} color={COLOR} bgColor={BG_COLOR} /></div>}
       {instructor && (
         <div className="mx-auto max-w-[1100px] px-[6vw] pb-[100px]">
-          <div className="mb-6 border-b-2 pb-3.5" style={{ borderColor: `${COLOR}22` }}><p className={`${sectionTitle} m-0 border-none p-0`}>Meet Your Instructor</p></div>
+          <div className="mb-6 border-b-2 pb-3.5" style={{ borderColor: `${COLOR}22` }}><h2 className={`${sectionTitle} m-0 border-none p-0`}>Meet Your Instructor</h2></div>
           <InstructorProfile instructor={instructor} color={COLOR} bgColor="#ffffff" />
         </div>
       )}

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { User } from "lucide-react";
 import { toUploadUrl } from "@/lib/api/image-url";
 
@@ -32,9 +33,11 @@ export default function InstructorProfile({
     >
       {/* Photo */}
       {avatarUrl ? (
-        <img
+        <Image
           src={avatarUrl}
           alt={instructor.name}
+          width={96}
+          height={96}
           className="w-24 h-24 rounded-2xl object-cover shrink-0"
           style={{ border: `2px solid ${color}33` }}
         />

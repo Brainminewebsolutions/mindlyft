@@ -99,7 +99,7 @@ export default function Academy() {
         style={{ backgroundImage: "url('/assets/img/hero/hero-bg-3.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/30 pointer-events-none" />
-        <div className="relative z-10 max-w-2xl">
+        <div className="relative z-10 max-w-2xl mx-auto md:mx-0 text-center md:text-left">
           <AnimateIn delay={0}>
             <LineBadge className="mb-6">India&apos;s AI-First Learning Academy · Pune</LineBadge>
           </AnimateIn>
@@ -112,12 +112,12 @@ export default function Academy() {
             </h1>
           </AnimateIn>
           <AnimateIn delay={200}>
-            <p className="text-lg text-gray-600 leading-relaxed max-w-lg mb-10">
+            <p className="text-lg text-gray-600 leading-relaxed max-w-lg mx-auto md:mx-0 mb-10">
               Structured programs in Artificial Intelligence, Data Science, and Generative AI — designed for professionals, freshers, and IIT aspirants who want real outcomes, not just certificates.
             </p>
           </AnimateIn>
           <AnimateIn delay={300}>
-            <div className="flex flex-wrap gap-3 mb-14">
+            <div className="flex flex-wrap justify-center md:justify-start gap-3 mb-14">
               <Link href="/courses" className="rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition shadow-lg shadow-violet-200">
                 Explore Programs
               </Link>
@@ -147,14 +147,14 @@ export default function Academy() {
           <div>
             <AnimateIn delay={0} direction="left"><LineBadge className="mb-5">The Challenge</LineBadge></AnimateIn>
             <AnimateIn delay={100} direction="left">
-              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-6">
+              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-6 text-center md:text-left">
                 Your AI ambitions are stuck{" "}
                 <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
                   in the wrong classroom.
                 </span>
               </h2>
             </AnimateIn>
-            <AnimateIn delay={200} direction="left">
+            <AnimateIn delay={200} direction="left" className="text-center md:text-left">
               <p className="text-base text-gray-500 leading-relaxed mb-4">
                 Generic online courses give you theory without context. University programs take years without guaranteeing relevance. Bootcamps rush you through without depth.
               </p>

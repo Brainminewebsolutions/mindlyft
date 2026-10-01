@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { Subheading } from "@/components/ui/Subheading";
 import { Section } from "@/components/ui/Section";
 
@@ -85,15 +86,21 @@ type Category = {
 
 type OurLeadersProps = {
   categories: Category[];
+  /** Overrides for the section heading/intro; defaults keep the original "Meet Our Leaders" copy. */
+  headingText?:      string;
+  headingHighlight?: string;
+  intro?:            string;
 };
 
 function LeaderAvatar({ name, imageUrl }: { name: string; imageUrl: string }) {
   if (imageUrl) {
     return (
-      <img
+      <Image
         src={imageUrl}
         alt={name}
-        className="w-full h-full object-cover object-top"
+        fill
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        className="object-cover object-top"
       />
     );
   }
@@ -268,7 +275,13 @@ function DefaultCategory({ category }: { category: Category }) {
   );
 }
 
-export default function OurLeaders({ categories, bg = "bg-white" }: OurLeadersProps & { bg?: string }) {
+export default function OurLeaders({
+  categories,
+  bg = "bg-white",
+  headingText = "Meet Our",
+  headingHighlight = "Leaders",
+  intro = "Our experienced and dedicated team of educators is committed to helping every student reach their full potential.",
+}: OurLeadersProps & { bg?: string }) {
   if (categories.length === 0) return null;
 
   return (
@@ -286,14 +299,11 @@ export default function OurLeaders({ categories, bg = "bg-white" }: OurLeadersPr
             color="black"
             size="xl"
             highlightClassName="!text-blue-600"
-            text="Meet Our"
-            highlight="Leaders"
+            text={headingText}
+            highlight={headingHighlight}
           />
           <div className="w-16 h-1 bg-blue-600 rounded-full mx-auto" />
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-            Our experienced and dedicated team of educators is committed to
-            helping every student reach their full potential.
-          </p>
+          <p className="text-gray-500 text-lg max-w-3xl mx-auto">{intro}</p>
         </div>
 
         {/* Categories */}

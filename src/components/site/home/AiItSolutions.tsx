@@ -9,7 +9,7 @@ export default function AiItSolutions(){
          <div className="cta-area style-two bg-f relative z-[1] ptb-130 round-20">
                 <div className="container style-one">
                   <div className="flex flex-wrap items-center">
-                    <div className="w-full md:w-1/2 2xl:w-5/12 2xl:pr-12 md:mb-[30px]">
+                    <div className="w-full md:w-1/2 2xl:w-5/12 2xl:pr-12 md:mb-[30px] text-center md:text-left">
                       <SectionBadge variant="dark">AI &amp; IT Solutions</SectionBadge>
                       <AnimateIn direction="up" delay={300}>
                         <Subheading

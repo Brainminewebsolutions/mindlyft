@@ -212,6 +212,58 @@ function DesktopItem({ item, pathname, scrolled }: { item: NavItem; pathname: st
 
 // ── Mobile nav (accordion) ────────────────────────────────────────────────────
 
+// Parent row for items with a submenu: the label navigates, the chevron
+// button beside it toggles the submenu (one tap target can't do both).
+function MobileParentRow({
+  item,
+  highlighted,
+  isOpen,
+  onToggle,
+  onNavigate,
+}: {
+  item: NavItem;
+  highlighted: boolean;
+  isOpen: boolean;
+  onToggle: () => void;
+  onNavigate: () => void;
+}) {
+  return (
+    <div
+      className={cn(
+        "flex items-center rounded-lg transition-colors",
+        highlighted ? "bg-indigo-50" : "hover:bg-gray-100"
+      )}
+    >
+      <Link
+        href={item.href}
+        onClick={onNavigate}
+        className={cn(
+          "flex-1 px-3 py-2.5 text-[15px] font-semibold transition-colors",
+          highlighted ? "text-indigo-600" : "text-gray-700 hover:text-gray-900"
+        )}
+      >
+        {item.label}
+      </Link>
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        aria-label={`${isOpen ? "Collapse" : "Expand"} ${item.label} menu`}
+        className={cn(
+          "flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors",
+          highlighted ? "text-indigo-600" : "text-gray-500 hover:text-gray-900"
+        )}
+      >
+        <ChevronDown
+          size={16}
+          strokeWidth={2.2}
+          className={cn("transition-transform duration-200", isOpen && "rotate-180")}
+        />
+      </button>
+    </div>
+  );
+}
+
 function MobileNav({
   pathname,
   onClose,
@@ -235,23 +287,13 @@ function MobileNav({
         if (item.label === "Courses") {
           return (
             <li key={item.label}>
-              <button
-                type="button"
-                onClick={() => setOpenItem(isOpen ? null : item.label)}
-                className={cn(
-                  "flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-[15px] font-semibold transition-colors",
-                  isActive || isOpen
-                    ? "text-indigo-600 bg-indigo-50"
-                    : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                )}
-              >
-                Courses
-                <ChevronDown
-                  size={14}
-                  strokeWidth={2.2}
-                  className={cn("transition-transform duration-200", isOpen && "rotate-180")}
-                />
-              </button>
+              <MobileParentRow
+                item={item}
+                highlighted={!!isActive || isOpen}
+                isOpen={isOpen}
+                onToggle={() => setOpenItem(isOpen ? null : item.label)}
+                onNavigate={onClose}
+              />
 
               {isOpen && (
                 <ul className="mt-0.5 ml-3 pl-3 border-l-2 border-indigo-100 space-y-0.5 pb-1">
@@ -297,23 +339,13 @@ function MobileNav({
         if (item.children?.length) {
           return (
             <li key={item.label}>
-              <button
-                type="button"
-                onClick={() => setOpenItem(isOpen ? null : item.label)}
-                className={cn(
-                  "flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-[15px] font-semibold transition-colors",
-                  isActive || isOpen
-                    ? "text-indigo-600 bg-indigo-50"
-                    : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                )}
-              >
-                {item.label}
-                <ChevronDown
-                  size={14}
-                  strokeWidth={2.2}
-                  className={cn("transition-transform duration-200", isOpen && "rotate-180")}
-                />
-              </button>
+              <MobileParentRow
+                item={item}
+                highlighted={!!isActive || isOpen}
+                isOpen={isOpen}
+                onToggle={() => setOpenItem(isOpen ? null : item.label)}
+                onNavigate={onClose}
+              />
               {isOpen && (
                 <ul className="mt-0.5 ml-3 pl-3 border-l-2 border-indigo-100 space-y-0.5 pb-1">
                   {item.children.map(child => (

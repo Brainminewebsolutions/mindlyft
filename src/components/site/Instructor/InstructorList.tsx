@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { User } from "lucide-react";
 import { toUploadUrl } from "@/lib/api/image-url";
 import type { InstructorProfileData } from "./InstructorProfile";
@@ -22,7 +23,7 @@ export default function InstructorList({
       <div className="w-full">
 
         {/* Heading */}
-        <div className="mb-10">
+        <div className="mb-10 text-center md:text-left">
           <h2 className="text-2xl md:text-4xl font-black mb-2" style={{ color }}>
             {title}
           </h2>
@@ -43,10 +44,12 @@ export default function InstructorList({
               >
                 {/* Full image fills card */}
                 {avatarUrl ? (
-                  <img
+                  <Image
                     src={avatarUrl}
                     alt={instructor.name}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 ) : (
                   <div

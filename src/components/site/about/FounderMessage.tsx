@@ -67,10 +67,13 @@ export default function FounderMessage({
 
             {/* Signature */}
             {signature ? (
-              <img
+              <Image
                 src={signature}
                 alt="Signature"
-                className="h-14 object-contain object-left opacity-80"
+                width={0}
+                height={0}
+                sizes="240px"
+                className="h-14 w-auto object-contain object-left opacity-80"
               />
             ) : (
               <div>

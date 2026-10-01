@@ -1,3 +1,4 @@
+import Image from "next/image";
 type ContactHeroProps = {
   title?: string;
   tagline?: string;
@@ -36,10 +37,13 @@ export default function ContactHero({
 
       {/* Right — portrait image, banner on mobile/tablet, full-height 40% side panel at lg+ */}
       <div className="relative h-64 w-full overflow-hidden sm:h-80 lg:h-auto lg:w-[40%]">
-        <img
+        <Image
           src="/Contact.jpeg"
           alt="MindlyftAI Office"
-          className="h-full w-full object-cover object-center"
+          fill
+          priority
+          sizes="(max-width: 1024px) 100vw, 40vw"
+          className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1e1b4b]/30 to-transparent" />
       </div>

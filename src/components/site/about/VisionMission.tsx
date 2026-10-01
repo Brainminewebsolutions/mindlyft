@@ -48,8 +48,8 @@ export default function VisionMission({ bg = "bg-white" }: { bg?: string }) {
             </h3>
 
             <p className="text-gray-600 leading-8">
-              To transform how businesses think, act, and grow by making
-              intelligent technology accessible, practical, and empowering.
+              To make artificial intelligence practical, accessible and genuinely
+              useful — for the people learning it and the organisations adopting it.
             </p>
           </div>
 
@@ -64,38 +64,27 @@ export default function VisionMission({ bg = "bg-white" }: { bg?: string }) {
             <ul className="space-y-3 text-gray-600">
               <li className="flex gap-3">
                 <span className="text-violet-500">✓</span>
-                <span>
-                  Simplify complex business challenges with intelligent
-                  automation
-                </span>
+                <span>Teach AI through building, not memorising</span>
+              </li>
+
+              <li className="flex gap-3">
+                <span className="text-violet-500">✓</span>
+                <span>Keep curriculum aligned with what the industry actually hires for</span>
+              </li>
+
+              <li className="flex gap-3">
+                <span className="text-violet-500">✓</span>
+                <span>Build secure, scalable AI solutions that deliver measurable results</span>
               </li>
 
               <li className="flex gap-3">
                 <span className="text-violet-500">✓</span>
                 <span>
-                  Build secure, scalable, and user-centric AI solutions
-                </span>
-              </li>
-
-              <li className="flex gap-3">
-                <span className="text-violet-500">✓</span>
-                <span>
-                  Deliver products that drive measurable outcomes
-                </span>
-              </li>
-
-              <li className="flex gap-3">
-                <span className="text-violet-500">✓</span>
-                <span>
-                  Enable organisations to thrive in the age of smart technology
+                  Make quality AI education available outside the usual metro and
+                  elite-institution routes
                 </span>
               </li>
             </ul>
-
-            <p className="mt-6 text-gray-600 leading-7 border-t pt-5">
-              Every product we build aims to amplify human potential through
-              practical AI innovation.
-            </p>
           </div>
         </div>
         {/* Stats Section */}

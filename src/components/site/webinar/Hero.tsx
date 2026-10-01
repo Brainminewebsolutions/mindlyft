@@ -15,7 +15,7 @@ export default function Hero() {
     >
       <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/30 pointer-events-none" />
 
-      <div className="relative z-10 max-w-2xl">
+      <div className="relative z-10 max-w-2xl mx-auto md:mx-0 text-center md:text-left">
         <AnimateIn delay={0}>
           <LineBadge className="mb-6">Live &amp; On-Demand Webinars</LineBadge>
         </AnimateIn>
@@ -30,14 +30,14 @@ export default function Hero() {
         </AnimateIn>
 
         <AnimateIn delay={200}>
-          <p className="text-lg text-gray-600 leading-relaxed max-w-md mb-10">
+          <p className="text-lg text-gray-600 leading-relaxed max-w-md mx-auto md:mx-0 mb-10">
             Real sessions, real insights — from knowledge deep-dives to career
             guidance, our community webinars are built to spark your next big breakthrough.
           </p>
         </AnimateIn>
 
         <AnimateIn delay={300}>
-          <div className="flex flex-wrap gap-3 mb-14">
+          <div className="flex flex-wrap justify-center md:justify-start gap-3 mb-14">
             <Link
               href="#sessions"
               className="rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition shadow-lg shadow-violet-200"

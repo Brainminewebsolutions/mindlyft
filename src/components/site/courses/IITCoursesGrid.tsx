@@ -133,7 +133,7 @@ export default function IITCoursesGrid({ courses, bg = "bg-white" }: { courses: 
           <LineBadge className="mb-5">Explore Our Courses</LineBadge>
         </AnimateIn>
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
-          <div>
+          <div className="text-center md:text-left">
             <AnimateIn delay={100} direction="left">
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
                 Find your{" "}

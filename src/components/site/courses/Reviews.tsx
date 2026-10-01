@@ -114,7 +114,7 @@ export default async function Reviews() {
       <div className="max-w-5xl mx-auto">
 
         {/* Heading */}
-        <div className="mb-10">
+        <div className="mb-10 text-center md:text-left">
           <h2 className="text-2xl md:text-4xl font-black text-violet-700 mb-2">
             Student Reviews
           </h2>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
@@ -11,25 +12,34 @@ export default function Innovation() {
       {/* About Us Section Start */}
       <section className="about-area style-three bg-black relative overflow-hidden z-[1] ptb-130">
         {/* Top Shape */}
-        <img
+        <Image
           src="/assets/img/about/about-shape-1.png"
           alt="Shape"
-          className="section-shape-one absolute top-0 right-0 z-[-1]"
+          width={0}
+          height={0}
+          sizes="50vw"
+          className="section-shape-one absolute top-0 right-0 z-[-1] h-auto w-auto"
         />
 
         {/* Bottom Shape */}
-        <img
+        <Image
           src="/assets/img/about/about-shape-2.png"
           alt="Shape"
-          className="section-shape-one absolute bottom-0 left-0 z-[-1]"
+          width={0}
+          height={0}
+          sizes="50vw"
+          className="section-shape-one absolute bottom-0 left-0 z-[-1] h-auto w-auto"
         />
 
-        <div className="container style-one relative">
+        <div className="container style-one relative text-center md:text-left">
           {/* Main Thumbnail */}
-          <img
+          <Image
             src="/assets/img/about/about-thumb-2.png"
             alt="About Thumbnail"
-            className="about-thumb round-10 move-left"
+            width={0}
+            height={0}
+            sizes="50vw"
+            className="about-thumb round-10 move-left h-auto w-auto"
             suppressHydrationWarning
           />
 
@@ -43,10 +53,13 @@ export default function Innovation() {
               <>
                 Building the Future With{" "}
                 <span className="thumb round-oval">
-                  <img
+                  <Image
                     src="/assets/img/about/about-thumb-4.jpg"
                     alt="Thumbnail"
-                    className="round-oval"
+                    width={0}
+                    height={0}
+                    sizes="200px"
+                    className="round-oval h-auto w-auto"
                   />
                 </span>{" "}
                 AI-Powered Learning and Cybersecurity That Evolves{" "}
@@ -88,10 +101,13 @@ export default function Innovation() {
         </div>
 
         {/* Bottom Image */}
-        <img
+        <Image
           src="/assets/img/about/about-img-3.png"
           alt="About Image"
-          className="about-img absolute bottom-0 z-[1] move-right"
+          width={0}
+          height={0}
+          sizes="50vw"
+          className="about-img absolute bottom-0 z-[1] move-right h-auto w-auto"
           suppressHydrationWarning
         />
       </section>

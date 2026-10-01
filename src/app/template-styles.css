@@ -119,10 +119,14 @@ a:focus {
   box-shadow: none;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: inline-block;
+/* Layered so Tailwind utilities (h-full, block, …) still win on other pages —
+   this sheet stays loaded after client-side navigation away from home. */
+@layer base {
+  img {
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
+  }
 }
 
 h1,

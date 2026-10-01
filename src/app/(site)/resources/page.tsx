@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   GraduationCap, ArrowRight, Newspaper, Globe, Lightbulb,
@@ -56,10 +57,13 @@ export default async function ResourcesPage() {
 
       {/* ── Hero ── */}
       <div className="relative h-[60vh] sm:h-[70vh] md:h-screen overflow-hidden">
-        <img
+        <Image
           src={HERO_IMAGE}
           alt="Resources"
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-violet-950/75 via-violet-900/35 to-transparent" />
 

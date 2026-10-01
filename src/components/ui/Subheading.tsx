@@ -9,7 +9,7 @@ interface SubheadingProps {
   centered?:           boolean;
   className?:          string;
   highlightClassName?: string;
-  as?:                 "h2" | "h3";
+  as?:                 "h1" | "h2" | "h3";
   color?:              SubheadingColor;
   size?:               SubheadingSize;
 }
@@ -49,7 +49,8 @@ export function Subheading({
         "font-bold",
         SIZE[size],
         TEXT_COLOR[color],
-        centered && "mx-auto text-center",
+        // Non-centred headings still centre on mobile; className can override.
+        centered ? "mx-auto text-center" : "text-center md:text-left",
         className
       )}
     >

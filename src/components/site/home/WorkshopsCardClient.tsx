@@ -20,7 +20,7 @@ function ProjectCard({ webinar, index }: { webinar: Webinar | null; index: numbe
   const imgSrc = webinar ? toUploadUrl(webinar.image ?? "") : null;
 
   return (
-    <div className="flex flex-col w-[320px] sm:w-[360px] flex-shrink-0 h-[480px] overflow-hidden rounded-2xl group cursor-pointer bg-white border border-violet-100">
+    <div className="flex flex-col w-[320px] sm:w-[360px] flex-shrink-0 h-[480px] lg:h-[80vh] overflow-hidden rounded-2xl group cursor-pointer bg-white border border-violet-100">
 
       {/* Image — 40% of card height */}
       <div className="relative h-[40%] w-full shrink-0 overflow-hidden">
@@ -123,27 +123,28 @@ export default function WorkshopsCardClient({ webinars }: { webinars: Webinar[] 
     <div className="bg-white py-16 overflow-hidden">
 
       {/* Section Header — matches Project layout */}
-      <div className="max-w-6xl mx-auto px-6 mb-10">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div>
+      <div className="max-w-6xl mx-auto px-6 mb-14 md:mb-20">
+        <div className="flex justify-center">
+          <div className="w-full text-center">
             <SectionBadge variant="dark">Workshops &amp; Webinars</SectionBadge>
             <p className="text-sm sm:text-base font-semibold uppercase tracking-wide text-violet-600">
               Free AI Workshops and Webinars in Pune
             </p>
             <Subheading
+              centered
               className="py-4 max-w-xl"
               text="Hands-on sessions to"
               highlight="accelerate your skills."
             />
-            <div className="w-16 h-1 bg-gradient-to-r from-violet-500 to-blue-500 rounded-full mt-4" />
-            <p className="mt-4 max-w-xl text-gray-600">
+            <div className="w-16 h-1 bg-gradient-to-r from-violet-500 to-blue-500 rounded-full mt-4 mx-auto" />
+            <p className="mt-4 max-w-2xl mx-auto text-gray-600">
               Not sure which program is right for you? Start with a free workshop. These are
               hands-on sessions led by the same faculty who teach our full programs, so you get a
               real sense of our teaching style, our labs and our pace before you commit to
               anything. Attend at our Akurdi campus or join live online.
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-4">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/workshops"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:opacity-90 active:scale-95"
@@ -157,22 +158,6 @@ export default function WorkshopsCardClient({ webinars }: { webinars: Webinar[] 
                 View Upcoming Dates
               </Link>
             </div>
-          </div>
-
-          {/* Prev / Next buttons */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => scroll("left")}
-              className="flex items-center justify-center w-11 h-11 rounded-full border-2 border-gray-200 text-gray-500 hover:border-violet-500 hover:text-violet-600 transition-colors duration-200"
-            >
-              <ArrowLeft size={18} />
-            </button>
-            <button
-              onClick={() => scroll("right")}
-              className="flex items-center justify-center w-11 h-11 rounded-full border-2 border-gray-200 text-gray-500 hover:border-violet-500 hover:text-violet-600 transition-colors duration-200"
-            >
-              <ArrowRight size={18} />
-            </button>
           </div>
         </div>
       </div>

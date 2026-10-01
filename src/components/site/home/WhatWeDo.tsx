@@ -184,6 +184,7 @@ export default function WhatWeDo() {
       <div className="mx-auto max-w-[1200px] px-6 pt-16 text-center lg:px-12">
         <SectionBadge variant = "dark">What We Do</SectionBadge>
         <Subheading
+          centered
           className="m-0 leading-[1.2] tracking-[-0.03em]"
           text="Explore Our Top-Class Services and"
           highlight="Unlock Your True Potential."

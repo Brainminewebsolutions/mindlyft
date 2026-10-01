@@ -80,7 +80,7 @@ export default async function OurJourneyPage() {
         style={{ backgroundImage: "url('/assets/img/hero/hero-bg-3.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/30 pointer-events-none" />
-        <div className="relative z-10 max-w-2xl">
+        <div className="relative z-10 max-w-2xl mx-auto md:mx-0 text-center md:text-left">
           <AnimateIn delay={0}><LineBadge className="mb-6">Our Journey</LineBadge></AnimateIn>
           <AnimateIn delay={100}>
             <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight mb-6">
@@ -91,12 +91,12 @@ export default async function OurJourneyPage() {
             </h1>
           </AnimateIn>
           <AnimateIn delay={200}>
-            <p className="text-lg text-gray-600 leading-relaxed max-w-md mb-10">
+            <p className="text-lg text-gray-600 leading-relaxed max-w-md mx-auto md:mx-0 mb-10">
               From a small idea in Pune to a growing national platform — here&apos;s the story of how MindLyft AI came to be and where it&apos;s headed.
             </p>
           </AnimateIn>
           <AnimateIn delay={300}>
-            <div className="flex flex-wrap gap-x-10 gap-y-4">
+            <div className="flex flex-wrap justify-center md:justify-start gap-x-10 gap-y-4">
               {STATS.map(({ icon: Icon, value, label, accent, bg }) => (
                 <div key={label} className="flex items-center gap-2">
                   <div className="flex h-8 w-8 items-center justify-center rounded-xl shrink-0" style={{ background: bg }}>

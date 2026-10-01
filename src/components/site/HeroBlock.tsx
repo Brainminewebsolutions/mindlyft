@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
@@ -153,11 +154,13 @@ export default function HeroBlock({
     /* Left: image  |  Right: all text content */
     const imgCol = (
       <div className="flex items-center justify-center">
-        <div className="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/10 w-full aspect-[4/3]">
-          <img
-            src={sideImage}
+        <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/10 w-full aspect-[4/3]">
+          <Image
+            src={sideImage!}
             alt=""
-            className="w-full h-full object-cover"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover"
           />
         </div>
       </div>
@@ -197,10 +200,13 @@ export default function HeroBlock({
       {/* Mode 1 — full-page background image */}
       {imageUrl && (
         <>
-          <img
+          <Image
             src={imageUrl}
             alt=""
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/45 to-black/65" />
         </>

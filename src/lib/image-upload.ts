@@ -2,9 +2,10 @@
 // browser before a file ever reaches the backend, so oversized camera
 // photos never make it into storage.
 
-export const MAX_IMAGE_UPLOAD_BYTES = 2 * 1024 * 1024; // 2MB
-const MAX_IMAGE_DIMENSION = 1920;
-const JPEG_QUALITY = 0.8;
+export const MAX_IMAGE_UPLOAD_BYTES = 1 * 1024 * 1024; // 1MB — keep in sync with backend FileUploadConstants
+// Largest uploaded image on the site renders ~800px wide; 1600px keeps it sharp on 2x screens.
+const MAX_IMAGE_DIMENSION = 1600;
+const OUTPUT_QUALITY = 0.8;
 
 export class ImageUploadError extends Error {}
 
@@ -24,7 +25,17 @@ function loadImage(file: File): Promise<HTMLImageElement> {
   });
 }
 
-function resizeAndCompress(img: HTMLImageElement, mimeType: string): Promise<Blob> {
+function canvasToBlob(canvas: HTMLCanvasElement, type: string): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => (blob ? resolve(blob) : reject(new ImageUploadError("Could not process image"))),
+      type,
+      OUTPUT_QUALITY,
+    );
+  });
+}
+
+async function resizeAndCompress(img: HTMLImageElement, mimeType: string): Promise<Blob> {
   const scale = Math.min(1, MAX_IMAGE_DIMENSION / Math.max(img.width, img.height));
   const width = Math.round(img.width * scale);
   const height = Math.round(img.height * scale);
@@ -33,25 +44,28 @@ function resizeAndCompress(img: HTMLImageElement, mimeType: string): Promise<Blo
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext("2d");
-  if (!ctx) return Promise.reject(new ImageUploadError("Image processing is not supported in this browser"));
+  if (!ctx) throw new ImageUploadError("Image processing is not supported in this browser");
   ctx.drawImage(img, 0, 0, width, height);
 
-  // Keep PNG for transparency; everything else becomes JPEG for the size win.
-  const outputType = mimeType === "image/png" ? "image/png" : "image/jpeg";
+  // WebP is smaller than JPEG and keeps transparency. Browsers that can't
+  // encode it (older Safari) silently return a PNG instead, so check the
+  // result type and fall back: PNG for transparent sources, else JPEG.
+  const webp = await canvasToBlob(canvas, "image/webp");
+  if (webp.type === "image/webp") return webp;
 
-  return new Promise((resolve, reject) => {
-    canvas.toBlob(
-      (blob) => (blob ? resolve(blob) : reject(new ImageUploadError("Could not process image"))),
-      outputType,
-      JPEG_QUALITY,
-    );
-  });
+  return canvasToBlob(canvas, mimeType === "image/png" ? "image/png" : "image/jpeg");
 }
+
+const EXTENSIONS: Record<string, string> = {
+  "image/webp": "webp",
+  "image/png":  "png",
+  "image/jpeg": "jpg",
+};
 
 /**
  * Validates and compresses an image file selected in an admin upload form.
- * Resizes to a max 1920px edge and re-encodes as JPEG (PNGs stay PNG to
- * preserve transparency). Throws ImageUploadError with a user-facing
+ * Resizes to a max 1600px edge and re-encodes as WebP (falling back to
+ * JPEG, or PNG for transparent sources, where WebP encoding is unsupported). Throws ImageUploadError with a user-facing
  * message if the file isn't an image or is still too large afterward.
  */
 export async function prepareImageFile(file: File): Promise<File> {
@@ -77,7 +91,7 @@ export async function prepareImageFile(file: File): Promise<File> {
     );
   }
 
-  const ext = blob.type === "image/png" ? "png" : "jpg";
+  const ext = EXTENSIONS[blob.type] ?? "jpg";
   const name = file.name.replace(/\.[^.]+$/, "") + "." + ext;
   return new File([blob], name, { type: blob.type });
 }

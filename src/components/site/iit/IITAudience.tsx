@@ -48,7 +48,7 @@ export default function IITAudience({ bg = "bg-white" }: { bg?: string }) {
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
-        <div className="mb-14">
+        <div className="mb-14 text-center md:text-left">
           <AnimateIn delay={0} direction="zoom"><LineBadge className="mb-5">Who This Is Built For</LineBadge></AnimateIn>
           <AnimateIn delay={100} direction="zoom">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
@@ -59,7 +59,7 @@ export default function IITAudience({ bg = "bg-white" }: { bg?: string }) {
             </h2>
           </AnimateIn>
           <AnimateIn delay={200} direction="zoom">
-            <p className="text-base text-gray-500 leading-relaxed max-w-xl">
+            <p className="text-base text-gray-500 leading-relaxed max-w-xl mx-auto md:mx-0">
               What this credential does for you depends on where you&apos;re standing right now. Pick the one that&apos;s closest to your situation.
             </p>
           </AnimateIn>

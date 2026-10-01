@@ -7,37 +7,35 @@ import {
   ShieldCheck,
   Users,
   TrendingUp,
-  Sparkles,
-  Brain,
 } from "lucide-react";
 
 const values = [
   {
     icon: Lightbulb,
-    title: "Innovation",
+    title: "Practical over theoretical",
     description:
-      "We explore bold ideas and smarter ways to build.",
+      "If it can't be built, deployed or demonstrated, it isn't finished.",
     color: "from-violet-500 to-purple-500",
   },
   {
     icon: ShieldCheck,
     title: "Integrity",
     description:
-      "Transparency, trust, and ethical practice guide everything we do.",
+      "We say what our programmes include and what they don't. No inflated promises about jobs or outcomes.",
     color: "from-blue-500 to-cyan-500",
   },
   {
-    icon: Brain,
-    title: "Human Centred Technology",
+    icon: Users,
+    title: "People first",
     description:
-      "We build tech that serves people, not just processes.",
+      "Technology should serve the people using it, not the other way round.",
     color: "from-orange-500 to-amber-500",
   },
   {
-    icon: Sparkles,
-    title: "Outcome-Driven",
+    icon: TrendingUp,
+    title: "Outcomes that can be measured",
     description:
-      "We focus on solutions that deliver measurable results.",
+      "For learners, that means a portfolio. For clients, it means a result they can point to.",
     color: "from-indigo-500 to-violet-500",
   },
 ];
@@ -55,16 +53,9 @@ export default function CompanyValues({ bg = "bg-white" }: { bg?: string }) {
               color="violet"
               size="xl"
               className="leading-tight mb-4"
-              text="The Principles"
-              highlight="That Drive Us"
+              text="What we"
+              highlight="stand for"
             />
-          </AnimateIn>
-          <AnimateIn delay={200} direction="right">
-            <p className="text-base text-gray-500 leading-relaxed max-w-2xl mx-auto">
-               We combine bold innovation, responsible AI practices, and a
-            relentless focus on human impact to create technology that delivers
-            meaningful results.
-            </p>
           </AnimateIn>
         </div>
 

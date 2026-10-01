@@ -63,7 +63,7 @@ export default function WorkshopsAudience({ bg = "bg-stone-50" }: { bg?: string 
     <section className={`${bg} px-6 md:px-[60px] py-24`}>
       <div className="max-w-6xl mx-auto">
 
-        <div className="mb-14 max-w-2xl">
+        <div className="mb-14 max-w-2xl mx-auto md:mx-0 text-center md:text-left">
           <AnimateIn delay={0} direction="left">
             <LineBadge className="mb-5">Built For Every Desk</LineBadge>
           </AnimateIn>

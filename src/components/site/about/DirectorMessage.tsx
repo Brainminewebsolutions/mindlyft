@@ -35,7 +35,7 @@ export default function DirectorMessage({
             color="mixed"
             size="xl"
             className="mt-4 leading-tight"
-            text="Meet our honorable"
+            text="Meet our Honorary"
             highlight="Chairman"
           />
           <div className="w-16 h-1 bg-violet-600 rounded-full mx-auto mt-4" />
@@ -74,10 +74,13 @@ export default function DirectorMessage({
             <div className="w-16 h-1 bg-violet-600 rounded-full" />
 
             {signature ? (
-              <img
+              <Image
                 src={signature}
                 alt="Signature"
-                className="h-14 object-contain object-left opacity-80"
+                width={0}
+                height={0}
+                sizes="240px"
+                className="h-14 w-auto object-contain object-left opacity-80"
               />
             ) : (
               <div>

@@ -7,7 +7,7 @@ export default function About({ bg = "bg-violet-50" }: { bg?: string }) {
     <section id="community" className={`${bg} px-6 py-24 md:px-[60px]`}>
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-        <div>
+        <div className="text-center md:text-left">
           <AnimateIn delay={0} direction="left"><LineBadge className="mb-5">About Our Community</LineBadge></AnimateIn>
           <AnimateIn delay={100} direction="left">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-6">

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { FileText, Link2, Download, ArrowRight, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -30,10 +31,12 @@ function ResourceCard({ resource }: { resource: ResourceItem }) {
     >
       <div className="relative h-36 overflow-hidden bg-gradient-to-br from-violet-50 to-blue-50 flex items-center justify-center shrink-0">
         {resource.image ? (
-          <img
+          <Image
             src={resource.image}
             alt={resource.name}
-            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : isLink ? (
           <Link2 className="w-10 h-10 text-violet-300" />

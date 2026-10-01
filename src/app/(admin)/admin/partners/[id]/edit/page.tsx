@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Upload, X } from "lucide-react";
@@ -149,7 +150,7 @@ export default function EditPartnerPage() {
             >
               {preview ? (
                 <div className="relative">
-                  <img src={preview} alt="preview" className="h-24 w-auto object-contain rounded-lg" />
+                  <Image src={preview} alt="preview" width={0} height={0} sizes="200px" unoptimized className="h-24 w-auto object-contain rounded-lg" />
                   <button type="button" className="absolute -top-2 -right-2 rounded-full bg-destructive p-0.5"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -165,7 +166,7 @@ export default function EditPartnerPage() {
                   <Upload className="h-8 w-8 text-muted-foreground/50" />
                   <p className="text-sm text-muted-foreground text-center">
                     Click to upload new logo<br />
-                    <span className="text-xs">JPG, PNG, WEBP — max 2 MB</span>
+                    <span className="text-xs">JPG, PNG, WEBP — max 1 MB</span>
                   </p>
                 </>
               )}

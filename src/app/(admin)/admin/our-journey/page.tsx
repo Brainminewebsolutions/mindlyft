@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Milestone, Plus, Trash2, Pencil, Calendar, MapPin, ImageIcon } from "lucide-react";
@@ -133,9 +134,9 @@ export default function AdminOurJourneyPage() {
                 <div key={e.id} className="flex items-center gap-4 px-6 py-4 hover:bg-muted/30 transition-colors">
 
                   {/* Thumbnail */}
-                  <div className="h-12 w-12 shrink-0 rounded-lg border border-border bg-muted overflow-hidden flex items-center justify-center">
+                  <div className="relative h-12 w-12 shrink-0 rounded-lg border border-border bg-muted overflow-hidden flex items-center justify-center">
                     {e.mainImage
-                      ? <img src={e.mainImage} alt={e.name} className="h-full w-full object-cover" />
+                      ? <Image src={e.mainImage} alt={e.name} fill sizes="48px" className="object-cover" />
                       : <ImageIcon className="h-5 w-5 text-muted-foreground/40" />
                     }
                   </div>

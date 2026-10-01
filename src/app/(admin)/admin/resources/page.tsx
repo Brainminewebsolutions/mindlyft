@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FileText, Plus, Trash2, Pencil, ExternalLink, Link2, Download } from "lucide-react";
@@ -123,9 +124,9 @@ export default function AdminResourcesPage() {
                 <div key={r.id} className="flex items-center gap-4 px-6 py-4 hover:bg-muted/30 transition-colors">
 
                   {/* Thumbnail */}
-                  <div className="h-12 w-12 shrink-0 rounded-lg border border-border bg-muted overflow-hidden flex items-center justify-center">
+                  <div className="relative h-12 w-12 shrink-0 rounded-lg border border-border bg-muted overflow-hidden flex items-center justify-center">
                     {r.image
-                      ? <img src={r.image} alt={r.name} className="h-full w-full object-cover" />
+                      ? <Image src={r.image} alt={r.name} fill sizes="48px" className="object-cover" />
                       : r.type === "Link"
                         ? <Link2 className="h-5 w-5 text-muted-foreground/40" />
                         : <FileText className="h-5 w-5 text-muted-foreground/40" />

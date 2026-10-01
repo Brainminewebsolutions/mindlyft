@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Subheading } from "@/components/ui/Subheading";
 import { Section } from "@/components/ui/Section";
 
@@ -30,11 +31,14 @@ export default function MembersWorkWith({ bg = "bg-white" }: { bg?: string }) {
       <div className="bg-violet-50 rounded-2xl py-12 overflow-hidden">
         <div className="flex w-max animate-marquee gap-16 items-center">
           {track.map((item, i) => (
-            <img
+            <Image
               key={`${item.name}-${i}`}
               src={item.logo}
               alt={item.name}
-              className="h-14 max-w-[160px] object-contain grayscale hover:grayscale-0 transition-all duration-300"
+              width={0}
+              height={0}
+              sizes="160px"
+              className="h-14 w-auto max-w-[160px] object-contain grayscale hover:grayscale-0 transition-all duration-300"
             />
           ))}
         </div>

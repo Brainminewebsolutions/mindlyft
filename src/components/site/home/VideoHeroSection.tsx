@@ -103,12 +103,6 @@ export default function VideoHeroSection() {
         style={{ background: "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(108,99,255,.10) 0%, transparent 70%)" }}
       />
 
-      {/* Scan line */}
-      <div
-        className="absolute left-0 right-0 h-0.5 z-[2] pointer-events-none animate-[mlScan_8s_linear_infinite]"
-        style={{ background: "linear-gradient(90deg,transparent,rgba(108,99,255,.45),rgba(56,217,245,.45),transparent)" }}
-      />
-
       {/* Hero content */}
       <div
         className={cn(

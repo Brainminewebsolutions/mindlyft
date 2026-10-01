@@ -70,12 +70,6 @@
 }
 
 /* ── Video hero animations ─────────────────────────────────────────────────── */
-@keyframes mlScan {
-  0%   { top: -4px; opacity: 0; }
-  10%  { opacity: .5; }
-  90%  { opacity: .5; }
-  100% { top: 100%; opacity: 0; }
-}
 @keyframes mlBounce {
   0%,100% { transform: translateY(0); }
   50%     { transform: translateY(8px); }

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { Calendar, MapPin, Clock, Users, Trophy } from "lucide-react";
 import { MediaGallery, ViewMoreButton, type MediaItem } from "@/components/site/our-journey/MediaGallery";
@@ -27,10 +28,12 @@ function FeaturedEvent({ event }: { event: EventItem }) {
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <div className="relative h-64 lg:h-auto min-h-[280px] overflow-hidden bg-gradient-to-br from-violet-600 to-blue-500">
           {event.image && (
-            <img
+            <Image
               src={event.image}
               alt={event.title}
-              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
             />
           )}
           <div className="absolute inset-0 bg-gradient-to-r from-violet-900/40 to-transparent" />
@@ -89,10 +92,12 @@ function EventGridCard({ event }: { event: EventItem }) {
       {/* Image */}
       <div className="relative h-44 overflow-hidden bg-gradient-to-br from-violet-500 to-blue-400">
         {event.image && (
-          <img
+          <Image
             src={event.image}
             alt={event.title}
-            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />

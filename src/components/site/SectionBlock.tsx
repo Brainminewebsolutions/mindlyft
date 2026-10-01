@@ -32,7 +32,7 @@ export default function SectionBlock({
       <div className="max-w-6xl mx-auto space-y-14">
 
         {/* Header */}
-        <div className={cn("space-y-4", isCenter ? "text-center" : "text-left")}>
+        <div className={cn("space-y-4", isCenter ? "text-center" : "text-center md:text-left")}>
           {badge && (
             <span className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 via-violet-500 to-blue-500 text-white text-sm font-semibold px-5 py-2 rounded-full shadow-lg shadow-violet-500/30 ring-1 ring-white/20">
               <span className="w-1.5 h-1.5 rounded-full bg-white/80 flex-shrink-0 animate-pulse" />
@@ -44,10 +44,10 @@ export default function SectionBlock({
             {title}
           </h2>
 
-          <div className={cn("w-16 h-1 bg-gradient-to-r from-violet-500 to-blue-500 rounded-full", isCenter && "mx-auto")} />
+          <div className={cn("w-16 h-1 bg-gradient-to-r from-violet-500 to-blue-500 rounded-full", isCenter ? "mx-auto" : "mx-auto md:mx-0")} />
 
           {subtitle && (
-            <p className={cn("text-gray-500 text-lg max-w-2xl", isCenter && "mx-auto")}>
+            <p className={cn("text-gray-500 text-lg max-w-2xl", isCenter ? "mx-auto" : "mx-auto md:mx-0")}>
               {subtitle}
             </p>
           )}

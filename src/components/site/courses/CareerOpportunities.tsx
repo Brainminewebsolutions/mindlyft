@@ -28,7 +28,7 @@ export default function CareerOpportunities({
       <div className="max-w-5xl mx-auto">
 
         {/* Heading */}
-        <div className="mb-8">
+        <div className="mb-8 text-center md:text-left">
           <h2 className="text-2xl md:text-4xl font-black text-gray-900 leading-snug mb-2" style={{ color }}>
             Career Opportunities
           </h2>

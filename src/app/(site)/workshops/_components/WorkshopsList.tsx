@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 import {
@@ -46,10 +47,12 @@ function WorkshopCard({ item, index }: { item: Webinar; index: number }) {
       {/* Image */}
       <div className="relative h-48 overflow-hidden shrink-0">
         {img ? (
-          <img
+          <Image
             src={img}
             alt={item.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
           <div className={`h-full w-full bg-gradient-to-br ${gradient} flex items-center justify-center`}>
@@ -159,7 +162,7 @@ export default function WorkshopsList({ items }: { items: Webinar[] }) {
           <LineBadge className="mb-5">Our Workshops</LineBadge>
         </AnimateIn>
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
-          <div>
+          <div className="text-center md:text-left">
             <AnimateIn delay={100} direction="left">
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
                 Find your next{" "}

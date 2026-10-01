@@ -33,7 +33,7 @@ export default async function Upcoming({ bg = "bg-violet-50" }: { bg?: string })
     <section id="upcoming" className={`${bg} px-6 py-24 md:px-[60px]`}>
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
-        <div>
+        <div className="text-center md:text-left">
           <AnimateIn delay={0} direction="left"><LineBadge className="mb-5">What&apos;s Next</LineBadge></AnimateIn>
           <AnimateIn delay={100} direction="left">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
@@ -44,7 +44,7 @@ export default async function Upcoming({ bg = "bg-violet-50" }: { bg?: string })
             </h2>
           </AnimateIn>
           <AnimateIn delay={200} direction="left">
-            <p className="text-base text-gray-500 leading-relaxed max-w-sm">
+            <p className="text-base text-gray-500 leading-relaxed max-w-sm mx-auto md:mx-0">
               Save your spot before they fill up — our sessions sell out fast.
             </p>
           </AnimateIn>

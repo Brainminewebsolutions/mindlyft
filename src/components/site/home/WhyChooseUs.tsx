@@ -68,7 +68,7 @@ export default function WhyChooseUs() {
         <div className="container-fluid style-one">
           <div className="flex flex-wrap items-stretch">
             <div className="w-full lg:w-1/2 xl:w-5/12 flex">
-              <div className="wh-content md:mb-[30px] flex flex-col justify-center">
+              <div className="wh-content md:mb-[30px] flex flex-col justify-center items-center text-center md:text-left">
                 <SectionBadge variant="dark">Why Choose Mindlyft AI</SectionBadge>
                 <AnimateIn direction="up" delay={400}>
                   <Subheading

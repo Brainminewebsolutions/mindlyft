@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { Plus, Trash2, ImageIcon, VideoIcon, Upload, Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -164,7 +165,7 @@ export function MediaGallery({ journeyId, media, onChange }: Props) {
               {m.type === "Video" ? (
                 <video src={m.url} className="h-full w-full object-cover" muted />
               ) : (
-                <img src={m.url} alt="" className="h-full w-full object-cover" />
+                <Image src={m.url} alt="" fill sizes="160px" className="object-cover" />
               )}
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors" />
               <span className="absolute top-1.5 left-1.5 rounded-full bg-black/60 p-1">

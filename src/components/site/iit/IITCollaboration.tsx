@@ -16,7 +16,7 @@ export default function IITCollaboration({ bg = "bg-white" }: { bg?: string }) {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
         {/* Left — text */}
-        <div>
+        <div className="text-center md:text-left">
           <AnimateIn delay={0} direction="left"><LineBadge className="mb-5">The Collaboration</LineBadge></AnimateIn>
           <AnimateIn delay={100} direction="left">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-6">

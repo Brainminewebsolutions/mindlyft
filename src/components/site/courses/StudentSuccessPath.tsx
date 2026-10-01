@@ -15,7 +15,7 @@ export default function StudentSuccessPath({ bg = "bg-violet-50" }: { bg?: strin
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
         {/* Left */}
-        <div>
+        <div className="text-center md:text-left">
           <AnimateIn delay={0} direction="left"><LineBadge className="mb-5">Success Path</LineBadge></AnimateIn>
           <AnimateIn delay={100} direction="left">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
@@ -26,12 +26,12 @@ export default function StudentSuccessPath({ bg = "bg-violet-50" }: { bg?: strin
             </h2>
           </AnimateIn>
           <AnimateIn delay={200} direction="left">
-            <p className="text-base text-gray-500 leading-relaxed max-w-md mb-8">
+            <p className="text-base text-gray-500 leading-relaxed max-w-md mx-auto md:mx-0 mb-8">
               Our structured curriculum is designed to accelerate your career trajectory from foundational knowledge to industry-ready expertise.
             </p>
           </AnimateIn>
           <AnimateIn delay={300} direction="left">
-            <div className="relative w-full max-w-md h-64 sm:h-80 rounded-3xl overflow-hidden shadow-xl">
+            <div className="relative w-full max-w-md mx-auto md:mx-0 h-64 sm:h-80 rounded-3xl overflow-hidden shadow-xl">
               <Image
                 src="/assets/img/about/wh-img-2.jpg"
                 alt="Student success"

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Upload, X, FileText } from "lucide-react";
@@ -193,7 +194,7 @@ export default function AddResourcePage() {
             >
               {imagePreview ? (
                 <div className="relative">
-                  <img src={imagePreview} alt="preview" className="h-24 w-auto object-contain rounded-lg" />
+                  <Image src={imagePreview} alt="preview" width={0} height={0} sizes="200px" unoptimized className="h-24 w-auto object-contain rounded-lg" />
                   <button type="button" className="absolute -top-2 -right-2 rounded-full bg-destructive p-0.5"
                     onClick={(e) => { e.stopPropagation(); setImagePreview(null); setImageFile(null); if (imageRef.current) imageRef.current.value = ""; }}>
                     <X className="h-3 w-3 text-white" />
@@ -204,7 +205,7 @@ export default function AddResourcePage() {
                   <Upload className="h-8 w-8 text-muted-foreground/50" />
                   <p className="text-sm text-muted-foreground text-center">
                     Click to upload thumbnail<br />
-                    <span className="text-xs">JPG, PNG, WEBP — max 2 MB</span>
+                    <span className="text-xs">JPG, PNG, WEBP — max 1 MB</span>
                   </p>
                 </>
               )}

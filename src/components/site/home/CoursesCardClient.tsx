@@ -69,16 +69,29 @@ export default function CoursesCardClient({ courses }: { courses: Course[] }) {
           />
 
           <div className="relative z-10 mx-auto w-full max-w-[1440px]">
+            {/* Two rows only: 1 col → 2 cards, 2 cols → 4, 3 cols → 6. Extra
+                cards are hidden with CSS (not JS) so SSR markup matches every
+                screen size with no layout shift. */}
             <div className="grid grid-cols-1 gap-8 min-[681px]:grid-cols-2 min-[1101px]:grid-cols-3">
-              {courses.map((course) => (
+              {courses.slice(0, 6).map((course, i) => (
                 <CourseCard
                   key={course.id}
                   course={course}
-                  cardClass=""
+                  cardClass={i >= 4 ? "max-[1100px]:hidden" : i >= 2 ? "max-[680px]:hidden" : ""}
                   textClass=""
                   accentRgb="124,58,237"
                 />
               ))}
+            </div>
+
+            <div className="mt-12 flex justify-center">
+              <Link
+                href="/courses"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-blue-500 px-8 py-3 text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:opacity-90 active:scale-95"
+              >
+                View All Courses
+                <ArrowRight size={16} strokeWidth={2.5} />
+              </Link>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import ContactForm from "@/components/site/contact/ContactForm";
 import { useState } from "react";
@@ -19,35 +20,35 @@ type Product = {
 const PRODUCTS: Product[] = [
   {
     // Social media analytics / sentiment
-    image: "images/Sent_ai.jpeg",
+    image: "/images/Sent_ai.jpeg",
     name: "SentixAI",
     tag: "(Social Media Sentiment Intelligence)",
     description: "Add your product description here. Describe what this product does and the value it delivers to customers.",
   },
   {
     // Document processing / scanning
-    image: "images/Document_ai.jpeg",
+    image: "/images/Document_ai.jpeg",
     name: "DocuMind AI",
     tag: "(Intelligent Document Processing)",
     description: "Add your product description here. Describe what this product does and the value it delivers to customers.",
   },
   {
     // Recruitment / hiring / people
-    image: "images/Hir_ genius_ai.jpeg",
+    image: "/images/Hir_ genius_ai.jpeg",
     name: "HireGenius AI",
     tag: "(Intelligent Talent Acquisition)",
     description: "Add your product description here. Describe what this product does and the value it delivers to customers.",
   },
   {
     // Interview / coaching / preparation
-    image: "images/Prep_smart_ai.jpeg",
+    image: "/images/Prep_smart_ai.jpeg",
     name: "Prep Smart AI",
     tag: "(Intelligent Interview Coach)",
     description: "Add your product description here. Describe what this product does and the value it delivers to customers.",
   },
   {
     // Performance / resource dashboard
-    image: "images/Optic ore_ai.jpeg",
+    image: "/images/Optic ore_ai.jpeg",
     name: "OptiCore AI",
     tag: "(Resource & Performance Intelligence)",
     description: "Add your product description here. Describe what this product does and the value it delivers to customers.",
@@ -373,13 +374,13 @@ export default function Innovation() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="mb-16"
+            className="mb-16 text-center md:text-left"
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-violet-200 bg-violet-50 text-violet-600 text-[12px] font-semibold uppercase tracking-widest mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
               Our Products
             </span>
-            <h2 className="text-[clamp(1.8rem,3.5vw,2.8rem)] font-extrabold leading-tight tracking-tight text-gray-900 max-w-xl">
+            <h2 className="text-[clamp(1.8rem,3.5vw,2.8rem)] font-extrabold leading-tight tracking-tight text-gray-900 max-w-xl mx-auto md:mx-0">
               Built for{" "}
               <span className="bg-gradient-to-r from-violet-500 to-blue-500 bg-clip-text text-transparent">
                 real-world
@@ -401,10 +402,12 @@ export default function Innovation() {
               >
                 {/* Image */}
                 <div className="relative w-full md:w-[45%] shrink-0 aspect-[16/10] overflow-hidden">
-                  <img
+                  <Image
                     src={p.image}
                     alt={p.name}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 45vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-br from-violet-500/15 via-transparent to-blue-500/15" />
 

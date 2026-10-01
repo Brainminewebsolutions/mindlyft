@@ -10,7 +10,7 @@ export default function WorkshopsHero({ count = 0 }: { count?: number }) {
       <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
         {/* Left — content */}
-        <div>
+        <div className="text-center md:text-left">
           <AnimateIn delay={0}>
             <LineBadge className="mb-6">Hands-On Workshops</LineBadge>
           </AnimateIn>
@@ -23,7 +23,7 @@ export default function WorkshopsHero({ count = 0 }: { count?: number }) {
             </h1>
           </AnimateIn>
           <AnimateIn delay={200}>
-            <p className="text-lg text-gray-600 leading-relaxed max-w-md mb-10">
+            <p className="text-lg text-gray-600 leading-relaxed max-w-md mx-auto md:mx-0 mb-10">
               Practical, instructor-led sessions designed to sharpen real-world skills.{" "}
              </p>
           </AnimateIn>

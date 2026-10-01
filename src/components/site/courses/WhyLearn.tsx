@@ -14,7 +14,7 @@ export default function WhyLearn({ bg = "bg-white" }: { bg?: string }) {
     <section className={`${bg} px-6 md:px-[60px] py-24 overflow-hidden`}>
       <div className="max-w-6xl mx-auto">
 
-        <div className="mb-14">
+        <div className="mb-14 text-center md:text-left">
           <AnimateIn delay={0} direction="left"><LineBadge className="mb-5">Why Learn With Us</LineBadge></AnimateIn>
           <AnimateIn delay={100} direction="left">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
@@ -25,7 +25,7 @@ export default function WhyLearn({ bg = "bg-white" }: { bg?: string }) {
             </h2>
           </AnimateIn>
           <AnimateIn delay={200} direction="left">
-            <p className="text-base text-gray-500 leading-relaxed max-w-xl">
+            <p className="text-base text-gray-500 leading-relaxed max-w-xl mx-auto md:mx-0">
               The structure of academic rigor, the speed of an applied lab.
             </p>
           </AnimateIn>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { Subheading } from "@/components/ui/Subheading";
 import { Section } from "@/components/ui/Section";
@@ -37,10 +38,13 @@ export default function OurPartners({ bg = "bg-white" }: { bg?: string }) {
               key={p.name}
               className="flex items-center justify-center bg-white rounded-xl shadow-sm border border-violet-100 w-50 h-50 p-4"
             >
-              <img
+              <Image
                 src={p.logo}
                 alt={p.name}
-                className="max-h-full max-w-full object-contain"
+                width={0}
+                height={0}
+                sizes="200px"
+                className="h-auto w-auto max-h-full max-w-full object-contain"
               />
             </div>
           ))}

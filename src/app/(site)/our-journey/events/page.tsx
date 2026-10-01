@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Trophy } from "lucide-react";
 import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
@@ -71,10 +72,13 @@ export default async function EventsPage() {
 
       {/* ── Hero ── */}
       <div className="relative h-[60vh] sm:h-[70vh] md:h-screen overflow-hidden">
-        <img
+        <Image
           src={HERO_IMAGE}
           alt="MindlyftAI Events"
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-violet-950/75 via-violet-900/35 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 z-10">

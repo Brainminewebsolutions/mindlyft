@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp, ImageIcon, Play, X } from "lucide-react";
 
@@ -75,7 +76,7 @@ function Lightbox({
         {item.type === "Video" ? (
           <video key={item.id} src={item.url} controls autoPlay className="max-h-[80vh] w-full rounded-xl bg-black" />
         ) : (
-          <img key={item.id} src={item.url} alt="" className="max-h-[80vh] w-auto max-w-full rounded-xl object-contain" />
+          <Image key={item.id} src={item.url} alt="" width={0} height={0} sizes="(max-width: 1024px) 100vw, 1024px" className="max-h-[80vh] h-auto w-auto max-w-full rounded-xl object-contain" />
         )}
         <p className="mt-3 text-sm text-white/70">{index + 1} / {media.length}</p>
       </div>
@@ -106,10 +107,12 @@ export function MediaGallery({ media }: { media: MediaItem[] }) {
                 </div>
               </>
             ) : (
-              <img
+              <Image
                 src={m.url}
                 alt=""
-                className="h-full w-full object-cover group-hover/media:scale-105 transition-transform duration-300"
+                fill
+                sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, 20vw"
+                className="object-cover group-hover/media:scale-105 transition-transform duration-300"
               />
             )}
           </button>

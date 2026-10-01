@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { Subheading } from "@/components/ui/Subheading";
 import { Section } from "@/components/ui/Section";
@@ -28,16 +29,22 @@ export default function Members() {
 
       <div className="bg-violet-50 py-8 overflow-hidden">
         <div className="flex animate-scroll">
-          <img
+          <Image
             src="/images/clieimg.png"
             alt="Members Work With"
+            width={0}
+            height={0}
+            sizes="200vw"
             className="h-40 w-auto shrink-0"
           />
 
           {/* duplicate image for seamless loop */}
-          <img
+          <Image
             src="/images/clieimg.png"
             alt="Members Work With"
+            width={0}
+            height={0}
+            sizes="200vw"
             className="h-40 w-auto shrink-0"
           />
         </div>
