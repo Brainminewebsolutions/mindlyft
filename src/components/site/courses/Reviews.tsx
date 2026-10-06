@@ -105,12 +105,12 @@ function ReviewCard({ review }: { review: Review }) {
   );
 }
 
-export default async function Reviews() {
+export default async function Reviews({ className = "py-14" }: { className?: string }) {
   const reviews = await getReviews();
   if (reviews.length === 0) return null;
 
   return (
-    <section className="py-14 px-6 md:px-14 lg:px-20">
+    <section className={`px-6 md:px-14 lg:px-20 ${className}`}>
       <div className="max-w-5xl mx-auto">
 
         {/* Heading */}

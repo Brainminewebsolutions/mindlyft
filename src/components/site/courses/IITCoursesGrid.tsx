@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Clock, Globe, User, ArrowRight, Wifi, MapPin, BookOpen, GraduationCap, BriefcaseBusiness, RefreshCw, CheckCircle, Sparkles } from "lucide-react";
+import { Clock, Globe, User, ArrowRight, Wifi, MapPin, BookOpen, GraduationCap, BriefcaseBusiness, RefreshCw, CheckCircle, Sparkles, ShieldCheck, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LineBadge } from "@/components/ui/LineBadge";
 import { AnimateIn } from "@/components/ui/AnimateIn";
@@ -16,6 +16,21 @@ const GRADIENTS = [
   "from-indigo-500 to-purple-600",
   "from-violet-600 to-indigo-500",
   "from-blue-600 to-violet-500",
+];
+
+// Icon keys the admin can pick for a course card chip.
+const CHIP_ICONS: Record<string, LucideIcon> = {
+  briefcase:  BriefcaseBusiness,
+  shield:     ShieldCheck,
+  user:       User,
+  graduation: GraduationCap,
+  refresh:    RefreshCw,
+};
+
+const DEFAULT_CHIPS = [
+  { label: "Students",        icon: "graduation" },
+  { label: "Professionals",   icon: "briefcase"  },
+  { label: "Career Changers", icon: "refresh"    },
 ];
 
 function CourseCard({ course, index }: { course: Course; index: number }) {
@@ -83,15 +98,14 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
         <div className="rounded-xl bg-violet-50 px-3 py-2.5">
           <p className="mb-2 text-[10px] font-black uppercase tracking-widest text-violet-500">Who This Is For</p>
           <div className="flex flex-wrap gap-1">
-            {[
-              { label: "Students", icon: <GraduationCap className="w-3 h-3" /> },
-              { label: "Professionals", icon: <BriefcaseBusiness className="w-3 h-3" /> },
-              { label: "Career Changers", icon: <RefreshCw className="w-3 h-3" /> },
-            ].map(({ label, icon }) => (
-              <span key={label} className="inline-flex items-center gap-1 rounded-full border border-violet-200 bg-white px-1.5 py-1 text-[11px] font-medium text-violet-600">
-                {icon}{label}
-              </span>
-            ))}
+            {(course.cardChips?.length ? course.cardChips : DEFAULT_CHIPS).map(({ label, icon }) => {
+              const Icon = icon ? CHIP_ICONS[icon] : undefined;
+              return (
+                <span key={label} className="inline-flex items-center gap-1 rounded-full border border-violet-200 bg-white px-1.5 py-1 text-[11px] font-medium text-violet-600">
+                  {Icon && <Icon className="w-3 h-3" />}{label}
+                </span>
+              );
+            })}
           </div>
         </div>
 

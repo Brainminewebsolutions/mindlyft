@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
@@ -34,6 +35,18 @@ async function getChapters(id: string): Promise<CourseChapterItem[]> {
     const envelope = await dotnetFetch<ChaptersEnvelope>(`/v1/courses/${id}/chapters-with-contents`, { next: { revalidate: COURSE_DETAIL_REVALIDATE_SECONDS } } as RequestInit);
     return envelope.isSuccess ? (envelope.data ?? []) : [];
   } catch { return []; }
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const course = await getCourseBySlug(slug);
+  if (!course) return {};
+
+  return {
+    title:       course.metaTitle ? { absolute: course.metaTitle } : course.name,
+    description: course.metaDescription ?? course.description ?? undefined,
+    alternates:  { canonical: course.courseType === "IIT" ? `/courses/iit/${course.slug}` : `/courses/mindlyftai/${course.slug}` },
+  };
 }
 
 const COLOR    = "#6c63ff";

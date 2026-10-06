@@ -9,6 +9,18 @@ export type InstructorDetail = {
   description: string | null;
 };
 
+export type CourseCardChip = { label: string; icon: string | null };
+
+// Course-specific copy for the public course page (list endpoints omit it).
+export type CoursePageContent = {
+  outcomesText: string | null;
+  audience:     { title: string; description: string }[] | null;
+  cardChips:    CourseCardChip[] | null;
+  careerRoles:  string[] | null;
+  careersNote:  string | null;
+  faqs:         { question: string; answer: string }[] | null;
+};
+
 export type Course = {
   id:               string;
   name:             string;
@@ -36,4 +48,8 @@ export type Course = {
   createdAt:        string;
   updatedAt:        string;
   instructorDetail: InstructorDetail | null;
+  metaTitle?:       string | null;
+  metaDescription?: string | null;
+  cardChips?:       CourseCardChip[] | null;
+  pageContent?:     CoursePageContent | null;
 };

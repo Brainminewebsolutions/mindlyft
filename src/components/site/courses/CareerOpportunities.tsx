@@ -12,51 +12,40 @@ const DEFAULT_ROLES = [
   "Information Security Associate",
 ];
 
+const PILL_COLORS = [
+  "border-violet-200 bg-violet-100 text-violet-800",
+  "border-blue-200 bg-blue-100 text-blue-800",
+  "border-emerald-200 bg-emerald-100 text-emerald-800",
+  "border-amber-200 bg-amber-100 text-amber-800",
+  "border-fuchsia-200 bg-fuchsia-100 text-fuchsia-800",
+];
+
 interface Props {
   roles?: string[];
-  color?:   string;
-  bgColor?: string;
+  intro?: string;
+  note?:  string;
 }
 
+// Body only — the caller supplies the section heading.
 export default function CareerOpportunities({
-  roles   = DEFAULT_ROLES,
-  color   = "#7c3aed",
-  bgColor = "#f5f3ff",
+  roles = DEFAULT_ROLES,
+  intro = "Upon successful completion of the program, learners can explore career opportunities such as:",
+  note,
 }: Props) {
   return (
-    <section className="py-14 px-6 md:px-14 lg:px-20" style={{ backgroundColor: bgColor }}>
-      <div className="max-w-5xl mx-auto">
+    <div>
+      <p className="mb-5 text-sm leading-relaxed text-gray-600">{intro}</p>
 
-        {/* Heading */}
-        <div className="mb-8 text-center md:text-left">
-          <h2 className="text-2xl md:text-4xl font-black text-gray-900 leading-snug mb-2" style={{ color }}>
-            Career Opportunities
-          </h2>
-          <p className="text-sm md:text-base text-gray-500 leading-relaxed">
-            Upon successful completion of the program, learners can explore career opportunities such as:
-          </p>
-        </div>
+      <ul className="flex flex-wrap gap-2.5">
+        {roles.map((role, i) => (
+          <li key={role} className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold ${PILL_COLORS[i % PILL_COLORS.length]}`}>
+            <Briefcase className="h-3.5 w-3.5 opacity-70" />
+            {role}
+          </li>
+        ))}
+      </ul>
 
-        {/* Roles grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-          {roles.map((role) => (
-            <div
-              key={role}
-              className="flex items-center gap-3 rounded-xl border bg-white px-4 py-3 shadow-sm"
-              style={{ borderColor: `${color}22` }}
-            >
-              <span
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
-                style={{ backgroundColor: `${color}15` }}
-              >
-                <Briefcase className="h-4 w-4" style={{ color }} />
-              </span>
-              <span className="text-sm font-semibold text-gray-800">{role}</span>
-            </div>
-          ))}
-        </div>
-
-      </div>
-    </section>
+      {note && <p className="mt-5 text-sm leading-relaxed text-gray-600">{note}</p>}
+    </div>
   );
 }

@@ -55,7 +55,7 @@ export default function CollaborationLogos({
   const s = SIZE_CLASSES[size];
 
   return (
-    <div className={`flex flex-nowrap items-center ${s.gap} ${className}`}>
+    <div className={`flex w-full flex-nowrap items-center justify-center ${s.gap} ${className}`}>
       <LogoItem
         src={SITE_CONFIG.logo1}
         alt="MindLyft AI"

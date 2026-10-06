@@ -23,7 +23,7 @@ export default function IITCollaboration({ bg = "bg-white" }: { bg?: string }) {
         <CollaborationLogos
           size="responsive"
           showLabels
-          className="mt-10 justify-center px-6 py-4 rounded-2xl w-full sm:justify-start"
+          className="mt-10 px-6 py-4 rounded-2xl"
         />
       </AnimateIn>
     </InfoSection>

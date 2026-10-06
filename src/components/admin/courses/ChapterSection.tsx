@@ -191,7 +191,7 @@ export function ChapterSection({ courseId }: Props) {
                     <div className="flex-1 min-w-0">
                       <p className="truncate text-sm font-semibold text-foreground">{ch.title}</p>
                       {ch.description && (
-                        <p className="mt-0.5 truncate text-xs text-muted-foreground">{ch.description}</p>
+                        <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{ch.description}</p>
                       )}
                     </div>
                     {isExpanded

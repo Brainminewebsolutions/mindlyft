@@ -129,7 +129,7 @@
     --chart-5: oklch(0.269 0 0);
 
     /* Sidebar */
-    --sidebar:                        oklch(0.985 0.006 264);
+    --sidebar:                        oklch(0.965 0.018 264);
     --sidebar-foreground:             oklch(0.145 0 0);
     --sidebar-primary:                oklch(0.511 0.262 264.376);
     --sidebar-primary-foreground:     oklch(0.985 0 0);
@@ -234,7 +234,7 @@ html:not(.dark) body {
     --border:                 oklch(0.90 0 0);
     --input:                  oklch(0.90 0 0);
     --ring:                   oklch(0.511 0.262 264.376);
-    --sidebar:                oklch(0.985 0.006 264);
+    --sidebar:                oklch(0.965 0.018 264);
     --sidebar-foreground:     oklch(0.145 0 0);
     --sidebar-primary:        oklch(0.511 0.262 264.376);
     --sidebar-primary-foreground: oklch(0.985 0 0);

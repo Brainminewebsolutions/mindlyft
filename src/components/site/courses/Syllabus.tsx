@@ -4,6 +4,8 @@ import type { CourseChapterItem } from "@/types/student/course";
 interface Props {
   chapters:     CourseChapterItem[];
   totalLessons: number;
+  heading?:     string;
+  showHeader?:  boolean;
   color?:       string;
   bgColor?:     string;
 }
@@ -11,6 +13,8 @@ interface Props {
 export default function Syllabus({
   chapters,
   totalLessons,
+  heading = "Course Syllabus",
+  showHeader = true,
   color   = "#7c3aed",
   bgColor = "#f5f3ff",
 }: Props) {
@@ -18,8 +22,9 @@ export default function Syllabus({
 
   return (
     <section>
+      {showHeader && (
       <div className="flex items-center justify-between mb-5 pb-3 border-b" style={{ borderColor: `${color}30` }}>
-        <h2 className="text-2xl md:text-4xl font-black m-0" style={{ color }}>Course Syllabus</h2>
+        <h2 className="text-2xl md:text-4xl font-black m-0" style={{ color }}>{heading}</h2>
         <span
           className="text-xs font-semibold px-3 py-1 rounded-full border"
           style={{ color, backgroundColor: bgColor, borderColor: `${color}40` }}
@@ -27,6 +32,7 @@ export default function Syllabus({
           {chapters.length} chapters · {totalLessons} lessons
         </span>
       </div>
+      )}
       <div className="space-y-2">
         {chapters.map((ch, chIdx) => (
           <details
@@ -48,7 +54,7 @@ export default function Syllabus({
               <div className="flex-1 min-w-0">
                 <p className="m-0 truncate text-sm font-bold text-gray-900">{ch.title}</p>
                 {ch.description && (
-                  <p className="m-0 mt-0.5 truncate text-xs text-gray-400">{ch.description}</p>
+                  <p className="m-0 mt-0.5 text-xs leading-relaxed text-gray-500">{ch.description}</p>
                 )}
               </div>
               <span className="text-xs font-semibold shrink-0" style={{ color }}>
