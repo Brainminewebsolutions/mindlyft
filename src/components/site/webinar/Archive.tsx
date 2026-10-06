@@ -69,7 +69,7 @@ export default async function Archive({ bg = "bg-white" }: { bg?: string }) {
               return (
                 <AnimateIn key={item.id} delay={300 + i * 70} direction="up">
                   <Link
-                    href={`/workshops/${item.slug}`}
+                    href={`/ai-workshops/${item.slug}`}
                     className="group block overflow-hidden rounded-3xl border border-gray-100 bg-white hover:-translate-y-1.5 hover:border-violet-200 hover:shadow-xl transition-all duration-300"
                   >
                     <div className={`relative flex h-36 items-center justify-center ${THUMBS[i % THUMBS.length]}`}>

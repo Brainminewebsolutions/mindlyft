@@ -11,7 +11,7 @@ export const ROUTES = {
   courses:         "/courses",
   coursesIIT:      "/courses/iit",
   coursesMindlyft: "/courses/mindlyftai",
-  iit:             "/iit",               // legacy — keep for backward compat
+  iit:             "/iit-kanpur-cyber-security-course",
 
   courseIIT:      (slug: string) => `/courses/iit/${slug}`,
   courseMindlyft: (slug: string) => `/courses/mindlyftai/${slug}`,
@@ -25,7 +25,7 @@ export const ROUTES = {
   // ── Webinars / Workshops ─────────────────────────────────
   webinar:    "/webinar",
   webinars:   "/webinars",
-  workshop:   (slug: string) => `/workshops/${slug}`,
+  workshop:   (slug: string) => `/ai-workshops/${slug}`,
 
   // ── Checkout ─────────────────────────────────────────────
   checkout:         (id: string | number) => `/checkout/${id}`,

@@ -90,7 +90,7 @@ function ProjectCard({ webinar, index }: { webinar: Webinar | null; index: numbe
           </span>
           {webinar ? (
             <Link
-              href={`/workshops/${webinar.slug}`}
+              href={`/ai-workshops/${webinar.slug}`}
               className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 group-hover:bg-blue-500 text-white transition-colors duration-300 shadow-md"
               onClick={(e) => e.stopPropagation()}
             >
@@ -146,13 +146,13 @@ export default function WorkshopsCardClient({ webinars }: { webinars: Webinar[] 
 
             <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
               <Link
-                href="/workshops"
+                href="/ai-workshops"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:opacity-90 active:scale-95"
               >
                 Register for a Free Workshop
               </Link>
               <Link
-                href="/workshops"
+                href="/ai-workshops"
                 className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-violet-200 px-6 py-3 text-sm font-semibold text-violet-700 transition-colors duration-200 hover:border-violet-500 hover:bg-violet-50"
               >
                 View Upcoming Dates

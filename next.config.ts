@@ -22,6 +22,14 @@ const nextConfig: NextConfig = {
     removeConsole: isProd ? { exclude: ["error", "warn"] } : false,
   },
 
+  async redirects() {
+    return [
+      { source: "/iit", destination: "/iit-kanpur-cyber-security-course", permanent: true },
+      { source: "/workshops", destination: "/ai-workshops", permanent: true },
+      { source: "/workshops/:slug", destination: "/ai-workshops/:slug", permanent: true },
+    ];
+  },
+
   async headers() {
     if (!isProd) return [];
 

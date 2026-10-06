@@ -5,8 +5,8 @@ const BASE = "https://www.mindlyftai.com";
 const STATIC_ROUTES: { url: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }[] = [
   { url: "/",           priority: 1.0,  changeFrequency: "weekly"  },
   { url: "/courses",    priority: 0.9,  changeFrequency: "daily"   },
-  { url: "/iit",        priority: 0.9,  changeFrequency: "weekly"  },
-  { url: "/workshops",  priority: 0.8,  changeFrequency: "weekly"  },
+  { url: "/iit-kanpur-cyber-security-course", priority: 0.9,  changeFrequency: "weekly"  },
+  { url: "/ai-workshops",  priority: 0.8,  changeFrequency: "weekly"  },
   { url: "/webinar",    priority: 0.8,  changeFrequency: "weekly"  },
   { url: "/blogs",      priority: 0.7,  changeFrequency: "daily"   },
   { url: "/about",      priority: 0.6,  changeFrequency: "monthly" },

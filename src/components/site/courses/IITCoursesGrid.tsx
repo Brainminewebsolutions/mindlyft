@@ -121,37 +121,43 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
   );
 }
 
-export default function IITCoursesGrid({ courses, bg = "bg-white" }: { courses: Course[]; bg?: string }) {
+export default function IITCoursesGrid({
+  courses, bg = "bg-white", showHeader = true,
+}: { courses: Course[]; bg?: string; showHeader?: boolean }) {
   const filtered = courses;
 
   return (
-    <section className={`${bg} px-6 md:px-[60px] py-20`}>
+    <section className={cn(bg, "px-6 md:px-[60px]", showHeader ? "py-20" : "pt-10 pb-20")}>
       <div className="max-w-7xl mx-auto">
 
         {/* Section header */}
-        <AnimateIn delay={0} direction="left">
-          <LineBadge className="mb-5">Explore Our Courses</LineBadge>
-        </AnimateIn>
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
-          <div className="text-center md:text-left">
-            <AnimateIn delay={100} direction="left">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
-                Find your{" "}
-                <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-                  next skill
-                </span>
-              </h2>
+        {showHeader && (
+          <>
+            <AnimateIn delay={0} direction="left">
+              <LineBadge className="mb-5">Explore Our Courses</LineBadge>
             </AnimateIn>
-            <AnimateIn delay={200} direction="left">
-              <p className="text-base text-gray-500 mt-2">
-                {courses.length} courses across AI, cybersecurity, technology, and more.
-              </p>
-            </AnimateIn>
-          </div>
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+              <div className="text-center md:text-left">
+                <AnimateIn delay={100} direction="left">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
+                    Find your{" "}
+                    <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
+                      next skill
+                    </span>
+                  </h2>
+                </AnimateIn>
+                <AnimateIn delay={200} direction="left">
+                  <p className="text-base text-gray-500 mt-2">
+                    {courses.length} courses across AI, cybersecurity, technology, and more.
+                  </p>
+                </AnimateIn>
+              </div>
 
-        </div>
+            </div>
 
-        <div className="border-b border-gray-100 mb-8" />
+            <div className="border-b border-gray-100 mb-8" />
+          </>
+        )}
 
         {/* Grid */}
         {filtered.length > 0 ? (

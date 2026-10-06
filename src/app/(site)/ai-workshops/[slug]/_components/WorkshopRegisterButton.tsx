@@ -67,7 +67,7 @@ export default function WorkshopRegisterButton({ webinarId, slug, productType, p
       });
 
       if (res.status === 401) {
-        router.push(`/login?next=/workshops/${slug}`);
+        router.push(`/login?next=/ai-workshops/${slug}`);
         return;
       }
 

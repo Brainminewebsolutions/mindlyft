@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
@@ -46,6 +47,38 @@ async function getWebinarById(id: string): Promise<Webinar | null> {
   }
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const webinar = await getWebinarBySlug(slug);
+  if (!webinar) return {};
+
+  const kind     = webinar.type;
+  const topic    = webinar.name.replace(new RegExp(`\\s*${kind}$`, "i"), "");
+  const isFree   = webinar.price === 0;
+  const where    = webinar.mode === "Online" ? "Online" : "in Pune";
+  const venue    = webinar.mode === "Online" ? "online" : "at our Akurdi campus";
+  const date     = new Date(webinar.date).toLocaleDateString("en-IN", {
+    day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
+  });
+  const duration = `${webinar.duration}-hour`;
+  const isPast   = webinar.date < new Date().toISOString().slice(0, 10);
+
+  return {
+    title: {
+      absolute: `${topic} ${kind} ${where} | ${isFree ? "Free Session | " : ""}MindLyft AI`,
+    },
+    description:
+      `${isFree ? "Free " : ""}${topic} ${kind.toLowerCase()} ${where.toLowerCase()} on ${date}. ` +
+      `${duration} hands-on session with ${webinar.instructor} ${venue}.` +
+      (isPast ? "" : " Limited seats — register now."),
+    alternates: { canonical: `/ai-workshops/${webinar.slug}` },
+  };
+}
+
 export default async function WorkshopDetailPage({
   params,
 }: {
@@ -55,7 +88,7 @@ export default async function WorkshopDetailPage({
   let webinar = await getWebinarBySlug(slug);
   if (!webinar && isNumericId(slug)) {
     const byId = await getWebinarById(slug);
-    if (byId) redirect(`/workshops/${byId.slug}`);
+    if (byId) redirect(`/ai-workshops/${byId.slug}`);
   }
   if (!webinar) notFound();
 
@@ -104,7 +137,7 @@ export default async function WorkshopDetailPage({
 
         {/* Back link */}
         <Link
-          href="/workshops"
+          href="/ai-workshops"
           className="absolute top-24 left-8 inline-flex items-center gap-1.5 text-white/70 hover:text-white text-sm font-medium transition-colors z-10"
         >
           <ArrowLeft className="w-4 h-4" />

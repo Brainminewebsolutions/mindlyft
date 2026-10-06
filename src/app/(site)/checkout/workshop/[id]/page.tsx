@@ -34,14 +34,14 @@ export default async function WorkshopCheckoutPage({
   const webinar = await getWebinar(id);
   if (!webinar) notFound();
 
-  if (webinar.price === 0) redirect(`/workshops/${webinar.slug}`);
+  if (webinar.price === 0) redirect(`/ai-workshops/${webinar.slug}`);
 
   return (
     <div className="min-h-screen bg-[#f9f9fb]" style={{ fontFamily: "var(--primaryFont, sans-serif)" }}>
       <div className="max-w-[680px] mx-auto px-[6vw] pt-10 pb-20">
 
         <Link
-          href={`/workshops/${webinar.slug}`}
+          href={`/ai-workshops/${webinar.slug}`}
           className="inline-flex items-center gap-1.5 text-[#6c63ff] text-[13px] font-semibold no-underline mb-8 hover:opacity-75 transition-opacity"
         >
           <ArrowLeft className="w-3.5 h-3.5" />

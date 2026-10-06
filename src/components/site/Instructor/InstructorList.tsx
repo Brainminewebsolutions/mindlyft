@@ -6,15 +6,19 @@ import type { InstructorProfileData } from "./InstructorProfile";
 interface Props {
   instructors: InstructorProfileData[];
   title?:      string;
+  subtitle?:   string;
+  altSuffix?:  string;
   color?:      string;
   bgColor?:    string;
 }
 
 export default function InstructorList({
   instructors,
-  title   = "Meet Your Instructors",
-  color   = "#7c3aed",
-  bgColor = "#f5f3ff",
+  title    = "Meet Your Instructors",
+  subtitle = "Learn from industry experts with real-world experience.",
+  altSuffix,
+  color    = "#7c3aed",
+  bgColor  = "#f5f3ff",
 }: Props) {
   if (instructors.length === 0) return null;
 
@@ -27,8 +31,8 @@ export default function InstructorList({
           <h2 className="text-2xl md:text-4xl font-black mb-2" style={{ color }}>
             {title}
           </h2>
-          <p className="text-sm text-gray-500">
-            Learn from industry experts with real-world experience.
+          <p className="max-w-3xl text-sm text-gray-500 leading-relaxed mx-auto md:mx-0">
+            {subtitle}
           </p>
         </div>
 
@@ -46,7 +50,7 @@ export default function InstructorList({
                 {avatarUrl ? (
                   <Image
                     src={avatarUrl}
-                    alt={instructor.name}
+                    alt={altSuffix ? `${instructor.name}, ${altSuffix}` : instructor.name}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"

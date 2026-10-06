@@ -41,7 +41,7 @@ function WorkshopCard({ item, index }: { item: Webinar; index: number }) {
 
   return (
     <Link
-      href={`/workshops/${item.slug}`}
+      href={`/ai-workshops/${item.slug}`}
       className="group flex flex-col rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
     >
       {/* Image */}
@@ -61,7 +61,7 @@ function WorkshopCard({ item, index }: { item: Webinar; index: number }) {
         )}
 
         {/* Mode badge */}
-        <span className="absolute top-3 left-3 flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-white bg-violet-600/80 backdrop-blur-sm px-2.5 py-0.5 rounded-full">
+        <span className="absolute top-3 left-3 flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-white bg-violet-600 px-2.5 py-0.5 rounded-full">
           <ModeIcon className="w-3 h-3" />
           {item.mode}
         </span>
@@ -132,7 +132,20 @@ function WorkshopCard({ item, index }: { item: Webinar; index: number }) {
   );
 }
 
-export default function WorkshopsList({ items }: { items: Webinar[] }) {
+interface WorkshopsListProps {
+  items:       Webinar[];
+  badge:       string;
+  heading:     string;
+  intro?:      string;
+  emptyTitle:  string;
+  emptyHint:   string;
+  showFilters?: boolean;
+  bg?:         string;
+}
+
+export default function WorkshopsList({
+  items, badge, heading, intro, emptyTitle, emptyHint, showFilters = true, bg = "bg-white",
+}: WorkshopsListProps) {
   const [mode, setMode]     = useState<Mode>("All");
   const [search, setSearch] = useState("");
 
@@ -154,71 +167,70 @@ export default function WorkshopsList({ items }: { items: Webinar[] }) {
   };
 
   return (
-    <section className="bg-white px-6 md:px-[60px] py-20">
+    <section className={cn(bg, "px-6 md:px-[60px] py-20")}>
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
         <AnimateIn delay={0} direction="left">
-          <LineBadge className="mb-5">Our Workshops</LineBadge>
+          <LineBadge className="mb-5">{badge}</LineBadge>
         </AnimateIn>
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
-          <div className="text-center md:text-left">
+          <div className="max-w-3xl text-center md:text-left">
             <AnimateIn delay={100} direction="left">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
-                Find your next{" "}
-                <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-                  workshop
-                </span>
-              </h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">{heading}</h2>
             </AnimateIn>
-            <AnimateIn delay={200} direction="left">
-              <p className="text-base text-gray-500 mt-2">
-                {items.length} workshops · hands-on, instructor-led, real outcomes.
-              </p>
-            </AnimateIn>
+            {intro && (
+              <AnimateIn delay={200} direction="left">
+                <p className="text-base text-gray-600 leading-relaxed mt-3">{intro}</p>
+              </AnimateIn>
+            )}
           </div>
 
           {/* Search */}
-          <AnimateIn delay={200} direction="right">
-            <div className="relative w-full sm:w-72 shrink-0">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-              <input
-                type="text"
-                placeholder="Search workshops…"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 text-sm text-gray-900 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-400 focus:border-violet-400 placeholder:text-gray-400 shadow-sm"
-              />
-            </div>
-          </AnimateIn>
+          {showFilters && items.length > 0 && (
+            <AnimateIn delay={200} direction="right">
+              <div className="relative w-full sm:w-72 shrink-0">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                <input
+                  type="text"
+                  placeholder="Search workshops…"
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2.5 text-sm text-gray-900 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-400 focus:border-violet-400 placeholder:text-gray-400 shadow-sm"
+                />
+              </div>
+            </AnimateIn>
+          )}
         </div>
 
         {/* Mode filters */}
-        <AnimateIn delay={250} direction="up">
-          <div className="flex items-center gap-2 flex-wrap mb-8">
-            {MODES.map(m => (
-              <button
-                key={m}
-                type="button"
-                onClick={() => setMode(m)}
-                className={cn(
-                  "flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all",
-                  mode === m
-                    ? "bg-gradient-to-r from-violet-600 to-blue-500 text-white shadow-md shadow-violet-200"
-                    : "bg-violet-50 text-violet-700 hover:bg-violet-100 border border-violet-100"
-                )}
-              >
-                {m}
-                <span className={cn(
-                  "text-[11px] font-bold px-1.5 py-0.5 rounded-full",
-                  mode === m ? "bg-white/25 text-white" : "bg-violet-100 text-violet-500"
-                )}>
-                  {counts[m]}
-                </span>
-              </button>
-            ))}
-          </div>
-        </AnimateIn>
+        {showFilters && items.length > 0 && (
+          <AnimateIn delay={250} direction="up">
+            <div className="flex items-center gap-2 flex-wrap mb-8">
+              {MODES.map(m => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setMode(m)}
+                  className={cn(
+                    "flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all",
+                    mode === m
+                      ? "bg-gradient-to-r from-violet-600 to-blue-500 text-white shadow-md shadow-violet-200"
+                      : "bg-violet-50 text-violet-700 hover:bg-violet-100 border border-violet-100"
+                  )}
+                >
+                  {m}
+                  <span className={cn(
+                    "text-[11px] font-bold px-1.5 py-0.5 rounded-full",
+                    mode === m ? "bg-white/25 text-white" : "bg-violet-100 text-violet-500"
+                  )}>
+                    {counts[m]}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </AnimateIn>
+        )}
 
         <div className="border-b border-gray-100 mb-8" />
 
@@ -235,9 +247,9 @@ export default function WorkshopsList({ items }: { items: Webinar[] }) {
               <BookOpen className="w-7 h-7 text-violet-400" />
             </div>
             <p className="text-gray-700 font-semibold text-base">
-              {search ? `No workshops match "${search}"` : "No workshops available"}
+              {items.length > 0 ? "No workshops match your search" : emptyTitle}
             </p>
-            <p className="text-sm text-gray-400 mt-1">Check back soon!</p>
+            {items.length === 0 && <p className="text-sm text-gray-500 mt-1">{emptyHint}</p>}
           </div>
         )}
 

@@ -12,7 +12,7 @@ const HERO_IMAGE =
 const QUICK_LINKS = [
   { icon: GraduationCap, label: "Explore Courses",    href: "/courses",   color: "text-violet-600 bg-violet-50" },
   { icon: Globe,         label: "Upcoming Webinars",  href: "/webinars",  color: "text-blue-600 bg-blue-50"    },
-  { icon: Lightbulb,     label: "Workshops",          href: "/workshops", color: "text-indigo-600 bg-indigo-50" },
+  { icon: Lightbulb,     label: "Workshops",          href: "/ai-workshops", color: "text-indigo-600 bg-indigo-50" },
   { icon: Newspaper,     label: "Blog & Insights",    href: "/blogs",     color: "text-violet-600 bg-violet-50" },
 ];
 

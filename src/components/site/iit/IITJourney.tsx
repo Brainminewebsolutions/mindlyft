@@ -1,16 +1,15 @@
 "use client";
 
 import { Fragment } from "react";
-import { FileText, Phone, BookOpen, Award, Rocket, ArrowRight, ArrowDown } from "lucide-react";
+import { Phone, BookOpen, FlaskConical, Award, ArrowRight, ArrowDown } from "lucide-react";
 import { LineBadge } from "@/components/ui/LineBadge";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 
 const STEPS = [
-  { icon: FileText, num: "01", title: "Apply online",     desc: "Submit your profile and goals — no entrance exam required.", accent: "#8B5CF6" },
-  { icon: Phone,    num: "02", title: "Counselling call", desc: "20-min session to confirm fit and batch details.",            accent: "#6366F1" },
-  { icon: BookOpen, num: "03", title: "Learn + build",    desc: "Live sessions, labs, and IIT-grade projects.",                accent: "#3B82F6" },
-  { icon: Award,    num: "04", title: "Get certified",    desc: "Dual certificates from MindLyft AI and IIT Kanpur.",         accent: "#7C3AED" },
-  { icon: Rocket,   num: "05", title: "Launch career",    desc: "Placement support, alumni network, recruiter access.",        accent: "#059669" },
+  { icon: Phone,        num: "01", title: "Apply and get assessed",       desc: "A short counselling call to match your background to the right track. There is no point putting a beginner in Level 2.", accent: "#8B5CF6" },
+  { icon: BookOpen,     num: "02", title: "Learn in a mixed format",      desc: "Classroom sessions at Akurdi with a C3iHub instructor, recorded material for revision, and live online sessions. The split varies by programme — the table above shows each.", accent: "#6366F1" },
+  { icon: FlaskConical, num: "03", title: "Work on labs and case studies", desc: "Simulated attacks, forensic exercises and real incident scenarios rather than closed-book assessment.", accent: "#3B82F6" },
+  { icon: Award,        num: "04", title: "Certify",                      desc: "A joint MindLyft AI and C3iHub, IIT Kanpur certificate on successful completion.", accent: "#7C3AED" },
 ];
 
 export default function IITJourney({ bg = "bg-violet-50" }: { bg?: string }) {
@@ -25,9 +24,9 @@ export default function IITJourney({ bg = "bg-violet-50" }: { bg?: string }) {
           </AnimateIn>
           <AnimateIn delay={100} direction="flip">
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
-              From application to{" "}
+              How the{" "}
               <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-                career transformation.
+                programme runs
               </span>
             </h2>
           </AnimateIn>

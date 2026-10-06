@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { LineBadge } from "@/components/ui/LineBadge";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 
 export default function IITHero({ bg = "bg-white" }: { bg?: string }) {
@@ -17,22 +15,22 @@ export default function IITHero({ bg = "bg-white" }: { bg?: string }) {
 
       {/* Content */}
       <div className="relative z-10 max-w-2xl">
-        
+
         <AnimateIn delay={100}>
           <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight mb-6">
-            Advance Your Career with {" "}
+            IIT Kanpur cyber security courses in Pune,{" "}
             <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
-              C3iHub IIT Kanpur AI Programs
+              with C3iHub
             </span>
           </h1>
         </AnimateIn>
         <AnimateIn delay={200}>
           <p className="text-lg text-gray-600 leading-relaxed max-w-xl mb-10">
-            Explore careers, placement stats, key facts, and opportunities available to
-            students through India&apos;s most prestigious technical institute — IIT Kanpur.
+            Most cybersecurity certificates in this market are issued by the institute that sold you
+            the course. This one is not.
           </p>
         </AnimateIn>
-        
+
       </div>
     </section>
   );

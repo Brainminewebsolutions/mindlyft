@@ -19,7 +19,7 @@ const PILLARS = [
     tagline: "World-class IIT education",
     description: "Premium programs developed in collaboration with IIT faculty and industry experts. Gain credentials that set you apart.",
     description2: "Certificate programs, research tracks, and live IIT-backed sessions — all in one place.",
-    href: "/iit",
+    href: "/iit-kanpur-cyber-security-course",
     pill: "from-violet-500 to-blue-500", dot: "#8B5CF6", card: "from-violet-600 to-blue-500",
   },
   {
@@ -35,7 +35,7 @@ const PILLARS = [
     tagline: "Hands-on, expert-led sessions",
     description: "Short intensive sessions focused on practical skill building with industry experts. Learn by doing.",
     description2: "Small cohorts, live practice, and immediate real-world results.",
-    href: "/workshops",
+    href: "/ai-workshops",
     pill: "from-indigo-500 to-violet-600", dot: "#6366F1", card: "from-indigo-600 to-violet-600",
   },
   {

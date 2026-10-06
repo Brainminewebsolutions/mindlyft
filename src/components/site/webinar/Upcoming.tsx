@@ -67,7 +67,7 @@ export default async function Upcoming({ bg = "bg-violet-50" }: { bg?: string })
               return (
                 <AnimateIn key={item.id} delay={200 + i * 80} direction="right">
                   <Link
-                    href={`/workshops/${item.slug}`}
+                    href={`/ai-workshops/${item.slug}`}
                     className="group flex flex-wrap items-center gap-5 rounded-2xl border border-gray-100 bg-white px-6 py-5 hover:translate-x-1.5 hover:shadow-md hover:border-violet-200 transition-all duration-300"
                   >
                     <div className="min-w-[60px] rounded-xl bg-gradient-to-br from-violet-600 to-blue-500 px-2.5 py-3 text-center text-white shrink-0">

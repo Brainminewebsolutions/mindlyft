@@ -52,8 +52,8 @@ interface Props    { user?: NavUser | null; height?: number; courses?: NavCourse
 const NAV: NavItem[] = [
   { label: "Home",       href: "/"           },
   { label: "Academy",   href: "/academy", children: [
-    { label: "IIT Programs", href: "/iit"       },
-    { label: "Workshops",    href: "/workshops" },
+    { label: "IIT Programs", href: "/iit-kanpur-cyber-security-course" },
+    { label: "Workshops",    href: "/ai-workshops" },
     { label: "Webinars",     href: "/webinars"  },
   ]},
   { label: "Courses",   href: "/courses"    }, // rendered via CoursesDesktopItem / mobile accordion

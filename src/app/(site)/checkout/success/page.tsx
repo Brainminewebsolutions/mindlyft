@@ -17,7 +17,7 @@ const COPY = {
     message:    "You're registered! We'll send you the joining details before the session.",
     myLink:     "/student/workshops",
     myLabel:    "Go to My Workshops",
-    browseLink: "/workshops",
+    browseLink: "/ai-workshops",
     browseLabel: "Browse more workshops",
   },
   webinar: {
