@@ -67,15 +67,35 @@ export async function generateMetadata({
   const duration = `${webinar.duration}-hour`;
   const isPast   = webinar.date < new Date().toISOString().slice(0, 10);
 
+  const title = {
+    absolute: `${topic} ${kind} ${where} | ${isFree ? "Free Session | " : ""}MindLyft AI`,
+  };
+  const description =
+    `${isFree ? "Free " : ""}${topic} ${kind.toLowerCase()} ${where.toLowerCase()} on ${date}. ` +
+    `${duration} hands-on session with ${webinar.instructor} ${venue}.` +
+    (isPast ? "" : " Limited seats — register now.");
+  const canonical = `/ai-workshops/${webinar.slug}`;
+  // Link previews (WhatsApp, LinkedIn, X…) show the workshop image, or the logo when it has none.
+  const shareImage = toUploadUrl(webinar.image) ?? "/MINDLYF_LOGO_new.png";
+
   return {
-    title: {
-      absolute: `${topic} ${kind} ${where} | ${isFree ? "Free Session | " : ""}MindLyft AI`,
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      type: "website",
+      url: canonical,
+      siteName: "MindLyft AI",
+      title,
+      description,
+      images: [{ url: shareImage, alt: webinar.name }],
     },
-    description:
-      `${isFree ? "Free " : ""}${topic} ${kind.toLowerCase()} ${where.toLowerCase()} on ${date}. ` +
-      `${duration} hands-on session with ${webinar.instructor} ${venue}.` +
-      (isPast ? "" : " Limited seats — register now."),
-    alternates: { canonical: `/ai-workshops/${webinar.slug}` },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [shareImage],
+    },
   };
 }
 

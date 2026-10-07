@@ -228,11 +228,11 @@ function UpskillCategory({ category }: { category: Category }) {
 
       {/* Category Heading */}
       <div className="mb-3 flex items-center justify-center gap-4">
-        <div className="h-px w-16 bg-violet-500" />
-        <span className="text-2xl font-semibold uppercase tracking-[0.3em] text-violet-800">
+        <div className="hidden h-px w-16 shrink-0 bg-violet-500 sm:block" />
+        <span className="text-center text-lg font-semibold uppercase tracking-[0.2em] text-violet-800 sm:text-2xl sm:tracking-[0.3em]">
           Meet Our Upskill Team
         </span>
-        <div className="h-px w-16 bg-violet-500" />
+        <div className="hidden h-px w-16 shrink-0 bg-violet-500 sm:block" />
       </div>
 
       {/* Leaders Grid */}
@@ -254,11 +254,11 @@ function DefaultCategory({ category }: { category: Category }) {
       <div>
         <div>
           <div className="mb-6 flex items-center justify-center gap-4">
-            <div className="h-px w-16 bg-violet-300" />
-            <span className="text-2xl font-semibold uppercase tracking-[0.3em] text-violet-600">
+            <div className="hidden h-px w-16 shrink-0 bg-violet-300 sm:block" />
+            <span className="text-center text-lg font-semibold uppercase tracking-[0.2em] text-violet-600 sm:text-2xl sm:tracking-[0.3em]">
               {category.title}
             </span>
-            <div className="h-px w-16 bg-violet-300" />
+            <div className="hidden h-px w-16 shrink-0 bg-violet-300 sm:block" />
           </div>
         </div>
         <div className="flex-1 h-px bg-gray-200 ml-2" />

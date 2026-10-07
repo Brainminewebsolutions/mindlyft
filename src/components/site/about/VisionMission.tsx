@@ -40,7 +40,7 @@ export default function VisionMission({ bg = "bg-white" }: { bg?: string }) {
         
         <div className="grid md:grid-cols-2 gap-8">
           {/* Vision */}
-          <div className="bg-white rounded-3xl p-8 shadow-sm border border-violet-100">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-violet-100">
             <div className="text-5xl mb-5">🚀</div>
 
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
@@ -54,7 +54,7 @@ export default function VisionMission({ bg = "bg-white" }: { bg?: string }) {
           </div>
 
           {/* Mission */}
-          <div className="bg-white rounded-3xl p-8 shadow-sm border border-blue-100">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-blue-100">
             <div className="text-5xl mb-5">🎯</div>
 
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
@@ -91,7 +91,7 @@ export default function VisionMission({ bg = "bg-white" }: { bg?: string }) {
 
       </div>
      <br />
-      <div className="mb-16 rounded-[32px] bg-violet-50 px-8 py-12">
+      <div className="mb-16 rounded-[32px] bg-violet-50 px-6 py-8 sm:px-8 sm:py-12">
   <div className="grid grid-cols-1 md:grid-cols-3">
     {stats.map((stat, index) => (
       <div
@@ -106,7 +106,7 @@ export default function VisionMission({ bg = "bg-white" }: { bg?: string }) {
           {stat.value}
         </h3>
 
-        <p className="text-gray-600 text-xl">
+        <p className="text-gray-600 text-lg sm:text-xl">
           {stat.label}
         </p>
       </div>

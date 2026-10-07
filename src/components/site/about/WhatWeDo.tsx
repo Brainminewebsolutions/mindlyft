@@ -52,7 +52,7 @@ export default function WhatWeDo({ bg = "bg-white" }: { bg?: string }) {
             width={0}
             height={0}
             sizes="(max-width: 1024px) 100vw, 45vw"
-            className="w-full h-[480px] object-cover rounded-2xl shadow-md"
+            className="w-full h-64 sm:h-80 lg:h-[480px] object-cover rounded-2xl shadow-md"
           />
         </div>
 

@@ -20,8 +20,11 @@ export default function FooterWatermark() {
     return () => observer.disconnect();
   }, []);
 
+  // Phones scale purely with the viewport so the whole wordmark fits on one line;
+  // from md up the original clamp applies.
+  const sizeClass = "text-[12vw] md:text-[clamp(4rem,13.5vw,220px)]";
+
   const textStyle: React.CSSProperties = {
-    fontSize: "clamp(4rem, 13.5vw, 220px)",
     fontFamily: "'Playfair Display', Georgia, serif",
     letterSpacing: "-0.02em",
     lineHeight: 1.15,
@@ -68,7 +71,7 @@ export default function FooterWatermark() {
       `}</style>
 
       <div ref={ref} className="pb-14 pt-8 mt-10 w-full">
-        <div className={`flex items-end justify-center w-full select-none pointer-events-none pb-4 ${visible ? "wm-visible" : ""}`}>
+        <div className={`flex items-end justify-center w-full overflow-hidden select-none pointer-events-none pb-4 ${visible ? "wm-visible" : ""}`}>
 
           {LETTERS.map((letter, i) => {
             const isI = i === LETTERS.length - 1; // last letter = "I" with robot
@@ -88,7 +91,7 @@ export default function FooterWatermark() {
 
             if (isI) {
               return (
-                <span key={i} className={`wm-letter-${i}`}>
+                <span key={i} className={`wm-letter-${i} ${sizeClass}`}>
                   <div className="flex flex-col items-center gap-0">
                     <div className="wm-robo" style={{ filter: "drop-shadow(0 4px 12px rgba(29,78,216,0.5))", lineHeight: 0, marginBottom: "4px" }}>
                       <Image
@@ -96,7 +99,7 @@ export default function FooterWatermark() {
                         alt="Robot"
                         width={120}
                         height={120}
-                        className="rounded-full object-cover object-top"
+                        className="h-[0.85em] max-h-[120px] w-[0.85em] max-w-[120px] rounded-full object-cover object-top"
                       />
                     </div>
                     <span className="font-black" style={textStyle}>I</span>
@@ -108,7 +111,7 @@ export default function FooterWatermark() {
             return (
               <span
                 key={i}
-                className={`wm-letter-${i} font-black`}
+                className={`wm-letter-${i} ${sizeClass} font-black`}
                 style={{
                   ...textStyle,
                   ...(isL ? { color: "#7c3aed", WebkitTextFillColor: "#7c3aed" } : {}),

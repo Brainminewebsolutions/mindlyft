@@ -50,7 +50,7 @@ export default function WorkshopsHero() {
 
         {/* Right — image */}
         <AnimateIn delay={200} direction="right">
-          <div className="relative w-full h-[420px] lg:h-[520px]">
+          <div className="relative w-full h-72 sm:h-[420px] lg:h-[520px]">
             <Image
               src="/assets/img/hero/hero-img-3.png"
               alt="A free hands-on AI workshop at the MindLyft AI Akurdi campus, Pune"

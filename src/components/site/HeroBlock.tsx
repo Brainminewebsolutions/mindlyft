@@ -142,7 +142,7 @@ export default function HeroBlock({
 
     gridContent = (
       <div className={cn(
-        "grid grid-cols-1 lg:grid-cols-2 gap-16 items-center",
+        "grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center",
         reverse && "[&>*:first-child]:lg:order-2 [&>*:last-child]:lg:order-1",
       )}>
         {left}
@@ -169,7 +169,7 @@ export default function HeroBlock({
 
     gridContent = (
       <div className={cn(
-        "grid grid-cols-1 lg:grid-cols-2 gap-16 items-center",
+        "grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center",
         reverse
           ? "[&>*:first-child]:lg:order-2 [&>*:last-child]:lg:order-1"
           : undefined,
@@ -193,7 +193,8 @@ export default function HeroBlock({
 
   return (
     <section className={cn(
-      "relative h-screen flex items-center justify-center overflow-hidden",
+      // Grows with its content on small screens; exactly one viewport tall from lg up.
+      "relative min-h-screen lg:h-screen flex items-center justify-center overflow-hidden",
       !imageUrl && bgClass,
     )}>
 
@@ -230,7 +231,7 @@ export default function HeroBlock({
       />
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-20 pb-10">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-28 pb-12 lg:pt-20 lg:pb-10">
         {gridContent}
       </div>
     </section>

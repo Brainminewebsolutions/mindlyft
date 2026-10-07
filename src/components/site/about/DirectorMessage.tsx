@@ -65,7 +65,7 @@ export default function DirectorMessage({
 
             <div className="space-y-4 -mt-4">
               {message.map((para, i) => (
-                <p key={i} className="text-gray-600 text-lg leading-relaxed">
+                <p key={i} className="text-gray-600 text-base md:text-lg leading-relaxed">
                   {para}
                 </p>
               ))}

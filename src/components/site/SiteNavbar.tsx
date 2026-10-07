@@ -573,7 +573,7 @@ export default function SiteNavbar({ user, height, courses = [] }: Props) {
 
       {/* ── Mobile drawer (slides from right) ── */}
       <aside className={cn(
-        "fixed top-0 right-0 h-full w-[300px] z-[998] bg-white border-l border-gray-200 shadow-2xl transition-transform duration-300 ease-in-out xl:hidden flex flex-col",
+        "fixed top-0 right-0 h-full w-[300px] max-w-[85vw] z-[998] bg-white border-l border-gray-200 shadow-2xl transition-transform duration-300 ease-in-out xl:hidden flex flex-col",
         mobileOpen ? "translate-x-0" : "translate-x-full"
       )}>
 

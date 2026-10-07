@@ -46,10 +46,10 @@ export default function IITEnrolCard({ courseId, price, discount, discountPrice,
         )}
 
         {/* Price and actions */}
-        <div className="border-t border-violet-100 bg-gradient-to-br from-violet-100 to-blue-100 p-6 sm:p-8 lg:border-l lg:border-t-0">
+        <div className="border-t border-violet-100 bg-gradient-to-br from-violet-100 to-blue-100 p-6 text-center sm:p-8 lg:border-l lg:border-t-0 lg:text-left">
           {hasDiscount ? (
             <div className="mb-5">
-              <div className="mb-1 flex items-center gap-2">
+              <div className="mb-1 flex items-center justify-center gap-2 lg:justify-start">
                 <span className="text-sm text-gray-400 line-through">₹{price.toLocaleString("en-IN")}</span>
                 <span className="rounded-full border border-violet-200 bg-white px-2 py-0.5 text-xs font-bold text-violet-600">{discount}% OFF</span>
               </div>

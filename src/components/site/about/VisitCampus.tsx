@@ -51,7 +51,7 @@ export default function VisitCampus({ bg = "bg-white" }: { bg?: string }) {
             <iframe
               src={SITE_CONFIG.mapEmbedUrl}
               title="MindLyft AI campus location"
-              className="block h-[360px] w-full border-0"
+              className="block h-72 w-full border-0 sm:h-[360px]"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />

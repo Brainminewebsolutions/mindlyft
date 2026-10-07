@@ -21,5 +21,6 @@ async function getPublicCourses(): Promise<Course[]> {
 
 export default async function CoursesCard() {
   const courses = await getPublicCourses();
-  return <CoursesCardClient courses={courses} />;
+  // Only the cards that are displayed go to the client; the total feeds the "N programs" line.
+  return <CoursesCardClient courses={courses.slice(0, 6)} total={courses.length} />;
 }

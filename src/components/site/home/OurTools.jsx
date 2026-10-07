@@ -16,6 +16,7 @@ const COLOR_PALETTE = [
 ];
 
 const RADIUS = 310;
+const RADIUS_MOBILE = 200; // tighter orbit below `sm` so side cards peek in beside the front one
 const CARD_W = 300;
 const CARD_H = 200;
 const AUTO_SPEED = 0.008; // radians per frame
@@ -30,6 +31,7 @@ export default function OurTools({ cards: cardsProp }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const [radius, setRadius] = useState(RADIUS);
   const dragStart = useRef(null);
   const angleRef = useRef(0);
   const rafRef = useRef(null);
@@ -37,6 +39,15 @@ export default function OurTools({ cards: cardsProp }) {
 
   const total = cards.length;
   const angleStep = (Math.PI * 2) / total;
+
+  // Orbit radius follows the `sm` breakpoint
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 640px)");
+    const sync = () => setRadius(mq.matches ? RADIUS : RADIUS_MOBILE);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   // Auto-rotate
   useEffect(() => {
@@ -131,18 +142,24 @@ export default function OurTools({ cards: cardsProp }) {
 
         {/* Stage — orbit math below is fixed to a 560×560 coordinate space, so on
             small screens we scale the whole thing down with a CSS transform rather
-            than recomputing RADIUS/CARD_W/CARD_H per breakpoint. The outer wrapper
-            reserves the visually-scaled footprint so layout doesn't leave a gap. */}
-        <div className="relative -mt-6 h-[280px] w-[280px] sm:-mt-10 sm:h-[364px] sm:w-[364px] md:-mt-12 md:h-[448px] md:w-[448px] lg:-mt-16 lg:h-[560px] lg:w-[560px]">
+            than recomputing CARD_W/CARD_H per breakpoint. The outer wrapper
+            reserves the visually-scaled footprint so layout doesn't leave a gap.
+            Below `sm` the stage stays near full size (so card text is readable)
+            and the orbit radius shrinks instead — the side cards are clipped by
+            the section's overflow-hidden. */}
+        <div className="relative -mt-8 h-[320px] w-[280px] sm:-mt-10 sm:h-[364px] sm:w-[364px] md:-mt-12 md:h-[448px] md:w-[448px] lg:-mt-16 lg:h-[560px] lg:w-[560px]">
         <div
-          className="absolute left-1/2 top-1/2 h-[560px] w-[560px] origin-center -translate-x-1/2 -translate-y-1/2 scale-[0.5] sm:scale-[0.65] md:scale-[0.8] lg:scale-100 cursor-grab select-none touch-none active:cursor-grabbing"
+          className="absolute left-1/2 top-1/2 h-[560px] w-[560px] origin-center -translate-x-1/2 -translate-y-1/2 scale-[0.85] sm:scale-[0.65] md:scale-[0.8] lg:scale-100 cursor-grab select-none touch-pan-y active:cursor-grabbing"
           ref={containerRef}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
-          onPointerLeave={onPointerUp}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
+          onPointerCancel={onPointerUp}
+          onPointerEnter={(e) => { if (e.pointerType === "mouse") setPaused(true); }}
+          onPointerLeave={(e) => {
+            onPointerUp();
+            if (e.pointerType === "mouse") setPaused(false);
+          }}
         >
           {/* Orbit ring */}
           <div className="pointer-events-none absolute inset-0" />
@@ -150,8 +167,8 @@ export default function OurTools({ cards: cardsProp }) {
           {/* Cards */}
           {cards.map((card, i) => {
             const theta = angle + i * angleStep;
-            const cx = 280 + Math.sin(theta) * RADIUS;
-            const cy = 280 + Math.cos(theta) * RADIUS * 0.38; // flatten Y for 3D feel
+            const cx = 280 + Math.sin(theta) * radius;
+            const cy = 280 + Math.cos(theta) * radius * 0.38; // flatten Y for 3D feel
             const cosT = Math.cos(theta);
             // depth: 0 (back) → 1 (front)
             const depth = (cosT + 1) / 2;

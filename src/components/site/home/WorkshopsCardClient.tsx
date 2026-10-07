@@ -20,7 +20,10 @@ function ProjectCard({ webinar, index }: { webinar: Webinar | null; index: numbe
   const imgSrc = webinar ? toUploadUrl(webinar.image ?? "") : null;
 
   return (
-    <div className="flex flex-col w-[320px] sm:w-[360px] flex-shrink-0 h-[480px] lg:h-[80vh] overflow-hidden rounded-2xl group cursor-pointer bg-white border border-violet-100">
+    // Desktop height = viewport − 60px fixed navbar (SiteNavbar) − 9.25rem for
+    // the prev/next arrows and breathing room, so cards and arrows fit in a
+    // single viewport together.
+    <div className="flex flex-col w-[320px] sm:w-[360px] flex-shrink-0 h-[480px] lg:h-[calc(100vh-60px-9.25rem)] lg:min-h-[440px] overflow-hidden rounded-2xl group cursor-pointer bg-white border border-violet-100">
 
       {/* Image — 40% of card height */}
       <div className="relative h-[40%] w-full shrink-0 overflow-hidden">
@@ -174,7 +177,7 @@ export default function WorkshopsCardClient({ webinars }: { webinars: Webinar[] 
       </div>
 
       {/* Prev / Next buttons — bottom */}
-      <div className="flex items-center justify-center gap-3 mt-8">
+      <div className="flex items-center justify-center gap-3 mt-8 lg:mt-5">
         <button
           onClick={() => scroll("left")}
           className="flex items-center justify-center w-11 h-11 rounded-full border-2 border-gray-200 text-gray-500 hover:border-violet-500 hover:text-violet-600 transition-colors duration-200"
@@ -187,6 +190,24 @@ export default function WorkshopsCardClient({ webinars }: { webinars: Webinar[] 
         >
           <ArrowRight size={18} />
         </button>
+      </div>
+
+      {/* View all — the row above is capped, the full lists live on their own pages */}
+      <div className="mt-10 flex flex-wrap items-center justify-center gap-4 px-6">
+        <Link
+          href="/ai-workshops"
+          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-blue-500 px-8 py-3 text-sm font-semibold text-white shadow-md transition-transform duration-200 hover:opacity-90 active:scale-95"
+        >
+          View All Workshops
+          <ArrowRight size={16} strokeWidth={2.5} />
+        </Link>
+        <Link
+          href="/webinars"
+          className="inline-flex items-center gap-2 rounded-full border-2 border-violet-200 px-8 py-3 text-sm font-semibold text-violet-700 transition-colors duration-200 hover:border-violet-500 hover:bg-violet-50"
+        >
+          View All Webinars
+          <ArrowRight size={16} strokeWidth={2.5} />
+        </Link>
       </div>
 
     </div>

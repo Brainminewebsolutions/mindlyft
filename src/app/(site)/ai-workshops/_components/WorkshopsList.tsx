@@ -206,7 +206,7 @@ export default function WorkshopsList({
         {/* Mode filters */}
         {showFilters && items.length > 0 && (
           <AnimateIn delay={250} direction="up">
-            <div className="flex items-center gap-2 flex-wrap mb-8">
+            <div className="flex items-center justify-center gap-2 flex-wrap mb-8 md:justify-start">
               {MODES.map(m => (
                 <button
                   key={m}

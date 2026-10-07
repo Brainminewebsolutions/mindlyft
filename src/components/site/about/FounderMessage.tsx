@@ -56,7 +56,7 @@ export default function FounderMessage({
             {/* Message Paragraphs */}
             <div className="space-y-4 -mt-4">
               {message.map((para, i) => (
-                <p key={i} className="text-gray-600 text-lg leading-relaxed">
+                <p key={i} className="text-gray-600 text-base md:text-lg leading-relaxed">
                   {para}
                 </p>
               ))}
@@ -85,7 +85,7 @@ export default function FounderMessage({
           </div>
 
  {/* Left — Founder Image */}
-          <div className="md:w-2/5 relative min-h-80">
+          <div className="md:w-2/5 relative min-h-80 order-first md:order-none">
 
             <Image
               src={imageUrl}

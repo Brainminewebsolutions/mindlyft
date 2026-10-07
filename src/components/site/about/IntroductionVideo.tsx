@@ -31,7 +31,7 @@ export default function IntroductionVideo({ bg = "bg-white" }: { bg?: string }) 
             controls
             playsInline
             preload="none"
-            className="w-full h-96"
+            className="w-full h-56 sm:h-96"
           >
             <source src="/introvideo.mp4" type="video/mp4" />
             Your browser does not support the video tag.

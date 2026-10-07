@@ -8,7 +8,7 @@ import { Clock, ArrowRight, Globe, User, CheckCircle, Sparkles, MessageCircle, M
 import type { Course } from "@/types/admin/course";
 import { SITE_CONFIG } from "@/constants/siteConfig";
 
-export default function CoursesCardClient({ courses }: { courses: Course[] }) {
+export default function CoursesCardClient({ courses, total }: { courses: Course[]; total: number }) {
   return (
     <section className="relative overflow-x-hidden bg-white isolate">
       {/* Section Header */}
@@ -20,7 +20,7 @@ export default function CoursesCardClient({ courses }: { courses: Course[] }) {
           highlight="from fundamentals to mastery."
         />
         <p className="mx-auto max-w-2xl text-gray-600">
-          {courses.length} programs spanning foundations to advanced specialisations, available in offline, online and hybrid formats.
+          {total} programs spanning foundations to advanced specialisations, available in offline, online and hybrid formats.
         </p>
         <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-violet-500 to-blue-500" />
 
@@ -73,7 +73,7 @@ export default function CoursesCardClient({ courses }: { courses: Course[] }) {
                 cards are hidden with CSS (not JS) so SSR markup matches every
                 screen size with no layout shift. */}
             <div className="grid grid-cols-1 gap-8 min-[681px]:grid-cols-2 min-[1101px]:grid-cols-3">
-              {courses.slice(0, 6).map((course, i) => (
+              {courses.map((course, i) => (
                 <CourseCard
                   key={course.id}
                   course={course}

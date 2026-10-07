@@ -42,7 +42,7 @@ export default function Syllabus({
             style={{ borderColor: `${color}20` }}
           >
             <summary
-              className="flex cursor-pointer select-none list-none items-center gap-3 px-5 py-4 transition-colors [&::-webkit-details-marker]:hidden"
+              className="flex cursor-pointer select-none list-none items-start gap-3 px-3 py-4 transition-colors sm:px-5 [&::-webkit-details-marker]:hidden"
               style={{ backgroundColor: `${bgColor}99` }}
             >
               <div
@@ -52,7 +52,7 @@ export default function Syllabus({
                 {chIdx + 1}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="m-0 truncate text-sm font-bold text-gray-900">{ch.title}</p>
+                <p className="m-0 text-sm font-bold leading-snug text-gray-900">{ch.title}</p>
                 {ch.description && (
                   <p className="m-0 mt-0.5 text-xs leading-relaxed text-gray-500">{ch.description}</p>
                 )}
@@ -68,7 +68,7 @@ export default function Syllabus({
                 {ch.contents.map((lesson, lIdx) => (
                   <li
                     key={lesson.id}
-                    className="flex items-center gap-3 border-b py-3 pl-14 pr-5 text-sm text-gray-500 last:border-b-0 hover:text-gray-800 transition-colors"
+                    className="flex items-center gap-3 border-b py-3 pl-6 pr-4 text-sm sm:pl-14 sm:pr-5 text-gray-500 last:border-b-0 hover:text-gray-800 transition-colors"
                     style={{ borderColor: `${color}10` }}
                   >
                     {lesson.videoUrl

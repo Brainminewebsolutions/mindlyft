@@ -34,9 +34,9 @@ export default function CareerOpportunities({
 }: Props) {
   return (
     <div>
-      <p className="mb-5 text-sm leading-relaxed text-gray-600">{intro}</p>
+      <p className="mb-5 text-center text-sm leading-relaxed text-gray-600 md:text-left">{intro}</p>
 
-      <ul className="flex flex-wrap gap-2.5">
+      <ul className="flex flex-wrap justify-center gap-2.5 md:justify-start">
         {roles.map((role, i) => (
           <li key={role} className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold ${PILL_COLORS[i % PILL_COLORS.length]}`}>
             <Briefcase className="h-3.5 w-3.5 opacity-70" />

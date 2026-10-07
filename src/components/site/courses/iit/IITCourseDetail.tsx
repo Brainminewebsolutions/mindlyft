@@ -101,7 +101,7 @@ export default function IITCourseDetail({ course, chapters, proxiedImage }: Prop
             {paragraphs(course.description).map((p) => <p key={p}>{p}</p>)}
           </div>
         )}
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
           <Link href="/contact" className={primaryCta}>
             <CalendarCheck className="h-4 w-4" /> Book a free counselling call
           </Link>
@@ -174,7 +174,7 @@ export default function IITCourseDetail({ course, chapters, proxiedImage }: Prop
           eyebrow="Curriculum"
           title={`Course syllabus — ${chapters.length} modules, ${course.duration} hours`}
         >
-          <div className="rounded-3xl border border-violet-100 bg-white p-4 shadow-sm sm:p-6">
+          <div className="rounded-3xl border border-violet-100 bg-white p-3 shadow-sm sm:p-6">
             <Syllabus chapters={chapters} totalLessons={totalLessons} showHeader={false} color={COLOR} bgColor={BG_COLOR} />
           </div>
         </Band>

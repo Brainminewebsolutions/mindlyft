@@ -177,7 +177,7 @@ export default function AddOurJourneyPage() {
                   <Upload className="h-8 w-8 text-muted-foreground/50" />
                   <p className="text-sm text-muted-foreground text-center">
                     Click to upload image<br />
-                    <span className="text-xs">JPG, PNG, WEBP — max 1 MB</span>
+                    <span className="text-xs">JPG, PNG, WEBP — max 300 KB</span>
                   </p>
                 </>
               )}

@@ -2,10 +2,12 @@
 // browser before a file ever reaches the backend, so oversized camera
 // photos never make it into storage.
 
-export const MAX_IMAGE_UPLOAD_BYTES = 1 * 1024 * 1024; // 1MB — keep in sync with backend FileUploadConstants
+export const MAX_IMAGE_UPLOAD_BYTES = 300 * 1024; // 300KB — keep in sync with backend FileUploadConstants
+const MAX_IMAGE_UPLOAD_LABEL = `${MAX_IMAGE_UPLOAD_BYTES / 1024}KB`;
 // Largest uploaded image on the site renders ~800px wide; 1600px keeps it sharp on 2x screens.
 const MAX_IMAGE_DIMENSION = 1600;
-const OUTPUT_QUALITY = 0.8;
+// Tried in order until the encoded image fits under the cap.
+const OUTPUT_QUALITIES = [0.8, 0.7, 0.6, 0.5];
 
 export class ImageUploadError extends Error {}
 
@@ -25,17 +27,17 @@ function loadImage(file: File): Promise<HTMLImageElement> {
   });
 }
 
-function canvasToBlob(canvas: HTMLCanvasElement, type: string): Promise<Blob> {
+function canvasToBlob(canvas: HTMLCanvasElement, type: string, quality: number): Promise<Blob> {
   return new Promise((resolve, reject) => {
     canvas.toBlob(
       (blob) => (blob ? resolve(blob) : reject(new ImageUploadError("Could not process image"))),
       type,
-      OUTPUT_QUALITY,
+      quality,
     );
   });
 }
 
-async function resizeAndCompress(img: HTMLImageElement, mimeType: string): Promise<Blob> {
+async function resizeAndCompress(img: HTMLImageElement, mimeType: string, quality: number): Promise<Blob> {
   const scale = Math.min(1, MAX_IMAGE_DIMENSION / Math.max(img.width, img.height));
   const width = Math.round(img.width * scale);
   const height = Math.round(img.height * scale);
@@ -50,10 +52,10 @@ async function resizeAndCompress(img: HTMLImageElement, mimeType: string): Promi
   // WebP is smaller than JPEG and keeps transparency. Browsers that can't
   // encode it (older Safari) silently return a PNG instead, so check the
   // result type and fall back: PNG for transparent sources, else JPEG.
-  const webp = await canvasToBlob(canvas, "image/webp");
+  const webp = await canvasToBlob(canvas, "image/webp", quality);
   if (webp.type === "image/webp") return webp;
 
-  return canvasToBlob(canvas, mimeType === "image/png" ? "image/png" : "image/jpeg");
+  return canvasToBlob(canvas, mimeType === "image/png" ? "image/png" : "image/jpeg", quality);
 }
 
 const EXTENSIONS: Record<string, string> = {
@@ -77,17 +79,21 @@ export async function prepareImageFile(file: File): Promise<File> {
   // animation, so just enforce the size cap and pass them through.
   if (file.type === "image/gif") {
     if (file.size > MAX_IMAGE_UPLOAD_BYTES) {
-      throw new ImageUploadError(`Image must be under ${MAX_IMAGE_UPLOAD_BYTES / (1024 * 1024)}MB`);
+      throw new ImageUploadError(`Image must be under ${MAX_IMAGE_UPLOAD_LABEL}`);
     }
     return file;
   }
 
   const img = await loadImage(file);
-  const blob = await resizeAndCompress(img, file.type);
+  let blob = await resizeAndCompress(img, file.type, OUTPUT_QUALITIES[0]);
+  for (const quality of OUTPUT_QUALITIES.slice(1)) {
+    if (blob.size <= MAX_IMAGE_UPLOAD_BYTES) break;
+    blob = await resizeAndCompress(img, file.type, quality);
+  }
 
   if (blob.size > MAX_IMAGE_UPLOAD_BYTES) {
     throw new ImageUploadError(
-      `Image is too large even after compression. Please use a smaller image (under ${MAX_IMAGE_UPLOAD_BYTES / (1024 * 1024)}MB).`,
+      `Image is too large even after compression. Please use a smaller image (under ${MAX_IMAGE_UPLOAD_LABEL}).`,
     );
   }
 

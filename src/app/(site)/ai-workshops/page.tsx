@@ -155,12 +155,14 @@ export default async function WorkshopsPage() {
               </>
             }
           />
-          <Link
-            href="/courses"
-            className="inline-flex items-center gap-2 rounded-xl border border-violet-200 bg-white px-6 py-3 text-sm font-semibold text-violet-700 hover:bg-violet-50 transition-colors"
-          >
-            Browse our programmes <ArrowRight className="h-4 w-4" />
-          </Link>
+          <div className="text-center md:text-left">
+            <Link
+              href="/courses"
+              className="inline-flex items-center gap-2 rounded-xl border border-violet-200 bg-white px-6 py-3 text-sm font-semibold text-violet-700 hover:bg-violet-50 transition-colors"
+            >
+              Browse our programmes <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
     </div>
