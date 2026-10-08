@@ -115,7 +115,7 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
   return (
     <Link
       href={href}
-      className={`${cardClass} relative flex h-[500px] cursor-pointer flex-col overflow-hidden rounded-[24px] border border-[color:rgba(var(--a),0.15)] bg-white shadow-[0_8px_32px_rgba(var(--a),0.10),0_2px_8px_rgba(0,0,0,0.06)]`}
+      className={`${cardClass} group relative flex h-[500px] cursor-pointer flex-col overflow-hidden rounded-[24px] border border-[color:rgba(var(--a),0.15)] bg-white shadow-[0_8px_32px_rgba(var(--a),0.10),0_2px_8px_rgba(0,0,0,0.06)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-2 hover:border-[color:rgba(var(--a),0.40)] hover:shadow-[0_20px_48px_rgba(var(--a),0.22),0_6px_16px_rgba(0,0,0,0.08)] motion-reduce:transition-none motion-reduce:hover:translate-y-0`}
       style={{ "--a": accentRgb } as React.CSSProperties}
     >
       {/* Image / gradient — 40% of card height */}
@@ -126,7 +126,7 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
             alt={course.name}
             fill
             sizes="(max-width: 680px) 100vw, (max-width: 1100px) 50vw, 33vw"
-            className="object-cover"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           />
         ) : (
           <div className="h-full w-full bg-[linear-gradient(135deg,rgba(var(--a),0.85)_0%,rgba(var(--a),0.45)_100%)]" />
@@ -162,47 +162,49 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
 
       {/* Content */}
       <div className="flex flex-1 flex-col gap-2 p-3">
-        {/* Name + stats + highlights — top-aligned so titles line up across
-            cards regardless of how much description/highlight content a
-            course has; leftover space collects above the button. */}
+        {/* Every block has a fixed slot so text lines up across cards: the title
+            reserves two lines, the description clamps at five, and the stats and
+            highlights are pinned to the bottom, just above the button. */}
         <div className="flex flex-1 flex-col gap-1">
-          <h3 className={`${textClass} text-[clamp(1rem,1.4vw,1.2rem)] font-bold leading-snug text-[#0f0a1e] [font-family:var(--secondaryFont)]`}>
+          <h3 className={`${textClass} text-[clamp(1rem,1.4vw,1.2rem)] line-clamp-2 min-h-[2.75em] font-bold leading-snug tracking-wide text-[#0f0a1e] transition-colors duration-300 group-hover:text-violet-700 [font-family:var(--secondaryFont)]`}>
             {course.name}
           </h3>
 
           {course.description && (
-            <p className={`${textClass} max-h-[100px] overflow-hidden text-[13px] leading-relaxed text-gray-500`}>
+            <p className={`${textClass} line-clamp-5 text-justify text-[13px] leading-relaxed text-gray-500`}>
               {course.description}
             </p>
           )}
 
-          {/* Stats row */}
-          <div className={`${textClass} flex flex-wrap gap-x-3 gap-y-1 text-[12px] text-gray-400`}>
-            <span className="flex items-center gap-1">
-              <Clock size={12} className="shrink-0" style={{ color: `rgba(${accentRgb},0.8)` }} />
-              {course.duration}h
-            </span>
-            <span className="flex items-center gap-1">
-              <Globe size={12} className="shrink-0" style={{ color: `rgba(${accentRgb},0.8)` }} />
-              {course.language}
-            </span>
-            <span className="flex items-center gap-1 max-w-[130px] truncate">
-              <User size={12} className="shrink-0" style={{ color: `rgba(${accentRgb},0.8)` }} />
-              {course.instructor}
-            </span>
+          <div className="mt-auto flex flex-col gap-1.5 pt-1">
+            {/* Stats row */}
+            <div className={`${textClass} flex flex-wrap gap-x-3 gap-y-1 text-[12px] text-gray-400`}>
+              <span className="flex items-center gap-1">
+                <Clock size={12} className="shrink-0" style={{ color: `rgba(${accentRgb},0.8)` }} />
+                {course.duration}h
+              </span>
+              <span className="flex items-center gap-1">
+                <Globe size={12} className="shrink-0" style={{ color: `rgba(${accentRgb},0.8)` }} />
+                {course.language}
+              </span>
+              <span className="flex items-center gap-1 max-w-[130px] truncate">
+                <User size={12} className="shrink-0" style={{ color: `rgba(${accentRgb},0.8)` }} />
+                {course.instructor}
+              </span>
+            </div>
+
+            {/* Highlights */}
+            {course.highlights && course.highlights.length > 0 && (
+              <ul className={`${textClass} flex flex-nowrap items-center gap-x-3 overflow-hidden`}>
+                {course.highlights.slice(0, 2).map((h, idx) => (
+                  <li key={idx} className="flex items-center gap-1.5 text-[12px] text-gray-500 truncate">
+                    <CheckCircle size={12} className="shrink-0 text-violet-500" />
+                    {h}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
- 
-          {/* Highlights */}
-          {course.highlights && course.highlights.length > 0 && (
-            <ul className={`${textClass} flex flex-nowrap items-center gap-x-3 overflow-hidden`}>
-              {course.highlights.slice(0, 2).map((h, idx) => (
-                <li key={idx} className="flex items-center gap-1.5 text-[12px] text-gray-500 truncate">
-                  <CheckCircle size={12} className="shrink-0 text-violet-500" />
-                  {h}
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
 
         {/* Button */}
@@ -210,7 +212,7 @@ function CourseCard({ course, cardClass, textClass, accentRgb }: CourseCardProps
           className={`${textClass} inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[linear-gradient(135deg,rgba(var(--a),1)_0%,rgba(var(--a),0.75)_100%)] py-2 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-95`}
         >
           View Course
-          <ArrowRight size={14} strokeWidth={2.5} />
+          <ArrowRight size={14} strokeWidth={2.5} className="transition-transform duration-300 group-hover:translate-x-1" />
         </div>
       </div>
     </Link>

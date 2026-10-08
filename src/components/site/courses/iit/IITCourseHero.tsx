@@ -16,7 +16,7 @@ export default function IITCourseHero({ name, category, proxiedImage, children }
 
         {/* Left — title and intro */}
         <div>
-          <CollaborationLogos size="sm" layout="inline" showLabels />
+          <CollaborationLogos size="sm" showLabels />
 
           {category && <LineBadge className="mt-8 mb-5">{category}</LineBadge>}
 

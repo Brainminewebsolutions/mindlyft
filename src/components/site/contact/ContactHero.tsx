@@ -11,32 +11,26 @@ export default function ContactHero({
   return (
     <div className="flex w-full flex-col lg:min-h-screen lg:flex-row">
 
-      {/* Left — content, full width on mobile/tablet, 60% at lg+ */}
-      <div
-        className="flex w-full flex-col justify-center px-6 py-16 sm:px-10 lg:w-[60%] lg:px-20 lg:py-0"
-        style={{ background: "linear-gradient(135deg, #1e1b4b 0%, #4c1d95 60%, #6d28d9 100%)" }}
-      >
-        <p className="mb-3 text-[11px] font-black uppercase tracking-[5px] text-violet-300">
+      {/* Left — content, full width and centered on mobile/tablet, 60% and left-aligned at lg+ */}
+      <div className="flex w-full flex-col items-center justify-center bg-[linear-gradient(135deg,#1e1b4b_0%,#4c1d95_60%,#6d28d9_100%)] px-6 pt-28 pb-14 text-center sm:px-10 sm:pt-32 sm:pb-16 lg:w-[60%] lg:items-start lg:px-20 lg:py-0 lg:text-left">
+        <p className="mb-3 text-[11px] font-black uppercase tracking-[4px] text-violet-300 sm:tracking-[5px]">
           Get In Touch
         </p>
-        <h1
-          className="text-4xl font-black leading-tight md:text-5xl lg:text-6xl"
-          style={{ color: "#ffffff", textShadow: "0 2px 16px rgba(0,0,0,0.4)" }}
-        >
+        <h1 className="text-4xl font-black leading-tight text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.4)] sm:text-5xl lg:text-6xl">
           {title}
         </h1>
-        <p className="mt-4 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
+        <p className="mt-4 max-w-md text-base leading-relaxed text-white/80 sm:text-lg">
           {tagline}
         </p>
-        <div className="mt-8 flex gap-2">
+        <div className="mt-6 flex gap-2 sm:mt-8">
           <span className="h-2 w-8 rounded-full bg-violet-400 opacity-70" />
           <span className="h-2 w-2 rounded-full bg-violet-400 opacity-40" />
           <span className="h-2 w-2 rounded-full bg-violet-400 opacity-20" />
         </div>
       </div>
 
-      {/* Right — portrait image, banner on mobile/tablet, full-height 40% side panel at lg+ */}
-      <div className="relative h-64 w-full overflow-hidden sm:h-80 lg:h-auto lg:w-[40%]">
+      {/* Right — portrait image, 4:3 banner on mobile/tablet, full-height 40% side panel at lg+ */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[16/9] lg:aspect-auto lg:w-[40%]">
         <Image
           src="/Contact.jpeg"
           alt="MindlyftAI Office"

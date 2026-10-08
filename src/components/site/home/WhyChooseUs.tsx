@@ -62,31 +62,30 @@ const details = [
 export default function WhyChooseUs() {
   return (
     <>
-      <div className="wh-area style-two bg_primary relative z-[1] round-20">
-        <Image alt="Shape" className="section-shape-one absolute bottom-0 left-0 z-[-1]" src="/assets/img/box-shape-2.png" width={600} height={400} />
-        <Image alt="Shape" className="section-shape-two absolute top-0 z-[-1]" src="/assets/img/box-shape-3.png" width={600} height={400} />
-        <div className="container-fluid style-one">
+      <div className="relative z-[1] rounded-[20px] bg-[#6366F1] min-[1920px]:mx-[13px]">
+        <Image alt="Shape" className="absolute bottom-0 left-0 z-[-1]" src="/assets/img/box-shape-2.png" width={600} height={400} />
+        <Image alt="Shape" className="absolute left-[53%] top-0 z-[-1] -translate-x-1/2" src="/assets/img/box-shape-3.png" width={600} height={400} />
+        <div className="mx-auto w-full px-3 min-[992px]:pl-[calc((100%-960px)/2+12px)] min-[1200px]:pl-[calc((100%-1140px)/2+12px)] min-[1400px]:pl-[calc((100%-1300px)/2+12px)]">
           <div className="flex flex-wrap items-stretch">
             <div className="w-full lg:w-1/2 xl:w-5/12 flex">
-              <div className="wh-content md:mb-[30px] flex flex-col justify-center items-center text-center md:text-left">
+              <div className="max-[991px]:pt-[60px] md:mb-[30px] flex flex-col justify-center items-center text-center md:text-left">
                 <SectionBadge variant="dark">Why Choose Mindlyft AI</SectionBadge>
                 <AnimateIn direction="up" delay={400}>
                   <Subheading
-                    className="!text-white mb-15"
+                    className="!text-white mb-[15px]"
                     text="Why Choose MindLyft AI"
                     highlight="for AI Training in Pune?"
                     highlightClassName="!text-violet-200"
                   />
                 </AnimateIn>
                 <AnimateIn direction="up" delay={500}>
-                  <p className="text-offwhite mb-30">
+                  <p className="mb-[30px] text-[#ddd]">
                     We are an AI-first institute in Pune built on three things learners consistently ask for: teachers who have actually done the work, a syllabus that matches what companies are hiring for, and genuine support until you land the role.
                   </p>
                 </AnimateIn>
                 <Link
                   href="/courses"
-                  className="inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-full font-semibold text-white text-sm transition-opacity hover:opacity-90"
-                  style={{ background: "linear-gradient(to right, #7c3aed, #3b82f6)" }}
+                  className="inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-full font-semibold text-white text-sm bg-[linear-gradient(to_right,#7c3aed,#3b82f6)] transition-opacity hover:opacity-90"
                 >
                   Explore Our Courses
                   <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/20">
@@ -96,7 +95,7 @@ export default function WhyChooseUs() {
               </div>
             </div>
             <AnimateIn direction="up" delay={400} className="w-full lg:w-1/2 xl:w-7/12 2xl:pl-12">
-              <div className="wh-bg bg-f bg-1 round-10" style={{ height: "480px" }} />
+              <div className="h-[480px] rounded-[10px] bg-[#ddd] bg-[url('/assets/img/about/wh-img-2.jpg')] bg-cover bg-center bg-no-repeat max-[991px]:bg-top min-[1920px]:my-5 min-[1920px]:mr-[5px]" />
             </AnimateIn>
           </div>
 
@@ -133,11 +132,11 @@ export default function WhyChooseUs() {
                   </div>
 
                   {/* Content */}
-                  <div className="px-5 py-4" style={{ textAlign: "center", color: "white" }}>
+                  <div className="px-5 py-4 text-center text-white">
                     <h3 className="text-base font-bold text-white mb-2 leading-snug group-hover:text-violet-200 transition-colors duration-200">
                       {item.title}
                     </h3>
-                    <p className="mb-30 leading-relaxed"  style={{ textAlign: "center", color: "white" }}>
+                    <p className="mb-[30px] text-center leading-relaxed text-white">
                       {item.desc}
                     </p>
                   </div>

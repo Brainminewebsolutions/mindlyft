@@ -10,7 +10,7 @@ export default function Innovation() {
   return (
     <>
       {/* About Us Section Start */}
-      <section className="about-area style-three bg-black relative overflow-hidden z-[1] ptb-130">
+      <section className="relative z-[1] overflow-hidden bg-black py-[60px] md:py-20 min-[992px]:py-[100px] min-[1200px]:py-[120px]">
         {/* Top Shape */}
         <Image
           src="/assets/img/about/about-shape-1.png"
@@ -18,7 +18,7 @@ export default function Innovation() {
           width={0}
           height={0}
           sizes="50vw"
-          className="section-shape-one absolute top-0 right-0 z-[-1] h-auto w-auto"
+          className="absolute top-0 right-0 z-[-1] h-auto w-auto"
         />
 
         {/* Bottom Shape */}
@@ -28,10 +28,10 @@ export default function Innovation() {
           width={0}
           height={0}
           sizes="50vw"
-          className="section-shape-one absolute bottom-0 left-0 z-[-1] h-auto w-auto"
+          className="absolute bottom-0 left-0 z-[-1] h-auto w-auto"
         />
 
-        <div className="container style-one relative text-center md:text-left">
+        <div className="mx-auto w-full px-3 min-[576px]:max-w-[540px] min-[768px]:max-w-[720px] min-[992px]:max-w-[960px] min-[1200px]:max-w-[1140px] min-[1400px]:max-w-[1300px] relative text-center md:text-left">
           {/* Main Thumbnail */}
           <Image
             src="/assets/img/about/about-thumb-2.png"
@@ -39,7 +39,7 @@ export default function Innovation() {
             width={0}
             height={0}
             sizes="50vw"
-            className="about-thumb round-10 move-left h-auto w-auto"
+            className="move-left absolute bottom-[30px] left-0 h-auto w-auto rounded-[10px] blur-[3px] [transform:rotate(20deg)] max-md:max-w-[120px]"
             suppressHydrationWarning
           />
 
@@ -48,18 +48,18 @@ export default function Innovation() {
 
           {/* Title */}
           <Subheading
-            className="font-medium !text-white/75 2xl:pr-6"
+            className="!text-white/75 2xl:pr-6"
             text={
               <>
                 Building the Future With{" "}
-                <span className="thumb round-oval">
+                <span className="rounded-[50px]">
                   <Image
                     src="/assets/img/about/about-thumb-4.jpg"
                     alt="Thumbnail"
                     width={0}
                     height={0}
                     sizes="200px"
-                    className="round-oval h-auto w-auto"
+                    className="h-auto w-auto rounded-[50px]"
                   />
                 </span>{" "}
                 AI-Powered Learning and Cybersecurity That Evolves{" "}
@@ -74,7 +74,7 @@ export default function Innovation() {
           `}</style>
           <Link
             href="/innovation"
-            className="circle-text-wrap group relative z-[1] rounded-full flex flex-col items-center justify-center ml-auto w-[160px] h-[160px] cursor-pointer"
+            className="group relative z-[1] rounded-full flex flex-col items-center justify-center ml-auto h-[270px] w-[270px] cursor-pointer"
           >
             {/* Center content */}
             <div className="absolute inset-0 flex flex-col items-center justify-center z-10 gap-0.5">
@@ -107,7 +107,7 @@ export default function Innovation() {
           width={0}
           height={0}
           sizes="50vw"
-          className="about-img absolute bottom-0 z-[1] move-right h-auto w-auto"
+          className="move-right absolute bottom-0 left-1/2 z-[1] h-auto w-[520px] max-w-[200px] md:max-w-[430px] min-[992px]:max-w-[520px] min-[1400px]:max-w-[630px]"
           suppressHydrationWarning
         />
       </section>

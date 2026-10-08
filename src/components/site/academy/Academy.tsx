@@ -1,52 +1,15 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  BookOpen, Wrench, Video, GraduationCap, ArrowRight,
+  BookOpen,
   Lightbulb, Users, Award, Layers, TrendingUp,
   Compass, Code2, Rocket,
 } from "lucide-react";
 import { LineBadge } from "@/components/ui/LineBadge";
 import { AnimateIn } from "@/components/ui/AnimateIn";
+import AcademyPillars from "./AcademyPillars";
 
 /* ─── Data ─────────────────────────────────────────────── */
-
-const PILLARS = [
-  {
-    num: "01", icon: GraduationCap, name: "IIT Programs",
-    tagline: "World-class IIT education",
-    description: "Premium programs developed in collaboration with IIT faculty and industry experts. Gain credentials that set you apart.",
-    description2: "Certificate programs, research tracks, and live IIT-backed sessions — all in one place.",
-    href: "/iit-kanpur-cyber-security-course",
-    pill: "from-violet-500 to-blue-500", dot: "#8B5CF6", card: "from-violet-600 to-blue-500",
-  },
-  {
-    num: "02", icon: BookOpen, name: "Courses",
-    tagline: "Structure your learning journey",
-    description: "Structured, self-paced programs built around AI, technology, and emerging skills. Industry-aligned curriculum from beginner to advanced.",
-    description2: "Certificate programs, IIT collaborations, and live tracks — all in one place.",
-    href: "/courses",
-    pill: "from-blue-500 to-indigo-600", dot: "#3B82F6", card: "from-blue-600 to-indigo-600",
-  },
-  {
-    num: "03", icon: Wrench, name: "Workshops",
-    tagline: "Hands-on, expert-led sessions",
-    description: "Short intensive sessions focused on practical skill building with industry experts. Learn by doing.",
-    description2: "Small cohorts, live practice, and immediate real-world results.",
-    href: "/ai-workshops",
-    pill: "from-indigo-500 to-violet-600", dot: "#6366F1", card: "from-indigo-600 to-violet-600",
-  },
-  {
-    num: "04", icon: Video, name: "Webinars",
-    tagline: "Learn from anywhere, anytime",
-    description: "Live online sessions on trending topics — AI, innovation, career growth. Interactive Q&A with speakers in real time.",
-    description2: "Free and premium sessions with recorded replays available.",
-    href: "/webinars",
-    pill: "from-violet-400 to-blue-400", dot: "#A78BFA", card: "from-violet-500 to-blue-400",
-  },
-];
 
 const STATS = [
   { value: "87%",  label: "of AI job listings require hands-on project experience — not just certifications." },
@@ -87,24 +50,18 @@ const FAQS = [
 /* ─── Component ─────────────────────────────────────────── */
 
 export default function Academy() {
-  const [active, setActive] = useState(0);
-  const pillar = PILLARS[active];
-
   return (
     <div className="min-h-screen bg-white">
 
       {/* ── 1. Hero ── */}
-      <section
-        className="relative h-screen flex items-center overflow-hidden px-6 pt-28 pb-16 md:px-[60px]"
-        style={{ backgroundImage: "url('/assets/img/hero/hero-bg-3.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/30 pointer-events-none" />
-        <div className="relative z-10 max-w-2xl mx-auto md:mx-0 text-center md:text-left">
+      <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-[url('/assets/img/hero/hero-bg-3.jpg')] bg-cover bg-center px-6 pt-28 pb-14 md:px-[60px] lg:pb-16">
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/75 md:to-white/30 pointer-events-none" />
+        <div className="relative z-10 w-full max-w-2xl mx-auto md:mx-0 text-center md:text-left lg:max-w-xl xl:max-w-2xl">
           <AnimateIn delay={0}>
-            <LineBadge className="mb-6">India&apos;s AI-First Learning Academy · Pune</LineBadge>
+            <LineBadge className="mb-5 sm:mb-6">India&apos;s AI-First Learning Academy · Pune</LineBadge>
           </AnimateIn>
           <AnimateIn delay={100}>
-            <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight mb-5 sm:mb-6">
               Don&apos;t just learn AI.{" "}
               <span className="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">
                 Build your future with it.
@@ -112,12 +69,12 @@ export default function Academy() {
             </h1>
           </AnimateIn>
           <AnimateIn delay={200}>
-            <p className="text-lg text-gray-600 leading-relaxed max-w-lg mx-auto md:mx-0 mb-10">
+            <p className="text-base sm:text-lg text-gray-600 leading-relaxed max-w-lg mx-auto md:mx-0 mb-8 sm:mb-10">
               Structured programs in Artificial Intelligence, Data Science, and Generative AI — designed for professionals, freshers, and IIT aspirants who want real outcomes, not just certificates.
             </p>
           </AnimateIn>
           <AnimateIn delay={300}>
-            <div className="flex flex-wrap justify-center md:justify-start gap-3 mb-14">
+            <div className="flex flex-wrap justify-center md:justify-start gap-3">
               <Link href="/courses" className="rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition shadow-lg shadow-violet-200">
                 Explore Programs
               </Link>
@@ -128,11 +85,11 @@ export default function Academy() {
           </AnimateIn>
         </div>
 
-        {/* Stat cards — floating on the right */}
-        <div className="hidden lg:grid absolute right-10 xl:right-16 top-1/2 -translate-y-1/2 z-10 grid-cols-2 gap-4">
+        {/* Stat cards — 2×2 grid below the content on mobile/tablet, floating on the right at lg+ */}
+        <div className="relative z-10 mx-auto mt-10 grid w-full max-w-sm grid-cols-2 gap-3 md:mx-0 lg:absolute lg:right-10 lg:top-1/2 lg:mt-0 lg:w-auto lg:max-w-none lg:-translate-y-1/2 lg:gap-4 xl:right-16">
           {[["500+","Learners Trained"],["IIT","Affiliated Programs"],["10+","Expert Mentors"],["Certified","Recognized Credentials"]].map(([v, l], i) => (
             <AnimateIn key={l} delay={400 + i * 80} direction="right" className="h-full">
-              <div className="flex h-full w-[160px] min-h-[108px] flex-col justify-center rounded-2xl border border-gray-100 bg-white/90 backdrop-blur-sm shadow-lg shadow-violet-100/60 px-6 py-5">
+              <div className="flex h-full w-full min-h-[88px] flex-col items-center justify-center rounded-2xl border border-gray-100 bg-white/90 backdrop-blur-sm shadow-lg shadow-violet-100/60 px-4 py-4 text-center md:items-start md:text-left lg:w-[160px] lg:min-h-[108px] lg:px-6 lg:py-5">
                 <div className="text-2xl font-extrabold bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">{v}</div>
                 <div className="text-xs font-medium text-gray-400 mt-0.5">{l}</div>
               </div>
@@ -214,51 +171,7 @@ export default function Academy() {
             </AnimateIn>
           </div>
 
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-            {/* Info card */}
-            <AnimateIn key={active} delay={0} direction="fade" className="w-full lg:w-[370px] shrink-0">
-              <div className={`rounded-3xl p-8 bg-gradient-to-br ${pillar.card} text-white shadow-xl`}>
-                <p className="text-white/50 text-xs font-bold uppercase tracking-widest mb-2">Pillar {pillar.num}</p>
-                <h3 className="text-[2rem] font-black leading-tight mb-1">{pillar.name}</h3>
-                <p className="text-white/70 text-sm font-medium mb-5">{pillar.tagline}</p>
-                <div className="h-px bg-white/20 mb-5" />
-                <p className="text-white/85 text-[0.92rem] leading-relaxed mb-3">{pillar.description}</p>
-                <p className="text-white/60 text-[0.88rem] leading-relaxed mb-8">{pillar.description2}</p>
-                <Link href={pillar.href} className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-colors duration-200">
-                  Explore {pillar.name} <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </AnimateIn>
-
-            {/* Bar chart + dots */}
-            <div className="flex-1 flex flex-col items-center w-full">
-              <div className="flex items-end justify-center gap-6 sm:gap-10 lg:gap-12">
-                {PILLARS.map((p, i) => {
-                  const Icon = p.icon;
-                  const isActive = i === active;
-                  return (
-                    <div key={i} className="flex flex-col items-center cursor-pointer" onClick={() => setActive(i)}>
-                      <div className={`w-[60px] sm:w-[68px] rounded-full bg-gradient-to-b ${p.pill} flex items-end justify-center pb-5 transition-all duration-500 ease-in-out ${isActive ? "h-[260px] sm:h-[300px] opacity-100 shadow-lg" : "h-[160px] sm:h-[200px] opacity-30 hover:opacity-50"}`}>
-                        <Icon className="w-6 h-6 text-white/80" />
-                      </div>
-                      <span className={`mt-3 text-[11px] font-bold transition-colors duration-300 ${isActive ? "text-violet-600" : "text-gray-400"}`}>
-                        {p.name.split(" ")[0]}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="relative flex items-center justify-center gap-6 sm:gap-10 lg:gap-12 mt-4 px-2 w-full">
-                <div className="absolute h-px bg-gray-200 inset-x-0" />
-                {PILLARS.map((p, i) => (
-                  <button key={i} onClick={() => setActive(i)}
-                    className="relative z-10 w-[18px] h-[18px] rounded-full transition-all duration-300 outline-none"
-                    style={{ background: i === active ? p.dot : "#D1D5DB", boxShadow: i === active ? `0 0 16px ${p.dot}88` : "none", transform: i === active ? "scale(1.35)" : "scale(1)" }}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
+          <AcademyPillars />
         </div>
       </section>
 

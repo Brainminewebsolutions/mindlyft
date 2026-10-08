@@ -26,7 +26,7 @@ export default function CourseCategoryHero({ name, description, image }: Props) 
       <div className="relative z-10 flex w-full min-w-0 flex-col justify-center gap-4 px-6 py-10 sm:px-8 md:w-[50%] md:px-14 md:py-24 lg:px-20">
 
         {/* Collaboration mark */}
-        <CollaborationLogos size="md" />
+        <CollaborationLogos size="md" showLabels />
 
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight text-gray-900">
           {name}

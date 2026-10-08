@@ -9,7 +9,10 @@ if (!BASE_URL && process.env.NODE_ENV !== "test") {
 // Single source of truth for how long ISR-cached backend responses stay fresh
 // (`{ next: { revalidate: REVALIDATE_SECONDS } }`). Change this to retune every
 // site page at once instead of editing each fetch call individually.
-export const REVALIDATE_SECONDS = 0;
+// Edits made through the backend proxy clear the whole cache straight away
+// (see src/app/api/backend/[...path]/route.ts), so this window only bounds how
+// stale a page can get after a change made outside the site (e.g. in the DB).
+export const REVALIDATE_SECONDS = 300;
 
 // Course detail pages (course + chapters-with-contents) hit a genuinely slow
 // backend query. With REVALIDATE_SECONDS=0 every navigation re-fetches live

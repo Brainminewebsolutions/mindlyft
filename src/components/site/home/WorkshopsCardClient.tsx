@@ -23,7 +23,7 @@ function ProjectCard({ webinar, index }: { webinar: Webinar | null; index: numbe
     // Desktop height = viewport − 60px fixed navbar (SiteNavbar) − 9.25rem for
     // the prev/next arrows and breathing room, so cards and arrows fit in a
     // single viewport together.
-    <div className="flex flex-col w-[320px] sm:w-[360px] flex-shrink-0 h-[480px] lg:h-[calc(100vh-60px-9.25rem)] lg:min-h-[440px] overflow-hidden rounded-2xl group cursor-pointer bg-white border border-violet-100">
+    <div className="flex flex-col w-[320px] sm:w-[360px] flex-shrink-0 h-[480px] lg:h-[calc(100vh-60px-9.25rem)] lg:min-h-[440px] overflow-hidden rounded-2xl group cursor-pointer bg-white border border-violet-100 transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1.5 hover:border-violet-300 hover:shadow-[0_12px_24px_rgba(124,58,237,0.18)] motion-reduce:transition-none motion-reduce:hover:translate-y-0">
 
       {/* Image — 40% of card height */}
       <div className="relative h-[40%] w-full shrink-0 overflow-hidden">
@@ -33,7 +33,7 @@ function ProjectCard({ webinar, index }: { webinar: Webinar | null; index: numbe
             alt={webinar?.name ?? "Coming Soon"}
             fill
             sizes="(max-width: 640px) 320px, 360px"
-            className="object-cover object-center"
+            className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(135deg,rgba(139,92,246,0.85)_0%,rgba(59,130,246,0.60)_100%)]">
@@ -63,7 +63,7 @@ function ProjectCard({ webinar, index }: { webinar: Webinar | null; index: numbe
       {/* Content — remaining 60% */}
       <div className="flex flex-1 flex-col justify-between p-4">
         <div>
-          <h3 className="font-semibold text-[1.3rem] leading-snug line-clamp-2 mb-1 text-gray-900 min-h-[3.6rem]">
+          <h3 className="font-bold text-[1.3rem] leading-snug line-clamp-2 mb-1 text-gray-900 min-h-[3.6rem] transition-colors duration-300 group-hover:text-violet-700">
             {webinar?.name ?? "New Session Coming Soon"}
           </h3>
 
@@ -154,21 +154,22 @@ export default function WorkshopsCardClient({ webinars }: { webinars: Webinar[] 
               >
                 Register for a Free Workshop
               </Link>
-              <Link
+              {/* <Link
                 href="/ai-workshops"
                 className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-violet-200 px-6 py-3 text-sm font-semibold text-violet-700 transition-colors duration-200 hover:border-violet-500 hover:bg-violet-50"
               >
                 View Upcoming Dates
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Cards row */}
+      {/* Cards row — vertical padding leaves room for the hover lift and shadow,
+          which the horizontal scroller would otherwise clip */}
       <div
         ref={scrollRef}
-        className="flex gap-5 overflow-x-auto scroll-smooth px-6 max-w-6xl mx-auto pb-2"
+        className="flex gap-5 overflow-x-auto scroll-smooth px-6 max-w-6xl mx-auto pt-2 pb-6"
         style={{ scrollbarWidth: "none" }}
       >
         {cards.map((w, i) => (
@@ -177,7 +178,7 @@ export default function WorkshopsCardClient({ webinars }: { webinars: Webinar[] 
       </div>
 
       {/* Prev / Next buttons — bottom */}
-      <div className="flex items-center justify-center gap-3 mt-8 lg:mt-5">
+      <div className="flex items-center justify-center gap-3 mt-4 lg:mt-0">
         <button
           onClick={() => scroll("left")}
           className="flex items-center justify-center w-11 h-11 rounded-full border-2 border-gray-200 text-gray-500 hover:border-violet-500 hover:text-violet-600 transition-colors duration-200"

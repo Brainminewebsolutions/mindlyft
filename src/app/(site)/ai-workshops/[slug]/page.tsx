@@ -105,7 +105,7 @@ export default async function WorkshopDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  let webinar = await getWebinarBySlug(slug);
+  const webinar = await getWebinarBySlug(slug);
   if (!webinar && isNumericId(slug)) {
     const byId = await getWebinarById(slug);
     if (byId) redirect(`/ai-workshops/${byId.slug}`);

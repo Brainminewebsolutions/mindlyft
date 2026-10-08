@@ -182,7 +182,7 @@ function Card({
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}
             />
-            <h3 className={`font-extrabold text-gray-900 truncate ${isCenter ? "text-lg" : "text-sm"}`}>
+            <h3 className={`font-bold text-gray-900 truncate ${isCenter ? "text-lg" : "text-sm"}`}>
               {item.name}
             </h3>
           </div>

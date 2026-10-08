@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import type { Metadata } from "next";
-import "@/app/template-styles.css";
 import TestimonialsCard from '../../components/site/home/TestimonialsCard'
 
 import WorkshopsCard from '../../components/site/home/WorkshopsCard'
@@ -60,11 +59,15 @@ export default function HomePage() {
       <GsapInit />
       <LibraryLoader />
       <>
-        <div>
-          <div className="cursor">
-            <span className="cursor-text" />
+        <div data-home-page>
+          {/* Custom cursor — `cursor`, `cursor-inner` and the `view` / `hidden` /
+              `cursorinnerhover` state classes are hooks toggled by mindlyft-init.ts.
+              Transforms are written as raw `transform` because the script sets
+              `style.transform` and must replace, not combine with, these. */}
+          <div className="cursor pointer-events-none fixed left-0 top-0 z-[999] flex h-[35px] w-[35px] items-center justify-center rounded-full border border-[#6366F1] bg-transparent [font-family:sans-serif] text-[10px] text-[#6366F1] opacity-0 transition-all duration-[350ms] ease-out [transform:translate(calc(-50%+15px),-50%)] [&.view]:h-[120px] [&.view]:w-[120px] [&.view]:cursor-pointer [&.view]:border-transparent [&.view]:bg-[#6366F1] [&.view]:text-base [&.view]:text-white">
+            <span className="cursor-text pointer-events-none hidden [.view>&]:block" />
           </div>
-          <div className="cursor-inner" />
+          <div className="cursor-inner pointer-events-none fixed z-[999] h-[6px] w-[6px] rounded-full bg-[#6366F1] opacity-0 transition-[width,height,opacity] duration-[600ms] [transform:translate(-50%,-50%)] [&.cursorinnerhover]:h-[15px] [&.cursorinnerhover]:w-[15px] [&.cursorinnerhover]:opacity-50" />
           <div id="smooth-wrapper">
             <div id="smooth-content">
 

@@ -26,7 +26,7 @@ export function initMindlyft() {
     const progressPath = document.getElementById("progress-path") as SVGPathElement | null;
     const progressWrap = document.getElementById("progress-wrap");
     if (progressPath && progressWrap) {
-        let pathLength = progressPath.getTotalLength();
+        const pathLength = progressPath.getTotalLength();
         progressPath.style.transition = (progressPath.style as any).webkitTransition = "none";
         progressPath.style.strokeDasharray = pathLength + " " + pathLength;
         progressPath.style.strokeDashoffset = String(pathLength);

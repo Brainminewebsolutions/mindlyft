@@ -164,7 +164,7 @@ function TestimonialsSpotlight() {
           className="flex items-center gap-3 mb-12"
         >
           <div className="h-px flex-1 bg-gradient-to-r from-transparent to-violet-200" />
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-violet-200 bg-violet-50 text-violet-600 text-[12px] font-semibold uppercase tracking-widest">
+          <span className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap px-3 sm:px-4 py-1.5 rounded-full border border-violet-200 bg-violet-50 text-violet-600 text-[11px] sm:text-[12px] font-semibold uppercase tracking-wider sm:tracking-widest">
             <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
             What Our Customers Say
           </span>
@@ -303,7 +303,7 @@ export default function Innovation() {
         sideImage="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=90"
         bg="light"
       >
-        <div className="flex flex-wrap gap-4 pt-2">
+        <div className="flex flex-wrap justify-center gap-3 pt-2 sm:gap-4 lg:justify-start">
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-violet-500 to-blue-500 text-white font-semibold text-[15px] hover:from-violet-600 hover:to-blue-600 transition-all duration-200 shadow-md shadow-violet-200"
@@ -335,7 +335,7 @@ export default function Innovation() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className={`flex items-center gap-6 py-8 ${i !== PILLARS.length - 1 ? "border-b border-gray-100" : ""}`}
+                className={`flex items-center gap-4 py-6 sm:gap-6 sm:py-8 ${i !== PILLARS.length - 1 ? "border-b border-gray-100" : ""}`}
               >
                 {/* Number */}
                 <span className={`shrink-0 text-[1rem] font-black bg-gradient-to-r ${p.gradient} bg-clip-text text-transparent w-8`}>
@@ -398,7 +398,7 @@ export default function Innovation() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                className={`group flex flex-col ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-10 bg-gray-50 rounded-3xl border border-gray-100 overflow-hidden hover:shadow-lg hover:border-violet-100 transition-all duration-300`}
+                className={`group flex flex-col ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-0 md:gap-10 bg-gray-50 rounded-3xl border border-gray-100 overflow-hidden hover:shadow-lg hover:border-violet-100 transition-all duration-300`}
               >
                 {/* Image */}
                 <div className="relative w-full md:w-[45%] shrink-0 aspect-[16/10] overflow-hidden">
@@ -412,16 +412,16 @@ export default function Innovation() {
                   <div className="absolute inset-0 bg-gradient-to-br from-violet-500/15 via-transparent to-blue-500/15" />
 
                   {/* Tag over image */}
-                  <div className="absolute top-4 left-4">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[11px] font-bold uppercase tracking-widest text-violet-600 shadow-sm">
-                      <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-violet-500 to-blue-500" />
+                  <div className="absolute top-4 left-4 right-4">
+                    <span className="inline-flex max-w-full items-center gap-1.5 px-3 py-1 rounded-2xl sm:rounded-full bg-white/90 backdrop-blur-sm text-[10px] sm:text-[11px] font-bold uppercase tracking-wider sm:tracking-widest text-violet-600 shadow-sm">
+                      <span className="w-1.5 h-1.5 shrink-0 rounded-full bg-gradient-to-r from-violet-500 to-blue-500" />
                       {p.tag}
                     </span>
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="flex flex-col gap-4 p-8 md:p-10 flex-1 min-w-0">
+                <div className="flex w-full flex-col items-center gap-4 p-6 text-center sm:p-8 md:items-start md:p-10 md:text-left flex-1 min-w-0">
                   <h3 className="text-[clamp(1.3rem,2.5vw,1.8rem)] font-extrabold text-gray-900 leading-snug">
                     {p.name}
                   </h3>

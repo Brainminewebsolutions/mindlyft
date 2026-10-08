@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { TrendingUp } from "lucide-react";
 import { SectionBadge } from "@/components/ui/SectionBadge";
 import { Subheading } from "@/components/ui/Subheading";
@@ -18,6 +19,7 @@ const steps = [
     headline: "Learning Services –",
     headlineBold: "Transforming Education into Industry-Ready Excellence",
     video: "/Fir1.mp4",
+    href: "/academy",
     features: [
       {
         title: "Focused Learning",
@@ -52,6 +54,7 @@ const steps = [
     headline: "AI Services –",
     headlineBold: "Building Intelligent Solutions That Drive Business Impact",
     video: "/Fir2.mp4",
+    href: "/ai-it-solutions",
     features: [
       {
         title: "AI Strategy & Consulting",
@@ -85,6 +88,7 @@ const steps = [
     headline: "Innovative Products –",
     headlineBold: "Creating Scalable Products for Tomorrow's Challenges",
     video: "/Fir3.mp4",
+    href: "/innovation",
     features: [
       {
         title: "AI-Powered Platforms",
@@ -209,7 +213,7 @@ export default function WhatWeDo() {
               >
                 <div className={`max-w-[500px] rounded-3xl px-4 py-8 ${step.accent.sectionBg}`}>
                   {/* Image — shown per-step on mobile/tablet; desktop uses the shared sticky image on the right */}
-                  <div className="relative mb-6 aspect-[4/3] w-full overflow-hidden rounded-2xl lg:hidden">
+                  <div className="relative mb-1.5 aspect-[4/3] w-full overflow-hidden rounded-2xl lg:hidden">
                     <Image
                       src={step.image}
                       alt={step.imageAlt}
@@ -220,7 +224,7 @@ export default function WhatWeDo() {
                   </div>
 
                   {/* Headline */}
-                  <h2 className="mb-8 text-[clamp(1.6rem,3vw,2.4rem)] font-black leading-[1.18] tracking-[-0.02em]">
+                  <h2 className="mb-2 text-[clamp(1.6rem,3vw,2.4rem)] font-bold leading-[1.18] tracking-[-0.02em]">
                     <span className={step.accent.text}>{step.headline} </span>
                     <span className="text-[#111]">{step.headlineBold}</span>
                   </h2>
@@ -243,11 +247,12 @@ export default function WhatWeDo() {
                   </div>
 
                   {/* CTA */}
-                  <button
-                    className={`cursor-pointer rounded-full border-none px-8 py-[0.85rem] text-[0.95rem] font-bold text-white transition-[filter,transform,box-shadow] duration-200 hover:-translate-y-px hover:brightness-110 hover:shadow-[0_8px_28px_rgba(0,0,0,0.25)] ${step.accent.bg}`}
+                  <Link
+                    href={step.href}
+                    className={`inline-block cursor-pointer rounded-full border-none px-8 py-[0.85rem] text-[0.95rem] font-bold text-white transition-[filter,transform,box-shadow] duration-200 hover:-translate-y-px hover:brightness-110 hover:shadow-[0_8px_28px_rgba(0,0,0,0.25)] ${step.accent.bg}`}
                   >
                     Learn More
-                  </button>
+                  </Link>
                 </div>
               </div>
             );

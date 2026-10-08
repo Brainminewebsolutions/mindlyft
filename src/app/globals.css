@@ -75,9 +75,18 @@
   50%     { transform: translateY(8px); }
 }
 
-/* ── Override template dark-only CSS variables for light mode ──────────────── */
-/* style.css defines these as black/dark with no theme variant.                 */
-/* We redefine them here so they adapt properly to light/dark mode.             */
+/* ── Brand fonts ───────────────────────────────────────────────────────────── */
+/* Display font for card titles; used via var(--secondaryFont).                 */
+@font-face {
+  font-family: "ClashDisplay";
+  src: url(/assets/fonts/clashdisplay-variable.ttf);
+}
+:root {
+    --primaryFont:   "DM Sans", sans-serif;
+    --secondaryFont: "ClashDisplay";
+}
+
+/* ── Section colour variables (light / dark) ───────────────────────────────── */
 :root {
     /* Template section colors — light equivalents */
     --codColor:      #ffffff;
@@ -188,10 +197,19 @@
     html {
         @apply font-sans;
     }
+    /* The home page keeps its original body font (navbar and footer included);
+       every other page uses the site font above. */
+    body:has([data-home-page]) {
+        font-family: var(--primaryFont);
+    }
+    /* Tailwind v4 gives buttons the default arrow cursor; keep the pointer. */
+    button:not(:disabled),
+    [role="button"]:not(:disabled) {
+        cursor: pointer;
+    }
 }
 
-/* Override template's hardcoded dark body background in light mode.           */
-/* style.css sets body { background-color: var(--blackColor) } unconditionally. */
+/* Light mode always uses the theme background and text colour. */
 html:not(.dark) body {
     background-color: var(--background) !important;
     color: var(--foreground) !important;
@@ -245,9 +263,4 @@ html:not(.dark) body {
     color-scheme: light;
     background-color: oklch(0.98 0 0);
     color: oklch(0.145 0 0);
-}
-
-.text-violet-500 
-{
-font-size: 18px !important;
 }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { insecureDispatcher, HOME_CACHE_TAGS } from "@/lib/api/dotnet-client";
 
 // Same-origin passthrough so browser code never has to call the .NET API
@@ -31,6 +31,9 @@ async function proxy(req: NextRequest, path: string[]) {
       for (const tag of HOME_CACHE_TAGS) {
         if (segments.includes(tag)) revalidateTag(tag);
       }
+      // Every other site fetch is cached by time only (REVALIDATE_SECONDS), so a
+      // successful write clears all cached pages — admin edits show up immediately.
+      revalidatePath("/", "layout");
     }
 
     return new NextResponse(res.body, {

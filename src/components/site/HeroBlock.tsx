@@ -72,6 +72,8 @@ export default function HeroBlock({
     <div className={cn(
       "flex flex-col justify-center space-y-5",
       isCenter && "items-center text-center",
+      // Two-column modes stack below lg — centre the text there, left-align once side by side.
+      !isCenter && mode !== "single" && "items-center text-center lg:items-start lg:text-left",
     )}>
       {badge && (
         <span className={cn(

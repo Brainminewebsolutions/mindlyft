@@ -27,10 +27,10 @@ export default function SiteFooter() {
 
       {/* ── Main content ── */}
       <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 pt-16 pb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 sm:gap-10">
 
           {/* Brand */}
-          <div className="lg:col-span-1">
+          <div className="col-span-2 sm:col-span-1">
             <Link href="/" className="flex items-center gap-3 mb-4">
               <Image
                 src={SITE_CONFIG.logo1}
@@ -46,7 +46,7 @@ export default function SiteFooter() {
             </p>
 
             {/* Social icons */}
-            <div className="flex items-center gap-2 mt-6">
+            <div className="flex items-center justify-between gap-2 mt-6 max-w-xs">
               {SOCIAL.map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
@@ -81,8 +81,8 @@ export default function SiteFooter() {
             </ul>
           </div>
 
-          {/* Contact */}
-          <div>
+          {/* Contact — moves below the two link lists on phones so they sit side by side */}
+          <div className="order-last col-span-2 sm:order-none sm:col-span-1">
             <h4 className="text-sm font-semibold uppercase tracking-widest text-violet-600 mb-5">
               Contact
             </h4>
@@ -159,7 +159,7 @@ export default function SiteFooter() {
 
       {/* ── Bottom bar ── */}
       <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-5">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <p className="text-sm text-gray-500">
             © {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.
           </p>

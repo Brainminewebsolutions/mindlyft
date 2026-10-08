@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function SectionHeading() {
   return (
-    <div className="flex flex-col items-center gap-4 text-center mb-12">
+    <div className="flex flex-col items-center gap-4 text-center mb-3">
       <Skeleton className="h-6 w-40 rounded-full" />
       <Skeleton className="h-9 w-72 sm:w-96" />
       <Skeleton className="h-1 w-16 rounded-full" />

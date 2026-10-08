@@ -9,7 +9,7 @@ interface SectionBadgeProps {
 
 export function SectionBadge({ children, variant = "light", className }: SectionBadgeProps) {
   return (
-    <div className="mb-6 inline-flex max-w-full flex-col items-center gap-1">
+    <div className="mb-1.5 inline-flex max-w-full flex-col items-center gap-1">
       <h2
         className={cn(
           "inline-flex max-w-full items-center gap-1.5 rounded-2xl px-4 py-2 text-center text-xs sm:truncate sm:whitespace-nowrap sm:rounded-full font-bold uppercase tracking-wide sm:gap-2 sm:px-5 sm:py-2 sm:text-base sm:tracking-wider md:px-6 md:py-2.5 md:text-2xl md:tracking-widest",

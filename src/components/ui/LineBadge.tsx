@@ -12,11 +12,12 @@ export function LineBadge({ children, className = "" }: LineBadgeProps) {
 
   return (
     <div className={cn("flex items-center gap-3", !hasJustify && "justify-center md:justify-start", className)}>
-      <span className="block h-px w-10 bg-violet-300" />
-      <p className="text-xs font-bold uppercase tracking-widest text-violet-500 whitespace-nowrap">
+      <span className="block h-px w-10 shrink-0 bg-violet-300" />
+      {/* Long labels wrap on phones instead of overflowing the viewport */}
+      <p className="text-xs font-bold uppercase tracking-widest text-violet-500 text-center sm:whitespace-nowrap">
         {children}
       </p>
-      <span className="block h-px w-10 bg-violet-300" />
+      <span className="block h-px w-10 shrink-0 bg-violet-300" />
     </div>
   );
 }

@@ -233,7 +233,7 @@ export default function Testimonials({ testimonials = [] }) {
         />
 
         {/* ── Header ── */}
-        <div className="mb-12 px-6 text-center">
+        <div className="mb-3 px-6 text-center">
           <SectionBadge variant="dark">Testimonials</SectionBadge>
 
           <Subheading
