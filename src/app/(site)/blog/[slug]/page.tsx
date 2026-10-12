@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { User, Calendar, Tag, ArrowLeft } from "lucide-react";
+import { User, Calendar, Clock, Tag, ArrowLeft, ChevronRight } from "lucide-react";
 import { dotnetFetch, REVALIDATE_SECONDS } from "@/lib/api/dotnet-client";
 import { toUploadUrl } from "@/lib/api/image-url";
 import ChapterViewer from "./_components/ChapterViewer";
@@ -63,55 +63,73 @@ export default async function BlogDetailPage({
   const chapters = [...blog.chapters].sort((a, b) => a.order - b.order);
 
   return (
-    <main className="min-h-screen bg-[#f9f8ff]">
+    <main className="min-h-screen bg-white">
 
-      {/* ── Hero ── */}
-      <div className="relative h-[60vh] sm:h-[70vh] md:h-screen overflow-hidden">
-        {/* Background */}
-        {cover ? (
-          <Image src={cover} alt={blog.title} fill priority sizes="100vw" className="object-cover" />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-600 via-violet-500 to-blue-500" />
+      {/* ── Article header ── */}
+      <header className="mx-auto max-w-4xl px-6 pt-28 pb-8 text-center">
+        {/* Breadcrumb — doubles as the way back to the listing */}
+        <nav className="flex flex-wrap items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest">
+          <Link href="/blogs" className="text-gray-400 hover:text-violet-600 transition-colors">
+            Blog
+          </Link>
+          {blog.categoryName && (
+            <>
+              <ChevronRight className="w-3.5 h-3.5 text-gray-300" />
+              <span className="text-violet-600">{blog.categoryName}</span>
+            </>
+          )}
+        </nav>
+
+        <h1 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-gray-900">
+          {blog.title}
+        </h1>
+
+        {blog.excerpt && (
+          <p className="mx-auto mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-gray-600">
+            {blog.excerpt}
+          </p>
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-violet-950/40 via-transparent to-transparent" />
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-gray-500">
+          {blog.authorName && (
+            <span className="flex items-center gap-1.5">
+              <User className="w-4 h-4 text-violet-500" />
+              {blog.authorName}
+            </span>
+          )}
+          {date && (
+            <span className="flex items-center gap-1.5">
+              <Calendar className="w-4 h-4 text-violet-500" />
+              {date}
+            </span>
+          )}
+          {blog.readTimeMinutes > 0 && (
+            <span className="flex items-center gap-1.5">
+              <Clock className="w-4 h-4 text-violet-500" />
+              {blog.readTimeMinutes} min read
+            </span>
+          )}
+        </div>
+      </header>
 
-        {/* Back link — top left */}
-        <Link
-          href="/blogs"
-          className="absolute top-24 left-8 inline-flex items-center gap-1.5 text-white/70 hover:text-white text-sm font-medium transition-colors z-10"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Blog
-        </Link>
-
-        {/* Title + meta — bottom left */}
-        <div className="absolute bottom-0 left-0 right-0 z-10">
-          <div className="px-8 pb-4 pt-6 bg-gradient-to-r from-violet-600/80 to-blue-500/80 max-w-full backdrop-blur-sm">
-            {blog.authorName && (
-              <span className="flex items-center gap-1.5 text-sm text-white">
-                <User className="w-3.5 h-3.5" />
-                {blog.authorName}
-              </span>
-            )}
-            {date && (
-              <span className="flex items-center gap-1.5 text-sm text-white mb-3">
-                <Calendar className="w-3.5 h-3.5" />
-                {date}
-              </span>
-            )}
-            <h1
-              className="text-xl md:text-2xl font-bold leading-snug max-w-3xl"
-              style={{ color: "#ffffff", textShadow: "0 2px 12px rgba(0,0,0,0.8)" }}
-            >
-              {blog.title}
-            </h1>
+      {/* ── Cover image ── */}
+      {cover && (
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-violet-100 shadow-sm">
+            <Image
+              src={cover}
+              alt={blog.title}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 1024px"
+              className="object-cover"
+            />
           </div>
         </div>
-      </div>
+      )}
 
       {/* ── Body ── */}
-      <div className="bg-[#f9f8ff]">
+      <div className="mx-auto max-w-6xl px-6 py-12">
 
         {chapters.length > 0 ? (
           <ChapterViewer chapters={chapters} />
@@ -122,17 +140,15 @@ export default async function BlogDetailPage({
         )}
 
         {/* Tags + back link */}
-        <div className="max-w-4xl mx-auto px-6 pb-12 space-y-6">
+        <div className="mt-12 max-w-3xl space-y-6 border-t border-violet-100 pt-8">
           {blog.tags.length > 0 && (
-            <div className="pt-8 border-t border-violet-100">
-              <div className="flex flex-wrap items-center gap-2">
-                <Tag className="w-4 h-4 text-gray-400" />
-                {blog.tags.map((t) => (
-                  <span key={t.id} className="text-xs font-semibold text-violet-600 bg-violet-50 border border-violet-200 px-3 py-1 rounded-full">
-                    {t.name}
-                  </span>
-                ))}
-              </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <Tag className="w-4 h-4 text-gray-400" />
+              {blog.tags.map((t) => (
+                <span key={t.id} className="text-xs font-semibold text-violet-600 bg-violet-50 border border-violet-200 px-3 py-1 rounded-full">
+                  {t.name}
+                </span>
+              ))}
             </div>
           )}
           <Link href="/blogs" className="inline-flex items-center gap-2 text-sm font-semibold text-violet-600 hover:text-violet-800 transition-colors">

@@ -120,9 +120,10 @@ export default async function IITPage() {
         altSuffix="cyber security instructor, C3iHub IIT Kanpur"
         color="#7c3aed"
         bgColor="#e8eaeb"
+        centered
       />
 
-      <CoursesFaq bg="bg-violet-50" heading="Common questions" faqs={IIT_FAQS} />
+      <CoursesFaq bg="bg-violet-50" heading="Common questions" faqs={IIT_FAQS} centered />
 
       {/* Final CTA */}
       <section className="bg-white px-6 md:px-[60px] py-20">

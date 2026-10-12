@@ -75,31 +75,20 @@ export default async function BlogsPage() {
   const { categories, blogsByCategory } = await fetchData();
 
   return (
-    <div className="min-h-screen bg-[#f9f8ff]">
+    <div className="min-h-screen bg-white">
 
-      {/* ── Hero ── */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-violet-600 via-violet-500 to-blue-500 pt-28 pb-12 px-6 text-center">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 25% 60%, white 1px, transparent 1px), radial-gradient(circle at 75% 40%, white 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-        <div className="relative max-w-2xl mx-auto">
-          <span className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm text-white text-sm font-semibold px-5 py-2 rounded-full ring-1 ring-white/20 mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-            Blog &amp; Insights
-          </span>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-3">
-            Ideas, Stories &amp; Expertise
-          </h1>
-          <p className="text-white/80 text-lg">
-            Explore our latest articles on AI, technology, business, and innovation.
-          </p>
-        </div>
-      </div>
+      {/* ── Page header ── */}
+      <header className="mx-auto max-w-3xl px-6 pt-28 pb-10 text-center">
+        <p className="text-xs font-bold uppercase tracking-widest text-violet-600">
+          Blog &amp; Insights
+        </p>
+        <h1 className="mt-3 text-4xl md:text-5xl font-extrabold leading-tight text-gray-900">
+          Ideas, Stories &amp; Expertise
+        </h1>
+        <p className="mt-4 text-lg leading-relaxed text-gray-600">
+          Explore our latest articles on AI, technology, business, and innovation.
+        </p>
+      </header>
 
       {/* ── Body ── */}
       {categories.length === 0 ? (

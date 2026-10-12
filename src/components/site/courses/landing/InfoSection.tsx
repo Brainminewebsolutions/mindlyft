@@ -22,10 +22,12 @@ interface InfoSectionProps {
   children?: React.ReactNode;
 }
 
-export function SectionHeader({ badge, heading, intro }: { badge: string; heading: string; intro?: React.ReactNode }) {
+export function SectionHeader({
+  badge, heading, intro, centered = false,
+}: { badge: string; heading: string; intro?: React.ReactNode; centered?: boolean }) {
   return (
-    <div className="mb-12 max-w-3xl mx-auto md:mx-0 text-center md:text-left">
-      <AnimateIn delay={0} direction="left"><LineBadge className="mb-5">{badge}</LineBadge></AnimateIn>
+    <div className={cn("mb-12 max-w-3xl mx-auto text-center", !centered && "md:mx-0 md:text-left")}>
+      <AnimateIn delay={0} direction="left"><LineBadge className={cn("mb-5", centered && "justify-center")}>{badge}</LineBadge></AnimateIn>
       <AnimateIn delay={100} direction="left">
         <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-4">{heading}</h2>
       </AnimateIn>

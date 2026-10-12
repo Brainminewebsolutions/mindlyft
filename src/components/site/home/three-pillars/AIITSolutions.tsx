@@ -20,7 +20,7 @@ type Service = {
 const SERVICES: Service[] = [
   {
     srno: "01",
-    image: "images/Ai_and_advance_intelligence.jpeg",
+    image: "/images/aiitsolutions/Ai_and_advance_intelligence.jpeg",
     title: "AI & Advanced Intelligence",
     subtitle: "AI-led transformation, intelligence, and innovation",
     items: [
@@ -32,7 +32,7 @@ const SERVICES: Service[] = [
   },
   {
     srno: "02",
-    image: "images/Data_analytics.jpeg",
+    image: "/images/aiitsolutions/Data_analytics.jpeg",
     title: "Data, Analytics & Insights",
     subtitle: "Turning data into business intelligence",
     items: [
@@ -44,7 +44,7 @@ const SERVICES: Service[] = [
   },
   {
     srno: "03",
-    image: "images/software.jpeg",
+    image: "/images/aiitsolutions/software.jpeg",
     title: "Software & Application Engineering",
     subtitle: "Building scalable, modern digital products",
     items: [
@@ -56,7 +56,7 @@ const SERVICES: Service[] = [
   },
   {
     srno: "04",
-    image: "images/Ai_products.jpeg",
+    image: "/images/aiitsolutions/Ai_products.jpeg",
     title: "Process Optimisation & Automation",
     subtitle: "Efficiency, productivity, and cost optimisation",
     items: [
@@ -68,7 +68,7 @@ const SERVICES: Service[] = [
   },
   {
     srno: "05",
-    image: "images/Cybersecurity.jpeg",
+    image: "/images/aiitsolutions/Cybersecurity.jpeg",
     title: "Cybersecurity & IT Security",
     subtitle: "Protection, compliance, and risk mitigation",
     items: [

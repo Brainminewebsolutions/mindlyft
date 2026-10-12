@@ -130,6 +130,7 @@ export function CourseTable({ courses, onEdit, onDelete, onToggleStatus }: Props
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead className="w-16">Order</TableHead>
                 <TableHead>Course</TableHead>
                 <TableHead>Mode</TableHead>
                 <TableHead className="hidden sm:table-cell">Type</TableHead>
@@ -144,6 +145,10 @@ export function CourseTable({ courses, onEdit, onDelete, onToggleStatus }: Props
             <TableBody>
               {courses.map((course) => (
                 <TableRow key={course.id}>
+
+                  <TableCell className="text-sm text-muted-foreground">
+                    {course.displayOrder}
+                  </TableCell>
 
                   <TableCell>
                     <div className="flex items-center gap-3">

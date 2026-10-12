@@ -140,7 +140,7 @@ export default function WorkshopsCardClient({ webinars }: { webinars: Webinar[] 
               highlight="accelerate your skills."
             />
             <div className="w-16 h-1 bg-gradient-to-r from-violet-500 to-blue-500 rounded-full mt-4 mx-auto" />
-            <p className="mt-4 max-w-2xl mx-auto text-gray-600">
+            <p className="mt-4 text-gray-600">
               Not sure which program is right for you? Start with a free workshop. These are
               hands-on sessions led by the same faculty who teach our full programs, so you get a
               real sense of our teaching style, our labs and our pace before you commit to

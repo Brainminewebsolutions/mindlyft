@@ -9,7 +9,7 @@ const QUICK_LINKS = [
   { label: "About",      href: "/about" },
   { label: "Courses",    href: "/courses" },
   { label: "Blog",       href: "/blogs" },
-  { label: "News Letter", href: "#" },
+  { label: "Newsletter", href: "#" },
   { label: "Contact",    href: "/contact" },
   { label: "Login",      href: "/login" },
 ];

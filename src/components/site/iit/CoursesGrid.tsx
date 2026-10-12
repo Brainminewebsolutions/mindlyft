@@ -109,7 +109,9 @@ function IITCourseCard({ course, index }: { course: Course; index: number }) {
   );
 }
 
-export default function CoursesGrid({ courses, bg = "bg-white" }: { courses: Course[]; bg?: string }) {
+export default function CoursesGrid({
+  courses, bg = "bg-white", showBadge = true,
+}: { courses: Course[]; bg?: string; showBadge?: boolean }) {
   const [search, setSearch] = useState("");
 
   const filtered = search.trim()
@@ -127,7 +129,7 @@ export default function CoursesGrid({ courses, bg = "bg-white" }: { courses: Cou
   return (
     <div className={`${bg} px-6 py-12`}>
     <div className="max-w-7xl mx-auto">
-      <LineBadge className="justify-center mb-8">Explore Our Courses</LineBadge>
+      {showBadge && <LineBadge className="justify-center mb-8">Explore Our Courses</LineBadge>}
       <div className="flex items-center justify-between gap-4 mb-10">
         <p className="text-sm text-gray-500">
           {courses.length} course{courses.length !== 1 ? "s" : ""} available

@@ -6,6 +6,7 @@ interface CoursesFaqProps {
   bg?:      string;
   heading?: string;
   faqs?:    { q: string; a: string }[];
+  centered?: boolean;
 }
 
 // Native <details> keeps every answer in the server-rendered HTML (indexable)
@@ -14,6 +15,7 @@ export default function CoursesFaq({
   bg = "bg-white",
   heading = "Frequently Asked Questions About AI Courses in Pune",
   faqs = FAQS,
+  centered = false,
 }: CoursesFaqProps) {
   const schema = {
     "@context": "https://schema.org",
@@ -32,7 +34,7 @@ export default function CoursesFaq({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <div className="max-w-4xl mx-auto">
-        <SectionHeader badge="FAQ" heading={heading} />
+        <SectionHeader badge="FAQ" heading={heading} centered={centered} />
 
         <div className="space-y-3">
           {faqs.map(({ q, a }) => (

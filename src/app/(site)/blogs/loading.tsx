@@ -1,46 +1,38 @@
 export default function Loading() {
   return (
-    <div className="min-h-screen animate-pulse bg-[#f9f8ff]">
-      {/* Hero */}
-      <div className="bg-violet-200/60 px-6 pb-12 pt-28">
-        <div className="mx-auto flex max-w-2xl flex-col items-center gap-4">
-          <div className="h-8 w-40 rounded-full bg-white/50" />
-          <div className="h-9 w-72 rounded bg-white/50" />
-          <div className="h-4 w-56 rounded bg-white/40" />
-        </div>
+    <div className="min-h-screen animate-pulse bg-white">
+      {/* Page header */}
+      <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 px-6 pb-10 pt-28">
+        <div className="h-4 w-32 rounded bg-gray-200" />
+        <div className="h-10 w-80 max-w-full rounded bg-gray-200" />
+        <div className="h-4 w-64 rounded bg-gray-200" />
       </div>
 
-      {/* Sidebar + grid */}
-      <div className="flex flex-col gap-0 lg:flex-row">
-        {/* Sidebar */}
-        <aside className="hidden w-72 shrink-0 border-r border-violet-100 bg-white px-4 py-6 lg:block xl:w-80">
-          <div className="mb-6 h-4 w-24 rounded bg-gray-200" />
-          <div className="space-y-2">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-10 rounded-xl bg-gray-100" />
+      <div className="mx-auto max-w-6xl px-6 pb-20">
+        {/* Filters */}
+        <div className="flex items-center justify-between gap-4 border-b border-violet-100 pb-6">
+          <div className="flex gap-2">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="h-8 w-20 rounded-full bg-gray-100" />
             ))}
           </div>
-        </aside>
+          <div className="hidden h-9 w-64 rounded-full bg-gray-100 md:block" />
+        </div>
 
         {/* Blog grid */}
-        <main className="flex-1 px-6 py-8 lg:px-8">
-          <div className="mb-8 flex items-center justify-between gap-4">
-            <div className="h-7 w-40 rounded bg-gray-200" />
-            <div className="h-10 w-72 rounded-xl bg-gray-100" />
-          </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="overflow-hidden rounded-2xl border border-gray-100 bg-white">
-                <div className="h-44 w-full bg-gray-200" />
-                <div className="space-y-2 p-5">
-                  <div className="h-4 w-3/4 rounded bg-gray-200" />
-                  <div className="h-3 w-full rounded bg-gray-200" />
-                  <div className="h-3 w-2/3 rounded bg-gray-200" />
-                </div>
+        <div className="grid grid-cols-1 gap-x-8 gap-y-12 pt-10 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i}>
+              <div className="aspect-[16/9] w-full rounded-2xl bg-gray-200" />
+              <div className="mt-4 space-y-2">
+                <div className="h-3 w-20 rounded bg-gray-200" />
+                <div className="h-5 w-3/4 rounded bg-gray-200" />
+                <div className="h-3 w-full rounded bg-gray-200" />
+                <div className="h-3 w-2/3 rounded bg-gray-200" />
               </div>
-            ))}
-          </div>
-        </main>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

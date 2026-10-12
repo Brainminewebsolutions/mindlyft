@@ -77,13 +77,14 @@ export default async function CoursesPage() {
         <div className="px-6 md:px-[60px] pt-20">
           <div className="max-w-6xl mx-auto">
             <SectionHeader
-              badge="Our Programs"
+              badge="Explore Our Courses"
               heading="All AI Certification Courses in Pune"
               intro={<p>Offline, online and hybrid formats. Fees from ₹45,000.</p>}
+              centered
             />
           </div>
         </div>
-        <CoursesGrid courses={courses} bg="bg-white" />
+        <CoursesGrid courses={courses} bg="bg-white" showBadge={false} />
       </section>
 
       <CourseOutcomes     bg="bg-violet-50" />
@@ -125,25 +126,25 @@ export default async function CoursesPage() {
 
       {/* Fees */}
       <section id="fees" className="bg-white px-6 md:px-[60px] py-20 scroll-mt-24">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+        <div className="max-w-6xl mx-auto">
           <SectionHeader
             badge="Fees & EMI"
             heading="Course Fees, EMI Options and Scholarships"
-            intro={
-              <>
-                <p>
-                  Our programs start from ₹45,000, with cost varying by duration and specialisation. We publish
-                  AI course fees in Pune openly on every course page rather than holding them behind an enquiry
-                  form, so you can compare properly before you speak to anyone.
-                </p>
-                <p>
-                  No-cost EMI is available across all programs. Early-enrolment and group discounts apply to
-                  selected batches — <Link href="/contact" className="font-semibold text-violet-600 hover:underline">ask a counsellor</Link> what
-                  is currently running.
-                </p>
-              </>
-            }
+            centered
           />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+          <div className="space-y-3 text-base text-gray-600 leading-relaxed text-center md:text-left">
+            <p>
+              Our programs start from ₹45,000, with cost varying by duration and specialisation. We publish
+              AI course fees in Pune openly on every course page rather than holding them behind an enquiry
+              form, so you can compare properly before you speak to anyone.
+            </p>
+            <p>
+              No-cost EMI is available across all programs. Early-enrolment and group discounts apply to
+              selected batches — <Link href="/contact" className="font-semibold text-violet-600 hover:underline">ask a counsellor</Link> what
+              is currently running.
+            </p>
+          </div>
           <div className="grid gap-4">
             {FEE_POINTS.map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex items-start gap-4 rounded-2xl border border-violet-100 bg-white p-5 shadow-sm">
@@ -157,6 +158,7 @@ export default async function CoursesPage() {
               </div>
             ))}
           </div>
+          </div>
         </div>
       </section>
 
@@ -169,7 +171,7 @@ export default async function CoursesPage() {
         numbered
       />
 
-      <CoursesFaq bg="bg-white" />
+      <CoursesFaq bg="bg-white" centered />
 
       <CoursesCta />
 

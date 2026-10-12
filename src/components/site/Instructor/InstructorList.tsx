@@ -10,6 +10,7 @@ interface Props {
   altSuffix?:  string;
   color?:      string;
   bgColor?:    string;
+  centered?:   boolean;
 }
 
 export default function InstructorList({
@@ -19,6 +20,7 @@ export default function InstructorList({
   altSuffix,
   color    = "#7c3aed",
   bgColor  = "#f5f3ff",
+  centered = false,
 }: Props) {
   if (instructors.length === 0) return null;
 
@@ -27,11 +29,11 @@ export default function InstructorList({
       <div className="w-full">
 
         {/* Heading */}
-        <div className="mb-10 text-center md:text-left">
+        <div className={`mb-10 text-center ${centered ? "" : "md:text-left"}`}>
           <h2 className="text-2xl md:text-4xl font-black mb-2" style={{ color }}>
             {title}
           </h2>
-          <p className="max-w-3xl text-sm text-gray-500 leading-relaxed mx-auto md:mx-0">
+          <p className={`max-w-3xl text-sm text-gray-500 leading-relaxed mx-auto ${centered ? "" : "md:mx-0"}`}>
             {subtitle}
           </p>
         </div>

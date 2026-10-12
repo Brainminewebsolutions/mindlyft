@@ -68,10 +68,11 @@ export default function WhyChooseUs() {
         <div className="mx-auto w-full px-3 min-[992px]:pl-[calc((100%-960px)/2+12px)] min-[1200px]:pl-[calc((100%-1140px)/2+12px)] min-[1400px]:pl-[calc((100%-1300px)/2+12px)]">
           <div className="flex flex-wrap items-stretch">
             <div className="w-full lg:w-1/2 xl:w-5/12 flex">
-              <div className="max-[991px]:pt-[60px] md:mb-[30px] flex flex-col justify-center items-center text-center md:text-left">
+              <div className="max-[991px]:pt-[60px] md:mb-[30px] flex flex-col justify-evenly items-center text-center">
                 <SectionBadge variant="dark">Why Choose Mindlyft AI</SectionBadge>
                 <AnimateIn direction="up" delay={400}>
                   <Subheading
+                    centered
                     className="!text-white mb-[15px]"
                     text="Why Choose MindLyft AI"
                     highlight="for AI Training in Pune?"

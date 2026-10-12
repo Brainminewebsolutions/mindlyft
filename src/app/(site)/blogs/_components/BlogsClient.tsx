@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, User, Calendar, ArrowRight, BookOpen, Search } from "lucide-react";
+import { ArrowRight, BookOpen, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 
@@ -33,91 +33,93 @@ export type Category = {
   blogCount:   number;
 };
 
-// ─── Gradients ────────────────────────────────────────────────────────────────
+const ALL = -1;
 
-const GRADIENTS = [
-  "from-violet-500 to-blue-500",
-  "from-fuchsia-500 to-violet-600",
-  "from-blue-500 to-cyan-400",
-  "from-emerald-500 to-teal-500",
-  "from-orange-400 to-pink-500",
-  "from-indigo-500 to-purple-600",
-];
+// ─── Shared bits ──────────────────────────────────────────────────────────────
 
-// ─── Blog Card ────────────────────────────────────────────────────────────────
-
-function BlogCard({ blog, index }: { blog: BlogItem; index: number }) {
-  const img      = blog.coverImageUrl ?? null;
-  const gradient = GRADIENTS[index % GRADIENTS.length];
-  const date     = blog.publishedAt
-    ? new Date(blog.publishedAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })
+function formatDate(publishedAt: string | null) {
+  return publishedAt
+    ? new Date(publishedAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })
     : null;
+}
 
+function Cover({ blog, sizes }: { blog: BlogItem; sizes: string }) {
+  if (blog.coverImageUrl) {
+    return (
+      <Image
+        src={blog.coverImageUrl}
+        alt={blog.title}
+        fill
+        sizes={sizes}
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+        unoptimized
+      />
+    );
+  }
+  return (
+    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-100 to-blue-100">
+      <BookOpen className="h-10 w-10 text-violet-300" />
+    </div>
+  );
+}
+
+function Meta({ blog }: { blog: BlogItem }) {
+  const parts = [
+    blog.authorName,
+    formatDate(blog.publishedAt),
+    blog.readTimeMinutes > 0 ? `${blog.readTimeMinutes} min read` : null,
+  ].filter(Boolean);
+
+  return <p className="text-xs text-gray-500">{parts.join(" · ")}</p>;
+}
+
+// ─── Featured post ────────────────────────────────────────────────────────────
+
+function FeaturedPost({ blog }: { blog: BlogItem }) {
   return (
     <Link
       href={`/blog/${blog.slug}`}
-      className="group flex flex-col rounded-2xl border border-violet-100 bg-white overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+      className="group grid grid-cols-1 items-center gap-6 md:grid-cols-2 md:gap-10"
     >
-      {/* Cover */}
-      <div className="relative h-44 overflow-hidden shrink-0">
-        {img ? (
-          <Image
-            src={img}
-            alt={blog.title}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-            unoptimized
-          />
-        ) : (
-          <div className={`h-full w-full bg-gradient-to-br ${gradient} flex items-center justify-center`}>
-            <span className="text-4xl font-bold text-white/30 select-none">{blog.title.charAt(0)}</span>
-          </div>
-        )}
-        {blog.readTimeMinutes > 0 && (
-          <span className="absolute top-3 right-3 flex items-center gap-1 bg-black/50 backdrop-blur-sm text-white text-[11px] font-medium px-2.5 py-1 rounded-full">
-            <Clock className="w-3 h-3" />
-            {blog.readTimeMinutes} min
-          </span>
-        )}
+      <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-violet-100 shadow-sm">
+        <Cover blog={blog} sizes="(max-width: 768px) 100vw, 50vw" />
       </div>
-
-      {/* Body */}
-      <div className="flex flex-col flex-1 p-5">
-        {blog.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {blog.tags.slice(0, 3).map((t) => (
-              <span key={t.id} className="text-[10px] font-semibold uppercase tracking-wider text-violet-600 bg-violet-50 px-2.5 py-0.5 rounded-full">
-                {t.name}
-              </span>
-            ))}
-          </div>
-        )}
-
-        <h3 className="text-[15px] font-bold text-gray-900 leading-snug mb-2 group-hover:text-violet-600 transition-colors line-clamp-2">
+      <div>
+        <p className="text-xs font-bold uppercase tracking-widest text-violet-600">{blog.categoryName}</p>
+        <h2 className="mt-3 text-2xl font-extrabold leading-snug text-gray-900 transition-colors group-hover:text-violet-600 sm:text-3xl">
           {blog.title}
-        </h3>
-
+        </h2>
         {blog.excerpt && (
-          <p className="text-sm text-gray-500 leading-relaxed line-clamp-2 mb-4 flex-1">
-            {blog.excerpt}
-          </p>
+          <p className="mt-3 line-clamp-3 text-base leading-relaxed text-gray-600">{blog.excerpt}</p>
         )}
-
-        <div className="mt-auto pt-3 border-t border-gray-100 flex items-center justify-between">
-          <div className="flex items-center gap-1.5 text-xs text-gray-400">
-            {blog.authorName && (
-              <>
-                <User className="w-3 h-3" />
-                <span className="truncate max-w-[90px]">{blog.authorName}</span>
-                {date && <span className="mx-1">·</span>}
-              </>
-            )}
-            {date && <span>{date}</span>}
-          </div>
-          <span className="flex items-center gap-1 text-xs font-semibold text-violet-600 group-hover:gap-2 transition-all shrink-0">
-            Read <ArrowRight className="w-3 h-3" />
-          </span>
+        <div className="mt-4">
+          <Meta blog={blog} />
         </div>
+        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-violet-600 transition-all group-hover:gap-2.5">
+          Read article <ArrowRight className="h-4 w-4" />
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+// ─── Blog card ────────────────────────────────────────────────────────────────
+
+function BlogCard({ blog }: { blog: BlogItem }) {
+  return (
+    <Link href={`/blog/${blog.slug}`} className="group flex flex-col">
+      <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-violet-100 shadow-sm">
+        <Cover blog={blog} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+      </div>
+      <p className="mt-4 text-[11px] font-bold uppercase tracking-widest text-violet-600">{blog.categoryName}</p>
+      <h3 className="mt-2 line-clamp-2 text-lg font-bold leading-snug text-gray-900 transition-colors group-hover:text-violet-600">
+        {blog.title}
+      </h3>
+      {blog.excerpt && (
+        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-gray-600">{blog.excerpt}</p>
+      )}
+      <div className="mt-3">
+        <Meta blog={blog} />
       </div>
     </Link>
   );
@@ -131,144 +133,99 @@ interface Props {
 }
 
 export default function BlogsClient({ categories, blogsByCategory }: Props) {
-  const [activeCategoryId, setActiveCategoryId] = useState<number>(categories[0]?.id ?? -1);
+  const [activeCategoryId, setActiveCategoryId] = useState<number>(ALL);
   const [search, setSearch] = useState("");
 
-  const activeCategory = categories.find(c => c.id === activeCategoryId);
-  const rawBlogs       = blogsByCategory[activeCategoryId] ?? [];
-  const blogs          = search.trim()
-    ? rawBlogs.filter(b =>
-        b.title.toLowerCase().includes(search.toLowerCase()) ||
-        b.excerpt?.toLowerCase().includes(search.toLowerCase()) ||
-        b.tags.some(t => t.name.toLowerCase().includes(search.toLowerCase()))
-      )
-    : rawBlogs;
+  // Newest first — the latest article leads the page.
+  const allBlogs = Object.values(blogsByCategory)
+    .flat()
+    .sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? ""));
 
-  const totalBlogs = Object.values(blogsByCategory).reduce((s, arr) => s + arr.length, 0);
+  const inCategory = activeCategoryId === ALL
+    ? allBlogs
+    : allBlogs.filter(b => b.blogCategoryId === activeCategoryId);
+
+  const q     = search.trim().toLowerCase();
+  const blogs = q
+    ? inCategory.filter(b =>
+        b.title.toLowerCase().includes(q) ||
+        b.excerpt?.toLowerCase().includes(q) ||
+        b.tags.some(t => t.name.toLowerCase().includes(q))
+      )
+    : inCategory;
+
+  // The featured slot only makes sense on the unfiltered listing.
+  const featured = !q && activeCategoryId === ALL ? blogs[0] : undefined;
+  const rest     = featured ? blogs.slice(1) : blogs;
+
+  const filters = [{ id: ALL, name: "All" }, ...categories];
 
   return (
-    <div className="flex flex-col lg:flex-row gap-0 min-h-screen">
+    <div className="mx-auto max-w-6xl px-6 pb-20">
 
-      {/* ── Sidebar (desktop) / Tabs (mobile) ── */}
-      <aside className="w-full lg:w-72 xl:w-80 shrink-0">
-
-        {/* Mobile: horizontal scroll tabs */}
-        <div className="lg:hidden overflow-x-auto border-b border-violet-100 bg-white px-4 py-3">
-          <div className="flex gap-2 w-max">
-            {categories.map(cat => (
+      {/* ── Filters ── */}
+      <div className="flex flex-col gap-4 border-b border-violet-100 pb-6 md:flex-row md:items-center md:justify-between">
+        <div className="-mx-6 overflow-x-auto px-6 md:mx-0 md:px-0">
+          <div className="flex w-max gap-2 md:w-auto md:flex-wrap">
+            {filters.map(cat => (
               <button
                 key={cat.id}
                 type="button"
-                onClick={() => { setActiveCategoryId(cat.id); setSearch(""); }}
+                onClick={() => setActiveCategoryId(cat.id)}
                 className={cn(
-                  "flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all",
+                  "whitespace-nowrap rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors",
                   activeCategoryId === cat.id
-                    ? "bg-gradient-to-r from-violet-600 to-blue-500 text-white shadow-md shadow-violet-200"
-                    : "bg-violet-50 text-violet-700 hover:bg-violet-100 border border-violet-100"
+                    ? "border-violet-600 bg-violet-600 text-white"
+                    : "border-violet-100 bg-white text-gray-600 hover:border-violet-300 hover:text-violet-700"
                 )}
               >
                 {cat.name}
-                <span className={cn(
-                  "text-[11px] font-bold px-1.5 py-0.5 rounded-full",
-                  activeCategoryId === cat.id ? "bg-white/20 text-white" : "bg-violet-100 text-violet-500"
-                )}>
-                  {cat.blogCount}
-                </span>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Desktop: sticky sidebar */}
-        <div className="hidden lg:flex flex-col sticky top-24 h-[calc(100vh-6rem)] overflow-y-auto bg-white border-r border-violet-100 px-4 py-6">
-          {/* Sidebar header */}
-          <div className="mb-6 px-2">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-1">Categories</h2>
-            <p className="text-sm text-gray-500">{totalBlogs} articles across {categories.length} topics</p>
-          </div>
-
-          {/* Category list */}
-          <nav className="flex flex-col gap-1 flex-1">
-            {categories.map(cat => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => { setActiveCategoryId(cat.id); setSearch(""); }}
-                className={cn(
-                  "group flex items-center justify-between w-full px-4 py-3 rounded-xl text-left transition-all",
-                  activeCategoryId === cat.id
-                    ? "bg-gradient-to-r from-violet-600 to-blue-500 text-white shadow-md shadow-violet-200"
-                    : "text-gray-700 hover:bg-violet-50 hover:text-violet-700"
-                )}
-              >
-                <span className="text-sm font-semibold truncate flex-1 mr-2">{cat.name}</span>
-                <span className={cn(
-                  "shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full",
-                  activeCategoryId === cat.id
-                    ? "bg-white/25 text-white"
-                    : "bg-violet-100 text-violet-500 group-hover:bg-violet-200"
-                )}>
-                  {cat.blogCount}
-                </span>
-              </button>
-            ))}
-          </nav>
-
-          {/* Bottom stat */}
-          <div className="mt-6 px-4 py-4 rounded-xl bg-gradient-to-br from-violet-50 to-blue-50 border border-violet-100">
-            <div className="flex items-center gap-2 text-violet-600">
-              <BookOpen className="w-4 h-4" />
-              <span className="text-sm font-semibold">Total Articles</span>
-            </div>
-            <p className="text-2xl font-extrabold text-gray-900 mt-1">{totalBlogs}</p>
-          </div>
+        <div className="relative w-full shrink-0 md:w-64">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search articles…"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="w-full rounded-full border border-violet-200 bg-white py-2 pl-9 pr-4 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-violet-400 focus:ring-2 focus:ring-violet-400"
+          />
         </div>
-      </aside>
+      </div>
 
-      {/* ── Blog content area ── */}
-      <main className="flex-1 px-6 lg:px-8 py-8">
-
-        {/* Section header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-          <div>
-            <h2 className="text-2xl font-extrabold text-gray-900">{activeCategory?.name ?? "Articles"}</h2>
-            {activeCategory?.description && (
-              <p className="text-sm text-gray-500 mt-1">{activeCategory.description}</p>
-            )}
-          </div>
-
-          {/* Search */}
-          <div className="relative w-full sm:w-72 shrink-0">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-            <input
-              type="text"
-              placeholder="Search articles…"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 text-sm text-gray-900 bg-white border border-violet-200 rounded-xl outline-none focus:ring-2 focus:ring-violet-400 focus:border-violet-400 placeholder:text-gray-400"
-            />
-          </div>
-        </div>
-
-        {/* Grid */}
-        {blogs.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-            {blogs.map((blog, i) => (
-              <BlogCard key={blog.id} blog={blog} index={i} />
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center py-24 text-center">
-            <div className="w-16 h-16 rounded-full bg-violet-50 flex items-center justify-center mb-4">
-              <BookOpen className="w-7 h-7 text-violet-400" />
+      {blogs.length > 0 ? (
+        <>
+          {/* ── Featured ── */}
+          {featured && (
+            <div className="border-b border-violet-100 py-10">
+              <FeaturedPost blog={featured} />
             </div>
-            <p className="text-gray-600 font-semibold">
-              {search ? `No articles match "${search}"` : "No articles in this category yet"}
-            </p>
-            <p className="text-sm text-gray-400 mt-1">Check back soon!</p>
+          )}
+
+          {/* ── Grid ── */}
+          {rest.length > 0 && (
+            <div className="grid grid-cols-1 gap-x-8 gap-y-12 pt-10 sm:grid-cols-2 lg:grid-cols-3">
+              {rest.map(blog => (
+                <BlogCard key={blog.id} blog={blog} />
+              ))}
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="flex flex-col items-center justify-center py-24 text-center">
+          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-violet-50">
+            <BookOpen className="h-7 w-7 text-violet-400" />
           </div>
-        )}
-      </main>
+          <p className="font-semibold text-gray-600">
+            {q ? `No articles match "${search}"` : "No articles in this category yet"}
+          </p>
+          <p className="mt-1 text-sm text-gray-400">Check back soon!</p>
+        </div>
+      )}
 
     </div>
   );

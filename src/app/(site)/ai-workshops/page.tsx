@@ -133,7 +133,7 @@ export default async function WorkshopsPage() {
         />
       </div>
 
-      <CoursesFaq bg="bg-violet-50" heading="Common questions" faqs={WORKSHOP_FAQS} />
+      <CoursesFaq bg="bg-violet-50" heading="Common questions" faqs={WORKSHOP_FAQS} centered />
 
       {/* From a workshop to a full programme */}
       <section className="bg-white px-6 md:px-[60px] py-20">

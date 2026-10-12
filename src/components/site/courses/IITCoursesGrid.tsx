@@ -148,10 +148,10 @@ export default function IITCoursesGrid({
         {showHeader && (
           <>
             <AnimateIn delay={0} direction="left">
-              <LineBadge className="mb-5">Explore Our Courses</LineBadge>
+              <LineBadge className="justify-center mb-5">Explore Our Courses</LineBadge>
             </AnimateIn>
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
-              <div className="text-center md:text-left">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-center gap-6 mb-10">
+              <div className="text-center">
                 <AnimateIn delay={100} direction="left">
                   <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
                     Find your{" "}
