@@ -7,6 +7,7 @@ import { Button }         from "@/components/ui/button";
 import { WebinarForm }    from "@/components/admin/webinars/WebinarForm";
 import { webinarService } from "@/services/admin/webinarService";
 import type { Webinar }   from "@/types/admin/webinar";
+import { StreamSetupPanel } from "@/components/live/StreamSetupPanel";
 
 export default function EditWebinarPage() {
   const { id }   = useParams<{ id: string }>();
@@ -86,6 +87,8 @@ export default function EditWebinarPage() {
           isLoading={submitting}
         />
       </div>
+
+      {webinar.mode !== "Offline" && <StreamSetupPanel workshopId={id} isAdmin />}
     </div>
   );
 }

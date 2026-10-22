@@ -18,6 +18,7 @@ import { cn }        from "@/lib/utils";
 import { employeeService } from "@/services/admin/employeeService";
 import { LANGUAGES } from "@/constants/languages";
 
+// id = Employee.Id as a string (the select value); the API's instructorId FK points at it
 type EmployeeOption = { id: string; name: string };
 
 function useActiveEmployees() {
@@ -25,7 +26,7 @@ function useActiveEmployees() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     employeeService.list({ status: "ACTIVE", limit: 200 })
-      .then((data) => setOptions(data.employees.map((e) => ({ id: e.id, name: e.name }))))
+      .then((data) => setOptions(data.employees.map((e) => ({ id: String(e.employeeId), name: e.name }))))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
@@ -132,6 +133,15 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
     setValue("slug", toSlug(watchedName || ""));
   }, [watchedName, setValue]);
 
+  // Select the saved instructor once employees load (older rows only have the name)
+  useEffect(() => {
+    if (loadingEmployees || !defaultValues) return;
+    const match =
+      employees.find((e) => defaultValues.instructorId != null && e.id === String(defaultValues.instructorId)) ??
+      employees.find((e) => e.name === defaultValues.instructor);
+    if (match) setValue("instructor", match.id);
+  }, [loadingEmployees, employees, defaultValues, setValue]);
+
   const selectCls = cn(
     "h-9 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground",
     "focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring transition"
@@ -144,7 +154,10 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
     fd.append("duration",         String(values.duration));
     fd.append("mode",             values.mode);
     fd.append("price",            values.subscriptionType === "Free" ? "0" : String(values.price ?? 0));
-    fd.append("instructor",       values.instructor);
+    // The select holds the employee id; the API also keeps the display name
+    const instructor = employees.find((e) => e.id === values.instructor);
+    fd.append("instructor",       instructor?.name ?? values.instructor);
+    if (instructor) fd.append("instructorId", instructor.id);
     fd.append("language",         values.language);
     fd.append("subscriptionType", values.subscriptionType);
     fd.append("status",           values.status);
@@ -207,10 +220,14 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
       {/* Online link / Offline address */}
       {watchedMode === "Online" && (
         <div className="space-y-1.5">
-          <Label htmlFor="link">Session Link</Label>
+          <Label htmlFor="link">External Session Link (optional)</Label>
           <Input id="link" type="url" {...register("link")}
             placeholder="https://meet.google.com/..."
             className={errors.link ? "border-destructive" : ""} />
+          <p className="text-xs text-muted-foreground">
+            Online sessions stream on Vimeo. After saving, link the Vimeo event on this session&apos;s edit page, and
+            students join from their dashboard. Only fill this in if you&apos;re using Zoom or Meet instead.
+          </p>
           {errors.link && <p className="text-xs text-destructive">{errors.link.message}</p>}
         </div>
       )}
@@ -315,8 +332,11 @@ export function WebinarForm({ mode, defaultValues, onSubmit, onCancel, isLoading
         <select {...register("instructor")} disabled={loadingEmployees}
           className={cn(selectCls, errors.instructor ? "border-destructive" : "", loadingEmployees ? "opacity-60" : "")}>
           <option value="">{loadingEmployees ? "Loading…" : "Select instructor"}</option>
-          {employees.map((e) => <option key={e.id} value={e.name}>{e.name}</option>)}
+          {employees.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
         </select>
+        <p className="text-xs text-muted-foreground">
+          The instructor can go live and see the stream key from their employee panel.
+        </p>
         {errors.instructor && <p className="text-xs text-destructive">{errors.instructor.message}</p>}
       </div>
 

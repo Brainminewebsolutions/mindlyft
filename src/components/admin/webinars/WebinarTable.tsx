@@ -120,7 +120,16 @@ export function WebinarTable({ webinars, onEdit, onDelete }: Props) {
                   </TableCell>
 
                   <TableCell><TypeBadge type={w.type} /></TableCell>
-                  <TableCell><ModeBadge mode={w.mode} /></TableCell>
+                  <TableCell>
+                    <div className="flex flex-col items-start gap-1">
+                      <ModeBadge mode={w.mode} />
+                      {w.hasRecording ? (
+                        <span className="text-[10px] font-medium text-emerald-600">● Recording ready</span>
+                      ) : w.hasLiveEvent ? (
+                        <span className="text-[10px] font-medium text-violet-600">● Vimeo live</span>
+                      ) : null}
+                    </div>
+                  </TableCell>
 
                   <TableCell className="hidden text-sm text-muted-foreground sm:table-cell">
                     {w.date} {w.time}
