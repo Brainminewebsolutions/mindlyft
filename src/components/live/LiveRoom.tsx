@@ -11,13 +11,16 @@ import { LiveEventPlayer, RecordingPlayer } from "./LiveEventPlayer";
 import { LiveStateBadge } from "./LiveStateBadge";
 import { googleCalendarUrl } from "./liveUtils";
 
-// Re-check periodically so the waiting room flips to the player (and the player to the recording) on its own.
-const POLL_MS = 30_000;
+// Re-check periodically so the waiting room flips to the player, and the player to the recording, on its own.
+// While live, check more often so the chat closes soon after the instructor stops streaming.
+const POLL_MS      = 30_000;
+const LIVE_POLL_MS = 15_000;
 
 function sameRoom(a: LiveAccess | null, b: LiveAccess) {
   return !!a &&
     a.state             === b.state &&
     a.playerEmbedUrl    === b.playerEmbedUrl &&
+    a.chatEmbedUrl      === b.chatEmbedUrl &&
     a.recordingEmbedUrl === b.recordingEmbedUrl;
 }
 
@@ -53,15 +56,18 @@ export function LiveRoom({ workshopId, hideHeader }: Props) {
       }
     };
 
-    load();
-    const timer = setInterval(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    const tick = async () => {
+      await load();
+      if (cancelled) return;
       const s = accessRef.current;
       // Stop polling once the recording is in place, as nothing else changes after that
       if (s?.state === "Ended" && (s.recordingEmbedUrl || !s.recordingProcessing)) return;
-      load();
-    }, POLL_MS);
+      timer = setTimeout(tick, s?.state === "Live" ? LIVE_POLL_MS : POLL_MS);
+    };
+    tick();
 
-    return () => { cancelled = true; clearInterval(timer); };
+    return () => { cancelled = true; clearTimeout(timer); };
   }, [workshopId]);
 
   if (loading) {
@@ -142,7 +148,12 @@ export function LiveRoom({ workshopId, hideHeader }: Props) {
 
       {access.state === "Live" && access.playerEmbedUrl && (
         <>
-          <LiveEventPlayer title={access.name} playerUrl={access.playerEmbedUrl} chatUrl={access.chatEmbedUrl} />
+          <LiveEventPlayer
+            title={access.name}
+            playerUrl={access.playerEmbedUrl}
+            chatUrl={access.chatEmbedUrl}
+            chatClosed={!access.chatEmbedUrl}
+          />
           <p className="text-xs text-muted-foreground">
             If the video shows &quot;event not started&quot;, the instructor hasn&apos;t started streaming yet. It will
             begin playing on its own.

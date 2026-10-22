@@ -1,18 +1,22 @@
 "use client";
 
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, MessageCircleOff } from "lucide-react";
 
 type Props = {
   title:         string;
   playerUrl:     string;
   chatUrl?:      string | null;
+  /** Event isn't streaming right now: show a "chat closed" panel instead of the chat. */
+  chatClosed?:   boolean;
 };
 
 /** Vimeo live player with Vimeo's live chat beside it (stacked below on mobile). */
-export function LiveEventPlayer({ title, playerUrl, chatUrl }: Props) {
+export function LiveEventPlayer({ title, playerUrl, chatUrl, chatClosed }: Props) {
+  const showSide = !!chatUrl || !!chatClosed;
+
   return (
     <div className="grid gap-4 lg:grid-cols-3">
-      <div className={chatUrl ? "lg:col-span-2" : "lg:col-span-3"}>
+      <div className={showSide ? "lg:col-span-2" : "lg:col-span-3"}>
         <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border bg-slate-100 shadow-sm">
           <iframe
             src={playerUrl}
@@ -35,6 +39,17 @@ export function LiveEventPlayer({ title, playerUrl, chatUrl }: Props) {
             title={`${title} chat`}
             className="min-h-0 w-full flex-1"
           />
+        </div>
+      )}
+
+      {!chatUrl && chatClosed && (
+        <div className="flex flex-col items-center justify-center rounded-xl border border-border bg-white px-6 py-10 text-center shadow-sm">
+          <MessageCircleOff className="mb-3 size-8 text-muted-foreground/50" />
+          <p className="text-sm font-semibold text-foreground">Chat is closed</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            The chat is open only while the session is live. It opens here automatically when the instructor
+            starts streaming.
+          </p>
         </div>
       )}
     </div>
