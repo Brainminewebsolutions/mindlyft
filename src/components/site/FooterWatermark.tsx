@@ -25,7 +25,7 @@ export default function FooterWatermark() {
   const sizeClass = "text-[12vw] md:text-[clamp(4rem,13.5vw,220px)]";
 
   const textStyle: React.CSSProperties = {
-    fontFamily: "'Playfair Display', Georgia, serif",
+    fontFamily: "'Times New Roman', Times, serif",
     letterSpacing: "-0.02em",
     lineHeight: 1.15,
     paddingBottom: "0.12em",
@@ -38,7 +38,6 @@ export default function FooterWatermark() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap');
 
         @keyframes waveRise {
           0%   { transform: translateY(80px); opacity: 0; }

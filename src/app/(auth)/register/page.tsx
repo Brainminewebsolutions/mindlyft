@@ -90,7 +90,7 @@ export default function RegisterPage() {
         <div className="relative z-10 p-10 pb-0 flex flex-col items-center gap-4">
           <Link href="/" className="flex flex-col items-center gap-2">
             <Image src="/mindlyftai_logo.png" alt="Mindlyft AI" width={100} height={100} className="rounded-2xl" priority />
-            <span className="text-2xl font-bold tracking-tight text-indigo-900" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+            <span className="text-2xl font-bold tracking-tight text-indigo-900" style={{ fontFamily: "'Times New Roman', Times, serif" }}>
               Mindlyft AI
             </span>
           </Link>
@@ -149,7 +149,7 @@ export default function RegisterPage() {
             <text x="330" y="288" fontSize="16">📚</text>
 
             {/* Tagline */}
-            <text x="200" y="368" textAnchor="middle" fontSize="13" fontWeight="600" fill="#6366f1" fontFamily="sans-serif">Join thousands of learners today</text>
+            <text x="200" y="368" textAnchor="middle" fontSize="13" fontWeight="600" fill="#6366f1" fontFamily="Times New Roman, Times, serif">Join thousands of learners today</text>
           </svg>
         </div>
       </div>

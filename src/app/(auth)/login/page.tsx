@@ -54,7 +54,7 @@ function LoginForm() {
       <div className="absolute top-0 left-0 z-20 p-6">
         <Link href="/" className="flex items-center gap-2.5">
           <Image src="/mindlyftai_logo.png" alt="Mindlyft AI" width={40} height={40} className="rounded-xl" priority />
-          <span className="text-lg font-bold tracking-tight text-white drop-shadow" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+          <span className="text-lg font-bold tracking-tight text-white drop-shadow" style={{ fontFamily: "'Times New Roman', Times, serif" }}>
             Mindlyft AI
           </span>
         </Link>

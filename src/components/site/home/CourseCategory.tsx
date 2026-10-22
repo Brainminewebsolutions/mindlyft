@@ -186,7 +186,7 @@ export default function CourseCategory({ categories }: Props) {
 
               {/* Main Content */}
               <div className="flex flex-col gap-1.5 md:gap-3">
-                <h2 className="m-0 text-[clamp(1.6rem,4.5vw,3.5rem)] font-extrabold leading-tight tracking-tight text-gray-900 [font-family:'Playfair_Display',Georgia,serif]">
+                <h2 className="m-0 text-[clamp(1.6rem,4.5vw,3.5rem)] font-extrabold leading-tight tracking-tight text-gray-900 [font-family:'Times_New_Roman',Times,serif]">
                   Certificate of <span className="text-violet-600">Completion</span>
                 </h2>
                 <p className="m-0 text-base md:text-lg leading-[1.5] md:leading-[1.6] text-gray-500">
