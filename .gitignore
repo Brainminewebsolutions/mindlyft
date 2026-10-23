@@ -50,3 +50,6 @@ AGENTS.md
 
 # zip files
 *.zip
+
+# production build output (scripts/build-production.ps1)
+/release/

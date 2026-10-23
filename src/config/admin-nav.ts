@@ -19,6 +19,7 @@ import {
   Tag,
   FileText,
   Milestone,
+  Inbox,
   type LucideIcon,
 } from "lucide-react";
 
@@ -46,6 +47,7 @@ export const adminNavGroups: NavGroup[] = [
     items: [
       { label: "Employees", href: "/admin/employees", icon: Users          },
       { label: "Students",  href: "/admin/students",  icon: GraduationCap  },
+      { label: "Contact Messages", href: "/admin/contact-messages", icon: Inbox },
     ],
   },
   {

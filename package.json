@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "postbuild": "node postbuild.js",
+    "build:prod": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-production.ps1",
     "start": "next start",
     "startdev": "node .next/standalone/server.js",
     "startprod": "node server.js",
