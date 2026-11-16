@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CourseEnrolLink from "../CourseEnrolLink";
 import { CalendarCheck, ShoppingBag, Sparkles, type LucideIcon } from "lucide-react";
 
 interface Props {
@@ -70,13 +71,13 @@ export default function IITEnrolCard({ courseId, price, discount, discountPrice,
               Coming Soon
             </div>
           ) : (
-            <Link
-              href={`/checkout/${courseId}`}
+            <CourseEnrolLink
+              courseId={courseId}
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-violet-500/25 transition-all hover:-translate-y-0.5 hover:shadow-xl"
             >
               <ShoppingBag className="h-4 w-4" />
               {price === 0 ? "Enrol for Free" : "Enrol Now"}
-            </Link>
+            </CourseEnrolLink>
           )}
           <Link
             href="/contact"

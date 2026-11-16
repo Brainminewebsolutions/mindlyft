@@ -28,9 +28,11 @@ type Props = {
   workshopId: string;
   /** Hide the page header when the parent already shows one (instructor studio). */
   hideHeader?: boolean;
+  /** Fixed 60vh-tall video, chat stacked below — for embedding in a narrow column. */
+  compact?: boolean;
 };
 
-export function LiveRoom({ workshopId, hideHeader }: Props) {
+export function LiveRoom({ workshopId, hideHeader, compact }: Props) {
   const [access,  setAccess]  = useState<LiveAccess | null>(null);
   const [error,   setError]   = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -153,6 +155,7 @@ export function LiveRoom({ workshopId, hideHeader }: Props) {
             playerUrl={access.playerEmbedUrl}
             chatUrl={access.chatEmbedUrl}
             chatClosed={!access.chatEmbedUrl}
+            compact={compact}
           />
           <p className="text-xs text-muted-foreground">
             If the video shows &quot;event not started&quot;, the instructor hasn&apos;t started streaming yet. It will
@@ -167,7 +170,7 @@ export function LiveRoom({ workshopId, hideHeader }: Props) {
             <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
               <Video className="size-4 text-violet-600" /> Session recording
             </div>
-            <RecordingPlayer title={`${access.name} recording`} url={access.recordingEmbedUrl} />
+            <RecordingPlayer title={`${access.name} recording`} url={access.recordingEmbedUrl} compact={compact} />
           </div>
         ) : (
           <div className="rounded-2xl border border-border bg-white px-6 py-14 text-center shadow-sm">

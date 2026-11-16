@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight, Check, ChevronDown, ChevronRight, Plus, User 
 import { SITE_CONFIG } from "@/constants/siteConfig";
 import { toUploadUrl } from "@/lib/api/image-url";
 import { cn } from "@/lib/utils";
+import CourseEnrolLink from "../CourseEnrolLink";
 import type { Course } from "@/types/admin/course";
 import type { CourseChapterItem } from "@/types/student/course";
 
@@ -150,9 +151,9 @@ export default function MindlyftCourseDetail({ course, chapters, proxiedImage }:
       Enrolment opens soon
     </span>
   ) : (
-    <Link href={`/checkout/${course.id}`} className={primaryBtn}>
+    <CourseEnrolLink courseId={course.id} className={primaryBtn}>
       {course.price === 0 ? "Enrol for free" : "Enrol now"} <ArrowRight className="h-4 w-4" />
-    </Link>
+    </CourseEnrolLink>
   );
 
   const priceBlock = (

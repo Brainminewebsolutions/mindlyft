@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Clock, Globe, User, ArrowRight, Wifi, MapPin, BookOpen, GraduationCap, BriefcaseBusiness, RefreshCw, CheckCircle, Sparkles, ShieldCheck, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useOwnsProduct } from "@/hooks/useOwnsProduct";
 import { LineBadge } from "@/components/ui/LineBadge";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import type { Course } from "@/types/admin/course";
@@ -38,6 +39,7 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
   const gradient = GRADIENTS[index % GRADIENTS.length];
   const ModeIcon = course.mode === "Online" ? Wifi : MapPin;
   const isFree   = course.price === 0;
+  const owned    = useOwnsProduct(course.id, "Course");
 
   return (
     <div className="group flex flex-col rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
@@ -121,6 +123,15 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
             <div className="flex flex-1 items-center justify-center gap-1 rounded-xl bg-[linear-gradient(135deg,#f59e0b_0%,#f97316_100%)] py-2 text-xs font-semibold text-white">
               <Sparkles className="w-3 h-3" />Coming Soon
             </div>
+          ) : owned === null ? (
+            <div aria-hidden className="flex flex-1 animate-pulse rounded-xl bg-violet-100 py-2 text-xs">&nbsp;</div>
+          ) : owned ? (
+            <Link
+              href={`/student/courses/${course.id}`}
+              className="flex flex-1 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 py-2 text-xs font-semibold text-emerald-700 transition-all hover:bg-emerald-100 active:scale-95"
+            >
+              Go to My Course
+            </Link>
           ) : (
             <Link
               href={`/courses/mindlyftai/${course.slug}?action=buy`}

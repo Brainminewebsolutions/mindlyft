@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
+import { useOwnsProduct } from "@/hooks/useOwnsProduct";
 
 interface Props {
   webinarId:   string;
@@ -19,6 +20,23 @@ export default function WorkshopRegisterButton({ webinarId, slug, productType, p
   const [loading, setLoading] = useState(false);
   const [done,    setDone]    = useState(false);
   const [error,   setError]   = useState<string | null>(null);
+  const owned = useOwnsProduct(webinarId, productType);
+
+  // Ownership not known yet — hold the space so "Register" never flashes for an owner.
+  if (owned === null) {
+    return <div aria-hidden className="w-full py-3.5 rounded-xl bg-violet-100 text-sm animate-pulse">&nbsp;</div>;
+  }
+
+  if (owned) {
+    return (
+      <Link
+        href={`/student/workshops/${webinarId}/live`}
+        className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-bold transition-all hover:bg-emerald-100"
+      >
+        Go to My {productType}
+      </Link>
+    );
+  }
 
   if (status === "Upcoming") {
     return (

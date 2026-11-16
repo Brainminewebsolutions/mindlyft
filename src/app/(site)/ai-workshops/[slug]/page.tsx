@@ -11,6 +11,7 @@ import { toUploadUrl } from "@/lib/api/image-url";
 import { isNumericId } from "@/lib/slug";
 import type { Webinar } from "@/types/admin/webinar";
 import WorkshopRegisterButton from "./_components/WorkshopRegisterButton";
+import WorkshopOwnerVideo from "./_components/WorkshopOwnerVideo";
 
 const GRADIENTS = [
   "linear-gradient(135deg,#667eea,#764ba2)",
@@ -164,6 +165,9 @@ export default async function WorkshopDetailPage({
           Back to Workshops
         </Link>
 
+        {/* Session video on the right of the image — registered students only */}
+        <WorkshopOwnerVideo webinarId={webinar.id} productType={webinar.type} placement="hero" />
+
         {/* Title — bottom */}
         <div className="absolute bottom-0 left-0 right-0 z-10">
           <div className="px-8 pb-4 pt-6 bg-gradient-to-r from-violet-600/80 to-blue-500/80 backdrop-blur-sm">
@@ -187,6 +191,9 @@ export default async function WorkshopDetailPage({
           <span className="flex items-center gap-1.5"><Globe className="w-4 h-4 text-violet-500" />{webinar.language}</span>
         </div>
       </div>
+
+      {/* ── Session video on phones (hero is too short there) — registered students only ── */}
+      <WorkshopOwnerVideo webinarId={webinar.id} productType={webinar.type} placement="below" />
 
       {/* ── Two-column body ── */}
       <div className="max-w-[1100px] mx-auto px-[6vw] py-12 grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-10 items-start">

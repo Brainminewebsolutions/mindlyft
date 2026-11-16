@@ -8,16 +8,21 @@ type Props = {
   chatUrl?:      string | null;
   /** Event isn't streaming right now: show a "chat closed" panel instead of the chat. */
   chatClosed?:   boolean;
+  /** Fixed 60vh-tall video with the chat stacked below, for embedding in a narrow column. */
+  compact?:      boolean;
 };
 
+const VIDEO_BOX = "relative w-full overflow-hidden rounded-xl border border-border bg-slate-100 shadow-sm";
+const videoBox  = (compact?: boolean) => `${VIDEO_BOX} ${compact ? "h-[min(60vh,calc(100vh-16rem))]" : "aspect-video"}`;
+
 /** Vimeo live player with Vimeo's live chat beside it (stacked below on mobile). */
-export function LiveEventPlayer({ title, playerUrl, chatUrl, chatClosed }: Props) {
+export function LiveEventPlayer({ title, playerUrl, chatUrl, chatClosed, compact }: Props) {
   const showSide = !!chatUrl || !!chatClosed;
 
   return (
-    <div className="grid gap-4 lg:grid-cols-3">
-      <div className={showSide ? "lg:col-span-2" : "lg:col-span-3"}>
-        <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border bg-slate-100 shadow-sm">
+    <div className={compact ? "grid gap-4" : "grid gap-4 lg:grid-cols-3"}>
+      <div className={compact ? "" : showSide ? "lg:col-span-2" : "lg:col-span-3"}>
+        <div className={videoBox(compact)}>
           <iframe
             src={playerUrl}
             title={title}
@@ -29,7 +34,7 @@ export function LiveEventPlayer({ title, playerUrl, chatUrl, chatClosed }: Props
       </div>
 
       {chatUrl && (
-        <div className="flex h-[480px] flex-col overflow-hidden rounded-xl border border-border bg-white shadow-sm lg:h-auto">
+        <div className={`flex h-[480px] flex-col overflow-hidden rounded-xl border border-border bg-white shadow-sm ${compact ? "" : "lg:h-auto"}`}>
           <div className="flex items-center gap-2 border-b border-border bg-gradient-to-r from-violet-50 to-blue-50 px-4 py-2.5">
             <MessageCircle className="size-4 text-violet-600" />
             <span className="text-sm font-semibold text-foreground">Live chat</span>
@@ -57,9 +62,9 @@ export function LiveEventPlayer({ title, playerUrl, chatUrl, chatClosed }: Props
 }
 
 /** Plain 16:9 Vimeo video player for recordings. */
-export function RecordingPlayer({ title, url }: { title: string; url: string }) {
+export function RecordingPlayer({ title, url, compact }: { title: string; url: string; compact?: boolean }) {
   return (
-    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-border bg-slate-100 shadow-sm">
+    <div className={videoBox(compact)}>
       <iframe
         src={url}
         title={title}

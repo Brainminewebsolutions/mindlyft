@@ -20,6 +20,7 @@ const STATUS_COLORS: Record<string, string> = {
   PAID:    "border-emerald-500/30 bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400",
   PENDING: "border-amber-500/30 bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400",
   FAILED:  "border-red-500/30 bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400",
+  DUPLICATE: "border-orange-500/30 bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400",
 };
 
 // Format using local date parts — d.toISOString() converts to UTC first,
@@ -109,6 +110,7 @@ export default function OrdersPage() {
           <option value="PAID">Paid</option>
           <option value="PENDING">Pending</option>
           <option value="FAILED">Failed</option>
+          <option value="DUPLICATE">Duplicate (refund needed)</option>
         </select>
 
         <div className="flex items-center gap-1.5">

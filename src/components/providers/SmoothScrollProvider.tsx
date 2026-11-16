@@ -45,6 +45,22 @@ export default function SmoothScrollProvider({
     };
     rafId = requestAnimationFrame(raf);
 
+    // Lenis measures the page's scrollable height by watching <html> for size
+    // changes. The root layout pins <html> to `h-full` (100% of the viewport),
+    // so it never resizes when content grows — streamed Suspense sections,
+    // lazy chunks and images loading in. Lenis then keeps a stale, too-short
+    // scroll limit and the wheel stops dead partway down the page.
+    // <body> does grow with its content, so watch that and re-measure.
+    let refreshTimer: ReturnType<typeof setTimeout>;
+    const resizeObserver = new ResizeObserver(() => {
+      lenis.resize();
+      // ScrollTrigger offsets go stale for the same reason; refresh once the
+      // layout has settled rather than on every intermediate size.
+      clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(() => (window as any).ScrollTrigger?.refresh?.(), 200);
+    });
+    resizeObserver.observe(document.body);
+
     let intervalId: ReturnType<typeof setInterval>;
     let attempts = 0;
 
@@ -75,6 +91,8 @@ export default function SmoothScrollProvider({
     return () => {
       cancelAnimationFrame(rafId);
       clearInterval(intervalId);
+      resizeObserver.disconnect();
+      clearTimeout(refreshTimer);
       lenis.destroy();
       delete (window as any).lenis;
       delete (window as any).gsapReady;
