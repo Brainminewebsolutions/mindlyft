@@ -71,7 +71,7 @@ export default function Syllabus({
                     className="flex items-center gap-3 border-b py-3 pl-6 pr-4 text-sm sm:pl-14 sm:pr-5 text-gray-500 last:border-b-0 hover:text-gray-800 transition-colors"
                     style={{ borderColor: `${color}10` }}
                   >
-                    {lesson.videoUrl
+                    {lesson.hasVideo
                       ? <PlayCircle className="h-3.5 w-3.5 shrink-0" style={{ color }} />
                       : <FileText   className="h-3.5 w-3.5 shrink-0 text-gray-300" />}
                     <span className="min-w-[20px] shrink-0 text-[11px] font-semibold text-gray-400">{lIdx + 1}.</span>

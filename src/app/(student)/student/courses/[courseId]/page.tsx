@@ -11,14 +11,14 @@ import { Badge }        from "@/components/ui/badge";
 import { CourseViewer } from "@/components/student/CourseViewer";
 
 import { studentCoursesService }                   from "@/services/student/studentCoursesService";
-import type { PurchasedCourse, CourseChapterItem } from "@/types/student/course";
+import type { PurchasedCourse, PlayerChapterItem } from "@/types/student/course";
 
 export default function CoursePage() {
   const { courseId: rawId } = useParams<{ courseId: string }>();
   const courseId = parseInt(rawId, 10);
 
   const [course,   setCourse]   = useState<PurchasedCourse | null>(null);
-  const [chapters, setChapters] = useState<CourseChapterItem[]>([]);
+  const [chapters, setChapters] = useState<PlayerChapterItem[]>([]);
   const [loading,  setLoading]  = useState(true);
   const [notFound, setNotFound] = useState(false);
 
