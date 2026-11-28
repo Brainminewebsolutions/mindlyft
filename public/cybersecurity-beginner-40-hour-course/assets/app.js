@@ -9,8 +9,8 @@
   // LEAD INTEGRATION CONFIG (PURE JS -> GOOGLE APPS SCRIPT)
   // =========================================================================
   const LEAD_CONFIG = {
-    sheetTab: "soc-analyst",
-    pageSubject: "New Lead | Advanced SOC Analyst & Threat Intelligence",
+    sheetTab: "cybersecurity-beginner-40-hour-course",
+    pageSubject: "New Lead | Practical Ethical Hacking & VAPT",
     googleScriptUrl: window.MINDLYFT_IIT_GOOGLE_SCRIPT_URL || ""
   };
 
@@ -340,7 +340,7 @@
         }
       });
 
-      window.location.href = "/soc-analyst/thank-you.html?" + q.toString();
+      window.location.href = "/cybersecurity-beginner-40-hour-course/thank-you.html?" + q.toString();
     });
   });
 

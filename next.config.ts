@@ -6,11 +6,11 @@ const STATIC_LANDING_PAGES = [
   "agentic-ai",
   "ai-security",
   "cloud-computing",
+  "cybersecurity-advanced-60-hour-course",
+  "cybersecurity-beginner-40-hour-course",
+  "cybersecurity-complete-100-hours-course",
   "data-analytics",
   "deep-learning",
-  "ethical-hacking",
-  "fullstack-cyber",
-  "soc-analyst",
 ] as const;
 
 const nextConfig: NextConfig = {
@@ -37,6 +37,12 @@ const nextConfig: NextConfig = {
       { source: "/iit", destination: "/iit-kanpur-cyber-security-course", permanent: true },
       { source: "/workshops", destination: "/ai-workshops", permanent: true },
       { source: "/workshops/:slug", destination: "/ai-workshops/:slug", permanent: true },
+      { source: "/ethical-hacking", destination: "/cybersecurity-beginner-40-hour-course", permanent: true },
+      { source: "/ethical-hacking/thank-you", destination: "/cybersecurity-beginner-40-hour-course/thank-you", permanent: true },
+      { source: "/soc-analyst", destination: "/cybersecurity-advanced-60-hour-course", permanent: true },
+      { source: "/soc-analyst/thank-you", destination: "/cybersecurity-advanced-60-hour-course/thank-you", permanent: true },
+      { source: "/fullstack-cyber", destination: "/cybersecurity-complete-100-hours-course", permanent: true },
+      { source: "/fullstack-cyber/thank-you", destination: "/cybersecurity-complete-100-hours-course/thank-you", permanent: true },
     ];
   },
 

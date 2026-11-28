@@ -9,8 +9,8 @@
   // LEAD INTEGRATION CONFIG (PURE JS -> GOOGLE APPS SCRIPT)
   // =========================================================================
   const LEAD_CONFIG = {
-    sheetTab: "ethical-hacking",
-    pageSubject: "New Lead | Practical Ethical Hacking & VAPT",
+    sheetTab: "cybersecurity-advanced-60-hour-course",
+    pageSubject: "New Lead | Advanced SOC Analyst & Threat Intelligence",
     googleScriptUrl: window.MINDLYFT_IIT_GOOGLE_SCRIPT_URL || ""
   };
 
@@ -340,7 +340,7 @@
         }
       });
 
-      window.location.href = "/ethical-hacking/thank-you.html?" + q.toString();
+      window.location.href = "/cybersecurity-advanced-60-hour-course/thank-you.html?" + q.toString();
     });
   });
 

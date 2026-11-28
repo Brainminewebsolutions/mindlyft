@@ -125,4 +125,22 @@ describe("POST /api/lead-notify", () => {
     expect(sendMail.mock.calls[0][0].subject).toContain("AI Security & ISO 42001 (C3iHub IIT Kanpur)");
     expect(sendMail.mock.calls[1][0].to).toBe("rohan@example.com");
   });
+
+  it("maps renamed cybersecurity slugs cleanly", async () => {
+    const res = await POST(
+      makeRequest({
+        refId: "ML-CYBER-3001",
+        sheet_tab: "cybersecurity-beginner-40-hour-course",
+        course_slug: "cybersecurity-beginner-40-hour-course",
+        name: "Sneha Joshi",
+        phone: "9876543210",
+        email: "sneha@example.com",
+      }),
+    );
+
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json.pageSlug).toBe("cybersecurity-beginner-40-hour-course");
+    expect(sendMail.mock.calls[0][0].subject).toContain("40-Hour Beginner Cybersecurity & VAPT");
+  });
 });

@@ -9,7 +9,7 @@
   // LEAD INTEGRATION CONFIG (PURE JS -> GOOGLE APPS SCRIPT)
   // =========================================================================
   const LEAD_CONFIG = {
-    sheetTab: "fullstack-cyber",
+    sheetTab: "cybersecurity-complete-100-hours-course",
     pageSubject: "New Lead | Full-Stack AI in Cybersecurity",
     googleScriptUrl: window.MINDLYFT_IIT_GOOGLE_SCRIPT_URL || ""
   };
@@ -340,7 +340,7 @@
         }
       });
 
-      window.location.href = "/fullstack-cyber/thank-you.html?" + q.toString();
+      window.location.href = "/cybersecurity-complete-100-hours-course/thank-you.html?" + q.toString();
     });
   });
 
