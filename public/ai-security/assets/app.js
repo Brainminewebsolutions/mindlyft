@@ -11,7 +11,7 @@
   const LEAD_CONFIG = {
     sheetTab: "ai-security",
     pageSubject: "New Lead | AI Security & ISO 42001",
-    googleScriptUrl: window.MINDLYFT_IIT_GOOGLE_SCRIPT_URL || ""
+    googleScriptUrl: window.MINDLYFT_IIT_GOOGLE_SCRIPT_URL || "https://script.google.com/macros/s/AKfycbwTDiHsb-zvqy5mdb9h4bvbI_B0Rz8iMIwym9KTgNqbSK9hXDWxH2OGyO98vkkSY3Y/exec"
   };
 
   const UTM_KEYS = [
