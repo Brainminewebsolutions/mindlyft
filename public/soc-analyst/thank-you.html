@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Thank You for Your Enquiry | MindLyft AI Academy</title>
+  <meta name="description" content="Thank you for your interest in MindLyft AI Academy. Our senior academic counsellor will connect with you via WhatsApp and phone shortly." />
+  <link rel="stylesheet" href="/soc-analyst/assets/styles.css" />
+  <style>
+    :root {
+      --bg-page: #f8f8f8;
+      --bg-card: #ffffff;
+      --violet-600: #7c3aed;
+      --violet-500: #8b5cf6;
+      --violet-200: #ddd6fe;
+      --indigo-600: #4f39f6;
+      --indigo-700: #134af9;
+      --text-primary: #101828;
+      --text-body: #4a5565;
+      --text-muted: #6a7282;
+      --border-subtle: #e5e7eb;
+      --border-violet: #ddd6fe;
+      --grad-cta: linear-gradient(90deg, #7c3aed 0%, #4f39f6 50%, #155dfc 100%);
+      --grad-lavender-radial: radial-gradient(ellipse at center, #ffffff 25%, #ede9fe 100%);
+      --font-editorial: "Times New Roman", Times, Georgia, serif;
+      --font-ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-ui);
+      background-color: var(--bg-page);
+      color: var(--text-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Ribbon */
+    .promo-ribbon {
+      background: #0f172a;
+      color: #e2e8f0;
+      font-size: 13px;
+      padding: 10px 16px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Glass Navbar */
+    .nav-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    }
+    .glass-nav {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-wrap: wrap;
+    }
+    .nav-mindlyft-logo {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+    }
+    .nav-brand-title {
+      font-weight: 800;
+      font-size: 19px;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+    .brand-partner-chip {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #f5f3ff;
+      color: var(--violet-600);
+      border: 1px solid var(--violet-200);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+    .nav-links a {
+      color: var(--text-body);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--violet-600);
+    }
+    @media (max-width: 860px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Thank You Hero Card */
+    .thank-you-hero {
+      background: var(--grad-lavender-radial);
+      padding: 60px 0 70px;
+      border-bottom: 1px solid var(--border-violet);
+      text-align: center;
+    }
+    .confirm-card {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid var(--border-violet);
+      border-radius: 28px;
+      padding: 48px 36px;
+      box-shadow: 0 20px 50px rgba(124, 58, 237, 0.09);
+    }
+    .confirm-icon-wrap {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: #dcfce7;
+      border: 2px solid #86efac;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      box-shadow: 0 8px 24px rgba(22, 163, 74, 0.22);
+    }
+    .confirm-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .confirm-title {
+      font-family: var(--font-editorial);
+      font-size: 38px;
+      line-height: 1.18;
+      color: var(--text-primary);
+      margin: 0 0 14px;
+    }
+    .confirm-sub {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-body);
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+
+    /* Action Cards Grid */
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      text-align: left;
+    }
+    @media (max-width: 720px) {
+      .action-grid {
+        grid-template-columns: 1fr;
+      }
+      .confirm-card {
+        padding: 32px 20px;
+      }
+      .confirm-title {
+        font-size: 28px;
+      }
+    }
+    .action-card {
+      background: #fbfbfd;
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+    .action-card.whatsapp-card {
+      background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+      border: 1px solid #86efac;
+    }
+    .action-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+    }
+    .action-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .action-header h3 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .action-desc {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--text-body);
+      margin: 0 0 20px;
+    }
+    .btn-action-wa {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #25d366;
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-action-wa:hover {
+      background: #1eb956;
+      transform: translateY(-1px);
+    }
+    .btn-action-phone {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #ffffff;
+      color: var(--text-primary);
+      border: 1.5px solid var(--border-subtle);
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-action-phone:hover {
+      border-color: var(--indigo-600);
+      color: var(--indigo-600);
+      background: #f8f9ff;
+    }
+
+    /* What Happens Next Section */
+    .next-steps-section {
+      padding: 60px 0;
+      background: #ffffff;
+    }
+    .section-head-center {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 40px;
+    }
+    .section-head-center h2 {
+      font-family: var(--font-editorial);
+      font-size: 32px;
+      color: var(--text-primary);
+      margin: 0 0 10px;
+    }
+    .section-head-center p {
+      font-size: 15px;
+      color: var(--text-body);
+      margin: 0;
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 860px) {
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .step-card {
+      background: #fbfbfd;
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 28px 24px;
+      position: relative;
+    }
+    .step-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--grad-cta);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .step-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 8px;
+    }
+    .step-card p {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: var(--text-body);
+      margin: 0;
+    }
+
+    /* Campus Info Strip */
+    .campus-strip {
+      padding: 44px 0;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .campus-card {
+      background: #ffffff;
+      border: 1px solid var(--border-violet);
+      border-radius: 20px;
+      padding: 28px 32px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+    }
+    .campus-details h4 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+    .campus-details p {
+      margin: 0 0 4px;
+      font-size: 13.5px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    /* Course Links Strip */
+    .other-courses-section {
+      padding: 60px 0;
+      background: #ffffff;
+    }
+    .track-subtitle {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--violet-600);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 28px 0 14px;
+    }
+    .courses-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 900px) {
+      .courses-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 560px) {
+      .courses-grid-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+    .course-mini-card {
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 18px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #ffffff;
+      transition: all 0.2s ease;
+    }
+    .course-mini-card:hover {
+      border-color: var(--violet-500);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.08);
+    }
+    .course-mini-kicker {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--violet-600);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .course-mini-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .course-mini-link {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--indigo-600);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Signature Footer */
+    .site-footer {
+      background: #f8fafc;
+      border-top: 1px solid var(--border-subtle);
+      padding: 60px 0 40px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.95fr 1.15fr 0.9fr;
+      gap: 36px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+    }
+    @media (max-width: 600px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+    .footer-grid h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 14px;
+    }
+    .footer-grid ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-grid ul li {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--text-body);
+      margin-bottom: 8px;
+    }
+    .footer-grid ul li a {
+      color: var(--text-body);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-grid ul li a:hover {
+      color: var(--violet-600);
+      text-decoration: underline;
+    }
+    .footer-wordmark {
+      font-size: 42px;
+      font-weight: 900;
+      color: #e2e8f0;
+      letter-spacing: -0.04em;
+      text-align: center;
+      user-select: none;
+    }
+
+    @media (max-width: 640px) {
+      .glass-nav #navWaBtn,
+      .glass-nav .nav-links {
+        display: none !important;
+      }
+      .glass-nav {
+        justify-content: center;
+        padding: 12px 16px;
+      }
+      .promo-ribbon {
+        font-size: 11.5px;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Ribbon -->
+  <div class="promo-ribbon">
+    <span><strong>MindLyft AI Academy</strong> · Premier 100% Offline Technical Education · Akurdi (Pune) Campus</span>
+    <a href="tel:+919975670303" style="color:#ffffff;font-size:12px;font-weight:700;text-decoration:underline;margin-left:8px">Admissions Desk: +91 99756 70303</a>
+  </div>
+
+  <!-- Navigation Bar -->
+  <div class="nav-wrapper">
+    <header class="glass-nav">
+      <a href="https://mindlyftai.com" class="brand-lockup" aria-label="MindLyft AI home page">
+        <img src="/soc-analyst/assets/images/mindlyft-logo.png" alt="MindLyft AI" class="nav-mindlyft-logo" />
+        <span class="nav-brand-title">MindLyft AI</span>
+        <span id="partnerChip" class="brand-partner-chip">Offline Technical Academy</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Programmes Navigation">
+        <a href="/courses">Agentic AI</a>
+        <a href="/courses">Data Analytics</a>
+        <a href="/fullstack-cyber">Cybersecurity</a>
+        <a href="/ethical-hacking">VAPT &amp; Red Team</a>
+      </nav>
+
+      <a id="navWaBtn" href="https://wa.me/919975670303" target="_blank" rel="noopener noreferrer" class="btn-action-wa" style="padding:8px 14px;font-size:12.5px">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.98-.276-.1-.477-.15-.678.15-.2.301-.778.98-.954 1.18-.175.2-.351.226-.652.075-.301-.15-1.272-.469-2.423-1.496-.895-.798-1.5-1.784-1.675-2.085-.176-.301-.019-.464.132-.614.135-.135.301-.351.452-.527.15-.175.2-.301.301-.502.1-.2.05-.376-.025-.526-.075-.15-.678-1.633-.929-2.235-.245-.588-.493-.508-.678-.518-.176-.008-.376-.01-.577-.01-.2 0-.527.075-.803.376-.276.301-1.054 1.03-1.054 2.511 0 1.481 1.079 2.91 1.23 3.111.15.201 2.124 3.243 5.145 4.548.719.311 1.281.497 1.719.636.723.23 1.381.197 1.901.12.58-.087 1.78-.727 2.03-1.43.25-.704.25-1.307.175-1.43-.075-.124-.276-.2-.577-.35zM12.042 21.667h-.002a9.63 9.63 0 01-4.912-1.345l-.352-.209-3.654.958.975-3.563-.229-.364a9.637 9.637 0 01-1.477-5.1c0-5.32 4.329-9.648 9.654-9.648 2.58 0 5.006 1.004 6.83 2.829a9.588 9.588 0 012.825 6.824c0 5.322-4.33 9.65-9.66 9.65zm8.286-17.947A11.66 11.66 0 0012.042 0C5.394 0 .004 5.39.004 12.04c0 2.12.553 4.188 1.606 6.012L0 24l6.109-1.602a11.637 11.637 0 005.93 1.609h.005c6.648 0 12.038-5.39 12.038-12.04 0-3.216-1.252-6.24-3.524-8.514z"/></svg>
+        WhatsApp Counsellor
+      </a>
+    </header>
+  </div>
+
+  <!-- Main Hero Confirmation Card (No Reference ID) -->
+  <section class="thank-you-hero">
+    <div class="container">
+      <div class="confirm-card">
+        <div class="confirm-icon-wrap">
+          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+
+        <div class="confirm-pill">Enquiry Confirmed · Priority Callback Queue</div>
+        
+        <h1 class="confirm-title">
+          Thank You, <span id="leadName">Learner</span>!
+        </h1>
+        
+        <p class="confirm-sub">
+          We have successfully received your enquiry for <strong id="courseName" style="color:var(--violet-600)">our Advanced Certification Programme</strong>. Our senior academic counsellor is reviewing your background and will reach out via WhatsApp and phone shortly.
+        </p>
+
+        <!-- 2 Instant Action Cards -->
+        <div class="action-grid">
+          <!-- WhatsApp Card -->
+          <div class="action-card whatsapp-card">
+            <div>
+              <div class="action-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.98-.276-.1-.477-.15-.678.15-.2.301-.778.98-.954 1.18-.175.2-.351.226-.652.075-.301-.15-1.272-.469-2.423-1.496-.895-.798-1.5-1.784-1.675-2.085-.176-.301-.019-.464.132-.614.135-.135.301-.351.452-.527.15-.175.2-.301.301-.502.1-.2.05-.376-.025-.526-.075-.15-.678-1.633-.929-2.235-.245-.588-.493-.508-.678-.518-.176-.008-.376-.01-.577-.01-.2 0-.527.075-.803.376-.276.301-1.054 1.03-1.054 2.511 0 1.481 1.079 2.91 1.23 3.111.15.201 2.124 3.243 5.145 4.548.719.311 1.281.497 1.719.636.723.23 1.381.197 1.901.12.58-.087 1.78-.727 2.03-1.43.25-.704.25-1.307.175-1.43-.075-.124-.276-.2-.577-.35zM12.042 21.667h-.002a9.63 9.63 0 01-4.912-1.345l-.352-.209-3.654.958.975-3.563-.229-.364a9.637 9.637 0 01-1.477-5.1c0-5.32 4.329-9.648 9.654-9.648 2.58 0 5.006 1.004 6.83 2.829a9.588 9.588 0 012.825 6.824c0 5.322-4.33 9.65-9.66 9.65zm8.286-17.947A11.66 11.66 0 0012.042 0C5.394 0 .004 5.39.004 12.04c0 2.12.553 4.188 1.606 6.012L0 24l6.109-1.602a11.637 11.637 0 005.93 1.609h.005c6.648 0 12.038-5.39 12.038-12.04 0-3.216-1.252-6.24-3.524-8.514z"/></svg>
+                <h3>Fast-Track on WhatsApp</h3>
+              </div>
+              <p class="action-desc">
+                Want immediate access? Connect directly with an academic counsellor on WhatsApp to receive the syllabus PDF, cohort fee schedule, and upcoming batch calendar instantly.
+              </p>
+            </div>
+            <a id="waHeroBtn" href="https://wa.me/919975670303" target="_blank" rel="noopener noreferrer" class="btn-action-wa">
+              Open WhatsApp Chat Now →
+            </a>
+          </div>
+
+          <!-- Phone Card -->
+          <div class="action-card">
+            <div>
+              <div class="action-header">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <h3>Speak to Admissions Desk</h3>
+              </div>
+              <p class="action-desc">
+                Prefer a telephonic conversation? Our Akurdi campus counsellors are active from 9:00 AM to 7:30 PM (Mon–Sat) to answer questions on prerequisites, fee structure, and offline lab seats.
+              </p>
+            </div>
+            <a href="tel:+919975670303" class="btn-action-phone">
+              Call Admissions: +91 99756 70303
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- What Happens Next Section -->
+  <section class="next-steps-section">
+    <div class="container">
+      <div class="section-head-center">
+        <h2>What Happens Next?</h2>
+        <p>Three straightforward steps to kickstart your hands-on offline learning journey.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Syllabus &amp; Fee Dispatch</h3>
+          <p>
+            Our admissions team sends you the comprehensive week-by-week curriculum PDF, fee structure, and upcoming cohort start dates directly on your WhatsApp and email.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>1:1 Academic Consultation</h3>
+          <p>
+            An experienced advisor contacts you within 15 minutes to evaluate your current background, confirm eligibility, and discuss batch timings (Weekday vs. Weekend).
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Akurdi Lab Visit &amp; Demo</h3>
+          <p>
+            Schedule a physical walkthrough of our high-spec lab workstations at Akurdi, Pune. Meet our instructors, view student capstones, and confirm your seat.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Physical Campus Location Strip -->
+  <section class="campus-strip">
+    <div class="container">
+      <div class="campus-card">
+        <div class="campus-details">
+          <h4>MindLyft AI Academy · Akurdi Campus</h4>
+          <p><strong>Address:</strong> 2nd Floor, ABC Tiara, Opp. Akurdi Railway Station Rd, Pradhikaran, Nigdi, Pune 411035</p>
+          <p><strong>Direct Helpline:</strong> <a href="tel:+919975670303" style="color:var(--indigo-600);font-weight:700;text-decoration:none">+91 99756 70303</a> &nbsp;|&nbsp; <strong>Email:</strong> <a href="mailto:info@mindlyftai.com" style="color:var(--indigo-600);text-decoration:none">info@mindlyftai.com</a></p>
+          <p><strong>Delivery Format:</strong> 100% Offline In-Person Classroom &amp; Dedicated Lab Workstations</p>
+        </div>
+        <div>
+          <a href="https://maps.google.com/?q=ABC+Tiara+Akurdi+Pune" target="_blank" rel="noopener noreferrer" class="btn-action-phone" style="white-space:nowrap">
+            Get Campus Directions ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Explore All Programmes -->
+  <section class="other-courses-section">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px;flex-wrap:wrap;gap:12px">
+        <div>
+          <h3 style="font-family:var(--font-editorial);font-size:26px;margin:0 0 6px;color:var(--text-primary)">Explore Our Certification Programmes</h3>
+          <p style="font-size:13.5px;color:var(--text-muted);margin:0">Industry-grade offline programmes with physical lab workstations at Akurdi, Pune.</p>
+        </div>
+        <a href="https://mindlyftai.com" style="font-size:13px;font-weight:700;color:var(--indigo-600);text-decoration:none">Visit MindLyft AI Home →</a>
+      </div>
+
+      <!-- CDAC Track -->
+      <div class="track-subtitle">AI &amp; Cloud Programmes · in association with C-DAC</div>
+      <div class="courses-grid-4">
+        <a href="/courses" class="course-mini-card">
+          <div>
+            <div class="course-mini-kicker">40-Hour Track</div>
+            <div class="course-mini-title">Agentic AI &amp; Intelligent Automation</div>
+          </div>
+          <div class="course-mini-link">View Course Details →</div>
+        </a>
+
+        <a href="/courses" class="course-mini-card">
+          <div>
+            <div class="course-mini-kicker">40-Hour Track</div>
+            <div class="course-mini-title">Deep Learning &amp; Neural Network Applications</div>
+          </div>
+          <div class="course-mini-link">View Course Details →</div>
+        </a>
+
+        <a href="/courses" class="course-mini-card">
+          <div>
+            <div class="course-mini-kicker">40-Hour Track</div>
+            <div class="course-mini-title">Data Analytics with AI</div>
+          </div>
+          <div class="course-mini-link">View Course Details →</div>
+        </a>
+
+        <a href="/courses" class="course-mini-card">
+          <div>
+            <div class="course-mini-kicker">40-Hour Track</div>
+            <div class="course-mini-title">Cloud Computing &amp; DevOps for AI</div>
+          </div>
+          <div class="course-mini-link">View Course Details →</div>
+        </a>
+      </div>
+
+      <!-- IIT Cyber Track -->
+      <div class="track-subtitle" style="margin-top:36px">Cybersecurity Programmes · in collaboration with C3iHub (IIT Kanpur)</div>
+      <div class="courses-grid-4">
+        <a href="/fullstack-cyber" class="course-mini-card">
+          <div>
+            <div class="course-mini-kicker">100-Hour Flagship</div>
+            <div class="course-mini-title">Full-Stack AI in Cybersecurity</div>
+          </div>
+          <div class="course-mini-link">View Course Details →</div>
+        </a>
+
+        <a href="/ethical-hacking" class="course-mini-card">
+          <div>
+            <div class="course-mini-kicker">40-Hour Track</div>
+            <div class="course-mini-title">Advanced Offensive VAPT &amp; API Security</div>
+          </div>
+          <div class="course-mini-link">View Course Details →</div>
+        </a>
+
+        <a href="/soc-analyst" class="course-mini-card">
+          <div>
+            <div class="course-mini-kicker">30-Hour Track</div>
+            <div class="course-mini-title">Enterprise SOC Defense &amp; Incident Response</div>
+          </div>
+          <div class="course-mini-link">View Course Details →</div>
+        </a>
+
+        <a href="/ai-security" class="course-mini-card">
+          <div>
+            <div class="course-mini-kicker">15-Hour Track</div>
+            <div class="course-mini-title">AI Security, LLM Red Teaming &amp; Governance</div>
+          </div>
+          <div class="course-mini-link">View Course Details →</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Signature Lavender Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-lockup" style="margin-bottom:14px">
+            <img src="/soc-analyst/assets/images/mindlyft-logo.png" alt="MindLyft AI" class="nav-mindlyft-logo" />
+            <span class="nav-brand-title">MindLyft AI</span>
+          </div>
+          <p style="margin:0 0 14px;line-height:1.6;color:var(--text-body);font-size:13.5px">
+            Empowering technical careers through industry-grade offline AI and Cybersecurity education. All courses offered at our state-of-the-art academy with dedicated workstations at Akurdi, Pune.
+          </p>
+          <div style="font-size:12px;color:var(--text-muted)">
+            &copy; 2026 MindLyft AI Academy. All rights reserved.
+          </div>
+        </div>
+
+        <div>
+          <h4>All Programmes</h4>
+          <ul>
+            <li><a href="/courses">Agentic AI &amp; Automation</a></li>
+            <li><a href="/courses">Deep Learning &amp; Neural Nets</a></li>
+            <li><a href="/courses">Data Analytics with AI</a></li>
+            <li><a href="/fullstack-cyber">Full-Stack Cybersecurity</a></li>
+            <li><a href="/ethical-hacking">VAPT &amp; Offensive Security</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Campus &amp; Enquiries</h4>
+          <ul>
+            <li><strong>Akurdi Campus:</strong> 2nd Floor, ABC Tiara, Opp. Akurdi Railway Station Rd, Pradhikaran, Nigdi, Pune 411035</li>
+            <li><strong>Email:</strong> <a href="mailto:info@mindlyftai.com" style="color:var(--text-body);text-decoration:none">info@mindlyftai.com</a></li>
+            <li><strong>WhatsApp / Phone:</strong> +91 99756 70303</li>
+            <li><strong>Training Delivery:</strong> 100% Offline In-Person Classroom &amp; Lab</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Terms &amp; Conditions</h4>
+          <ul>
+            <li><a href="https://mindlyftai.com/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a></li>
+            <li><a href="https://mindlyftai.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+            <li><a href="https://mindlyftai.com/terms#refunds" target="_blank" rel="noopener noreferrer">Refund Policy</a></li>
+            <li><a href="https://mindlyftai.com/terms#ip" target="_blank" rel="noopener noreferrer">Intellectual Property</a></li>
+            <li><a href="https://mindlyftai.com/terms#contact" target="_blank" rel="noopener noreferrer">Legal Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-wordmark" aria-hidden="true">MindLyft AI</div>
+    </div>
+  </footer>
+
+  <!-- Dynamic Param & Lead Hydration Script -->
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      let leadName = params.get("name") || "";
+      let courseName = params.get("course") || params.get("course_name") || "";
+
+      // Fallback to sessionStorage if query params absent
+      if (!leadName || !courseName) {
+        try {
+          const stored = sessionStorage.getItem("mindlyft_last_lead");
+          if (stored) {
+            const data = JSON.parse(stored);
+            if (!leadName && data.name) leadName = data.name;
+            if (!courseName && (data.course_name || data.courseCode || data.course)) {
+              courseName = data.course_name || data.courseCode || data.course;
+            }
+          }
+        } catch (e) {}
+      }
+
+      // Default fallbacks
+      leadName = leadName ? leadName.trim() : "Learner";
+      courseName = courseName ? courseName.trim() : "MindLyft AI Certification Programme";
+
+      // Populate DOM elements
+      const leadEl = document.getElementById("leadName");
+      const courseEl = document.getElementById("courseName");
+      const partnerChip = document.getElementById("partnerChip");
+
+      if (leadEl) leadEl.textContent = leadName;
+      if (courseEl) courseEl.textContent = courseName;
+
+      // Update partner chip dynamically based on course
+      if (partnerChip) {
+        const isCyber = /cyber|hacking|vapt|soc|security/i.test(courseName);
+        const isCdac = /ai|agentic|deep learning|data|cloud|devops/i.test(courseName);
+        if (isCyber) {
+          partnerChip.textContent = "in collaboration with C3iHub (IIT Kanpur)";
+        } else if (isCdac) {
+          partnerChip.textContent = "in association with C-DAC";
+        }
+      }
+
+      // Update WhatsApp links with prefilled enquiry text (NO reference ID)
+      const waText = encodeURIComponent(
+        `Hi MindLyft AI Academy! My name is ${leadName}. I just submitted my enquiry for the "${courseName}" offline programme at Akurdi. Please share the syllabus PDF, cohort fees, and upcoming batch schedule.`
+      );
+      const waUrl = `https://wa.me/919975670303?text=${waText}`;
+
+      const waHeroBtn = document.getElementById("waHeroBtn");
+      const navWaBtn = document.getElementById("navWaBtn");
+      if (waHeroBtn) waHeroBtn.href = waUrl;
+      if (navWaBtn) navWaBtn.href = waUrl;
+
+      // Preserve UTM parameters & lead context on thank-you page for analytics/conversion tracking
+      const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "utm_id", "gclid", "fbclid"];
+      const utmCaptured = {};
+      let storedUtms = {};
+      try {
+        storedUtms = JSON.parse(sessionStorage.getItem("mindlyft_utm_params") || "{}") || {};
+      } catch (e) {}
+      utmKeys.forEach(function (k) {
+        const val = params.get(k) || storedUtms[k] || "";
+        if (val) utmCaptured[k] = val;
+      });
+      window.mindlyftLead = Object.assign({
+        name: leadName,
+        course: courseName,
+        refId: params.get("refId") || ""
+      }, utmCaptured);
+      if (Array.isArray(window.dataLayer)) {
+        window.dataLayer.push(Object.assign({ event: "mindlyft_thank_you_view" }, window.mindlyftLead));
+      }
+    })();
+  </script>
+</body>
+</html>

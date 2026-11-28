@@ -2,6 +2,17 @@ import type { NextConfig } from "next";
 
 const isProd = process.env.NODE_ENV === "production";
 
+const STATIC_LANDING_PAGES = [
+  "agentic-ai",
+  "ai-security",
+  "cloud-computing",
+  "data-analytics",
+  "deep-learning",
+  "ethical-hacking",
+  "fullstack-cyber",
+  "soc-analyst",
+] as const;
+
 const nextConfig: NextConfig = {
   allowedDevOrigins: ['192.168.31.218'],
   poweredByHeader: false,
@@ -27,6 +38,14 @@ const nextConfig: NextConfig = {
       { source: "/workshops", destination: "/ai-workshops", permanent: true },
       { source: "/workshops/:slug", destination: "/ai-workshops/:slug", permanent: true },
     ];
+  },
+
+  async rewrites() {
+    return STATIC_LANDING_PAGES.flatMap((slug) => [
+      { source: `/${slug}`, destination: `/${slug}/index.html` },
+      { source: `/${slug}.html`, destination: `/${slug}/index.html` },
+      { source: `/${slug}/thank-you`, destination: `/${slug}/thank-you.html` },
+    ]);
   },
 
   async headers() {
