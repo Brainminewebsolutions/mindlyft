@@ -13,7 +13,7 @@
   // Capture UTM parameters from URL query params or sessionStorage fallback
   function getUtmParameters() {
     const params = new URLSearchParams(window.location.search);
-    const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_id", "utm_term", "utm_content"];
+    const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_id", "utm_term", "utm_content", "gclid", "fbclid"];
     const utms = {};
 
     utmKeys.forEach(function (key) {
@@ -218,21 +218,29 @@
       const refId = "ML-CDAC-" + Math.floor(1000 + Math.random() * 9000);
       const payload = {
         refId: refId,
+        program_group: "cdac",
+        course_slug: "data-analytics",
         course_name: courseName,
         source: intent,
+        intent: intent,
         name: name,
         phone: rawPhone, // Clean 10 digits without leading '+' so Google Sheets NEVER parses as a formula
         phone_full: "+91 " + rawPhone,
         email: email || "Not Provided",
         background: profile || "Not Specified",
+        profile: profile || "Not Specified",
         pageUrl: window.location.href,
+        landingPage: window.location.href,
+        referrer: document.referrer || "",
         submittedAt: new Date().toISOString(),
         utm_source: utms.utm_source || "direct",
         utm_medium: utms.utm_medium || "none",
         utm_campaign: utms.utm_campaign || "",
         utm_id: utms.utm_id || "",
         utm_term: utms.utm_term || "",
-        utm_content: utms.utm_content || ""
+        utm_content: utms.utm_content || "",
+        gclid: utms.gclid || "",
+        fbclid: utms.fbclid || ""
       };
 
       // Store in sessionStorage for fast thank you page hydration
@@ -267,32 +275,41 @@
         window.location.href = targetUrl;
       }
 
-      // Send to Google Apps Script Web App (Sheet + Email Notification)
-      if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL" && GOOGLE_SCRIPT_URL.startsWith("http")) {
-        fetch(GOOGLE_SCRIPT_URL, {
+      const requests = [
+        fetch("/api/lead-notify", {
           method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-          },
+          keepalive: true,
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
+        }).catch((notifyErr) => {
+          console.warn("[Lead Email Notice]", notifyErr);
         })
-        .then(() => {
-          if (submitBtn) submitBtn.textContent = "Confirmed! Redirecting...";
-          setTimeout(redirectToThankYou, 300);
-        })
-        .catch((fetchErr) => {
-          console.warn("[Sheet Integration Notice]", fetchErr);
-          redirectToThankYou();
-        });
+      ];
 
-        // Safety fallback: Redirect within 1.2s regardless of network speed
-        setTimeout(redirectToThankYou, 1200);
-      } else {
-        // Direct redirect if script URL is not yet configured (demo / testing mode)
-        if (submitBtn) submitBtn.textContent = "Redirecting to Confirmation...";
-        setTimeout(redirectToThankYou, 350);
+      // Send to Google Apps Script Web App (CDAC Sheet)
+      if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL" && GOOGLE_SCRIPT_URL.startsWith("http")) {
+        requests.push(
+          fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            keepalive: true,
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify(payload)
+          }).catch((fetchErr) => {
+            console.warn("[Sheet Integration Notice]", fetchErr);
+          })
+        );
       }
+
+      Promise.allSettled(requests).then(() => {
+        if (submitBtn) submitBtn.textContent = "Confirmed! Redirecting...";
+        setTimeout(redirectToThankYou, 300);
+      });
+
+      // Safety fallback: Redirect within 1.5s regardless of network speed
+      setTimeout(redirectToThankYou, 1500);
     });
   });
 

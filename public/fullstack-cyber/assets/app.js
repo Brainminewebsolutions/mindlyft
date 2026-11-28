@@ -11,7 +11,7 @@
   const LEAD_CONFIG = {
     sheetTab: "fullstack-cyber",
     pageSubject: "New Lead | Full-Stack AI in Cybersecurity",
-    googleScriptUrl: "https://script.google.com/macros/s/AKfycbwCCWY8oBeDyHo9ooujLnqe8nMEg9t6ijvpnl0FHbaw7Opga3wBfZaxdHidKR2brTk/exec"
+    googleScriptUrl: window.MINDLYFT_IIT_GOOGLE_SCRIPT_URL || ""
   };
 
   const UTM_KEYS = [
@@ -277,13 +277,15 @@
       const refId = "ML-CYBER-" + Math.floor(1000 + Math.random() * 9000);
       const payload = {
         refId,
+        program_group: "iit",
         sheet_tab: LEAD_CONFIG.sheetTab,
         course_slug: LEAD_CONFIG.sheetTab,
         email_subject: LEAD_CONFIG.pageSubject,
         course_name: courseName,
         intent,
         name,
-        phone: "+91" + phone,
+        phone: phone,
+        phone_full: "+91 " + phone,
         email,
         profile,
         pageUrl: window.location.href,
@@ -305,8 +307,21 @@
         sessionStorage.setItem("mindlyft_last_lead", JSON.stringify(payload));
       } catch (err) {}
 
-      // Dispatch to Google Apps Script (writes to Sheet tab + sends email)
-      await dispatchLead(payload);
+      // Dispatch to server email + IIT Sheet webhook, and optional client Apps Script
+      await Promise.race([
+        Promise.allSettled([
+          fetch("/api/lead-notify", {
+            method: "POST",
+            keepalive: true,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(Object.assign({ skipServerSheet: Boolean(LEAD_CONFIG.googleScriptUrl) }, payload))
+          }).catch((notifyErr) => {
+            console.warn("[MindLyft Lead Email Notice]", notifyErr);
+          }),
+          dispatchLead(payload)
+        ]),
+        new Promise((resolve) => setTimeout(resolve, 1500))
+      ]);
 
       // Hook for CRM / Google Ads / Meta Pixel integration
       window.dispatchEvent(new CustomEvent("mindlyft:leadSubmitted", { detail: payload }));
